@@ -1,0 +1,60 @@
+<?php
+	/* /modules/general/Site.php
+	 * Autor: Buchberger Florian
+	 * Version: 0.1.0
+	 * Beschreibung:
+	 *	Stellt Funktionen fÃ¼r den Seitenaufbau zur VerfÃ¼gung
+	 *
+	 * Changelog:
+	 * 	0.1.0:  22. 06. 2013, Buchberger Florian - erste Version
+	 *	0.2.0	24. 06. 2013, Handle MArco - Fehlerkorrektur nun lauffähig
+	 */
+
+	$siteContents = array();
+	$siteContents["header"] = "";
+	$siteContents["footer"] = "";
+
+	$seperators = array();
+	$seperators["main"] = "&main;";
+	$seperators["title"] = "&title;";
+
+	/*
+	 * LÃ¤d die Design Datei und splittet sie nach dem seperator "main" auf.
+	 * Parameter: $filename - Dateiname als String
+	 */
+	function getDesignFile($filename) {
+		global $siteContents, $seperators;
+		$handle = fopen($filename, "r");
+		$content = "";
+		
+		while (true) {
+			$tmp = fgets($handle);
+			if ($tmp == null) break;
+			$content .= $tmp;
+		}
+	
+		$tmp = strpos($content, $seperators["main"]);
+		$siteContents["header"] = substr($content, 0, $tmp);
+		$siteContents["footer"] = substr($content, $tmp + strlen($seperators["main"]));
+	}
+
+	/*
+	 * LÃ¤d Design und gibt den Teil bis zum "main"-seperator aus.
+	 * Parameter: $title - Titel der Seite als String
+	 * 	      $design - Designname als String
+	 */
+	function pageHeader($title, $design) {
+		global $siteContents, $seperators;
+		getDesignFile($_SERVER['DOCUMENT_ROOT'] . "/modules/design/" . $design . ".html");
+		echo str_replace($seperators["title"], $title, $siteContents["header"]);
+	}
+
+	
+	/*
+	 * Gibt den zuvor geladenen Teil des Designs ab dem "main" seperator aus.
+	 */
+	function pageFooter() {
+		global $siteContents;
+		echo $siteContents["footer"];
+	}
+?>

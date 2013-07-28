@@ -1,0 +1,43 @@
+<?php
+
+	/* /backend/romms.php
+	 * Autor: Handle Marco
+	 * Version: 0.1.0
+	 * Beschreibung:
+	 *	Erstellt die Formulare fuer die Eingabe der Klassenraumen
+	 *
+	 * Changelog:
+	 * 	0.1.0:  22. 07. 2013, Handle Marco - erste Version
+	 */
+
+
+include($_SERVER['DOCUMENT_ROOT'] . "/modules/formular/formular.php");
+include($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Connect.php");
+include($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Main.php");
+include($_SERVER['DOCUMENT_ROOT'] . "/modules/database/selects.php");
+
+$selectTeachers = array(
+	array("XH", 	""),
+	array("Test2", 	""),
+	array("Test3", 	""),
+	);
+
+$fields = array(
+	array( "ID", 		"",			 				"hidden", 	"",		"",		"",					""),
+	array( "roName", 		"Name: ", 					"text", 	"8",	"",		"",					""),
+	array( "teShort", 	"Zust&auml;ndige Lehrer: ", "dropdown", "",		"",		$selectTeachers,	""),	
+	);
+
+
+pageHeader("Formular","main");
+
+$result = selectRooms("","");
+while ($row = mysql_fetch_array($result)){
+	print_r($row);
+	form_new("get","",$fields,$row);
+}
+
+form_new("get","",$fields,false);
+
+pageFooter();
+?>
