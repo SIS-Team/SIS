@@ -8,6 +8,6 @@
 	 * Changelog:
 	 * 	1.0.0:  22. 06. 2013, Buchberger Florian - erste Version
 	 */
-	$connection = mysql_connect('localhost', 'sisadmin', 'ahNgahng');
+	$connection = mysql_connect('localhost', 'sisadmin', 'passwd');
 	mysql_select_db('sis');
 ?>
