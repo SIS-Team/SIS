@@ -2,13 +2,14 @@
 
 	/* /modules/database/selects.php
 	 * Autor: Handle Marco
-	 * Version: 0.2.0
+	 * Version: 0.3.0
 	 * Beschreibung:
 	 *	Select Befehle f√ºr die Datenbank
 	 *
 	 * Changelog:
 	 * 	0.1.0:  22. 07. 2013, Handle Marco - erste Version
 	 *	0.2.0:  27. 07. 2013, Handle Marco - Erweiterungen der selects
+	 *	0.3.0:	01. 08. 2013, Handle Marco - Ab‰nderung der selects
 	 */
 
 /*
