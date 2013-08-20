@@ -43,8 +43,10 @@ $selectSubjects = array(
 
 $selectDays = array(
 	array("Mo", 	""),
-	array("Test2", 	""),
-	array("Test3", 	""),
+	array("Di", 	""),
+	array("Mi", 	""),
+	array("Do", 	""),
+	array("Fr", 	""),
 	);
 
 $fields = array(
@@ -54,8 +56,8 @@ $fields = array(
 	array( "teShort", 	"Lehrer: ",	 		"dropdown",	"5",	"",		$selectTeachers,	""),
 	array( "suShort", 	"Fach: ", 			"dropdown",	"5",	"",		$selectSubjects,	""),
 	array( "daShort",	"Tag: ", 			"dropdown",	"5",	"",		$selectDays,		""),
-	array( "hour", 		"Stundenbeginn: ", 	"text",		"5",	"",		"",					""),
-	array( "length", 	"Stundenanzahl: ", 	"text",		"4",	"",		"",					""),
+	array( "startHour",	"Stundenbeginn: ", 	"text",		"5",	"",		"",					""),
+	array( "endHour", 	"Stundenende: ", 	"text",		"5",	"",		"",					""),
 	);
 
 
