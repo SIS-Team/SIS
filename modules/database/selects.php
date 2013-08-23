@@ -4,16 +4,16 @@
 	 * Autor: Handle Marco
 	 * Version: 0.3.0
 	 * Beschreibung:
-	 *	Select Befehle fÃ¼r die Datenbank
+	 *	Select Befehle fÃƒÂ¼r die Datenbank
 	 *
 	 * Changelog:
 	 * 	0.1.0:  22. 07. 2013, Handle Marco - erste Version
 	 *	0.2.0:  27. 07. 2013, Handle Marco - Erweiterungen der selects
-	 *	0.3.0:	01. 08. 2013, Handle Marco - Abänderung der selects
+	 *	0.3.0:	01. 08. 2013, Handle Marco - AbÃ¤nderung der selects
 	 */
 
 /*
- *Gibt die Ganze Tabelle mit all ihren Spalten zurÃ¼ck
+ *Gibt die Ganze Tabelle mit all ihren Spalten zurÃƒÂ¼ck
  *
  *$where string z.B. section='Elektronik'
  *$order string z.B. short
@@ -33,12 +33,12 @@ else if($where!="" && $order==""){	//Wenn keine Sortierung vorhanden
 	$sql="SELECT * FROM ".$table." WHERE ".$where;
 	
 }
-else if($where=="" && $order!=""){	//Wenn keine EinschrÃ¤nkung vorhanden
+else if($where=="" && $order!=""){	//Wenn keine EinschrÃƒÂ¤nkung vorhanden
 	//echo "3";
 	$sql="SELECT * FROM ".$table." ORDER BY ".$order;
 	
 }
-else{	//Wenn keine EischrÃ¤nkung und Sortierung vorhanden
+else{	//Wenn keine EischrÃƒÂ¤nkung und Sortierung vorhanden
 	//echo "4";
 	$sql="SELECT * FROM ".$table;
 
@@ -64,12 +64,12 @@ else if($where!="" && $order==""){	//Wenn keine Sortierung vorhanden
 	$sqlex=$sql." WHERE ".$where;
 	
 }
-else if($where=="" && $order!=""){	//Wenn keine EinschrÃ¤nkung vorhanden
+else if($where=="" && $order!=""){	//Wenn keine EinschrÃƒÂ¤nkung vorhanden
 	//echo "3";
 	$sql=$sql." ORDER BY ".$order;
 	
 }
-else{	//Wenn keine EischrÃ¤nkung und Sortierung vorhanden
+else{	//Wenn keine EischrÃƒÂ¤nkung und Sortierung vorhanden
 	//echo "4";
 	$sqlex=$sql;
 
@@ -96,12 +96,12 @@ else if($where!="" && $order==""){	//Wenn keine Sortierung vorhanden
 	$sqlex=$sql." WHERE ".$where;
 	
 }
-else if($where=="" && $order!=""){	//Wenn keine EinschrÃ¤nkung vorhanden
+else if($where=="" && $order!=""){	//Wenn keine EinschrÃƒÂ¤nkung vorhanden
 	//echo "3";
 	$sql=$sql." ORDER BY ".$order;
 	
 }
-else{	//Wenn keine EischrÃ¤nkung und Sortierung vorhanden
+else{	//Wenn keine EischrÃƒÂ¤nkung und Sortierung vorhanden
 	//echo "4";
 	$sqlex=$sql;
 
@@ -128,12 +128,12 @@ else if($where!="" && $order==""){	//Wenn keine Sortierung vorhanden
 	$sqlex=$sql." WHERE ".$where;
 	
 }
-else if($where=="" && $order!=""){	//Wenn keine EinschrÃ¤nkung vorhanden
+else if($where=="" && $order!=""){	//Wenn keine EinschrÃƒÂ¤nkung vorhanden
 	//echo "3";
 	$sql=$sql." ORDER BY ".$order;
 	
 }
-else{	//Wenn keine EischrÃ¤nkung und Sortierung vorhanden
+else{	//Wenn keine EischrÃƒÂ¤nkung und Sortierung vorhanden
 	//echo "4";
 	$sqlex=$sql;
 
@@ -158,12 +158,12 @@ else if($where!="" && $order==""){	//Wenn keine Sortierung vorhanden
 	$sqlex=$sql." WHERE ".$where;
 	
 }
-else if($where=="" && $order!=""){	//Wenn keine EinschrÃ¤nkung vorhanden
+else if($where=="" && $order!=""){	//Wenn keine EinschrÃƒÂ¤nkung vorhanden
 	//echo "3";
 	$sql=$sql." ORDER BY ".$order;
 	
 }
-else{	//Wenn keine EischrÃ¤nkung und Sortierung vorhanden
+else{	//Wenn keine EischrÃƒÂ¤nkung und Sortierung vorhanden
 	//echo "4";
 	$sqlex=$sql;
 
@@ -178,7 +178,7 @@ function selectLesson($where,$order){	//TODO
 
 //$sql= "SELECT lessons.ID, classes.name as clName, rooms.name as roName, teachers.short as teShort, subjects.short as suShort, hours.weekdayShort as daShort, hours.hour as startHour, hours.hour as endHour FROM lessons INNER JOIN classes ON classes.ID=lessonsBase.classFK INNER JOIN rooms ON rooms.ID=lessons.roomFK INNER JOIN teachers ON teachers.ID=lessons.teachersFK INNER JOIN subjects ON subjects.ID=lessons.subjectFK INNER JOIN hours ON (hours.ID=lessonsBase.startHourFK) AND (hours.ID=lessonsBase.startHourFK) AND hours.ID=lessonsBase.endHourFK";
 
-  $sql= "SELECT lessons.ID, classes.name as clName, rooms.name as roName, teachers.short as teShort, subjects.short as suShort, hours.weekdayShort as daShort, hours.hour as startHour, hours.hour as endHour FROM (lessons INNER JOIN lessonsBase ON lessonsBase.ID = lessons.lessonFK INNER JOIN rooms ON rooms.ID = lessons.roomFK INNER JOIN teachers ON teachers.ID = lessons.teachersFK INNER JOIN subjects ON subjects.ID = lessons.subjectFK), (lessonsBase INNER JOIN classes ON classes.ID = lessonsBase.classFK INNER JOIN hours ON (hours.ID=lessonsBase.startHourFK) AND (hours.ID=lessonsBase.startHourFK) AND (hours.ID=lessonsBase.endHourFK))";
+  $sql= "SELECT lessons.ID, classes.name as clName, rooms.name as roName, teachers.short as teShort, subjects.short as suShort, hoursStart.weekdayShort as daShort, hoursStart.hour as startHour, hoursEnd.hour as endHour FROM lessons INNER JOIN rooms ON rooms.ID = lessons.roomFK INNER JOIN teachers ON teachers.ID = lessons.teachersFK INNER JOIN subjects ON subjects.ID = lessons.subjectFK INNER JOIN lessonsBase ON lessonsBase.ID = lessons.lessonFK INNER JOIN classes ON classes.ID = lessonsBase.classFK INNER JOIN hours as hoursStart ON hoursStart.ID = lessonsBase.startHourFK INNER JOIN hours as hoursEnd ON hoursEnd.ID = lessonsBase.endHourFK";
 
 	echo "10";
 
@@ -193,12 +193,12 @@ else if($where!="" && $order==""){	//Wenn keine Sortierung vorhanden
 	$sqlex=$sql." WHERE ".$where;
 	
 }
-else if($where=="" && $order!=""){	//Wenn keine EinschrÃ¤nkung vorhanden
+else if($where=="" && $order!=""){	//Wenn keine EinschrÃƒÂ¤nkung vorhanden
 	//echo "3";
 	$sql=$sql." ORDER BY ".$order;
 	
 }
-else{	//Wenn keine EischrÃ¤nkung und Sortierung vorhanden
+else{	//Wenn keine EischrÃƒÂ¤nkung und Sortierung vorhanden
 	echo "4";
 	$sqlex=$sql;
 
@@ -223,12 +223,12 @@ else if($where!="" && $order==""){	//Wenn keine Sortierung vorhanden
 	$sqlex=$sql." WHERE ".$where;
 	
 }
-else if($where=="" && $order!=""){	//Wenn keine EinschrÃ¤nkung vorhanden
+else if($where=="" && $order!=""){	//Wenn keine EinschrÃƒÂ¤nkung vorhanden
 	//echo "3";
 	$sql=$sql." ORDER BY ".$order;
 	
 }
-else{	//Wenn keine EischrÃ¤nkung und Sortierung vorhanden
+else{	//Wenn keine EischrÃƒÂ¤nkung und Sortierung vorhanden
 	//echo "4";
 	$sqlex=$sql;
 
@@ -254,12 +254,12 @@ else if($where!="" && $order==""){	//Wenn keine Sortierung vorhanden
 	$sqlex=$sql." WHERE ".$where;
 	
 }
-else if($where=="" && $order!=""){	//Wenn keine EinschrÃ¤nkung vorhanden
+else if($where=="" && $order!=""){	//Wenn keine EinschrÃƒÂ¤nkung vorhanden
 	//echo "3";
 	$sql=$sql." ORDER BY ".$order;
 	
 }
-else{	//Wenn keine EischrÃ¤nkung und Sortierung vorhanden
+else{	//Wenn keine EischrÃƒÂ¤nkung und Sortierung vorhanden
 	//echo "4";
 	$sqlex=$sql;
 
@@ -284,12 +284,12 @@ else if($where!="" && $order==""){	//Wenn keine Sortierung vorhanden
 	$sqlex=$sql." WHERE ".$where;
 	
 }
-else if($where=="" && $order!=""){	//Wenn keine EinschrÃ¤nkung vorhanden
+else if($where=="" && $order!=""){	//Wenn keine EinschrÃƒÂ¤nkung vorhanden
 	//echo "3";
 	$sql=$sql." ORDER BY ".$order;
 	
 }
-else{	//Wenn keine EischrÃ¤nkung und Sortierung vorhanden
+else{	//Wenn keine EischrÃƒÂ¤nkung und Sortierung vorhanden
 	//echo "4";
 	$sqlex=$sql;
 
@@ -314,12 +314,12 @@ else if($where!="" && $order==""){	//Wenn keine Sortierung vorhanden
 	$sqlex=$sql." WHERE ".$where;
 	
 }
-else if($where=="" && $order!=""){	//Wenn keine EinschrÃ¤nkung vorhanden
+else if($where=="" && $order!=""){	//Wenn keine EinschrÃƒÂ¤nkung vorhanden
 	//echo "3";
 	$sql=$sql." ORDER BY ".$order;
 	
 }
-else{	//Wenn keine EischrÃ¤nkung und Sortierung vorhanden
+else{	//Wenn keine EischrÃƒÂ¤nkung und Sortierung vorhanden
 	//echo "4";
 	$sqlex=$sql;
 
