@@ -270,7 +270,7 @@ return mysql_query($sqlex);
 
 function selectSubstitude($where,$order){	//TODO
 
-  $sql= "SELECT substitudes.ID, subjects.short as suShort, teachers.short as teShort, substitudes.time, rooms.name as roName, substitudes.hour, substitudes.length, substitudes.hidden, substitudes.sure, substitudes.comment FROM substitudes INNER JOIN subjects ON subjects.ID = substitudes.subject INNER JOIN teachers ON teachers.ID = substitudes.teacher INNER JOIN rooms ON rooms.ID = substitudes.room";
+  $sql= "SELECT substitudes.ID, subjects.short as suShort, teachers.short as teShort, substitudes.time, rooms.name as roName, hoursStart.hour as startHour, hoursEnd.hour as endHour, substitudes.hidden, substitudes.sure, substitudes.comment FROM substitudes INNER JOIN subjects ON subjects.ID = substitudes.subjectFK INNER JOIN teachers ON teachers.ID = substitudes.teacherFK INNER JOIN rooms ON rooms.ID = substitudes.roomFK INNER JOIN hours as hoursStart ON hoursStart.ID = substitudes.startHourFK INNER JOIN hours as hoursEnd ON hoursEnd.ID = substitudes.endHourFK";
 
 //printf("%s,%s,%s",$table, $where, $order);
 if($where!="" && $order!=""){		//Wenn beide Variablen beide gesetzt

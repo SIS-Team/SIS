@@ -39,13 +39,13 @@ $fields = array(
 	array( "ID", 		"",			 		"hidden", 	"",		"",		"",					""),
 	array( "suShort", 	"Fach: ", 			"dropdown", "8",	"",		$selectSubjects,	""),
 	array( "teShort", 	"Supplierlehrer: ",	"dropdown", "5",	"",		$selectTeachers,	""),
-	array( "time", 		"Datum ",			"text",		"15",	"",		"",					""),
+	array( "time", 		"Datum: ",			"text",		"10",	"",		"",					""),
 	array( "roName",	"Raum: ", 			"dropdown",	"8",	"",		$selectRooms,		""),
-	array( "hour", 		"Stunde: ", 		"text",		"5",	"",		"",					""),
-	array( "length",	"L&auml;nge: ", 	"text",		"4",	"",		"",					""),
+	array( "startHour", "Start-Stunde: ", 	"text",		"5",	"",		"",					""),
+	array( "endHour",	"End-Stunde: ",	 	"text",		"4",	"",		"",					""),
 	array( "hidden",	"Ausblednen? ", 	"checkbox",	"",		"",		"",					""),
 	array( "sure", 		"Sicher? ", 		"checkbox",	"",		"",		"",					""),
-	array( "comment", 	"Kommentar: ", 		"text",		"20",	"",		"",					""),
+	array( "comment", 	"Kommentar: ", 		"text",		"25",	"",		"",					""),
 	);
 
 
