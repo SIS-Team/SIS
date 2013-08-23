@@ -2,7 +2,7 @@
 
 	/* /modules/database/selects.php
 	 * Autor: Handle Marco
-	 * Version: 0.3.0
+	 * Version: 0.4.0
 	 * Beschreibung:
 	 *	Select Befehle fÃƒÂ¼r die Datenbank
 	 *
@@ -10,6 +10,7 @@
 	 * 	0.1.0:  22. 07. 2013, Handle Marco - erste Version
 	 *	0.2.0:  27. 07. 2013, Handle Marco - Erweiterungen der selects
 	 *	0.3.0:	01. 08. 2013, Handle Marco - AbÃ¤nderung der selects
+	 *	0.4.0:	23. 08. 2013, Handle Marco - Lessons Select
 	 */
 
 /*
@@ -174,9 +175,7 @@ return mysql_query($sqlex);
 }
 
 
-function selectLesson($where,$order){	//TODO
-
-//$sql= "SELECT lessons.ID, classes.name as clName, rooms.name as roName, teachers.short as teShort, subjects.short as suShort, hours.weekdayShort as daShort, hours.hour as startHour, hours.hour as endHour FROM lessons INNER JOIN classes ON classes.ID=lessonsBase.classFK INNER JOIN rooms ON rooms.ID=lessons.roomFK INNER JOIN teachers ON teachers.ID=lessons.teachersFK INNER JOIN subjects ON subjects.ID=lessons.subjectFK INNER JOIN hours ON (hours.ID=lessonsBase.startHourFK) AND (hours.ID=lessonsBase.startHourFK) AND hours.ID=lessonsBase.endHourFK";
+function selectLesson($where,$order){
 
   $sql= "SELECT lessons.ID, classes.name as clName, rooms.name as roName, teachers.short as teShort, subjects.short as suShort, hoursStart.weekdayShort as daShort, hoursStart.hour as startHour, hoursEnd.hour as endHour FROM lessons INNER JOIN rooms ON rooms.ID = lessons.roomFK INNER JOIN teachers ON teachers.ID = lessons.teachersFK INNER JOIN subjects ON subjects.ID = lessons.subjectFK INNER JOIN lessonsBase ON lessonsBase.ID = lessons.lessonFK INNER JOIN classes ON classes.ID = lessonsBase.classFK INNER JOIN hours as hoursStart ON hoursStart.ID = lessonsBase.startHourFK INNER JOIN hours as hoursEnd ON hoursEnd.ID = lessonsBase.endHourFK";
 
@@ -210,7 +209,7 @@ return mysql_query($sqlex);
 
 function selectMissingTeacher($where,$order){
 
-  $sql= "SELECT missingTeachers.ID, teachers.short as teShort, missingTeachers.startDay, hours.startHour, missingTeachers.endDay, hours.endHour, missingTeachers.sure, missingTeachers.reason FROM missingTeachers INNER JOIN teachers ON teachers.ID = missingTeachers.teacherFK INNER JOIN hours ON (hours.ID = missingTeachers.startHourFK) AND (hours.ID = missingTeachers.endHourFK)";
+  $sql= "SELECT missingTeachers.ID, teachers.short as teShort, missingTeachers.startDay as startDay, hoursStart.hour as startHour, missingTeachers.endDay as endDay, hoursEnd.hour as endHour, missingTeachers.sure, missingTeachers.reason FROM missingTeachers INNER JOIN teachers ON teachers.ID = missingTeachers.teacherFK INNER JOIN hours as hoursStart ON hoursStart.ID = missingTeachers.startHourFK INNER JOIN hours as hoursEnd ON hoursEnd.ID = missingTeachers.endHourFK";
 
 //printf("%s,%s,%s",$table, $where, $order);
 if($where!="" && $order!=""){		//Wenn beide Variablen beide gesetzt
@@ -241,7 +240,7 @@ return mysql_query($sqlex);
 
 function selectMissingClass($where,$order){
 
-  $sql= "SELECT missingClasses.ID, classes.name as clName, missingClasses.sDay, missingClasses.sHour, missingClasses.eDay, missingClasses.eHour, missingClasses.sure, missingClasses.reason FROM missingClasses INNER JOIN classes ON classes.ID = missingClasses.classFK";
+  $sql= "SELECT missingClasses.ID, classes.name as clName, missingClasses.startDay as startDay, hoursStart.hour as startHour, missingClasses.endDay as endDay, hoursEnd.hour as endHour, missingClasses.sure, missingClasses.reason FROM missingClasses INNER JOIN classes ON classes.ID = missingClasses.classFK INNER JOIN hours as hoursStart ON hoursStart.ID = missingClasses.startHourFK INNER JOIN hours as hoursEnd ON hoursEnd.ID = missingClasses.endHourFK";
 
 //printf("%s,%s,%s",$table, $where, $order);
 if($where!="" && $order!=""){		//Wenn beide Variablen beide gesetzt

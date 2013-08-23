@@ -22,20 +22,14 @@ $selectTeachers = array(
 	array( "test3", ""),
 	);
 
-$selectHours = array(
-	array( "1",""),
-	array( "2",""),
-	array( "5",""),
-	);
-
 
 $fields = array(
 	array( "ID", 		"",			 		"hidden", 	"",		"",		"",					""),
 	array( "teShort", 	"Lehrer: ", 		"dropdown", "5",	"",		$selectTeachers,	""),
-	array( "sDay", 		"Starttag: ",		"text", 	"15",	"",		"",					""),
-	array( "sHour", 	"Start-Stunde: ",	"dropdown",	"5",	"",		$selectHours,		""),
-	array( "eDay", 		"Endtag: ", 		"text",		"15",	"",		"",					""),
-	array( "eHour", 	"End-Stunde: ", 	"dropdown",	"5",	"",		$selectHours,		""),
+	array( "startDay", 	"Starttag: ",		"text", 	"10",	"",		"",					""),
+	array( "startHour", "Start-Stunde: ",	"text",		"5",	"",		"",					""),
+	array( "endDay", 	"Endtag: ", 		"text",		"10",	"",		"",					""),
+	array( "endHour", 	"End-Stunde: ", 	"text",		"5",	"",		"",					""),
 	array( "sure", 		"Sicher? ", 		"checkbox",	"",		"",		"",					""),
 	array( "reason", 	"Grund: ", 			"text",		"30",	"",		"",					""),
 	);

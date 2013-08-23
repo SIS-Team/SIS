@@ -26,10 +26,10 @@ $selectClasses = array(
 $fields = array(
 	array( "ID", 		"",			 		"hidden", 	"",		"",		"",					""),
 	array( "clName", 	"Klasse: ", 		"dropdown", "5",	"",		$selectClasses,		""),
-	array( "sDay", 		"Starttag: ",		"text", 	"15",	"",		"",					""),
-	array( "sHour", 	"Start-Stunde: ",	"text",		"5",	"",		"",					""),
-	array( "eDay", 		"Endtag: ", 		"text",		"15",	"",		"",					""),
-	array( "eHour", 	"End-Stunde: ", 	"text",		"5",	"",		"",					""),
+	array( "startDay", 	"Starttag: ",		"text", 	"10",	"",		"",					""),
+	array( "startHour", "Start-Stunde: ",	"text",		"5",	"",		"",					""),
+	array( "endDay", 	"Endtag: ", 		"text",		"10",	"",		"",					""),
+	array( "endHour", 	"End-Stunde: ", 	"text",		"5",	"",		"",					""),
 	array( "sure", 		"Sicher? ", 		"checkbox",	"",		"",		"",					""),
 	array( "reason", 	"Grund: ", 			"text",		"30",	"",		"",					""),
 	);
