@@ -117,7 +117,7 @@ return mysql_query($sqlex);
 
 function selectTeacher($where,$order){
 
-$sql= "SELECT teachers.ID, teachers.name as teName, teachers.short as teShort, teachers.display, sections.short as seShort FROM teachers INNER JOIN sections ON teachers.sectionFK=sections.ID";
+$sql= "SELECT teachers.ID, teachers.name as teName, teachers.short as teShort, teachers.display, sections.short as seShort FROM teachers LEFT JOIN sections ON teachers.sectionFK=sections.ID";
 
 //printf("%s,%s,%s",$table, $where, $order);
 if($where!="" && $order!=""){		//Wenn beide Variablen beide gesetzt

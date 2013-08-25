@@ -35,11 +35,14 @@ $fields = array(
 pageHeader("Formular","main");
 
 $result = selectTeacher("","");
+$i=0;
 while ($row = mysql_fetch_array($result)){
-	print_r($row);
+//	print_r($row);
 	form_new("get","",$fields,$row);
+	$i=$i+1;
+	
 }
-
+//print_r($i);
 form_new("get","",$fields,false);
 
 pageFooter();
