@@ -24,7 +24,7 @@ $selectTeachers = array(
 
 $fields = array(
 	array( "ID", 		"",			 				"hidden", 	"",		"",		"",					""),
-	array( "roName", 		"Name: ", 					"text", 	"8",	"",		"",					""),
+	array( "roName", 	"Name: ", 					"text", 	"8",	"",		"",					""),
 	array( "teShort", 	"Zust&auml;ndige Lehrer: ", "dropdown", "",		"",		$selectTeachers,	""),	
 	);
 
@@ -33,7 +33,7 @@ pageHeader("Formular","main");
 
 $result = selectRooms("","");
 while ($row = mysql_fetch_array($result)){
-	print_r($row);
+	//print_r($row);
 	form_new("get","",$fields,$row);
 }
 

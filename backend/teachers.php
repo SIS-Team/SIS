@@ -25,9 +25,9 @@ $selectSections = array(
 
 $fields = array(
 	array( "ID", 		"",			 			"hidden", 	"",		"",		"",					""),
-	array( "teName", 	"Name: ", 				"text", 	"15",	"",		"",					""),
+	array( "teName", 	"Name: ", 				"text", 	"25",	"",		"",					""),
 	array( "teShort", 	"K&uuml;rzel: ", 		"text", 	"5",	"",		"",					""),
-	array( "display", 	"Kurzname: ", 			"text",		"15",	"",		"",					""),
+	array( "display", 	"Kurzname: ", 			"text",		"20",	"",		"",					""),
 	array( "seShort",	"Stammabteilung: ", 	"dropdown",	"5",	"",		$selectSections,	""),	
 	);
 

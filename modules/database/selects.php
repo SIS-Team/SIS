@@ -85,7 +85,7 @@ return mysql_query($sqlex);
 
 function selectRooms($where,$order){
 
-$sql= "SELECT rooms.ID, rooms.name as roName, teachers.short as teShort FROM rooms INNER JOIN teachers ON rooms.teacherFK=teachers.ID";
+$sql= "SELECT rooms.ID, rooms.name as roName, teachers.short as teShort FROM rooms LEFT JOIN teachers ON rooms.teacherFK=teachers.ID";
 
 //printf("%s,%s,%s",$table, $where, $order);
 if($where!="" && $order!=""){		//Wenn beide Variablen beide gesetzt
