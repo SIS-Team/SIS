@@ -2,7 +2,7 @@
 
 	/* /modules/database/selects.php
 	 * Autor: Handle Marco
-	 * Version: 0.5.0
+	 * Version: 1.0.0
 	 * Beschreibung:
 	 *	Select Befehle fÃƒÂ¼r die Datenbank
 	 *
@@ -12,324 +12,181 @@
 	 *	0.3.0:	01. 08. 2013, Handle Marco - AbÃ¤nderung der selects
 	 *	0.4.0:	23. 08. 2013, Handle Marco - Lessons Select
 	 *	0.5.0	23. 08. 2013, Hanlde Marco - Selects fertigstellen
+	 *	1.0.0	25. 08. 2013, Handle Marco - Fertigstellung
 	 */
 
 /*
  *Gibt die Ganze Tabelle mit all ihren Spalten zurÃƒÂ¼ck
  *
- *$where string z.B. section='Elektronik'
- *$order string z.B. short
+ *$table string Tabellenname
+ *$where string zum Filtern
+ *$order string zum Sortieren
  *	
  */
  
 function selectAll($table, $where, $order){
 
-//printf("%s,%s,%s",$table, $where, $order);
-if($where!="" && $order!=""){		//Wenn beide Variablen beide gesetzt
-	//echo "1";
-	$sql="SELECT * FROM ".$table." WHERE ".$where." ORDER BY ".$order;
-
-}
-else if($where!="" && $order==""){	//Wenn keine Sortierung vorhanden
-	//echo "2";
-	$sql="SELECT * FROM ".$table." WHERE ".$where;
+	$sql = "SELECT * FROM ".$table;					//Stamm sql-Befehl
 	
-}
-else if($where=="" && $order!=""){	//Wenn keine EinschrÃƒÂ¤nkung vorhanden
-	//echo "3";
-	$sql="SELECT * FROM ".$table." ORDER BY ".$order;
-	
-}
-else{	//Wenn keine EischrÃƒÂ¤nkung und Sortierung vorhanden
-	//echo "4";
-	$sql="SELECT * FROM ".$table;
+	if (!empty($where)) $sql .= " WHERE " . $where; 	//Wenn where Variable gesetzt ist
+	if (!empty($where)) $sql .= " ORDER BY " . $order;	//Wenn order Variable gesetzt ist
 
-}
-
-return mysql_query($sql);
+	return mysql_query($sql);	//R�ckgabe
 
 }
 
 
+/*
+ *Gibt den Inhalt f�r das Formular Section zur�ck
+ *
+ *$where string zum Filtern
+ *$order string zum Sortieren
+ *	
+ */
 
 function selectSection($where,$order){
 
-$sql="SELECT sections.ID , sections.name as seName, sections.short as seShort, teachers.short as teShort FROM sections INNER JOIN teachers ON sections.teacherFK=teachers.ID";
+	$sql="SELECT sections.ID , sections.name as seName, sections.short as seShort, teachers.short as teShort FROM sections INNER JOIN teachers ON sections.teacherFK=teachers.ID";		//Stamm sql-Befehl
 
-if($where!="" && $order!=""){		//Wenn beide Variablen beide gesetzt
-	//echo "1";
-	$sqlex=$sql." WHERE ".$where." ORDER BY ".$order;
-
-}
-else if($where!="" && $order==""){	//Wenn keine Sortierung vorhanden
-	//echo "2";
-	$sqlex=$sql." WHERE ".$where;
+	if (!empty($where)) $sql .= " WHERE " . $where; 	//Wenn where Variable gesetzt ist
+	if (!empty($where)) $sql .= " ORDER BY " . $order;	//Wenn order Variable gesetzt ist
 	
-}
-else if($where=="" && $order!=""){	//Wenn keine EinschrÃƒÂ¤nkung vorhanden
-	//echo "3";
-	$sql=$sql." ORDER BY ".$order;
-	
-}
-else{	//Wenn keine EischrÃƒÂ¤nkung und Sortierung vorhanden
-	//echo "4";
-	$sqlex=$sql;
+	return mysql_query($sql);	//R�ckgabe
 
 }
 
-return mysql_query($sqlex);
-
-
-
-}
+/*
+ *Gibt den Inhalt f�r das Formular Rooms zur�ck
+ *
+ *$where string zum Filtern
+ *$order string zum Sortieren
+ *	
+ */
 
 function selectRooms($where,$order){
 
-$sql= "SELECT rooms.ID, rooms.name as roName, teachers.short as teShort FROM rooms LEFT JOIN teachers ON rooms.teacherFK=teachers.ID";
+	$sql= "SELECT rooms.ID, rooms.name as roName, teachers.short as teShort FROM rooms LEFT JOIN teachers ON rooms.teacherFK=teachers.ID";	//Stamm sql-Befehl
 
-//printf("%s,%s,%s",$table, $where, $order);
-if($where!="" && $order!=""){		//Wenn beide Variablen beide gesetzt
-	//echo "1";
-	$sqlex=$sql." WHERE ".$where." ORDER BY ".$order;
+	if (!empty($where)) $sql .= " WHERE " . $where; 	//Wenn where Variable gesetzt ist
+	if (!empty($where)) $sql .= " ORDER BY " . $order;	//Wenn order Variable gesetzt ist
 
-}
-else if($where!="" && $order==""){	//Wenn keine Sortierung vorhanden
-	//echo "2";
-	$sqlex=$sql." WHERE ".$where;
-	
-}
-else if($where=="" && $order!=""){	//Wenn keine EinschrÃƒÂ¤nkung vorhanden
-	//echo "3";
-	$sql=$sql." ORDER BY ".$order;
-	
-}
-else{	//Wenn keine EischrÃƒÂ¤nkung und Sortierung vorhanden
-	//echo "4";
-	$sqlex=$sql;
-
-}
-
-return mysql_query($sqlex);
+	return mysql_query($sql);	//R�ckgabe
 
 }
 
 
+/*
+ *Gibt den Inhalt f�r das Formular Teacher zur�ck
+ *
+ *$where string zum Filtern
+ *$order string zum Sortieren
+ *	
+ */
 
 function selectTeacher($where,$order){
 
-$sql= "SELECT teachers.ID, teachers.name as teName, teachers.short as teShort, teachers.display, sections.short as seShort FROM teachers LEFT JOIN sections ON teachers.sectionFK=sections.ID";
+	$sql= "SELECT teachers.ID, teachers.name as teName, teachers.short as teShort, teachers.display, sections.short as seShort FROM teachers LEFT JOIN sections ON teachers.sectionFK=sections.ID";	//Stamm sql-Befehl
 
-//printf("%s,%s,%s",$table, $where, $order);
-if($where!="" && $order!=""){		//Wenn beide Variablen beide gesetzt
-	//echo "1";
-	$sqlex=$sql." WHERE ".$where." ORDER BY ".$order;
+	if (!empty($where)) $sql .= " WHERE " . $where; 	//Wenn where Variable gesetzt ist
+	if (!empty($where)) $sql .= " ORDER BY " . $order;	//Wenn order Variable gesetzt ist
 
-}
-else if($where!="" && $order==""){	//Wenn keine Sortierung vorhanden
-	//echo "2";
-	$sqlex=$sql." WHERE ".$where;
-	
-}
-else if($where=="" && $order!=""){	//Wenn keine EinschrÃƒÂ¤nkung vorhanden
-	//echo "3";
-	$sql=$sql." ORDER BY ".$order;
-	
-}
-else{	//Wenn keine EischrÃƒÂ¤nkung und Sortierung vorhanden
-	//echo "4";
-	$sqlex=$sql;
+	return mysql_query($sql);	//R�ckgabe
 
 }
 
-return mysql_query($sqlex);
-
-}
+/*
+ *Gibt den Inhalt f�r das Formular Class zur�ck
+ *
+ *$where string zum Filtern
+ *$order string zum Sortieren
+ *	
+ */
 
 function selectClass($where,$order){
 
-$sql= "SELECT classes.ID, classes.name as clName, sections.short as seShort, teachers.short as teShort, rooms.name as roName FROM classes LEFT JOIN sections ON sections.ID=classes.sectionFK LEFT JOIN teachers ON teachers.ID=classes.teacherFK LEFT JOIN rooms ON rooms.ID=classes.roomFK";
+	$sql= "SELECT classes.ID, classes.name as clName, sections.short as seShort, teachers.short as teShort, rooms.name as roName FROM classes LEFT JOIN sections ON sections.ID=classes.sectionFK LEFT JOIN teachers ON teachers.ID=classes.teacherFK LEFT JOIN rooms ON rooms.ID=classes.roomFK";	//Stamm sql-Befehl
 
-//printf("%s,%s,%s",$table, $where, $order);
-if($where!="" && $order!=""){		//Wenn beide Variablen beide gesetzt
-	//echo "1";
-	$sqlex=$sql." WHERE ".$where." ORDER BY ".$order;
+	if (!empty($where)) $sql .= " WHERE " . $where; 	//Wenn where Variable gesetzt ist
+	if (!empty($where)) $sql .= " ORDER BY " . $order;	//Wenn order Variable gesetzt ist
 
-}
-else if($where!="" && $order==""){	//Wenn keine Sortierung vorhanden
-	//echo "2";
-	$sqlex=$sql." WHERE ".$where;
-	
-}
-else if($where=="" && $order!=""){	//Wenn keine EinschrÃƒÂ¤nkung vorhanden
-	//echo "3";
-	$sql=$sql." ORDER BY ".$order;
-	
-}
-else{	//Wenn keine EischrÃƒÂ¤nkung und Sortierung vorhanden
-	//echo "4";
-	$sqlex=$sql;
+	return mysql_query($sql);	//R�ckgabe
 
 }
 
-return mysql_query($sqlex);
-
-}
-
+/*
+ *Gibt den Inhalt f�r das Formular Lesson zur�ck
+ *
+ *$where string zum Filtern
+ *$order string zum Sortieren
+ *	
+ */
 
 function selectLesson($where,$order){
 
-  $sql= "SELECT lessons.ID, classes.name as clName, rooms.name as roName, teachers.short as teShort, subjects.short as suShort, hoursStart.weekdayShort as daShort, hoursStart.hour as startHour, hoursEnd.hour as endHour FROM lessons INNER JOIN rooms ON rooms.ID = lessons.roomFK INNER JOIN teachers ON teachers.ID = lessons.teachersFK INNER JOIN subjects ON subjects.ID = lessons.subjectFK INNER JOIN lessonsBase ON lessonsBase.ID = lessons.lessonBaseFK INNER JOIN classes ON classes.ID = lessonsBase.classFK INNER JOIN hours as hoursStart ON hoursStart.ID = lessonsBase.startHourFK INNER JOIN hours as hoursEnd ON hoursEnd.ID = lessonsBase.endHourFK";
+  	$sql= "SELECT lessons.ID, classes.name as clName, rooms.name as roName, teachers.short as teShort, subjects.short as suShort, hoursStart.weekdayShort as daShort, hoursStart.hour as startHour, hoursEnd.hour as endHour FROM lessons INNER JOIN rooms ON rooms.ID = lessons.roomFK INNER JOIN teachers ON teachers.ID = lessons.teachersFK INNER JOIN subjects ON subjects.ID = lessons.subjectFK INNER JOIN lessonsBase ON lessonsBase.ID = lessons.lessonBaseFK INNER JOIN classes ON classes.ID = lessonsBase.classFK INNER JOIN hours as hoursStart ON hoursStart.ID = lessonsBase.startHourFK INNER JOIN hours as hoursEnd ON hoursEnd.ID = lessonsBase.endHourFK";	//Stamm sql-Befehl
 
-	echo "10";
+	if (!empty($where)) $sql .= " WHERE " . $where; 	//Wenn where Variable gesetzt ist
+	if (!empty($where)) $sql .= " ORDER BY " . $order;	//Wenn order Variable gesetzt ist
 
-//printf("%s,%s",$where, $order);
-if($where!="" && $order!=""){		//Wenn beide Variablen beide gesetzt
-	echo "1";
-	$sqlex=$sql." WHERE ".$where." ORDER BY ".$order;
-
-}
-else if($where!="" && $order==""){	//Wenn keine Sortierung vorhanden
-	//echo "2";
-	$sqlex=$sql." WHERE ".$where;
-	
-}
-else if($where=="" && $order!=""){	//Wenn keine EinschrÃƒÂ¤nkung vorhanden
-	//echo "3";
-	$sql=$sql." ORDER BY ".$order;
-	
-}
-else{	//Wenn keine EischrÃƒÂ¤nkung und Sortierung vorhanden
-	echo "4";
-	$sqlex=$sql;
+	return mysql_query($sql);	//R�ckgabe
 
 }
 
-return mysql_query($sqlex);
-
-}
+/*
+ *Gibt den Inhalt f�r das Formular MissingTeacher zur�ck
+ *
+ *$where string zum Filtern
+ *$order string zum Sortieren
+ *	
+ */
 
 function selectMissingTeacher($where,$order){
 
-  $sql= "SELECT missingTeachers.ID, teachers.short as teShort, missingTeachers.startDay as startDay, hoursStart.hour as startHour, missingTeachers.endDay as endDay, hoursEnd.hour as endHour, missingTeachers.sure, missingTeachers.reason FROM missingTeachers INNER JOIN teachers ON teachers.ID = missingTeachers.teacherFK INNER JOIN hours as hoursStart ON hoursStart.ID = missingTeachers.startHourFK INNER JOIN hours as hoursEnd ON hoursEnd.ID = missingTeachers.endHourFK";
+  	$sql= "SELECT missingTeachers.ID, teachers.short as teShort, missingTeachers.startDay as startDay, hoursStart.hour as startHour, missingTeachers.endDay as endDay, hoursEnd.hour as endHour, missingTeachers.sure, missingTeachers.reason FROM missingTeachers INNER JOIN teachers ON teachers.ID = missingTeachers.teacherFK INNER JOIN hours as hoursStart ON hoursStart.ID = missingTeachers.startHourFK INNER JOIN hours as hoursEnd ON hoursEnd.ID = missingTeachers.endHourFK";		//Stamm sql-Befehl
 
-//printf("%s,%s,%s",$table, $where, $order);
-if($where!="" && $order!=""){		//Wenn beide Variablen beide gesetzt
-	//echo "1";
-	$sqlex=$sql." WHERE ".$where." ORDER BY ".$order;
+	if (!empty($where)) $sql .= " WHERE " . $where; 	//Wenn where Variable gesetzt ist
+	if (!empty($where)) $sql .= " ORDER BY " . $order;	//Wenn order Variable gesetzt ist
 
-}
-else if($where!="" && $order==""){	//Wenn keine Sortierung vorhanden
-	//echo "2";
-	$sqlex=$sql." WHERE ".$where;
-	
-}
-else if($where=="" && $order!=""){	//Wenn keine EinschrÃƒÂ¤nkung vorhanden
-	//echo "3";
-	$sql=$sql." ORDER BY ".$order;
-	
-}
-else{	//Wenn keine EischrÃƒÂ¤nkung und Sortierung vorhanden
-	//echo "4";
-	$sqlex=$sql;
+	return mysql_query($sql);	//R�ckgabe
 
 }
 
-return mysql_query($sqlex);
-
-}
-
+/*
+ *Gibt den Inhalt f�r das Formular MissingClasses zur�ck
+ *
+ *$where string zum Filtern
+ *$order string zum Sortieren
+ *	
+ */
 
 function selectMissingClass($where,$order){
 
-  $sql= "SELECT missingClasses.ID, classes.name as clName, missingClasses.startDay as startDay, hoursStart.hour as startHour, missingClasses.endDay as endDay, hoursEnd.hour as endHour, missingClasses.sure, missingClasses.reason FROM missingClasses INNER JOIN classes ON classes.ID = missingClasses.classFK INNER JOIN hours as hoursStart ON hoursStart.ID = missingClasses.startHourFK INNER JOIN hours as hoursEnd ON hoursEnd.ID = missingClasses.endHourFK";
+  $sql= "SELECT missingClasses.ID, classes.name as clName, missingClasses.startDay as startDay, hoursStart.hour as startHour, missingClasses.endDay as endDay, hoursEnd.hour as endHour, missingClasses.sure, missingClasses.reason FROM missingClasses INNER JOIN classes ON classes.ID = missingClasses.classFK INNER JOIN hours as hoursStart ON hoursStart.ID = missingClasses.startHourFK INNER JOIN hours as hoursEnd ON hoursEnd.ID = missingClasses.endHourFK";	//Stamm sql-Befehl
 
-//printf("%s,%s,%s",$table, $where, $order);
-if($where!="" && $order!=""){		//Wenn beide Variablen beide gesetzt
-	//echo "1";
-	$sqlex=$sql." WHERE ".$where." ORDER BY ".$order;
+	if (!empty($where)) $sql .= " WHERE " . $where; 	//Wenn where Variable gesetzt ist
+	if (!empty($where)) $sql .= " ORDER BY " . $order;	//Wenn order Variable gesetzt ist
 
-}
-else if($where!="" && $order==""){	//Wenn keine Sortierung vorhanden
-	//echo "2";
-	$sqlex=$sql." WHERE ".$where;
-	
-}
-else if($where=="" && $order!=""){	//Wenn keine EinschrÃƒÂ¤nkung vorhanden
-	//echo "3";
-	$sql=$sql." ORDER BY ".$order;
-	
-}
-else{	//Wenn keine EischrÃƒÂ¤nkung und Sortierung vorhanden
-	//echo "4";
-	$sqlex=$sql;
+	return mysql_query($sql);	//R�ckgabe
 
 }
 
-return mysql_query($sqlex);
+/*
+ *Gibt den Inhalt f�r das Formular Substitudes zur�ck
+ *
+ *$where string zum Filtern
+ *$order string zum Sortieren
+ *	
+ */
+
+function selectSubstitude($where,$order){
+
+ 	$sql= "SELECT substitudes.ID, subjects.short as suShort, teachers.short as teShort, substitudes.time, rooms.name as roName, hoursStart.hour as startHour, hoursEnd.hour as endHour, substitudes.hidden, substitudes.sure, substitudes.comment FROM substitudes INNER JOIN subjects ON subjects.ID = substitudes.subjectFK INNER JOIN teachers ON teachers.ID = substitudes.teacherFK INNER JOIN rooms ON rooms.ID = substitudes.roomFK INNER JOIN hours as hoursStart ON hoursStart.ID = substitudes.startHourFK INNER JOIN hours as hoursEnd ON hoursEnd.ID = substitudes.endHourFK";	//Stamm sql-Befehl
+
+	if (!empty($where)) $sql .= " WHERE " . $where; 	//Wenn where Variable gesetzt ist
+	if (!empty($where)) $sql .= " ORDER BY " . $order;	//Wenn order Variable gesetzt ist
+
+	return mysql_query($sql);	//R�ckgabe
 
 }
-
-function selectSubstitude($where,$order){	//TODO
-
-  $sql= "SELECT substitudes.ID, subjects.short as suShort, teachers.short as teShort, substitudes.time, rooms.name as roName, hoursStart.hour as startHour, hoursEnd.hour as endHour, substitudes.hidden, substitudes.sure, substitudes.comment FROM substitudes INNER JOIN subjects ON subjects.ID = substitudes.subjectFK INNER JOIN teachers ON teachers.ID = substitudes.teacherFK INNER JOIN rooms ON rooms.ID = substitudes.roomFK INNER JOIN hours as hoursStart ON hoursStart.ID = substitudes.startHourFK INNER JOIN hours as hoursEnd ON hoursEnd.ID = substitudes.endHourFK";
-
-//printf("%s,%s,%s",$table, $where, $order);
-if($where!="" && $order!=""){		//Wenn beide Variablen beide gesetzt
-	//echo "1";
-	$sqlex=$sql." WHERE ".$where." ORDER BY ".$order;
-
-}
-else if($where!="" && $order==""){	//Wenn keine Sortierung vorhanden
-	//echo "2";
-	$sqlex=$sql." WHERE ".$where;
-	
-}
-else if($where=="" && $order!=""){	//Wenn keine EinschrÃƒÂ¤nkung vorhanden
-	//echo "3";
-	$sql=$sql." ORDER BY ".$order;
-	
-}
-else{	//Wenn keine EischrÃƒÂ¤nkung und Sortierung vorhanden
-	//echo "4";
-	$sqlex=$sql;
-
-}
-
-return mysql_query($sqlex);
-
-}
-
-function selectMonitor($where,$order){
-
-  $sql= "SELECT monitors.ID, monitors.name, monitorMode.name as mode, monitors.file, rooms.name as roName FROM monitors INNER JOIN monitorMode ON monitorMode.ID = monitors.mode INNER JOIN rooms ON rooms.ID = monitors.roomFK";
-
-//printf("%s,%s,%s",$table, $where, $order);
-if($where!="" && $order!=""){		//Wenn beide Variablen beide gesetzt
-	//echo "1";
-	$sqlex=$sql." WHERE ".$where." ORDER BY ".$order;
-
-}
-else if($where!="" && $order==""){	//Wenn keine Sortierung vorhanden
-	//echo "2";
-	$sqlex=$sql." WHERE ".$where;
-	
-}
-else if($where=="" && $order!=""){	//Wenn keine EinschrÃƒÂ¤nkung vorhanden
-	//echo "3";
-	$sql=$sql." ORDER BY ".$order;
-	
-}
-else{	//Wenn keine EischrÃƒÂ¤nkung und Sortierung vorhanden
-	//echo "4";
-	$sqlex=$sql;
-
-}
-
-return mysql_query($sqlex);
-
-}
-
-
-
 
 ?>
