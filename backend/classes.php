@@ -38,7 +38,7 @@ $selectClasses = array(
 $fields = array(
 	array( "ID", 		"",			 			"hidden", 	"",		"",		"",					""),
 	array( "clName", 	"Name: ", 				"text", 	"8",	"",		"",					""),
-	array( "seShort", 	"Abteilung: ", 			"dropdown", "",		"",		$selectSections,	""),
+	array( "seShort", 	"Abteilung: ", 			"dropdown", "5",	"",		$selectSections,	""),
 	array( "teShort",	"Klassenvorstand: ", 	"dropdown",	"",		"",		$selectTeachers,	""),
 	array( "roName", 	"Stammklasse: ", 		"dropdown",	"",		"",		$selectClasses,		""),	
 	);

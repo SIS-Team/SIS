@@ -2,7 +2,7 @@
 
 	/* /modules/database/selects.php
 	 * Autor: Handle Marco
-	 * Version: 0.4.0
+	 * Version: 0.5.0
 	 * Beschreibung:
 	 *	Select Befehle fÃƒÂ¼r die Datenbank
 	 *
@@ -11,6 +11,7 @@
 	 *	0.2.0:  27. 07. 2013, Handle Marco - Erweiterungen der selects
 	 *	0.3.0:	01. 08. 2013, Handle Marco - AbÃ¤nderung der selects
 	 *	0.4.0:	23. 08. 2013, Handle Marco - Lessons Select
+	 *	0.5.0	23. 08. 2013, Hanlde Marco - Selects fertigstellen
 	 */
 
 /*
@@ -53,7 +54,7 @@ return mysql_query($sql);
 
 function selectSection($where,$order){
 
-$sql="SELECT sections.ID , sections.name as seName, teachers.short as teShort FROM sections INNER JOIN teachers ON sections.teacherFK=teachers.ID";
+$sql="SELECT sections.ID , sections.name as seName, sections.short as seShort, teachers.short as teShort FROM sections INNER JOIN teachers ON sections.teacherFK=teachers.ID";
 
 if($where!="" && $order!=""){		//Wenn beide Variablen beide gesetzt
 	//echo "1";
@@ -116,7 +117,7 @@ return mysql_query($sqlex);
 
 function selectTeacher($where,$order){
 
-$sql= "SELECT teachers.ID, teachers.name as teName, teachers.short as teShort, teachers.display, sections.name as seName FROM teachers INNER JOIN sections ON teachers.sectionFK=sections.ID";
+$sql= "SELECT teachers.ID, teachers.name as teName, teachers.short as teShort, teachers.display, sections.short as seShort FROM teachers INNER JOIN sections ON teachers.sectionFK=sections.ID";
 
 //printf("%s,%s,%s",$table, $where, $order);
 if($where!="" && $order!=""){		//Wenn beide Variablen beide gesetzt
@@ -146,7 +147,7 @@ return mysql_query($sqlex);
 
 function selectClass($where,$order){
 
-$sql= "SELECT classes.ID, classes.name as clName, sections.name as seName, teachers.short as teShort, rooms.name as roName FROM classes INNER JOIN sections ON sections.ID=classes.sectionFK INNER JOIN teachers ON teachers.ID=classes.teacherFK INNER JOIN rooms ON rooms.ID=classes.roomFK";
+$sql= "SELECT classes.ID, classes.name as clName, sections.short as seShort, teachers.short as teShort, rooms.name as roName FROM classes INNER JOIN sections ON sections.ID=classes.sectionFK INNER JOIN teachers ON teachers.ID=classes.teacherFK INNER JOIN rooms ON rooms.ID=classes.roomFK";
 
 //printf("%s,%s,%s",$table, $where, $order);
 if($where!="" && $order!=""){		//Wenn beide Variablen beide gesetzt

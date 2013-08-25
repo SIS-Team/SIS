@@ -25,7 +25,7 @@ $selectTeachers = array(
 
 $fields = array(
 	array( "ID", 		"",			 			"hidden", 	"",		"",		"",					""),
-	array( "seName",	"Name: ", 				"text", 	"15",	"",		"",					""),
+	array( "seName",	"Name: ", 				"text", 	"25",	"",		"",					""),
 	array( "seShort",	"Kürzel: ",			 	"text",	 	"5",	"",		"",					""),
 	array( "teShort",	"Abteilungsleiter: ", 	"dropdown", "15",	"",		$selectTeachers,	""),
 	);

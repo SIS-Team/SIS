@@ -17,9 +17,10 @@ include($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Main.php");
 include($_SERVER['DOCUMENT_ROOT'] . "/modules/database/selects.php");
 
 $selectSections = array(
-	array("Elektronik", 	""),
-	array("Test2", 	""),
-	array("Test3", 	""),
+	array("E", 	""),
+	array("N", 	""),
+	array("W", 	""),
+	array("M", 	""),
 	);
 
 $fields = array(
@@ -27,7 +28,7 @@ $fields = array(
 	array( "teName", 	"Name: ", 				"text", 	"15",	"",		"",					""),
 	array( "teShort", 	"K&uuml;rzel: ", 		"text", 	"5",	"",		"",					""),
 	array( "display", 	"Kurzname: ", 			"text",		"15",	"",		"",					""),
-	array( "seShort",	"Stammabteilung: ", 	"dropdown",	"",		"",		$selectSections,	""),	
+	array( "seShort",	"Stammabteilung: ", 	"dropdown",	"5",	"",		$selectSections,	""),	
 	);
 
 
