@@ -147,7 +147,7 @@ return mysql_query($sqlex);
 
 function selectClass($where,$order){
 
-$sql= "SELECT classes.ID, classes.name as clName, sections.short as seShort, teachers.short as teShort, rooms.name as roName FROM classes INNER JOIN sections ON sections.ID=classes.sectionFK INNER JOIN teachers ON teachers.ID=classes.teacherFK INNER JOIN rooms ON rooms.ID=classes.roomFK";
+$sql= "SELECT classes.ID, classes.name as clName, sections.short as seShort, teachers.short as teShort, rooms.name as roName FROM classes LEFT JOIN sections ON sections.ID=classes.sectionFK LEFT JOIN teachers ON teachers.ID=classes.teacherFK LEFT JOIN rooms ON rooms.ID=classes.roomFK";
 
 //printf("%s,%s,%s",$table, $where, $order);
 if($where!="" && $order!=""){		//Wenn beide Variablen beide gesetzt
@@ -178,7 +178,7 @@ return mysql_query($sqlex);
 
 function selectLesson($where,$order){
 
-  $sql= "SELECT lessons.ID, classes.name as clName, rooms.name as roName, teachers.short as teShort, subjects.short as suShort, hoursStart.weekdayShort as daShort, hoursStart.hour as startHour, hoursEnd.hour as endHour FROM lessons INNER JOIN rooms ON rooms.ID = lessons.roomFK INNER JOIN teachers ON teachers.ID = lessons.teachersFK INNER JOIN subjects ON subjects.ID = lessons.subjectFK INNER JOIN lessonsBase ON lessonsBase.ID = lessons.lessonFK INNER JOIN classes ON classes.ID = lessonsBase.classFK INNER JOIN hours as hoursStart ON hoursStart.ID = lessonsBase.startHourFK INNER JOIN hours as hoursEnd ON hoursEnd.ID = lessonsBase.endHourFK";
+  $sql= "SELECT lessons.ID, classes.name as clName, rooms.name as roName, teachers.short as teShort, subjects.short as suShort, hoursStart.weekdayShort as daShort, hoursStart.hour as startHour, hoursEnd.hour as endHour FROM lessons INNER JOIN rooms ON rooms.ID = lessons.roomFK INNER JOIN teachers ON teachers.ID = lessons.teachersFK INNER JOIN subjects ON subjects.ID = lessons.subjectFK INNER JOIN lessonsBase ON lessonsBase.ID = lessons.lessonBaseFK INNER JOIN classes ON classes.ID = lessonsBase.classFK INNER JOIN hours as hoursStart ON hoursStart.ID = lessonsBase.startHourFK INNER JOIN hours as hoursEnd ON hoursEnd.ID = lessonsBase.endHourFK";
 
 	echo "10";
 
