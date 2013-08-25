@@ -21,7 +21,7 @@
  *$table string Tabellenname
  *$where string zum Filtern
  *$order string zum Sortieren
- *	
+ *
  */
  
 function selectAll($table, $where, $order){
@@ -42,6 +42,7 @@ function selectAll($table, $where, $order){
  *$where string zum Filtern
  *$order string zum Sortieren
  *	
+ *ID,seName,seShort,teShort
  */
 
 function selectSection($where,$order){
@@ -60,7 +61,8 @@ function selectSection($where,$order){
  *
  *$where string zum Filtern
  *$order string zum Sortieren
- *	
+ *
+ *ID,roName,teShort	
  */
 
 function selectRooms($where,$order){
@@ -81,6 +83,7 @@ function selectRooms($where,$order){
  *$where string zum Filtern
  *$order string zum Sortieren
  *	
+ *ID,teName,teShort,display,seShort
  */
 
 function selectTeacher($where,$order){
@@ -100,6 +103,7 @@ function selectTeacher($where,$order){
  *$where string zum Filtern
  *$order string zum Sortieren
  *	
+ *ID,clName,seShort,teShort,roName
  */
 
 function selectClass($where,$order){
@@ -119,6 +123,7 @@ function selectClass($where,$order){
  *$where string zum Filtern
  *$order string zum Sortieren
  *	
+ *ID,clName,roName,teShort,suShort,dadaShort,startHour,endHour
  */
 
 function selectLesson($where,$order){
@@ -137,7 +142,8 @@ function selectLesson($where,$order){
  *
  *$where string zum Filtern
  *$order string zum Sortieren
- *	
+ *
+ *ID,teShort,startDay,startHour,endDay,endHour,sure,reason
  */
 
 function selectMissingTeacher($where,$order){
@@ -156,7 +162,8 @@ function selectMissingTeacher($where,$order){
  *
  *$where string zum Filtern
  *$order string zum Sortieren
- *	
+ *
+ *ID,clName,startDay,startHour,endDay,endHour,sure,reason
  */
 
 function selectMissingClass($where,$order){
@@ -176,6 +183,7 @@ function selectMissingClass($where,$order){
  *$where string zum Filtern
  *$order string zum Sortieren
  *	
+ *ID,suShort,teShort,time,roName,startHour,endHour,hidden,sure,comment
  */
 
 function selectSubstitude($where,$order){
