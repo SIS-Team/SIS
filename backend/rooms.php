@@ -11,33 +11,30 @@
 	 */
 
 
-include($_SERVER['DOCUMENT_ROOT'] . "/modules/formular/formular.php");
-include($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Connect.php");
-include($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Main.php");
-include($_SERVER['DOCUMENT_ROOT'] . "/modules/database/selects.php");
+include($_SERVER['DOCUMENT_ROOT'] . "/modules/form/form.php");					//Stell die Formularmasken zur Verfügung
+include($_SERVER['DOCUMENT_ROOT'] . "/modules/form/dropdownSelect.php");		//Stellt die Listen für die Dropdownmenüs zur Verfügung
+include($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Connect.php");			//Bindet die Datenbank ein
+include($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
+include($_SERVER['DOCUMENT_ROOT'] . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
 
-$selectTeachers = array(
-	array("XH", 	""),
-	array("Test2", 	""),
-	array("Test3", 	""),
-	);
-
+//Formularmaske
 $fields = array(
 	array( "ID", 		"",			 				"hidden", 	"",		"",		"",					""),
 	array( "roName", 	"Name: ", 					"text", 	"8",	"",		"",					""),
 	array( "teShort", 	"Zust&auml;ndige Lehrer: ", "dropdown", "",		"",		$selectTeachers,	""),	
 	);
 
+//Seitenheader
+pageHeader("Formular","main");				
 
-pageHeader("Formular","main");
+$result = selectRooms("","");		//Rückgabewert des Selects
 
-$result = selectRooms("","");
-while ($row = mysql_fetch_array($result)){
-	//print_r($row);
-	form_new("get","",$fields,$row);
+while ($row = mysql_fetch_array($result)){	//Fügt solange eine neue Formularzeile hinzu, solange ein Inhalt zur Verfügung steht
+	form_new("get","",$fields,$row);		//Formular wird erstellt
 }
 
-form_new("get","",$fields,false);
+form_new("get","",$fields,false);			//Formular für einen neuen Eintrag
 
+//Seitenfooter
 pageFooter();
 ?>
