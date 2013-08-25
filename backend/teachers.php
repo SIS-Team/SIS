@@ -24,10 +24,10 @@ $selectSections = array(
 
 $fields = array(
 	array( "ID", 		"",			 			"hidden", 	"",		"",		"",					""),
-	array( "teName", 		"Name: ", 				"text", 	"15",	"",		"",					""),
+	array( "teName", 	"Name: ", 				"text", 	"15",	"",		"",					""),
 	array( "teShort", 	"K&uuml;rzel: ", 		"text", 	"5",	"",		"",					""),
 	array( "display", 	"Kurzname: ", 			"text",		"15",	"",		"",					""),
-	array( "seName",	 	"Stammabteilung: ", 	"dropdown",	"",		"",		$selectSections,	""),	
+	array( "seShort",	"Stammabteilung: ", 	"dropdown",	"",		"",		$selectSections,	""),	
 	);
 
 
@@ -35,7 +35,7 @@ pageHeader("Formular","main");
 
 $result = selectTeacher("","");
 while ($row = mysql_fetch_array($result)){
-	//print_r($row);
+	print_r($row);
 	form_new("get","",$fields,$row);
 }
 

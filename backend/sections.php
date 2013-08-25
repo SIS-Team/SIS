@@ -24,12 +24,11 @@ $selectTeachers = array(
 	);
 
 $fields = array(
-	array( "ID", 		"",			 			"hidden", 	"",		"",		"",						""),
-	array( "seName",	"Name: ", 				"text", 	"15",	"",		"",						""),
-	array( "teShort",	"Abteilungsleiter: ", 	"dropdown", "15",		"",		$selectTeachers,	""),
+	array( "ID", 		"",			 			"hidden", 	"",		"",		"",					""),
+	array( "seName",	"Name: ", 				"text", 	"15",	"",		"",					""),
+	array( "seShort",	"Kürzel: ",			 	"text",	 	"5",	"",		"",					""),
+	array( "teShort",	"Abteilungsleiter: ", 	"dropdown", "15",	"",		$selectTeachers,	""),
 	);
-
-
 pageHeader("Formular","main");
 
 $result = selectSection("","");

@@ -17,9 +17,10 @@ include($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Main.php");
 include($_SERVER['DOCUMENT_ROOT'] . "/modules/database/selects.php");
 
 $selectSections = array(
-	array("Elektronik", 	""),
-	array("Test2", 	""),
-	array("Test3", 	""),
+	array("N", 	""),
+	array("E", 	""),
+	array("M", 	""),
+	array("W", 	""),
 	);
 
 $selectTeachers = array(
@@ -37,7 +38,7 @@ $selectClasses = array(
 $fields = array(
 	array( "ID", 		"",			 			"hidden", 	"",		"",		"",					""),
 	array( "clName", 	"Name: ", 				"text", 	"8",	"",		"",					""),
-	array( "seName", 	"Abteilung: ", 			"dropdown", "",		"",		$selectSections,	""),
+	array( "seShort", 	"Abteilung: ", 			"dropdown", "",		"",		$selectSections,	""),
 	array( "teShort",	"Klassenvorstand: ", 	"dropdown",	"",		"",		$selectTeachers,	""),
 	array( "roName", 	"Stammklasse: ", 		"dropdown",	"",		"",		$selectClasses,		""),	
 	);
