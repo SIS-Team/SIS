@@ -31,10 +31,10 @@ pageHeader("Formular","main");
 $result = selectAll("news","","");
 while ($row = mysql_fetch_array($result)){
 	print_r($row);
-	form_new("get","",$fields,$row);
+	form_new($fields,$row);
 }
 
-form_new("get","",$fields,false);
+form_new($fields,false);
 
 pageFooter();
 ?>
