@@ -29,7 +29,7 @@ function selectAll($table, $where, $order){
 	$sql = "SELECT * FROM ".$table;					//Stamm sql-Befehl
 	
 	if (!empty($where)) $sql .= " WHERE " . $where; 	//Wenn where Variable gesetzt ist
-	if (!empty($where)) $sql .= " ORDER BY " . $order;	//Wenn order Variable gesetzt ist
+	if (!empty($order)) $sql .= " ORDER BY " . $order;	//Wenn order Variable gesetzt ist
 
 	return mysql_query($sql);	//Rückgabe
 
@@ -50,7 +50,7 @@ function selectSection($where,$order){
 	$sql="SELECT sections.ID , sections.name as seName, sections.short as seShort, teachers.short as teShort FROM sections INNER JOIN teachers ON sections.teacherFK=teachers.ID";		//Stamm sql-Befehl
 
 	if (!empty($where)) $sql .= " WHERE " . $where; 	//Wenn where Variable gesetzt ist
-	if (!empty($where)) $sql .= " ORDER BY " . $order;	//Wenn order Variable gesetzt ist
+	if (!empty($order)) $sql .= " ORDER BY " . $order;	//Wenn order Variable gesetzt ist
 	
 	return mysql_query($sql);	//Rückgabe
 
@@ -70,7 +70,7 @@ function selectRooms($where,$order){
 	$sql= "SELECT rooms.ID, rooms.name as roName, teachers.short as teShort FROM rooms LEFT JOIN teachers ON rooms.teacherFK=teachers.ID";	//Stamm sql-Befehl
 
 	if (!empty($where)) $sql .= " WHERE " . $where; 	//Wenn where Variable gesetzt ist
-	if (!empty($where)) $sql .= " ORDER BY " . $order;	//Wenn order Variable gesetzt ist
+	if (!empty($order)) $sql .= " ORDER BY " . $order;	//Wenn order Variable gesetzt ist
 
 	return mysql_query($sql);	//Rückgabe
 
@@ -91,7 +91,7 @@ function selectTeacher($where,$order){
 	$sql= "SELECT teachers.ID, teachers.name as teName, teachers.short as teShort, teachers.display, sections.short as seShort FROM teachers LEFT JOIN sections ON teachers.sectionFK=sections.ID";	//Stamm sql-Befehl
 
 	if (!empty($where)) $sql .= " WHERE " . $where; 	//Wenn where Variable gesetzt ist
-	if (!empty($where)) $sql .= " ORDER BY " . $order;	//Wenn order Variable gesetzt ist
+	if (!empty($order)) $sql .= " ORDER BY " . $order;	//Wenn order Variable gesetzt ist
 
 	return mysql_query($sql);	//Rückgabe
 
@@ -108,10 +108,10 @@ function selectTeacher($where,$order){
 
 function selectClass($where,$order){
 
-	$sql= "SELECT classes.ID, classes.name as clName, sections.short as seShort, teachers.short as teShort, rooms.name as roName FROM classes LEFT JOIN sections ON sections.ID=classes.sectionFK LEFT JOIN teachers ON teachers.ID=classes.teacherFK LEFT JOIN rooms ON rooms.ID=classes.roomFK";	//Stamm sql-Befehl
+	$sql= "SELECT classes.ID, classes.name as clName, sections.short as seShort, teachers.short as teShort, rooms.name as roName FROM classes LEFT JOIN sections ON sections.ID=classes.sectionFK LEFT JOIN teachers ON teachers.ID=classes.teacherFK LEFT JOIN rooms ON rooms.ID=classes.roomFK ";	//Stamm sql-Befehl
 
 	if (!empty($where)) $sql .= " WHERE " . $where; 	//Wenn where Variable gesetzt ist
-	if (!empty($where)) $sql .= " ORDER BY " . $order;	//Wenn order Variable gesetzt ist
+	if (!empty($order)) $sql .= " ORDER BY " . $order;	//Wenn order Variable gesetzt ist
 
 	return mysql_query($sql);	//Rückgabe
 
@@ -131,7 +131,7 @@ function selectLesson($where,$order){
   	$sql= "SELECT lessons.ID, classes.name as clName, rooms.name as roName, teachers.short as teShort, subjects.short as suShort, hoursStart.weekdayShort as daShort, hoursStart.hour as startHour, hoursEnd.hour as endHour FROM lessons INNER JOIN rooms ON rooms.ID = lessons.roomFK INNER JOIN teachers ON teachers.ID = lessons.teachersFK INNER JOIN subjects ON subjects.ID = lessons.subjectFK INNER JOIN lessonsBase ON lessonsBase.ID = lessons.lessonBaseFK INNER JOIN classes ON classes.ID = lessonsBase.classFK INNER JOIN hours as hoursStart ON hoursStart.ID = lessonsBase.startHourFK INNER JOIN hours as hoursEnd ON hoursEnd.ID = lessonsBase.endHourFK";	//Stamm sql-Befehl
 
 	if (!empty($where)) $sql .= " WHERE " . $where; 	//Wenn where Variable gesetzt ist
-	if (!empty($where)) $sql .= " ORDER BY " . $order;	//Wenn order Variable gesetzt ist
+	if (!empty($order)) $sql .= " ORDER BY " . $order;	//Wenn order Variable gesetzt ist
 
 	return mysql_query($sql);	//Rückgabe
 
@@ -151,7 +151,7 @@ function selectMissingTeacher($where,$order){
   	$sql= "SELECT missingTeachers.ID, teachers.short as teShort, missingTeachers.startDay as startDay, hoursStart.hour as startHour, missingTeachers.endDay as endDay, hoursEnd.hour as endHour, missingTeachers.sure, missingTeachers.reason FROM missingTeachers INNER JOIN teachers ON teachers.ID = missingTeachers.teacherFK INNER JOIN hours as hoursStart ON hoursStart.ID = missingTeachers.startHourFK INNER JOIN hours as hoursEnd ON hoursEnd.ID = missingTeachers.endHourFK";		//Stamm sql-Befehl
 
 	if (!empty($where)) $sql .= " WHERE " . $where; 	//Wenn where Variable gesetzt ist
-	if (!empty($where)) $sql .= " ORDER BY " . $order;	//Wenn order Variable gesetzt ist
+	if (!empty($order)) $sql .= " ORDER BY " . $order;	//Wenn order Variable gesetzt ist
 
 	return mysql_query($sql);	//Rückgabe
 
@@ -171,7 +171,7 @@ function selectMissingClass($where,$order){
   $sql= "SELECT missingClasses.ID, classes.name as clName, missingClasses.startDay as startDay, hoursStart.hour as startHour, missingClasses.endDay as endDay, hoursEnd.hour as endHour, missingClasses.sure, missingClasses.reason FROM missingClasses INNER JOIN classes ON classes.ID = missingClasses.classFK INNER JOIN hours as hoursStart ON hoursStart.ID = missingClasses.startHourFK INNER JOIN hours as hoursEnd ON hoursEnd.ID = missingClasses.endHourFK";	//Stamm sql-Befehl
 
 	if (!empty($where)) $sql .= " WHERE " . $where; 	//Wenn where Variable gesetzt ist
-	if (!empty($where)) $sql .= " ORDER BY " . $order;	//Wenn order Variable gesetzt ist
+	if (!empty($order)) $sql .= " ORDER BY " . $order;	//Wenn order Variable gesetzt ist
 
 	return mysql_query($sql);	//Rückgabe
 
@@ -191,7 +191,7 @@ function selectSubstitude($where,$order){
  	$sql= "SELECT substitudes.ID, subjects.short as suShort, teachers.short as teShort, substitudes.time, rooms.name as roName, hoursStart.hour as startHour, hoursEnd.hour as endHour, substitudes.hidden, substitudes.sure, substitudes.comment FROM substitudes INNER JOIN subjects ON subjects.ID = substitudes.subjectFK INNER JOIN teachers ON teachers.ID = substitudes.teacherFK INNER JOIN rooms ON rooms.ID = substitudes.roomFK INNER JOIN hours as hoursStart ON hoursStart.ID = substitudes.startHourFK INNER JOIN hours as hoursEnd ON hoursEnd.ID = substitudes.endHourFK";	//Stamm sql-Befehl
 
 	if (!empty($where)) $sql .= " WHERE " . $where; 	//Wenn where Variable gesetzt ist
-	if (!empty($where)) $sql .= " ORDER BY " . $order;	//Wenn order Variable gesetzt ist
+	if (!empty($order)) $sql .= " ORDER BY " . $order;	//Wenn order Variable gesetzt ist
 
 	return mysql_query($sql);	//Rückgabe
 
