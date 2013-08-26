@@ -12,7 +12,7 @@
 
 
 include($_SERVER['DOCUMENT_ROOT'] . "/modules/form/form.php");					//Stell die Formularmasken zur Verfügung
-include($_SERVER['DOCUMENT_ROOT'] . "/modules/form/dropdownSelect.php");		//Stellt die Listen für die Dropdownmenüs zur Verfügung
+include($_SERVER['DOCUMENT_ROOT'] . "/modules/form/dropdownSelects.php");		//Stellt die Listen für die Dropdownmenüs zur Verfügung
 include($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Connect.php");			//Bindet die Datenbank ein
 include($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
 include($_SERVER['DOCUMENT_ROOT'] . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
@@ -21,9 +21,9 @@ include($_SERVER['DOCUMENT_ROOT'] . "/modules/database/selects.php");			//Stellt
 $fields = array(
 	array( "ID", 		"",			 			"hidden", 	"",		"",		"",					""),
 	array( "clName", 	"Name: ", 				"text", 	"8",	"",		"",					""),
-	array( "seShort", 	"Abteilung: ", 			"text", "5",	"",		"",	""),
-	array( "teShort",	"Klassenvorstand: ", 	"text",	"",		"",		"",	""),
-	array( "roName", 	"Stammklasse: ", 		"text",	"",		"",		"",		""),	
+	array( "seShort", 	"Abteilung: ", 			"dropdown", "5",	"",		$selectSections, 	""),
+	array( "teShort",	"Klassenvorstand: ", 	"dropdown",	"",		"",		$selectTeachers, 	""),
+	array( "roName", 	"Stammklasse: ", 		"dropdown",	"",		"",		$selectRooms, 		""),	
 	);
 
 //Seitenheader
