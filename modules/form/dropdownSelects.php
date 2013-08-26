@@ -8,7 +8,9 @@
 	 * Changelog:
 	 * 	1.0.0:  26. 08. 2013, Handle Marco - Selects für die Dropdownmenüs fertiggestellt
 	 */
+	
 include($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Connect.php");			//Bindet die Datenbank ein
+
 
 //Section
 $temp =  mysql_query("SELECT short FROM sections");

@@ -38,18 +38,16 @@ error_reporting(E_ALL);
 	 
 /*Funktion um die Formulare zu erstellen
  *
- *$method- Methode(get,post) als string
- *$action- Action als string
  *$field - Array das die Informationen �ber das Formular enth�lt als string 
  *$content- Inhalt des Formulars wenn leeres Formular false sonst array mit Inhalten
  *
  */
-function form_new($method,$action,$field,$content)
+function form_new($field,$content)
 {	
 
 printf("<table>\n");	//Tabellen Tag auf
 	printf("<tr>\n");	//Zeilen 	Tag auf
-  		printf("<form method=\"%s\" action=\"%s\">\n",$method,$action);	//Formular Anfang Tag
+  		printf("<form method=\"post\">\n");	//Formular Anfang Tag
   			//F�r jeden Eintrag im Array field einmal diese Schleife durchlaufen
 			foreach($field as $f) {	
 				
@@ -97,13 +95,13 @@ printf("<table>\n");	//Tabellen Tag auf
 
 				}
 				else if($f[2] == "button") {
-					printf("<td><input type=\"button\" name=\"%s\" value=\"%s\" style=\"width: %spx; height: %spx\" %s>\n",	//Button erstellen
+					printf("<td><input type=\"submit\" name=\"%s\" value=\"%s\" style=\"width: %spx; height: %spx\" %s>\n",	//Button erstellen
 							$f[0], $f[1], $f[3], $f[4], $f[6]);
 
 				}
 				else if($f[2] == "hidden") {
 					printf("<td><input type=\"hidden\" name=\"%s\" value=\"%s\">\n",			//Versteckten Typ erstellen
-							$f[0], $f[1]);
+							$f[0], $f[5]);
 
 				}
 				else if($f[2] == "dropdown") {												//Dropdown Men� erstellen
