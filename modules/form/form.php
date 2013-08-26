@@ -64,6 +64,7 @@ printf("<table>\n");	//Tabellen Tag auf
 						if($a[0]==$content[$f[0]])			//Wenn ein Eintrag mit dem mitgegebenen Eintrag �bereinstimmt, dann in dem Aktuellen Input, beim Inhalt und dem Entsprechenden Eintrag select auf true setzen
 						{	
 							$f[5][$ii][1]=true;
+							break;
 						}
 						else								//sonst leer
 						{
@@ -106,7 +107,8 @@ printf("<table>\n");	//Tabellen Tag auf
 
 				}
 				else if($f[2] == "dropdown") {												//Dropdown Men� erstellen
-				
+					$select="";
+					
 					foreach($f[5] as $p)													//F r jeden Men eintrag im Array f einen Eintrag erstellen
 						{
 							if($p[1]==true){													//wenn ausgew hlt selected
