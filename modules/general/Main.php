@@ -1,5 +1,5 @@
 <?php
-	/* /modules/general/Connect.php
+	/* /modules/general/Main.php
 	 * Autor: Buchberger Florian
 	 * Version: 0.1.0
 	 * Beschreibung:
