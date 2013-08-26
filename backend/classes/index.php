@@ -16,6 +16,10 @@ include($_SERVER['DOCUMENT_ROOT'] . "/modules/form/dropdownSelects.php");		//Ste
 include($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Connect.php");			//Bindet die Datenbank ein
 include($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
 include($_SERVER['DOCUMENT_ROOT'] . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
+include($_SERVER['DOCUMENT_ROOT'] . "/modules/database/inserts.php");			//Stellt die insert-Befehle zur Verfügung
+
+if($_POST['save']!="")
+	classes();
 
 //Formularmaske
 $fields = array(
