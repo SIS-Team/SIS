@@ -14,6 +14,12 @@ include($_SERVER['DOCUMENT_ROOT'] . "/modules/form/form.php");					//Stell die F
 include($_SERVER['DOCUMENT_ROOT'] . "/modules/form/dropdownSelects.php");		//Stellt die Listen für die Dropdownmenüs zur Verfügung
 include($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
 include($_SERVER['DOCUMENT_ROOT'] . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
+include($_SERVER['DOCUMENT_ROOT'] . "/modules/database/inserts.php");					//Stell die Formularmasken zur Verfügung
+
+
+if($_POST['save']!="")
+	missingClasses();
+
 
 //Formularmaske
 $fields = array(

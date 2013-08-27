@@ -7,33 +7,70 @@
 	 *	Select Befehle fÃ¼r die Datenbank
 	 *
 	 * Changelog:
-	 * 	0.1.0:  27. 07. 2013, Handle Marco - erste Version
+	 * 	0.1.0:  26. 08. 2013, Handle Marco - erste Version
 	 */
+	 
+	 include($_SERVER['DOCUMENT_ROOT'] . "/modules/other/dateFunctions.php");					//Stell Datumfunktionen zur Verf�gung
 
 
 function classes(){
 
 $post=$_POST;
-print_r($post);
+//print_r($post);
 unset($post["save"]);
 
 $classesInsert=array("ID" => "","name" => "","sectionFK" => "","teacherFK" => "","roomFK" => "");
 
-$classesInsert["ID"]=$post["ID"];
-$classesInsert["name"]=$post["clName"];
+$data["ID"]=$post["ID"];
+$data["name"]=$post["clName"];
 
 $temp = mysql_fetch_array(mysql_query("SELECT ID FROM sections WHERE short='".$post["seShort"]."'"));
-$classesInsert["sectionFK"] = $temp["ID"];
+$data["sectionFK"] = $temp["ID"];
 $temp = mysql_fetch_array(mysql_query("SELECT ID FROM teachers WHERE short='".$post["teShort"]."'"));
-$classesInsert["teacherFK"] = $temp["ID"];
+$data["teacherFK"] = $temp["ID"];
 $temp = mysql_fetch_array(mysql_query("SELECT ID FROM rooms WHERE name='".$post["roName"]."'"));
-$classesInsert["roomFK"] = $temp["ID"];
+$data["roomFK"] = $temp["ID"];
 
 if(empty($post["delete"]))
-	saveupdate($classesInsert,"classes");
+	saveupdate($data,"classes");
 else
-	delete($classesInsert["ID"],"classes");
+	delete($data["ID"],"classes");
 }
+
+function missingClasses(){
+
+$post=$_POST;
+//print_r($post);
+unset($post["save"]);
+
+$data=array("ID" => "","classFK" => "","startDay" => "","startHourFK" => "","endDay" => "","endHourFK" => "","sure" => "","reason" => "");
+
+$data["ID"]=$post["ID"];
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM classes WHERE name='".$post["clName"]."'"));
+$data["classFK"]=$temp["ID"];
+$day = weekday($post["startDay"]);
+$data["startDay"]=$post["startDay"];
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".$post["startHour"]."'"));
+$data["startHourFK"]=$temp["ID"];
+$day = weekday($post["endDay"]);
+$data["endDay"]=$post["endDay"];
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".$post["endHour"]."'"));
+$data["endHourFK"]=$temp["ID"];
+if(!empty($post["sure"]))
+	$data["sure"]=true;
+$data["reason"]=$post["reason"];
+
+if(empty($post["delete"]))
+	saveupdate($data,"missingClasses");
+else
+	delete($data["ID"],"missingClasses");
+	
+}
+
+
+
+
+
 
 
 function saveUpdate($insert,$table){
