@@ -10,11 +10,10 @@
 	 * 	0.1.0:  22. 07. 2013, Handle Marco - erste Version
 	 */
 
-include($_SERVER['DOCUMENT_ROOT'] . "/modules/form/form.php");					//Stell die Formularmasken zur Verfügung
-include($_SERVER['DOCUMENT_ROOT'] . "/modules/form/dropdownSelects.php");		//Stellt die Listen für die Dropdownmenüs zur Verfügung
-include($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Connect.php");			//Bindet die Datenbank ein
-include($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
-include($_SERVER['DOCUMENT_ROOT'] . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
+include($_SERVER['DOCUMENT_ROOT'] . "/modules/form/form.php");					//Stell die Formularmasken zur VerfÃ¼gung
+include($_SERVER['DOCUMENT_ROOT'] . "/modules/form/dropdownSelects.php");		//Stellt die Listen fÃ¼r die DropdownmenÃ¼s zur VerfÃ¼gung
+include($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Main.php");				//Stellt das Design zur VerfÃ¼gung
+include($_SERVER['DOCUMENT_ROOT'] . "/modules/database/selects.php");			//Stellt die select-Befehle zur VerfÃ¼gung
 
 //Formularmaske
 $fields = array(
@@ -29,13 +28,13 @@ $fields = array(
 pageHeader("Formular","main");
 
 
-$result = selectTeacher("","");				//Rückgabewert des Selects
+$result = selectTeacher("","");				//RÃ¼ckgabewert des Selects
 
-while ($row = mysql_fetch_array($result)){	//Fügt solange eine neue Formularzeile hinzu, solange ein Inhalt zur Verfügung steht
+while ($row = mysql_fetch_array($result)){	//FÃ¼gt solange eine neue Formularzeile hinzu, solange ein Inhalt zur VerfÃ¼gung steht
 	form_new($fields,$row);		//Formular wird erstellt
 }
 
-form_new($fields,false);			//Formular für einen neuen Eintrag
+form_new($fields,false);			//Formular fÃ¼r einen neuen Eintrag
 
 //Seitenfooter
 pageFooter();
