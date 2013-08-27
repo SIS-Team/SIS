@@ -98,6 +98,28 @@ else
 	
 }
 
+function rooms(){
+
+$post=$_POST;
+//print_r($post);
+unset($post["save"]);
+
+$data=array("ID" => "","name" => "","teacherFK" => "");
+
+$data["ID"]=$post["ID"];
+$data["name"]=$post["roName"];
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM teachers WHERE short='".$post["teShort"]."'"));
+$data["teacherFK"]=$temp["ID"];
+
+if(empty($post["delete"]))
+	saveupdate($data,"rooms");
+else
+	delete($data["ID"],"rooms");
+	
+}
+
+
+
 
 
 
