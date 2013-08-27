@@ -139,7 +139,26 @@ else
 	
 }
 
+function subjects(){
 
+$post=$_POST;
+//print_r($post);
+unset($post["save"]);
+
+$data=array("ID" => "","name" => "","short" => "","new" => "");
+
+$data["ID"]=$post["ID"];
+$data["name"]=$post["name"];
+$data["short"]=$post["short"];
+if(!empty($post["new"]))
+	$data["new"]=true;
+
+if(empty($post["delete"]))
+	saveupdate($data,"subjects");
+else
+	delete($data["ID"],"subjects");
+	
+}
 
 
 
