@@ -118,6 +118,26 @@ else
 	
 }
 
+function sections(){
+
+$post=$_POST;
+//print_r($post);
+unset($post["save"]);
+
+$data=array("ID" => "","name" => "","short" => "","teacherFK" => "");
+
+$data["ID"]=$post["ID"];
+$data["name"]=$post["seName"];
+$data["short"]=$post["seShort"];
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM teachers WHERE short='".$post["teShort"]."'"));
+$data["teacherFK"]=$temp["ID"];
+
+if(empty($post["delete"]))
+	saveupdate($data,"sections");
+else
+	delete($data["ID"],"sections");
+	
+}
 
 
 
