@@ -2,12 +2,13 @@
 
 	/* /backend/classes.php
 	 * Autor: Handle Marco
-	 * Version: 0.1.0
+	 * Version: 0.2.0
 	 * Beschreibung:
 	 *	Erstellt die Formulare fuer die Eingabe der Klassen
 	 *
 	 * Changelog:
 	 * 	0.1.0:  22. 07. 2013, Handle Marco - erste Version
+	 *  0.2.0:  27. 08. 2013, Handle Marco - Update,Save,delete implementiert
 	 */
 
 include($_SERVER['DOCUMENT_ROOT'] . "/modules/form/form.php");					//Stell die Formularmasken zur Verfügung

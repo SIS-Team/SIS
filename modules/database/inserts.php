@@ -68,6 +68,35 @@ else
 }
 
 
+function missingTeachers(){
+
+$post=$_POST;
+//print_r($post);
+unset($post["save"]);
+
+$data=array("ID" => "","teacherFK" => "","startDay" => "","startHourFK" => "","endDay" => "","endHourFK" => "","sure" => "","reason" => "");
+
+$data["ID"]=$post["ID"];
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM teachers WHERE short='".$post["teShort"]."'"));
+$data["teacherFK"]=$temp["ID"];
+$day = weekday($post["startDay"]);
+$data["startDay"]=$post["startDay"];
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".$post["startHour"]."'"));
+$data["startHourFK"]=$temp["ID"];
+$day = weekday($post["endDay"]);
+$data["endDay"]=$post["endDay"];
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".$post["endHour"]."'"));
+$data["endHourFK"]=$temp["ID"];
+if(!empty($post["sure"]))
+	$data["sure"]=true;
+$data["reason"]=$post["reason"];
+
+if(empty($post["delete"]))
+	saveupdate($data,"missingTeachers");
+else
+	delete($data["ID"],"missingTeachers");
+	
+}
 
 
 

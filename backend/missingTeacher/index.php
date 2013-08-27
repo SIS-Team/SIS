@@ -2,12 +2,13 @@
 
 	/* /backend/missingTeachers.php
 	 * Autor: Handle Marco
-	 * Version: 0.1.0
+	 * Version: 0.2.0
 	 * Beschreibung:
 	 *	Erstellt die Formulare fuer die Eingabe der Fehlenden Lehrer
 	 *
 	 * Changelog:
 	 * 	0.1.0:  22. 07. 2013, Handle Marco - erste Version
+	 *  0.2.0:  27. 08. 2013, Handle Marco - Update,Save,delete implementiert
 	 */
 
 
@@ -16,6 +17,11 @@ include($_SERVER['DOCUMENT_ROOT'] . "/modules/form/dropdownSelects.php");		//Ste
 include($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Connect.php");			//Bindet die Datenbank ein
 include($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
 include($_SERVER['DOCUMENT_ROOT'] . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
+include($_SERVER['DOCUMENT_ROOT'] . "/modules/database/inserts.php");					//Stell die Formularmasken zur Verf�gung
+
+if($_POST['save']!="")
+	missingTeachers();
+
 
 //Formularmaske
 $fields = array(
