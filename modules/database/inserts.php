@@ -174,7 +174,7 @@ $enHour = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort
 $class = mysql_fetch_array(mysql_query("SELECT ID FROM classes WHERE name='".$post["clName"]."'"));
 $temp = mysql_fetch_array(mysql_query("SELECT lessons.ID FROM lessons INNER JOIN lessonsBase ON lessonsBase.ID = lessons.lessonBaseFK WHERE lessonsBase.startHourFK='".$stHour["ID"]."' AND lessonsBase.endHourFK='".$enHour["ID"]."' AND lessonsBase.classFK='".$class["ID"]."'"));
 $data["lessonFK"]=$temp["ID"];
-$temp = mysql_fetch_array(mysql_query("SELECT ID FROM subjects WHERE short LIKE '%".$post["suShort"]."%'"));
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM subjects WHERE short LIKE '".$post["suShort"]."'"));
 $data["subjectFK"]=$temp["ID"];
 $temp = mysql_fetch_array(mysql_query("SELECT ID FROM teachers WHERE short='".$post["teShort"]."'"));
 $data["teacherFK"]=$temp["ID"];
