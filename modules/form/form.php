@@ -3,16 +3,16 @@
 	 * Autor: Handle Marco
 	 * Version: 0.4.0
 	 * Beschreibung:
-	 *	Funktionen fÃ¼r Formulare
+	 *	Funktionen fÃƒÂ¼r Formulare
 	 *
 	 * Changelog:
 	 * 	0.1.0:  23. 06. 2013, Handle Marco - erste Version
 	 *	0.2.0	24. 06. 2013, Handle Marco - Erweiterung Formular erstellen
-	 *	0.3.0	28. 06. 2013, Handle Marco - Funktion f�r Speicher und L�sch-Button
+	 *	0.3.0	28. 06. 2013, Handle Marco - Funktion fï¿½r Speicher und Lï¿½sch-Button
 	 *	0.4.0	22. 07. 2013, Handle Marco - Ersetzen des Dropdown-Menues mit datalist(HTML5)
 	 */
 /*
-//Bei einem Dropdown-Men� werden die Auswahltexte wie folgt angegeben:
+//Bei einem Dropdown-Menï¿½ werden die Auswahltexte wie folgt angegeben:
 			value		name		select(true||"")
 $select = array(
 	array( "test1", 	"Test1", 	"true"),
@@ -24,7 +24,7 @@ $select = array(
 			name		Text			Typ			size_a	size_b	value		sonstiges	
 $fields = array(
 	array( "std", 		"Stunde(n): ", 	"text", 	"15",	"",		"test",		"readonly=\"true\""),
-	array( "datum", 	"Datum: ", 		"textarea", "10",	"10",	"ha��p",	""),
+	array( "datum", 	"Datum: ", 		"textarea", "10",	"10",	"haï¿½ï¿½p",	""),
 	array( "klasse", 	"Klasse: ", 	"checkbox", "",		"",		"checked",	""),
 	array( "lehrer", 	"Lehrer: ", 	"checkbox", "",		"",		"",			""),
 	array( "fach", 		"Fach: ", 		"button", 	"",		"",		"",			""),
@@ -38,7 +38,7 @@ error_reporting(E_ALL);
 	 
 /*Funktion um die Formulare zu erstellen
  *
- *$field - Array das die Informationen �ber das Formular enth�lt als string 
+ *$field - Array das die Informationen ï¿½ber das Formular enthï¿½lt als string 
  *$content- Inhalt des Formulars wenn leeres Formular false sonst array mit Inhalten
  *
  */
@@ -48,7 +48,7 @@ function form_new($field,$content)
 printf("<table>\n");	//Tabellen Tag auf
 	printf("<tr>\n");	//Zeilen 	Tag auf
   		printf("<form method=\"post\">\n");	//Formular Anfang Tag
-  			//F�r jeden Eintrag im Array field einmal diese Schleife durchlaufen
+  			//Fï¿½r jeden Eintrag im Array field einmal diese Schleife durchlaufen
 			foreach($field as $f) {	
 				
 				if($content!=false && $f[2]!="dropdown")	//Wenn Content mitgeliefert wird und der Typ des aktuellen Inputs kein DropDown, dann Content austauschen
@@ -57,9 +57,9 @@ printf("<table>\n");	//Tabellen Tag auf
 				}
 				else if($content!=false && $f[2]=="dropdown")	//Wenn Content mitgeliefert wird und der Typ des des aktuellen Inputs ein DropDown ist, dann Sonderbehandlung
 				{
-					foreach($f[5] as $ii => $a)				//F�r jeden Inhalt(Eintr�g der DropDown Liste) wird �berpr�ft ob der content mit dem Einrag in der DropDown Liste �bereinstimmt --> ausgew�hlt
+					foreach($f[5] as $ii => $a)				//Fï¿½r jeden Inhalt(Eintrï¿½g der DropDown Liste) wird ï¿½berprï¿½ft ob der content mit dem Einrag in der DropDown Liste ï¿½bereinstimmt --> ausgewï¿½hlt
 					{
-						if($a[0]==$content[$f[0]])			//Wenn ein Eintrag mit dem mitgegebenen Eintrag �bereinstimmt, dann in dem Aktuellen Input, beim Inhalt und dem Entsprechenden Eintrag select auf true setzen
+						if($a[0]==$content[$f[0]])			//Wenn ein Eintrag mit dem mitgegebenen Eintrag ï¿½bereinstimmt, dann in dem Aktuellen Input, beim Inhalt und dem Entsprechenden Eintrag select auf true setzen
 						{	
 							$f[5][$ii][1]=true;
 							break;
@@ -104,7 +104,7 @@ printf("<table>\n");	//Tabellen Tag auf
 							$f[0], $f[5]);
 
 				}
-				else if($f[2] == "dropdown") {												//Dropdown Men� erstellen
+				else if($f[2] == "dropdown") {												//Dropdown Menï¿½ erstellen
 					$select="";
 					
 					foreach($f[5] as $p)													//F r jeden Men eintrag im Array f einen Eintrag erstellen
@@ -117,7 +117,7 @@ printf("<table>\n");	//Tabellen Tag auf
 					printf("<td>%s <input value=\"%s\" autocomplete=\"off\" size=\"%s\" list=\"%s\" name=\"%s\"><datalist id=\"%s\"  %s>\n",
 							$f[1], $select, $f[3], $f[0], $f[0], $f[0], $f[6]);
 							
-					foreach($f[5] as $p)													//F�r jeden Men�eintrag im Array f einen Eintrag erstellen
+					foreach($f[5] as $p)													//Fï¿½r jeden Menï¿½eintrag im Array f einen Eintrag erstellen
 					{
 							printf("<option value=\"%s\">\n", $p[0]);
 					}
@@ -141,13 +141,126 @@ printf("<table>\n");	//Tabellen Tag auf
 printf("</table>\n");
 }
 
+function form_lesson($field,$content)
+{	
+$zeile=1;
+printf("<table>\n");	//Tabellen Tag auf
+	do{
+				if(($zeile-1)%5==0){
+					$zeile1=1;
+					$visibility="";
+					$hour=(($zeile-1)/5)+1;
+					$rowID="";
+				}
+				else{
+					$zeile1=0;
+					$visibility="style=\"visibility:collapse\"";
+					$hour=floor((($zeile-1)/5)+1);
+					$rowID="id=\"visibleRow".($zeile-(($hour-1)*5)).$hour."\"";
+				}
+					
+					
+	printf("<tr %s %s>\n",$rowID,$visibility);	//Zeilen 	Tag auf
+  		printf("<form method=\"post\">\n");	//Formular Anfang Tag
+  			//Fï¿½r jeden Eintrag im Array field einmal diese Schleife durchlaufen
+  			
+  			
+  			
+			foreach($field as $f) {	
+				
+				if($content!=false && $f[2]!="dropdown")	//Wenn Content mitgeliefert wird und der Typ des aktuellen Inputs kein DropDown, dann Content austauschen
+				{
+					$f[5]=$content[$f[0]];					//Content des aktuellen Inputs austauschen, Name des Array-Indizes ist der name des Inputs
+				}
+				else if($content!=false && $f[2]=="dropdown")	//Wenn Content mitgeliefert wird und der Typ des des aktuellen Inputs ein DropDown ist, dann Sonderbehandlung
+				{
+					foreach($f[5] as $ii => $a)				//Fï¿½r jeden Inhalt(Eintrï¿½g der DropDown Liste) wird ï¿½berprï¿½ft ob der content mit dem Einrag in der DropDown Liste ï¿½bereinstimmt --> ausgewï¿½hlt
+					{
+						if($a[0]==$content[$f[0]])			//Wenn ein Eintrag mit dem mitgegebenen Eintrag ï¿½bereinstimmt, dann in dem Aktuellen Input, beim Inhalt und dem Entsprechenden Eintrag select auf true setzen
+						{	
+							$f[5][$ii][1]=true;
+							break;
+						}
+						else								//sonst leer
+						{
+							$f[5][$ii][1]="";
+						}
+					}
+				}
+				
+				
+				
+				if($f[2] == "text") {
+					printf("<td>%s <input type=\"text\" name=\"%s\" size=\"%spx\" value=\"%s\" %s >\n",	//Textbox erstellen
+							$f[1], $f[0], $f[3], $f[5], $f[6]);
+
+				}
+				else if($f[2] == "hidden") {
+					printf("<td><input type=\"hidden\" name=\"%s\" value=\"%s\">\n",			//Versteckten Typ erstellen
+							$f[0], $f[5]);
+
+					if($zeile1==1){
+						printf("<td>Teilung: <input type=\"text\" id=\"%s\" size=\"2px\" value=\"1\" >\n",	//Textbox erstellen  			
+	  							"visibilityText".$hour,$hour);
+						printf("<td><input type=\"button\" size=\"4px\" value=\"OK\" onclick=\"javascript:Visibility(%s)\" >\n",	//Textbox erstellen  			
+	  							$hour);	  						
+	  					printf("<td>Stunde: <input type=\"text\" size=\"3px\" value=\"%s\" readonly >\n",	//Textbox erstellen  			
+	  							$hour);
+
+	  				}
+	  				else{
+	  					printf("<td><td><td>\n");
+	  				}
+
+					
+				}
+				else if($f[2] == "dropdown") {												//Dropdown Menï¿½ erstellen
+					$select="";
+					
+					foreach($f[5] as $p)													//F r jeden Men eintrag im Array f einen Eintrag erstellen
+						{
+							if($p[1]==true){													//wenn ausgew hlt selected
+								$select=$p[0];
+							}
+						}
+
+					printf("<td>%s <input value=\"%s\" autocomplete=\"off\" size=\"%s\" list=\"%s\" name=\"%s\"><datalist id=\"%s\"  %s>\n",
+							$f[1], $select, $f[3], $f[0], $f[0], $f[0], $f[6]);
+							
+					foreach($f[5] as $p)													//Fï¿½r jeden Menï¿½eintrag im Array f einen Eintrag erstellen
+					{
+							printf("<option value=\"%s\">\n", $p[0]);
+					}
+
+					printf("</datalist></td>\n");
+				}
+				
+			}
+			
+			if($content==false)
+			{
+				form_savedelete(true);
+			}
+			else
+			{
+				form_savedelete(false);
+			}
+				
+		printf("</form>\n");
+  	printf("</tr>\n");
+  	$zeile+=1;
+   	}while($zeile<=80);
+printf("</table>\n");
+}
+
+
 function form_substitudes($fieldRow1,$fieldRow2,$content)
 {	
 
 printf("<table>\n");	//Tabellen Tag auf
 	printf("<form method=\"post\">\n");	//Formular Anfang Tag
 		printf("<tr>\n");	//Zeilen 	Tag auf
-  			//F�r jeden Eintrag im Array field einmal diese Schleife durchlaufen
+  			//Fï¿½r jeden Eintrag im Array field einmal diese Schleife durchlaufen
 			foreach($fieldRow1 as $f) {	
 				
 				if($content!=false && $f[2]!="dropdown")	//Wenn Content mitgeliefert wird und der Typ des aktuellen Inputs kein DropDown, dann Content austauschen
@@ -156,9 +269,9 @@ printf("<table>\n");	//Tabellen Tag auf
 				}
 				else if($content!=false && $f[2]=="dropdown")	//Wenn Content mitgeliefert wird und der Typ des des aktuellen Inputs ein DropDown ist, dann Sonderbehandlung
 				{
-					foreach($f[5] as $ii => $a)				//F�r jeden Inhalt(Eintr�g der DropDown Liste) wird �berpr�ft ob der content mit dem Einrag in der DropDown Liste �bereinstimmt --> ausgew�hlt
+					foreach($f[5] as $ii => $a)				//Fï¿½r jeden Inhalt(Eintrï¿½g der DropDown Liste) wird ï¿½berprï¿½ft ob der content mit dem Einrag in der DropDown Liste ï¿½bereinstimmt --> ausgewï¿½hlt
 					{
-						if($a[0]==$content[$f[0]])			//Wenn ein Eintrag mit dem mitgegebenen Eintrag �bereinstimmt, dann in dem Aktuellen Input, beim Inhalt und dem Entsprechenden Eintrag select auf true setzen
+						if($a[0]==$content[$f[0]])			//Wenn ein Eintrag mit dem mitgegebenen Eintrag ï¿½bereinstimmt, dann in dem Aktuellen Input, beim Inhalt und dem Entsprechenden Eintrag select auf true setzen
 						{	
 							$f[5][$ii][1]=true;
 							break;
@@ -212,7 +325,7 @@ printf("<table>\n");	//Tabellen Tag auf
 							$f[0], $f[5]);
 
 				}
-				else if($f[2] == "dropdown") {												//Dropdown Men� erstellen
+				else if($f[2] == "dropdown") {												//Dropdown Menï¿½ erstellen
 					$select="";
 					
 					foreach($f[5] as $p)													//F r jeden Men eintrag im Array f einen Eintrag erstellen
@@ -225,7 +338,7 @@ printf("<table>\n");	//Tabellen Tag auf
 					printf("<td>%s <input value=\"%s\" autocomplete=\"off\" size=\"%s\" list=\"%s\" name=\"%s\"><datalist id=\"%s\"  %s>\n",
 							$f[1], $select, $f[3], $f[0], $f[0], $f[0], $f[6]);
 							
-					foreach($f[5] as $p)													//F�r jeden Men�eintrag im Array f einen Eintrag erstellen
+					foreach($f[5] as $p)													//Fï¿½r jeden Menï¿½eintrag im Array f einen Eintrag erstellen
 					{
 							printf("<option value=\"%s\">\n", $p[0]);
 					}
@@ -246,7 +359,7 @@ printf("<table>\n");	//Tabellen Tag auf
 				
   	printf("</tr>\n");
   	printf("<tr id=\"visibleRow%s\" style=\"visibility:%s\">\n",$ID,$collapse);	//Zeilen 	Tag auf
-  			//F�r jeden Eintrag im Array field einmal diese Schleife durchlaufen
+  			//Fï¿½r jeden Eintrag im Array field einmal diese Schleife durchlaufen
   			printf("<td colspan=\"7\"></td>\n");
 			foreach($fieldRow2 as $f) {	
 					
@@ -267,10 +380,10 @@ printf("</table>\n");
 
 
 /*
- *Erstellt die Schaltfl�chen f�r Speichern und L�schen
+ *Erstellt die Schaltflï¿½chen fï¿½r Speichern und Lï¿½schen
  *$new ist eine Boolsch Variable
- *True bedeutet dass es ein leeres Formular ist --> Kein L�schen
- *False bedeutet kein neues Formular --> L�schen
+ *True bedeutet dass es ein leeres Formular ist --> Kein Lï¿½schen
+ *False bedeutet kein neues Formular --> Lï¿½schen
  */
 function form_savedelete($new)
 {

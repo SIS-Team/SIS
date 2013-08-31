@@ -1,3 +1,47 @@
+<script type="text/javascript">
+function Visibility(hour) {
+	
+var temp = parseInt(document.getElementById('visibilityText'+hour).value);	
+
+switch(temp){
+	case 2: 
+		var zahl = 2; 
+		break;
+	case 3: 
+		var zahl = 3;
+		break; 
+	case 4: 
+		var zahl = 4; 
+		break;
+	case 5: 
+		var zahl = 5; 
+		break;
+	default: 
+		var zahl = 1;
+		break;
+}
+
+var i=2;
+
+document.getElementById('visibleRow2'+hour).style.visibility="collapse";
+document.getElementById('visibleRow3'+hour).style.visibility="collapse";
+document.getElementById('visibleRow4'+hour).style.visibility="collapse";
+document.getElementById('visibleRow5'+hour).style.visibility="collapse";
+
+
+while(i<=zahl){
+
+document.getElementById('visibleRow'+i+hour).style.visibility="visible";
+
+i++;
+}
+	
+
+}
+</script>
+
+
+
 <?php
 
 	/* /backend/lessons.php
@@ -18,25 +62,21 @@ include($_SERVER['DOCUMENT_ROOT'] . "/modules/database/selects.php");			//Stellt
 //Formularmaske
 $fields = array(
 	array( "ID", 		"",			 		"hidden", 	"",		"",		"",					""),
-	array( "clName", 	"Klasse: ", 		"dropdown", "8",	"",		$selectClasses,		""),
 	array( "roName",	"Raum: ", 			"dropdown", "8",	"",		$selectRooms,		""),
 	array( "teShort", 	"Lehrer: ",	 		"dropdown",	"5",	"",		$selectTeachers,	""),
 	array( "suShort", 	"Fach: ", 			"dropdown",	"5",	"",		$selectSubjects,	""),
-	array( "daShort",	"Tag: ", 			"dropdown",	"5",	"",		$selectDays,		""),
-	array( "startHour",	"Stundenbeginn: ", 	"text",		"5",	"",		"",					""),
-	array( "endHour", 	"Stundenende: ", 	"text",		"5",	"",		"",					""),
 	);
 
 //Seitenheader
 pageHeader("Formular","main");
 
-$result = selectLesson("","");	//Rückgabewert des Selects
+//$result = selectLesson("","");	//Rückgabewert des Selects
 
 while ($row = mysql_fetch_array($result)){	//Fügt solange eine neue Formularzeile hinzu, solange ein Inhalt zur Verfügung steht
-	form_new($fields,$row);		//Formular wird erstellt
+	form_lesson($fields,$row);		//Formular wird erstellt
 }
 
-form_new($fields,false);			//Formular für einen neuen Eintrag
+form_lesson($fields,false);			//Formular für einen neuen Eintrag
 
 //Seitenfooter
 pageFooter();
