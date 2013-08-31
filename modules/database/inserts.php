@@ -161,10 +161,10 @@ else
 function substitudes(){
 
 $post=$_POST;
-print_r($post);
+//print_r($post);
 unset($post["save"]);
 
-$data=array("ID" => "","move" => "","lessonFK" => "","subjecFK" => "","teacherFK" => "","time" => "","roomFK" => "","startHourFK" => "","endHourFK" => "","hidden" => "","sure" => "","comment" => "");
+$data=array("ID" => "","move" => "","lessonFK" => "","subjectFK" => "","teacherFK" => "","time" => "","roomFK" => "","startHourFK" => "","endHourFK" => "","hidden" => "","sure" => "","comment" => "");
 
 $data["ID"]=$post["ID"];
 $data["move"]=$post["move"];
@@ -172,9 +172,9 @@ $day = weekday($post["time"]);
 $stHour = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".$post["startHour"]."'"));
 $enHour = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".$post["endHour"]."'"));
 $class = mysql_fetch_array(mysql_query("SELECT ID FROM classes WHERE name='".$post["clName"]."'"));
-$temp = mysql_fetch_array(mysql_query("SELECT ID FROM lesson INNER JOIN lessonsBase ON lessonsBase.ID = lessons.lessonBaseFK WHERE lessonsBase.startHourFK='".$stHour."' AND lessonsBase.endHourFK='".$enHour."' AND lessonsBase.classFK='".$class."'"));
+$temp = mysql_fetch_array(mysql_query("SELECT lessons.ID FROM lessons INNER JOIN lessonsBase ON lessonsBase.ID = lessons.lessonBaseFK WHERE lessonsBase.startHourFK='".$stHour["ID"]."' AND lessonsBase.endHourFK='".$enHour["ID"]."' AND lessonsBase.classFK='".$class["ID"]."'"));
 $data["lessonFK"]=$temp["ID"];
-$temp = mysql_fetch_array(mysql_query("SELECT ID FROM subjects WHERE short='".$post["suShort"]."'"));
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM subjects WHERE short LIKE '%".$post["suShort"]."%'"));
 $data["subjectFK"]=$temp["ID"];
 $temp = mysql_fetch_array(mysql_query("SELECT ID FROM teachers WHERE short='".$post["teShort"]."'"));
 $data["teacherFK"]=$temp["ID"];
@@ -191,13 +191,11 @@ if(!empty($post["sure"]))
 	$data["sure"]=true;
 $data["comment"]=$post["comment"];
 
-print_r($data);
-/*
 if(empty($post["delete"]))
 	saveupdate($data,"substitudes");
 else
 	delete($data["ID"],"substitudes");
-*/	
+	
 }
 
 
