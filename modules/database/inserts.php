@@ -145,13 +145,11 @@ $post=$_POST;
 //print_r($post);
 unset($post["save"]);
 
-$data=array("ID" => "","name" => "","short" => "","new" => "");
+$data=array("ID" => "","name" => "","short" => "");
 
 $data["ID"]=$post["ID"];
 $data["name"]=$post["name"];
 $data["short"]=$post["short"];
-if(!empty($post["new"]))
-	$data["new"]=true;
 
 if(empty($post["delete"]))
 	saveupdate($data,"subjects");
@@ -160,6 +158,47 @@ else
 	
 }
 
+function substitudes(){
+
+$post=$_POST;
+print_r($post);
+unset($post["save"]);
+
+$data=array("ID" => "","move" => "","lessonFK" => "","subjecFK" => "","teacherFK" => "","time" => "","roomFK" => "","startHourFK" => "","endHourFK" => "","hidden" => "","sure" => "","comment" => "");
+
+$data["ID"]=$post["ID"];
+$data["move"]=$post["move"];
+$day = weekday($post["time"]);
+$stHour = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".$post["startHour"]."'"));
+$enHour = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".$post["endHour"]."'"));
+$class = mysql_fetch_array(mysql_query("SELECT ID FROM classes WHERE name='".$post["clName"]."'"));
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM lesson INNER JOIN lessonsBase ON lessonsBase.ID = lessons.lessonBaseFK WHERE lessonsBase.startHourFK='".$stHour."' AND lessonsBase.endHourFK='".$enHour."' AND lessonsBase.classFK='".$class."'"));
+$data["lessonFK"]=$temp["ID"];
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM subjects WHERE short='".$post["suShort"]."'"));
+$data["subjectFK"]=$temp["ID"];
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM teachers WHERE short='".$post["teShort"]."'"));
+$data["teacherFK"]=$temp["ID"];
+$data["time"]=$post["time"];
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM rooms WHERE name='".$post["roName"]."'"));
+$data["roomFK"]=$temp["ID"];
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".$post["newStartHour"]."'"));
+$data["startHourFK"]=$temp["ID"];
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".$post["newEndHour"]."'"));
+$data["endHourFK"]=$temp["ID"];
+if(!empty($post["hidden"]))
+	$data["hidden"]=true;
+if(!empty($post["sure"]))
+	$data["sure"]=true;
+$data["comment"]=$post["comment"];
+
+print_r($data);
+/*
+if(empty($post["delete"]))
+	saveupdate($data,"substitudes");
+else
+	delete($data["ID"],"substitudes");
+*/	
+}
 
 
 

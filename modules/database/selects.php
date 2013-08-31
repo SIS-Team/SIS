@@ -183,12 +183,12 @@ function selectMissingClass($where,$order){
  *$where string zum Filtern
  *$order string zum Sortieren
  *	
- *ID,suShort,teShort,time,roName,startHour,endHour,hidden,sure,comment
+ *ID,move,clname,suShort,teShort,time,roName,startHour,endHour,hidden,sure,comment,newStartHour,endStartHour
  */
 
 function selectSubstitude($where,$order){
 
- 	$sql= "SELECT substitudes.ID, substitudes.move, classes.name as clName, subjects.short as suShort, teachers.short as teShort, substitudes.time, rooms.name as roName, hoursStart.hour as startHour, hoursEnd.hour as endHour, substitudes.hidden, substitudes.sure, substitudes.comment, newHoursStart.hour as newStartHour, newHoursEnd.hour as newEndHour FROM substitudes INNER JOIN subjects ON subjects.ID = substitudes.subjectFK INNER JOIN teachers ON teachers.ID = substitudes.teacherFK INNER JOIN rooms ON rooms.ID = substitudes.roomFK INNER JOIN lessons ON lessons.ID=substitudes.lessonFK INNER JOIN lessonsBase ON lessonsBase.ID=lessons.lessonBaseFK INNER JOIN classes ON classes.ID = lessonsBase.classFK INNER JOIN hours as hoursStart ON hoursStart.ID = lessonsBase.startHourFK INNER JOIN hours as hoursEnd ON hoursEnd.ID = lessonsBase.endHourFK INNER JOIN hours as newHoursStart ON newHoursStart.ID = substitudes.startHourFK INNER JOIN hours as newHoursEnd ON newHoursEnd.ID = substitudes.endHourFK";	//Stamm sql-Befehl
+ 	$sql= "SELECT substitudes.ID, substitudes.move, classes.name as clName, subjects.short as suShort, teachers.short as teShort, substitudes.time, rooms.name as roName, hoursStart.hour as startHour, hoursEnd.hour as endHour, substitudes.hidden, substitudes.sure, substitudes.comment, newHoursStart.hour as newStartHour, newHoursEnd.hour as newEndHour FROM substitudes INNER JOIN subjects ON subjects.ID = substitudes.subjectFK LEFT JOIN teachers ON teachers.ID = substitudes.teacherFK LEFT JOIN rooms ON rooms.ID = substitudes.roomFK INNER JOIN lessons ON lessons.ID=substitudes.lessonFK INNER JOIN lessonsBase ON lessonsBase.ID=lessons.lessonBaseFK INNER JOIN classes ON classes.ID = lessonsBase.classFK INNER JOIN hours as hoursStart ON hoursStart.ID = lessonsBase.startHourFK INNER JOIN hours as hoursEnd ON hoursEnd.ID = lessonsBase.endHourFK LEFT JOIN hours as newHoursStart ON newHoursStart.ID = substitudes.startHourFK LEFT JOIN hours as newHoursEnd ON newHoursEnd.ID = substitudes.endHourFK";	//Stamm sql-Befehl
 
 	if (!empty($where)) $sql .= " WHERE " . $where; 	//Wenn where Variable gesetzt ist
 	if (!empty($order)) $sql .= " ORDER BY " . $order;	//Wenn order Variable gesetzt ist

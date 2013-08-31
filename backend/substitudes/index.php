@@ -57,7 +57,6 @@ pageHeader("Formular","main");
 $result = selectSubstitude("","");			//Rückgabewert des Selects
 
 while ($row = mysql_fetch_array($result)){	//Fügt solange eine neue Formularzeile hinzu, solange ein Inhalt zur Verfügung steht
-print_r($row);
 	form_substitudes($fieldsRow1,$fieldsRow2 ,$row);		//Formular wird erstellt
 }
 
