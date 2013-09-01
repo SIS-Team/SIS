@@ -35,7 +35,12 @@ document.getElementById('visibleRow'+i+hour).style.visibility="visible";
 
 i++;
 }
-	
+
+}
+
+function text(text,hour){
+
+document.getElementById('visibilityText'+hour).value = text;
 
 }
 </script>
@@ -59,6 +64,13 @@ include($_SERVER['DOCUMENT_ROOT'] . "/modules/form/dropdownSelects.php");		//Ste
 include($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
 include($_SERVER['DOCUMENT_ROOT'] . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
 
+
+print_r($_POST);
+
+
+
+
+
 //Formularmaske
 $fields = array(
 	array( "ID", 		"",			 		"hidden", 	"",		"",		"",					""),
@@ -78,6 +90,13 @@ while ($row = mysql_fetch_array($result)){	//Fügt solange eine neue Formularzeil
 
 form_lesson($fields,false);			//Formular für einen neuen Eintrag
 
+
+
+if(!empty($_POST['hour'])){
+
+	
+	printf("<script type=\"text/javascript\">text(%s,%s); Visibility(%s);</script>",$_POST['visibilityText'.$_POST['hour']],$_POST['hour'],$_POST['hour']);
+}
 //Seitenfooter
 pageFooter();
 ?>

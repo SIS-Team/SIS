@@ -200,11 +200,11 @@ printf("<table>\n");	//Tabellen Tag auf
 							$f[0], $f[5]);
 
 					if($zeile1==1){
-						printf("<td>Teilung: <input type=\"text\" id=\"%s\" size=\"2px\" value=\"1\" >\n",	//Textbox erstellen  			
-	  							"visibilityText".$hour,$hour);
+						printf("<td>Teilung: <input type=\"text\" name=\"%s\" id=\"%s\" size=\"2px\" value=\"1\" >\n",	//Textbox erstellen  			
+	  							"visibilityText".$hour,"visibilityText".$hour,$hour);
 						printf("<td><input type=\"button\" size=\"4px\" value=\"OK\" onclick=\"javascript:Visibility(%s)\" >\n",	//Textbox erstellen  			
 	  							$hour);	  						
-	  					printf("<td>Stunde: <input type=\"text\" size=\"3px\" value=\"%s\" readonly >\n",	//Textbox erstellen  			
+	  					printf("<td>Stunde: <input type=\"text\" name =\"hour\" size=\"3px\" value=\"%s\" readonly >\n",	//Textbox erstellen  			
 	  							$hour);
 
 	  				}
