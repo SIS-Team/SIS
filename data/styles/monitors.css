@@ -1,0 +1,62 @@
+@font-face { 
+	font-family: digital;
+	font-style: normal;
+	font-weight: normal;
+	src:url('../fonts/digital-7.ttf');
+}
+
+* {
+	color: #fff;
+}
+body {
+	background-color: #000;
+}
+
+#main {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	text-align: center;
+}
+
+#main * {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+#overlay {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	left: 0px;
+	top: 0px;
+}
+
+.bottom {
+	position: absolute;
+	bottom: 0px;
+}
+.clock {
+	height: 70px;
+	overflow: hidden;	
+	font-family: digital;
+}
+
+#digitalClock {
+	right: 0px;
+	font-size: 50px;
+	width: 200px;
+}
+
+#analogClock {
+	right: 200px;
+}
+
+#date {
+	width: 200px;
+	height: 30px;
+	font-size: 25px;
+	right: 0px;
+	text-align: center;
+}

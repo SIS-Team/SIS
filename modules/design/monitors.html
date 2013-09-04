@@ -1,10 +1,21 @@
 <html>
 	<head>
 		<title>&title;</title>
-		<link rel="stylesheet" type="text/css" href="/data/styles/monitors.css">
-		<script type="text/javascript" src="/data/scripts/monitors.js" />
+		<link rel="stylesheet" type="text/css" href="../../data/styles/monitors.css">
+		<script type="text/javascript" src="../../data/scripts/monitors.js"></script>
 	</head>
-	<body>
-		&main;
+	<body onload="main()">
+		<div id="main">
+			<img src="../../data/images/sis.png" />
+		</div>
+		<div id="overlay">
+			<div id="analogClock" class="bottom clock">
+				<canvas id="canvas" height="70px" width="70px">
+			</div>
+			<div id="digitalClock" class="bottom clock">
+			</div>
+			<div id="date" class="bottom clock">
+			</div>
+		</div>
 	</body>
 </html>
