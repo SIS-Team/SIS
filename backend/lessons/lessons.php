@@ -130,13 +130,13 @@ $fields = array(
 //Seitenheader
 pageHeader("Formular","main");
 
-//$result = selectLesson("","");	//Rückgabewert des Selects
+$where="classes.name='".$_POST['class']."' AND hoursStart.weekdayShort='".$_POST['day']."'";
+$result = selectLesson($where,"");	//Rückgabewert des Selects
 
 while ($row = mysql_fetch_array($result)){	//Fügt solange eine neue Formularzeile hinzu, solange ein Inhalt zur Verfügung steht
-	form_lesson($fields,$row);		//Formular wird erstellt
+	print_r($row);
 }
-
-form_lesson($fields,false);			//Formular für einen neuen Eintrag
+form_lesson($fields,false);		//Formular wird erstellt
 
 
 
