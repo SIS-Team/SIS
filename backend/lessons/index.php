@@ -42,7 +42,25 @@ function text(text,hour){
 
 document.getElementById('visibilityText'+hour).value = text;
 
+document.getElementsByName('visibilityText'+hour)[1].value=text;
+document.getElementsByName('visibilityText'+hour)[2].value=text;
+document.getElementsByName('visibilityText'+hour)[3].value=text;
+document.getElementsByName('visibilityText'+hour)[4].value=text;
+
 }
+
+function changeText(hour){
+
+var text;
+text=document.getElementById('visibilityText'+hour).value;
+
+document.getElementsByName('visibilityText'+hour)[1].value=text;
+document.getElementsByName('visibilityText'+hour)[2].value=text;
+document.getElementsByName('visibilityText'+hour)[3].value=text;
+document.getElementsByName('visibilityText'+hour)[4].value=text;
+
+}
+
 </script>
 
 
@@ -73,10 +91,10 @@ print_r($_POST);
 
 //Formularmaske
 $fields = array(
-	array( "ID", 		"",			 		"hidden", 	"",		"",		"",					""),
-	array( "roName",	"Raum: ", 			"dropdown", "8",	"",		$selectRooms,		""),
-	array( "teShort", 	"Lehrer: ",	 		"dropdown",	"5",	"",		$selectTeachers,	""),
-	array( "suShort", 	"Fach: ", 			"dropdown",	"5",	"",		$selectSubjects,	""),
+	array( "ID", 			"",			 		"hidden", 	"",		"",		"",					""),
+	array( "roName",		"Raum: ", 			"dropdown", "8",	"",		$selectRooms,		""),
+	array( "teShort", 		"Lehrer: ",	 		"dropdown",	"5",	"",		$selectTeachers,	""),
+	array( "suShort", 	"	Fach: ", 			"dropdown",	"5",	"",		$selectSubjects,	""),
 	);
 
 //Seitenheader
