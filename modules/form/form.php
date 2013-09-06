@@ -148,17 +148,17 @@ printf("<table>\n");	//Tabellen Tag auf
 	do{
 				if(($zeile-1)%5==0){
 					$zeile1=1;
-					$visibility="";
 					$hour=(($zeile-1)/5)+1;
-					$rowID="";
+					$visibility="style=\"visibility:visible\"";
 				}
 				else{
 					$zeile1=0;
-					$visibility="style=\"visibility:collapse\"";
 					$hour=floor((($zeile-1)/5)+1);
-					$rowID="id=\"visibleRow".($zeile-(($hour-1)*5)).$hour."\"";
+					$visibility="style=\"visibility:collapse\"";
+
 				}
-					
+				
+				$rowID="id=\"visibleRow".($zeile-(($hour-1)*5)).$hour."\"";
 					
 	printf("<tr %s %s>\n",$rowID,$visibility);	//Zeilen 	Tag auf
   		printf("<form method=\"post\">\n");	//Formular Anfang Tag
@@ -203,22 +203,26 @@ printf("<table>\n");	//Tabellen Tag auf
 						printf("<td>Teilung: <input type=\"text\" name=\"%s\" id=\"%s\" size=\"2px\" value=\"1\" onchange=\"javascript:changeText(%s);\">\n",	//Textbox erstellen  			
 	  							"visibilityText".$hour,"visibilityText".$hour,$hour);
 						printf("<td><input type=\"button\" size=\"4px\" value=\"OK\" onclick=\"javascript:Visibility(%s)\" >\n",	//Textbox erstellen  			
-	  							$hour);	  						
+	  							$hour);  						
 	  					printf("<td>Stunde: <input type=\"text\" name =\"hour\" size=\"3px\" value=\"%s\" readonly >\n",	//Textbox erstellen  			
 	  							$hour);
+	  					printf("<td>L&auml;nge: <input type=\"text\" id=\"%s\" size=\"5px\" value=\"%s\" onchange=\"javascript:visibleHours(%s);\">\n",	//Textbox erstellen
+							"visibleHour".$hour, $f[5], $hour);
 
 	  				}
 	  				else{
 	  					printf("<td><input type=\"hidden\" name=\"%s\" size=\"2px\" value=\"1\" >\n",	//Textbox erstellen  			
 	  							"visibilityText".$hour);
-						printf("<td>\n",	//Textbox erstellen  			
-	  							$hour);	  						
+						printf("<td><td>\n");	  						
 	  					printf("<td><input type=\"hidden\" name =\"hour\" size=\"3px\" value=\"%s\" readonly >\n",	//Textbox erstellen  			
 	  							$hour);
 
 	  				}
-
-					
+	  					printf("<td><input type=\"hidden\" name =\"day\" value=\"%s\" >\n",	//Textbox erstellen  			
+	  							$_POST['day']);
+						printf("<td><input type=\"hidden\" name =\"class\" value=\"%s\" >\n",	//Textbox erstellen  			
+	  							$_POST['class']);
+	  											
 				}
 				else if($f[2] == "dropdown") {												//Dropdown MenÃ¯Â¿Â½ erstellen
 					$select="";

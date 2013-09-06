@@ -1,80 +1,14 @@
-<script type="text/javascript">
-function Visibility(hour) {
-	
-var temp = parseInt(document.getElementById('visibilityText'+hour).value);	
-
-switch(temp){
-	case 2: 
-		var zahl = 2; 
-		break;
-	case 3: 
-		var zahl = 3;
-		break; 
-	case 4: 
-		var zahl = 4; 
-		break;
-	case 5: 
-		var zahl = 5; 
-		break;
-	default: 
-		var zahl = 1;
-		break;
-}
-
-var i=2;
-
-document.getElementById('visibleRow2'+hour).style.visibility="collapse";
-document.getElementById('visibleRow3'+hour).style.visibility="collapse";
-document.getElementById('visibleRow4'+hour).style.visibility="collapse";
-document.getElementById('visibleRow5'+hour).style.visibility="collapse";
-
-
-while(i<=zahl){
-
-document.getElementById('visibleRow'+i+hour).style.visibility="visible";
-
-i++;
-}
-
-}
-
-function text(text,hour){
-
-document.getElementById('visibilityText'+hour).value = text;
-
-document.getElementsByName('visibilityText'+hour)[1].value=text;
-document.getElementsByName('visibilityText'+hour)[2].value=text;
-document.getElementsByName('visibilityText'+hour)[3].value=text;
-document.getElementsByName('visibilityText'+hour)[4].value=text;
-
-}
-
-function changeText(hour){
-
-var text;
-text=document.getElementById('visibilityText'+hour).value;
-
-document.getElementsByName('visibilityText'+hour)[1].value=text;
-document.getElementsByName('visibilityText'+hour)[2].value=text;
-document.getElementsByName('visibilityText'+hour)[3].value=text;
-document.getElementsByName('visibilityText'+hour)[4].value=text;
-
-}
-
-</script>
-
-
 
 <?php
 
-	/* /backend/lessons.php
+	/* /backend/index.php
 	 * Autor: Handle Marco
 	 * Version: 0.1.0
 	 * Beschreibung:
-	 *	Erstellt die Formulare fuer die Eingabe der Unterrichtsstunden
+	 * Auswahl der Klasse
 	 *
 	 * Changelog:
-	 * 	0.1.0:  22. 07. 2013, Handle Marco - erste Version
+	 * 	0.1.0:  06. 09. 2013, Handle Marco - erste Version
 	 */
 
 include($_SERVER['DOCUMENT_ROOT'] . "/modules/form/form.php");					//Stell die Formularmasken zur Verfügung
@@ -86,35 +20,31 @@ include($_SERVER['DOCUMENT_ROOT'] . "/modules/database/selects.php");			//Stellt
 print_r($_POST);
 
 
-
-
-
-//Formularmaske
-$fields = array(
-	array( "ID", 			"",			 		"hidden", 	"",		"",		"",					""),
-	array( "roName",		"Raum: ", 			"dropdown", "8",	"",		$selectRooms,		""),
-	array( "teShort", 		"Lehrer: ",	 		"dropdown",	"5",	"",		$selectTeachers,	""),
-	array( "suShort", 	"	Fach: ", 			"dropdown",	"5",	"",		$selectSubjects,	""),
-	);
-
 //Seitenheader
 pageHeader("Formular","main");
 
-//$result = selectLesson("","");	//Rückgabewert des Selects
-
-while ($row = mysql_fetch_array($result)){	//Fügt solange eine neue Formularzeile hinzu, solange ein Inhalt zur Verfügung steht
-	form_lesson($fields,$row);		//Formular wird erstellt
+printf("<form method=\"post\" action=\"lessons.php\"> ");
+printf("Klasse wählen: <input autocomplete=\"off\" list=\"class\" name=\"class\" size=\"5\"><datalist id=\"class\">\n");
+					
+foreach($selectClasses as $p)							//FÃ¯Â¿Â½r jeden MenÃ¯Â¿Â½eintrag im Array f einen Eintrag erstellen
+{
+	printf("<option value=\"%s\">\n", $p[0]);
 }
 
-form_lesson($fields,false);			//Formular für einen neuen Eintrag
+printf("</datalist>\n");
 
-
-
-if(!empty($_POST['hour'])){
-
-	
-	printf("<script type=\"text/javascript\">text(%s,%s); Visibility(%s);</script>",$_POST['visibilityText'.$_POST['hour']],$_POST['hour'],$_POST['hour']);
+printf("Tag wählen: <input autocomplete=\"off\" list=\"day\" name=\"day\" size=\"3\" value=\"Mo\"><datalist id=\"day\">\n");
+							
+foreach($selectDays as $p)							//FÃ¯Â¿Â½r jeden MenÃ¯Â¿Â½eintrag im Array f einen Eintrag erstellen
+{
+	printf("<option value=\"%s\">\n", $p[0]);
 }
-//Seitenfooter
+
+printf("</datalist>\n");
+
+
+printf("<input type=\"submit\" name=\"save\" value=\"Speichern\">\n");	//Submit Button erstellen
+printf("</form>");
+
 pageFooter();
 ?>
