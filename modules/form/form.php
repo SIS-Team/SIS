@@ -206,7 +206,7 @@ printf("<table>\n");	//Tabellen Tag auf
 	  							$hour);  						
 	  					printf("<td>Stunde: <input type=\"text\" name =\"hour\" size=\"3px\" value=\"%s\" readonly >\n",	//Textbox erstellen  			
 	  							$hour);
-	  					printf("<td>L&auml;nge: <input type=\"text\" id=\"%s\" size=\"5px\" value=\"%s\" onchange=\"javascript:visibleHours(%s);\">\n",	//Textbox erstellen
+	  					printf("<td>L&auml;nge: <input type=\"text\" name=\"length\" id=\"%s\" size=\"5px\" value=\"%s\" onchange=\"javascript:visibleHours(%s);\">\n",	//Textbox erstellen
 							"visibleHour".$hour, $f[5], $hour);
 
 	  				}

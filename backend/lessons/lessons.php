@@ -107,10 +107,10 @@ ii+=1;
 	 * 	0.1.0:  22. 07. 2013, Handle Marco - erste Version
 	 */
 
-include($_SERVER['DOCUMENT_ROOT'] . "/modules/form/form.php");					//Stell die Formularmasken zur Verfügung
-include($_SERVER['DOCUMENT_ROOT'] . "/modules/form/dropdownSelects.php");		//Stellt die Listen für die Dropdownmenüs zur Verfügung
-include($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
-include($_SERVER['DOCUMENT_ROOT'] . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
+include($_SERVER['DOCUMENT_ROOT'] . "/modules/form/form.php");					//Stell die Formularmasken zur VerfÃ¼gung
+include($_SERVER['DOCUMENT_ROOT'] . "/modules/form/dropdownSelects.php");		//Stellt die Listen fÃ¼r die DropdownmenÃ¼s zur VerfÃ¼gung
+include($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Main.php");				//Stellt das Design zur VerfÃ¼gung
+include($_SERVER['DOCUMENT_ROOT'] . "/modules/database/selects.php");			//Stellt die select-Befehle zur VerfÃ¼gung
 
 
 print_r($_POST);
@@ -131,12 +131,23 @@ $fields = array(
 pageHeader("Formular","main");
 
 $where="classes.name='".$_POST['class']."' AND hoursStart.weekdayShort='".$_POST['day']."'";
-$result = selectLesson($where,"");	//Rückgabewert des Selects
+$sort="hoursStart.hour ASC";
+$result = selectLesson($where,"");	//RÃ¼ckgabewert des Selects
 
-while ($row = mysql_fetch_array($result)){	//Fügt solange eine neue Formularzeile hinzu, solange ein Inhalt zur Verfügung steht
-	print_r($row);
+print_r($test);
+while ($row = mysql_fetch_array($result)){	//FÃ¼gt solange eine neue Formularzeile hinzu, solange ein Inhalt zur VerfÃ¼gung steht
+
+  	$sql= "SELECT COUNT(*) FROM lessons INNER JOIN rooms ON rooms.ID = lessons.roomFK INNER JOIN teachers ON teachers.ID = lessons.teachersFK INNER JOIN subjects ON subjects.ID = lessons.subjectFK INNER JOIN lessonsBase ON lessonsBase.ID = lessons.lessonBaseFK INNER JOIN classes ON classes.ID = lessonsBase.classFK INNER JOIN hours as hoursStart ON hoursStart.ID = lessonsBase.startHourFK INNER JOIN hours as hoursEnd ON hoursEnd.ID = lessonsBase.endHourFK";	//Stamm sql-Befehl
+	$where2 = " AND " . "hoursStart.hour='".$row['startHour']."' AND hoursEnd.hour='".$row['endHour']."'";
+	$sql .= " WHERE " . $where.$where2; 
+	
+	$same = mysql_result(mysql_query($sql),0);
+	//print_r($same);
+	$row['same']=$same;
+	$content[] = $row;
 }
-form_lesson($fields,false);		//Formular wird erstellt
+print_r($content);
+//form_lesson($fields,false);		//Formular wird erstellt
 
 
 
