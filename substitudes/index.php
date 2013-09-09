@@ -20,13 +20,12 @@ include($_SERVER['DOCUMENT_ROOT'] . "/modules/other/dateFunctions.php");		//Stel
 $substitudes = array();
 
 //Seitenheader
-pageHeader("Formular","Main");
+pageHeader("Formular","main");
 
 //Tabellenkopfausgabe
 printf("<table border = 1 frame = void>");
 printf("<tr>");
-printf("<td>&#160</td>");
-printf("<td>Zeit</td>");
+printf("<td>Stunde</td>");
 printf("<td>Klasse</td>");
 printf("<td>Zu supplieren durch</td>");
 printf("<td>Fach</td>");
@@ -41,7 +40,6 @@ for($count = 0;; $count++)	//Supplierungen ausgeben
 {
   if(empty($substitudes[$count][2]) == true) break;		//Abbruch wenn keine weiteren Einträge
 printf("<tr>");
- printf( "<td>".($count+1)."</td>");	//Tabellenzeilennummer
  printf( "<td>".$substitudes[$count][7]."</td>");// supplierte Stunde 
  printf( "<td>".$substitudes[$count][2]."</td>");	//Klassenname
  printf( "<td>".$substitudes[$count][4]."</td>");	//supplierender Lehrer
