@@ -24,7 +24,30 @@ $date = date("Y-m-d");
 return $date;
 }
 
+function prevNextDay($d) {
+	$days = array("Mo", "Di", "Mi", "Do", "Fr");
+	$arr=array_keys($days,$d);
+	
+	$key=implode($arr);
+	
+	if($key>0 && $key<4){
+		$prev=$days[$key-1];
+		$next=$days[$key+1];
+	}
+	else if($key==0){
+		$prev="";
+		$next=$days[$key+1];
+	}
+	else if($key==4){
+		$next="";
+		$prev=$days[$key-1];
+	}
 
+	$array['prev']=$prev;
+	$array['next']=$next;
+	
+	return $array;
+}
 
 
 
