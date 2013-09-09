@@ -17,7 +17,6 @@ include($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Main.php");				//Stellt da
 include($_SERVER['DOCUMENT_ROOT'] . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
 
 
-print_r($_POST);
 
 
 //Seitenheader

@@ -111,12 +111,7 @@ include($_SERVER['DOCUMENT_ROOT'] . "/modules/form/form.php");					//Stell die F
 include($_SERVER['DOCUMENT_ROOT'] . "/modules/form/dropdownSelects.php");		//Stellt die Listen für die Dropdownmenüs zur Verfügung
 include($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
 include($_SERVER['DOCUMENT_ROOT'] . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
-
-
-print_r($_POST);
-
-
-
+include($_SERVER['DOCUMENT_ROOT'] . "/modules/other/dateFunctions.php");			//Stellt die select-Befehle zur Verfügung
 
 
 //Formularmaske
@@ -129,12 +124,22 @@ $fields = array(
 
 //Seitenheader
 pageHeader("Formular","main");
+printf("Klasse: <a href=\"index.php\" >%s</a> und der Tag: %s",$_POST['class'],$_POST['day']);
+$days=prevNextDay($_POST['day']);
+printf("<form action=\"lessons.php\" method=\"post\">\n");
+printf("<table width=\"100%%\"><tr>");
+if($days['prev']!="")
+	printf("<td><input type=\"submit\" value=\"%s\" name=\"day\"></td>\n",$days['prev']);
+printf("<td><input type=\"hidden\" name=\"class\" value=\"%s\"</td>\n",$_POST['class']);
+if($days['next']!="")
+	printf("<td style=\"text-align:right\"><input type=\"submit\" value=\"%s\" name=\"day\"></td>\n",$days['next']);
+printf("</tr></table></form>\n");
+
 
 $where="classes.name='".$_POST['class']."' AND hoursStart.weekdayShort='".$_POST['day']."'";
 $sort="hoursStart.hour ASC";
 $result = selectLesson($where,"");	//Rückgabewert des Selects
 
-print_r($test);
 while ($row = mysql_fetch_array($result)){	//Fügt solange eine neue Formularzeile hinzu, solange ein Inhalt zur Verfügung steht
 
   	$sql= "SELECT COUNT(*) FROM lessons INNER JOIN rooms ON rooms.ID = lessons.roomFK INNER JOIN teachers ON teachers.ID = lessons.teachersFK INNER JOIN subjects ON subjects.ID = lessons.subjectFK INNER JOIN lessonsBase ON lessonsBase.ID = lessons.lessonBaseFK INNER JOIN classes ON classes.ID = lessonsBase.classFK INNER JOIN hours as hoursStart ON hoursStart.ID = lessonsBase.startHourFK INNER JOIN hours as hoursEnd ON hoursEnd.ID = lessonsBase.endHourFK";	//Stamm sql-Befehl
@@ -146,8 +151,12 @@ while ($row = mysql_fetch_array($result)){	//Fügt solange eine neue Formularzei
 	$row['same']=$same;
 	$content[] = $row;
 }
-print_r($content);
-//form_lesson($fields,false);		//Formular wird erstellt
+	$sql= "SELECT COUNT(*) FROM lessons INNER JOIN rooms ON rooms.ID = lessons.roomFK INNER JOIN teachers ON teachers.ID = lessons.teachersFK INNER JOIN subjects ON subjects.ID = lessons.subjectFK INNER JOIN lessonsBase ON lessonsBase.ID = lessons.lessonBaseFK INNER JOIN classes ON classes.ID = lessonsBase.classFK INNER JOIN hours as hoursStart ON hoursStart.ID = lessonsBase.startHourFK INNER JOIN hours as hoursEnd ON hoursEnd.ID = lessonsBase.endHourFK";	//Stamm sql-Befehl
+	$sql .= " WHERE " . $where; 
+	//$content[] = mysql_result(mysql_query($sql),0);
+
+//print_r(end($content));
+form_lesson($fields,$content);		//Formular wird erstellt
 
 
 
