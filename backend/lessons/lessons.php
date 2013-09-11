@@ -66,14 +66,18 @@ function visibleHours(hour){
 
 var length=parseInt(document.getElementById('visibleHour'+hour).value);
 var endHour = hour + length -1;
-var ii = 1;
+var ii = hour+1;
 
-do{
+while(ii<=16){
 
-document.getElementById('visibleRow1'+ii).style.visibility="visible";
-ii+=1;
+if(parseInt(document.getElementById('visibleHour'+ii).value)==1){
+	document.getElementById('visibleRow1'+ii).style.visibility="visible";
+	ii+=1;
+}
+else
+	ii+=parseInt(document.getElementById('visibleHour'+ii).value);
 
-}while(ii<="16");
+}
 
 ii=hour+1;
 
