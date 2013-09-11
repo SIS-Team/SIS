@@ -42,7 +42,7 @@ foreach($selectDays as $p)							//Fï¿½r jeden Menï¿½eintrag im Array f ei
 printf("</datalist>\n");
 
 
-printf("<input type=\"submit\" name=\"save\" value=\"Speichern\">\n");	//Submit Button erstellen
+printf("<input type=\"submit\" name=\"ok\" value=\"Speichern\">\n");	//Submit Button erstellen
 printf("</form>");
 
 pageFooter();

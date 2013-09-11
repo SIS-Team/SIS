@@ -115,7 +115,16 @@ include($_SERVER['DOCUMENT_ROOT'] . "/modules/form/form.php");					//Stell die F
 include($_SERVER['DOCUMENT_ROOT'] . "/modules/form/dropdownSelects.php");		//Stellt die Listen für die Dropdownmenüs zur Verfügung
 include($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
 include($_SERVER['DOCUMENT_ROOT'] . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
-include($_SERVER['DOCUMENT_ROOT'] . "/modules/other/dateFunctions.php");			//Stellt die select-Befehle zur Verfügung
+include($_SERVER['DOCUMENT_ROOT'] . "/modules/database/inserts.php");			//Stellt die insert-Befehle zur Verf�gung
+
+if(empty($_POST['class'])){
+	header('Location: index.php');
+	exit();
+}else if(empty($_POST['day']))
+	$_POST['day']="Mo";
+	
+if($_POST['save']!="")
+	lessons();
 
 
 //Formularmaske
@@ -130,11 +139,15 @@ $fields = array(
 pageHeader("Formular","main");
 printf("Klasse: <a href=\"index.php\" >%s</a> und der Tag: %s",$_POST['class'],$_POST['day']);
 $days=prevNextDay($_POST['day']);
+
 printf("<form action=\"lessons.php\" method=\"post\">\n");
 printf("<table width=\"100%%\"><tr>");
+
 if($days['prev']!="")
 	printf("<td><input type=\"submit\" value=\"%s\" name=\"day\"></td>\n",$days['prev']);
+	
 printf("<td><input type=\"hidden\" name=\"class\" value=\"%s\"</td>\n",$_POST['class']);
+
 if($days['next']!="")
 	printf("<td style=\"text-align:right\"><input type=\"submit\" value=\"%s\" name=\"day\"></td>\n",$days['next']);
 printf("</tr></table></form>\n");
