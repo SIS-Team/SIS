@@ -40,8 +40,8 @@ for($count = 0;; $count++)	//Supplierungen ausgeben
 {
   if(empty($substitudes[$count][2]) == true) break;		//Abbruch wenn keine weiteren Einträge
 printf("<tr>");
- printf( "<td>".$substitudes[$count][7]."</td>");// supplierte Stunde 
  printf( "<td>".$substitudes[$count][2]."</td>");	//Klassenname
+ printf( "<td>".$substitudes[$count][7]."</td>");	//supplierte Stunde
  printf( "<td>".$substitudes[$count][4]."</td>");	//supplierender Lehrer
  printf( "<td>".$substitudes[$count][3]."</td>");	//Fach
  printf( "<td>".$substitudes[$count][11]."</td>");	//Bemerkung
@@ -54,7 +54,7 @@ function getSubstitude($date){	//Supplierungen des gewählten Datums abrufen
 	global $substitudes;
 			$where = "time = '".$date."'";
 				
-			$substitude_sql = selectSubstitude($where,"startHour")	
+			$substitude_sql = selectSubstitude($where,"clName")	
 			or die("MySQL-Error: ".mysql_error());
 			while($substitude = mysql_fetch_array($substitude_sql)) {    
 		 	$substitudes[]=$substitude;}	
