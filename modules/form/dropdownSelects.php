@@ -17,7 +17,7 @@ $temp =  mysql_query("SELECT short FROM sections");
 $selectSections = create($temp,"seShort");
 
 //Teacher
-$temp = mysql_query("SELECT short FROM teachers");
+$temp = mysql_query("SELECT short FROM teachers WHERE invisible = 'FALSE' ");
 $selectTeachers = create($temp,"teShort");
 
 //Rooms
@@ -25,11 +25,11 @@ $temp = mysql_query("SELECT name FROM rooms");
 $selectRooms = create($temp,"roName");
 
 //Subjects
-$temp = mysql_query("SELECT short FROM subjects");
+$temp = mysql_query("SELECT short FROM subjects WHERE invisible = 'FALSE' ");
 $selectSubjects = create($temp,"suShort");
 
 //Classes
-$temp = mysql_query("SELECT name FROM classes");
+$temp = mysql_query("SELECT name FROM classes WHERE invisible = 'FALSE' ");
 $selectClasses = create($temp,"clName");
 
 //Days
