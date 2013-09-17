@@ -51,24 +51,9 @@ printf("<table>\n");	//Tabellen Tag auf
   			//FÃƒÂ¯Ã‚Â¿Ã‚Â½r jeden Eintrag im Array field einmal diese Schleife durchlaufen
 			foreach($field as $f) {	
 				
-				if($content!=false && $f[2]!="dropdown")	//Wenn Content mitgeliefert wird und der Typ des aktuellen Inputs kein DropDown, dann Content austauschen
+				if($content!=false)	//Wenn Content mitgeliefert wird und der Typ des aktuellen Inputs kein DropDown, dann Content austauschen
 				{
 					$f[5]=$content[$f[0]];					//Content des aktuellen Inputs austauschen, Name des Array-Indizes ist der name des Inputs
-				}
-				else if($content!=false && $f[2]=="dropdown")	//Wenn Content mitgeliefert wird und der Typ des des aktuellen Inputs ein DropDown ist, dann Sonderbehandlung
-				{
-					foreach($f[5] as $ii => $a)				//FÃƒÂ¯Ã‚Â¿Ã‚Â½r jeden Inhalt(EintrÃƒÂ¯Ã‚Â¿Ã‚Â½g der DropDown Liste) wird ÃƒÂ¯Ã‚Â¿Ã‚Â½berprÃƒÂ¯Ã‚Â¿Ã‚Â½ft ob der content mit dem Einrag in der DropDown Liste ÃƒÂ¯Ã‚Â¿Ã‚Â½bereinstimmt --> ausgewÃƒÂ¯Ã‚Â¿Ã‚Â½hlt
-					{
-						if($a[0]==$content[$f[0]])			//Wenn ein Eintrag mit dem mitgegebenen Eintrag ÃƒÂ¯Ã‚Â¿Ã‚Â½bereinstimmt, dann in dem Aktuellen Input, beim Inhalt und dem Entsprechenden Eintrag select auf true setzen
-						{	
-							$f[5][$ii][1]=true;
-							break;
-						}
-						else								//sonst leer
-						{
-							$f[5][$ii][1]="";
-						}
-					}
 				}
 	
 				if ($f[2] == "checkbox") {		//Checkbox
@@ -105,24 +90,10 @@ printf("<table>\n");	//Tabellen Tag auf
 
 				}
 				else if($f[2] == "dropdown") {												//Dropdown MenÃƒÂ¯Ã‚Â¿Ã‚Â½ erstellen
-					$select="";
-					
-					foreach($f[5] as $p)													//F r jeden Men eintrag im Array f einen Eintrag erstellen
-						{
-							if($p[1]==true){													//wenn ausgew hlt selected
-								$select=$p[0];
-							}
-						}
 
-					printf("<td>%s <input value=\"%s\" autocomplete=\"off\" size=\"%s\" list=\"%s\" name=\"%s\"><datalist id=\"%s\"  %s>\n",
-							$f[1], $select, $f[3], $f[0], $f[0], $f[0], $f[6]);
+					printf("<td>%s <input value=\"%s\" autocomplete=\"off\" size=\"%s\" list=\"%s\" name=\"%s\"></td>\n",
+							$f[1], $f[5], $f[3], $f[0], $f[0]);
 							
-					foreach($f[5] as $p)													//FÃƒÂ¯Ã‚Â¿Ã‚Â½r jeden MenÃƒÂ¯Ã‚Â¿Ã‚Â½eintrag im Array f einen Eintrag erstellen
-					{
-							printf("<option value=\"%s\">\n", $p[0]);
-					}
-
-					printf("</datalist></td>\n");
 				}
 				
 			}
@@ -198,11 +169,11 @@ printf("<table>\n");	//Tabellen Tag auf
   			
   			
 			foreach($field as $f) {	
-				if($f[0]=="ID" && isset($index))						//Wenn Content mitgeliefert wird und der Typ des aktuellen Inputs kein DropDown, dann Content austauschen
+				if(isset($index))						//Wenn Content mitgeliefert wird und der Typ des aktuellen Inputs kein DropDown, dann Content austauschen
 				{
 					$f[5]=$stuff[$f[0]];					//Content des aktuellen Inputs austauschen, Name des Array-Indizes ist der name des Inputs
 				}
-				else if($f[2]=="dropdown" &&  isset($index))	//Wenn Content mitgeliefert wird und der Typ des des aktuellen Inputs ein DropDown ist, dann Sonderbehandlung
+				/*else if($f[2]=="dropdown" &&  isset($index))	//Wenn Content mitgeliefert wird und der Typ des des aktuellen Inputs ein DropDown ist, dann Sonderbehandlung
 				{
 					foreach($f[5] as $ii => $a)				//FÃƒÂ¯Ã‚Â¿Ã‚Â½r jeden Inhalt(EintrÃƒÂ¯Ã‚Â¿Ã‚Â½g der DropDown Liste) wird ÃƒÂ¯Ã‚Â¿Ã‚Â½berprÃƒÂ¯Ã‚Â¿Ã‚Â½ft ob der content mit dem Einrag in der DropDown Liste ÃƒÂ¯Ã‚Â¿Ã‚Â½bereinstimmt --> ausgewÃƒÂ¯Ã‚Â¿Ã‚Â½hlt
 					{
@@ -216,7 +187,7 @@ printf("<table>\n");	//Tabellen Tag auf
 							$f[5][$ii][1]="";
 						}
 					}
-				}
+				}*/
 				
 				
 				
@@ -255,24 +226,10 @@ printf("<table>\n");	//Tabellen Tag auf
 	  											
 				}
 				else if($f[2] == "dropdown") {												//Dropdown MenÃƒÂ¯Ã‚Â¿Ã‚Â½ erstellen
-					$select="";
-					
-					foreach($f[5] as $p)													//F r jeden Men eintrag im Array f einen Eintrag erstellen
-						{
-							if($p[1]==true){													//wenn ausgew hlt selected
-								$select=$p[0];
-							}
-						}
 
-					printf("<td>%s <input value=\"%s\" autocomplete=\"off\" size=\"%s\" list=\"%s\" name=\"%s\"><datalist id=\"%s\"  %s>\n",
-							$f[1], $select, $f[3], $f[0], $f[0], $f[0], $f[6]);
+					printf("<td>%s <input value=\"%s\" autocomplete=\"off\" size=\"%s\" list=\"%s\" name=\"%s\"></td>\n",
+							$f[1], $f[5], $f[3], $f[0], $f[0]);
 							
-					foreach($f[5] as $p)													//FÃƒÂ¯Ã‚Â¿Ã‚Â½r jeden MenÃƒÂ¯Ã‚Â¿Ã‚Â½eintrag im Array f einen Eintrag erstellen
-					{
-							printf("<option value=\"%s\">\n", $p[0]);
-					}
-
-					printf("</datalist></td>\n");
 				}
 				
 			}
@@ -299,26 +256,11 @@ printf("<table>\n");	//Tabellen Tag auf
   			//FÃƒÂ¯Ã‚Â¿Ã‚Â½r jeden Eintrag im Array field einmal diese Schleife durchlaufen
 			foreach($fieldRow1 as $f) {	
 				
-				if($content!=false && $f[2]!="dropdown")	//Wenn Content mitgeliefert wird und der Typ des aktuellen Inputs kein DropDown, dann Content austauschen
+				if($content!=false)	//Wenn Content mitgeliefert wird und der Typ des aktuellen Inputs kein DropDown, dann Content austauschen
 				{
 					$f[5]=$content[$f[0]];					//Content des aktuellen Inputs austauschen, Name des Array-Indizes ist der name des Inputs
 				}
-				else if($content!=false && $f[2]=="dropdown")	//Wenn Content mitgeliefert wird und der Typ des des aktuellen Inputs ein DropDown ist, dann Sonderbehandlung
-				{
-					foreach($f[5] as $ii => $a)				//FÃƒÂ¯Ã‚Â¿Ã‚Â½r jeden Inhalt(EintrÃƒÂ¯Ã‚Â¿Ã‚Â½g der DropDown Liste) wird ÃƒÂ¯Ã‚Â¿Ã‚Â½berprÃƒÂ¯Ã‚Â¿Ã‚Â½ft ob der content mit dem Einrag in der DropDown Liste ÃƒÂ¯Ã‚Â¿Ã‚Â½bereinstimmt --> ausgewÃƒÂ¯Ã‚Â¿Ã‚Â½hlt
-					{
-						if($a[0]==$content[$f[0]])			//Wenn ein Eintrag mit dem mitgegebenen Eintrag ÃƒÂ¯Ã‚Â¿Ã‚Â½bereinstimmt, dann in dem Aktuellen Input, beim Inhalt und dem Entsprechenden Eintrag select auf true setzen
-						{	
-							$f[5][$ii][1]=true;
-							break;
-						}
-						else								//sonst leer
-						{
-							$f[5][$ii][1]="";
-						}
-					}
-				}
-	
+					
 				if ($f[2] == "checkbox") {		//Checkbox
 				
 					if($f[5]==true){			//Wenn gecheckt, dann Variable checked auf checked setzen
@@ -371,15 +313,8 @@ printf("<table>\n");	//Tabellen Tag auf
 							}
 						}
 
-					printf("<td>%s <input value=\"%s\" autocomplete=\"off\" size=\"%s\" list=\"%s\" name=\"%s\"><datalist id=\"%s\"  %s>\n",
-							$f[1], $select, $f[3], $f[0], $f[0], $f[0], $f[6]);
-							
-					foreach($f[5] as $p)													//FÃƒÂ¯Ã‚Â¿Ã‚Â½r jeden MenÃƒÂ¯Ã‚Â¿Ã‚Â½eintrag im Array f einen Eintrag erstellen
-					{
-							printf("<option value=\"%s\">\n", $p[0]);
-					}
-
-					printf("</datalist></td>\n");
+					printf("<td>%s <input value=\"%s\" autocomplete=\"off\" size=\"%s\" list=\"%s\" name=\"%s\"></td>\n",
+							$f[1], $f[5], $f[3], $f[0], $f[0]);							
 				}
 				
 			}
