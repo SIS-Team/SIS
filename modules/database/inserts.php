@@ -19,7 +19,7 @@ $post=$_POST;
 //print_r($post);
 unset($post["save"]);
 
-$classesInsert=array("ID" => "","name" => "","sectionFK" => "","teacherFK" => "","roomFK" => "");
+$data=array("ID" => "","name" => "","sectionFK" => "","teacherFK" => "","roomFK" => "");
 
 $data["ID"]=$post["ID"];
 $data["name"]=$post["clName"];
@@ -35,6 +35,51 @@ if(empty($post["delete"]))
 	saveupdate($data,"classes");
 else
 	delete($data["ID"],"classes");
+}
+
+
+function lessons(){
+
+$post=$_POST;
+//print_r($post);
+unset($post["save"]);
+
+$lessonsInsert=array("ID" => "","lessonBaseFK" => "","roomFK" => "","teachersFK" => "","subjectFK" => "");
+$lessonsBaseInsert=array("ID" => "","startHourFK" => "","endHourFK" => "","classFK" => "");
+
+$lessonsInsert["ID"]=$post["ID"];
+
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE hour='".$post["hour"]."' AND weekdayShort='".$post["day"]."'"));
+$lessonsBaseInsert["startHourFK"] = $temp["ID"];
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE hour='".($post["hour"]+$post["length"]-1)."' AND weekdayShort='".$post["day"]."'"));
+$lessonsBaseInsert["endHourFK"] = $temp["ID"];
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM classes WHERE name='".$post["class"]."'"));
+$lessonsBaseInsert["classFK"] = $temp["ID"];
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM lessonsBase WHERE startHourFK='".$lessonsBaseInsert["startHourFK"]."' AND classFK='".$lessonsBaseInsert["classFK"]."'"));
+$lessonsBaseInsert["ID"] = $temp["ID"];
+
+if($lessonsBaseInsert['ID']==""){
+	saveupdate($lessonsBaseInsert,"lessonsBase");
+	$temp = mysql_fetch_array(mysql_query("SELECT ID FROM lessonsBase WHERE startHourFK='".$lessonsBaseInsert["startHourFK"]."' AND endHourFK='".$lessonsBaseInsert["endHourFK"]."' AND classFK='".$lessonsBaseInsert["classFK"]."'"));
+	$lessonsBaseInsert["ID"] = $temp["ID"];
+}
+
+$lessonsInsert["lessonBaseFK"]=$lessonsBaseInsert["ID"];
+
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM teachers WHERE short='".$post["teShort"]."'"));
+$lessonsInsert["teachersFK"] = $temp["ID"];
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM rooms WHERE name='".$post["roName"]."'"));
+$lessonsInsert["roomFK"] = $temp["ID"];
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM subjects WHERE short LIKE '".$post["suShort"]."'"));
+$lessonsInsert["subjectFK"]=$temp["ID"];
+
+//print_r($lessonsBaseInsert);
+//echo ",";
+//print_r($lessonsInsert);
+
+saveupdate($lessonsInsert,"lessons");
+
+
 }
 
 function missingClasses(){
