@@ -36,8 +36,6 @@ if(!empty($post["invisible"]))
 
 if(empty($post["delete"]))
 	saveupdate($data,"classes");
-else
-	delete($data["ID"],"classes");
 }
 
 
@@ -80,8 +78,20 @@ $lessonsInsert["subjectFK"]=$temp["ID"];
 //echo ",";
 //print_r($lessonsInsert);
 
-saveupdate($lessonsInsert,"lessons");
+if(empty($post["delete"]))
+	saveupdate($lessonsInsert,"lessons");
+else{
 
+$lessonsbaseID=$lessonsInsert["lessonBaseFK"];
+
+$sql="DELETE FROM lessons WHERE lessonBaseFK = '".$lessonsbaseID."'";
+mysql_query($sql);
+$sql="DELETE FROM lessonsBase WHERE ID = '".$lessonsbaseID."'";
+mysql_query($sql);
+
+
+
+}
 
 }
 
@@ -161,8 +171,6 @@ $data["teacherFK"]=$temp["ID"];
 
 if(empty($post["delete"]))
 	saveupdate($data,"rooms");
-else
-	delete($data["ID"],"rooms");
 	
 }
 
@@ -182,8 +190,6 @@ $data["teacherFK"]=$temp["ID"];
 
 if(empty($post["delete"]))
 	saveupdate($data,"sections");
-else
-	delete($data["ID"],"sections");
 	
 }
 
@@ -204,8 +210,6 @@ if(!empty($post["invisible"]))
 
 if(empty($post["delete"]))
 	saveupdate($data,"subjects");
-else
-	delete($data["ID"],"subjects");
 	
 }
 
@@ -268,8 +272,6 @@ if(!empty($post["invisible"]))
 
 if(empty($post["delete"]))
 	saveupdate($data,"teachers");
-else
-	delete($data["ID"],"teachers");
 	
 }
 
