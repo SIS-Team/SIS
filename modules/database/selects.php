@@ -88,7 +88,7 @@ function selectRooms($where,$order){
 
 function selectTeacher($where,$order){
 
-	$sql= "SELECT teachers.ID, teachers.name as teName, teachers.short as teShort, teachers.display, sections.short as seShort FROM teachers LEFT JOIN sections ON teachers.sectionFK=sections.ID";	//Stamm sql-Befehl
+	$sql= "SELECT teachers.ID, teachers.name as teName, teachers.short as teShort, teachers.display, sections.short as seShort, teachers.invisible FROM teachers LEFT JOIN sections ON teachers.sectionFK=sections.ID";	//Stamm sql-Befehl
 
 	if (!empty($where)) $sql .= " WHERE " . $where; 	//Wenn where Variable gesetzt ist
 	if (!empty($order)) $sql .= " ORDER BY " . $order;	//Wenn order Variable gesetzt ist
@@ -108,7 +108,7 @@ function selectTeacher($where,$order){
 
 function selectClass($where,$order){
 
-	$sql= "SELECT classes.ID, classes.name as clName, sections.short as seShort, teachers.short as teShort, rooms.name as roName FROM classes LEFT JOIN sections ON sections.ID=classes.sectionFK LEFT JOIN teachers ON teachers.ID=classes.teacherFK LEFT JOIN rooms ON rooms.ID=classes.roomFK ";	//Stamm sql-Befehl
+	$sql= "SELECT classes.ID, classes.name as clName, sections.short as seShort, teachers.short as teShort, rooms.name as roName, classes.invisible FROM classes LEFT JOIN sections ON sections.ID=classes.sectionFK LEFT JOIN teachers ON teachers.ID=classes.teacherFK LEFT JOIN rooms ON rooms.ID=classes.roomFK ";	//Stamm sql-Befehl
 
 	if (!empty($where)) $sql .= " WHERE " . $where; 	//Wenn where Variable gesetzt ist
 	if (!empty($order)) $sql .= " ORDER BY " . $order;	//Wenn order Variable gesetzt ist

@@ -22,10 +22,10 @@ if($_POST['save']!="")
 
 //Formularmaske
 $fields = array(
-	array( "ID", 	"",			 		"hidden", 	"",		"",		"",		""),
-	array( "name", 	"Name: ", 			"text", 	"50",	"",		"",		""),
-	array( "short", "K&uuml;rzel: ", 	"text", 	"5",	"",		"",		""),
-	array( "new", 	"Neues Fach: ", 	"checkbox",	"",		"",		"",		""),
+	array( "ID", 		"",			 		"hidden", 	"",		"",		"",		""),
+	array( "name", 		"Name: ", 			"text", 	"50",	"",		"",		""),
+	array( "short", 	"K&uuml;rzel: ", 	"text", 	"5",	"",		"",		""),
+	array( "invisible", "Unsichtbar: ", 	"checkbox",	"",		"",		"",		""),		
 	);
 
 //Seitenheader

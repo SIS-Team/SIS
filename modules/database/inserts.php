@@ -19,7 +19,7 @@ $post=$_POST;
 //print_r($post);
 unset($post["save"]);
 
-$data=array("ID" => "","name" => "","sectionFK" => "","teacherFK" => "","roomFK" => "");
+$data=array("ID" => "","name" => "","sectionFK" => "","teacherFK" => "","roomFK" => "","invisible" => "");
 
 $data["ID"]=$post["ID"];
 $data["name"]=$post["clName"];
@@ -30,6 +30,9 @@ $temp = mysql_fetch_array(mysql_query("SELECT ID FROM teachers WHERE short='".$p
 $data["teacherFK"] = $temp["ID"];
 $temp = mysql_fetch_array(mysql_query("SELECT ID FROM rooms WHERE name='".$post["roName"]."'"));
 $data["roomFK"] = $temp["ID"];
+if(!empty($post["invisible"]))
+	$data["invisible"]=true;
+
 
 if(empty($post["delete"]))
 	saveupdate($data,"classes");
@@ -190,11 +193,14 @@ $post=$_POST;
 //print_r($post);
 unset($post["save"]);
 
-$data=array("ID" => "","name" => "","short" => "");
+$data=array("ID" => "","name" => "","short" => "","invisible" => "");
 
 $data["ID"]=$post["ID"];
 $data["name"]=$post["name"];
 $data["short"]=$post["short"];
+if(!empty($post["invisible"]))
+	$data["invisible"]=true;
+
 
 if(empty($post["delete"]))
 	saveupdate($data,"subjects");
@@ -243,6 +249,29 @@ else
 	
 }
 
+function teachers(){
+
+$post=$_POST;
+//print_r($post);
+unset($post["save"]);
+
+$data=array("ID" => "","name" => "","short" => "","display" => "","sectionFK" => "","invisible" => "");
+
+$data["ID"]=$post["ID"];
+$data["name"]=$post["teName"];
+$data["short"]=$post["teShort"];
+$data["display"]=$post["display"];
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM sections WHERE short='".$post["seShort"]."'"));
+$data["sectionFK"] = $temp["ID"];
+if(!empty($post["invisible"]))
+	$data["invisible"]=true;
+
+if(empty($post["delete"]))
+	saveupdate($data,"teachers");
+else
+	delete($data["ID"],"teachers");
+	
+}
 
 
 function saveUpdate($insert,$table){

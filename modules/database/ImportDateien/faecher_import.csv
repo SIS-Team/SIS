@@ -1,0 +1,287 @@
+Soziales Lernen;SOZL
+ORDINARIAT;ORD
+RELIGION KATHOL.;RK
+RELIGION ISLAM.;RISL
+RELIGION EVANG.;RE
+Religion Serbisch Orthodox;RSOR
+ITALIENISCH;I
+Spanisch;SPA
+Deutsch;D
+Englisch;E1
+GESCHICHTE;G
+Geschichte und politische Bildung;GPB
+GESCHICHTE U.S.;GSK
+Geographie und Wirtschaftskunde;GWK
+GEOGRAPHIE;GE
+Wirtschaft u. Rech;WIR3
+WIRT.BD.R.+STBKDE.;WBRS
+Betriebstechnik;BET
+BETRIEBSL.U.KALK.;BTK1
+LEIBES?BUNGEN KNAB;LUK
+"LEIBES?B.KNAB. ?B;";LUKU
+Mathematik und angewandte Mathematik;MAM
+DARST. GEOMETRIE;DG1
+Angewandte Physik;APH
+Phsysik und angewandte Physik;P
+ANG.CHEM.?KOLOGIE;ACOL
+CHEMIE U.UMWELTTE.;CACU
+ELEKTRON.DATENVER.;EDAD
+GRUNDLAG.D.MASCHB.;GMB
+MASCHINENBAU;MB
+MASCHINENKUNDE;MK
+GRUNDLAGEN DER ELEKTROTECHNIK;GET
+ET U. ELEKTRONIK;ETE
+ELEKTROTECHNIK;ET
+AKTUELLE FACH L4A;AF4A
+ELEKTR.ME?TECHNIK;EMT
+ELEKT.MASCH.U.STRO;EMS
+ELEKT.MASCHINEN;EMAS
+ELEKT. ANLAGEN;EA
+EL: ANTRIEBE U LE;EALE
+ELEKTRONIK U. M.;ELME
+ELEKTRONIK U. NT.;ELN
+INDUST.ELEKTR.REG.UEB.;IERU
+INDUST.ELEKTR.REG.;IERT
+MASCH.ELEMENTE;MEL
+F?RDERT. u. T. LOG;FTTL
+F?RDERTECHNIK;FOT
+STR?MUNGSM. U. ANL;SMA1
+STR?MUNGSMASCHINEN;SM
+DG U. KONSTURKT.;DGKU
+KONSTRUKTIONS?BUNG;KU
+ENERGIET.U.LEIST.E;ETLE
+ELEKTR.U.DIG.TECHN;EDT
+NACHR.TECHN.;NT
+HF U.IMPULSTECHN.;HIT
+TECHN.INFORMATIK;TINF
+ME?TECHN-DIG.TECHN;MTDT
+Fertigungstechnik;FTKL
+Laboratorium;LA1
+WERKSTAETTENLAB.;WLA
+WERKSTAETTE;WE5A
+Me?- Steurungs- und Regelungstechnik;MSRT
+EL.ST.+REGELUNGST.;ESR
+FRANZOESISCH;F
+COMPUTERSTANDSOFTW;COSS
+QUALIT?TSSICHERUNG;QUAL
+CHEMIE;KCH
+Physik;KPH
+MATHEM.U.DG;KMDG
+AUDIO-VIS.MEDIEN;KAUD
+LABORATORIEN;KLA
+GEOGR.U.GESCHICHTE;KGGS
+SCH?LERB?CHEREI;KSBU
+BETRIEBSWIRT.GST.;KBWG
+FACHB?CHEREI;KFBU
+ENERGIE U. UMWT.;EUT1
+EL: ANLAGEN UMWELT;EAUT
+LEHRERB?CHEREI;KLBU
+BILDUNGSBERATER;BIB
+SICHERHEITSING.;SICH
+WERKST.LEITER;WRKL
+ABTEILUNGSVORST.;ABTV
+DIREKTOR;DIR
+ADM.UNTERST.DIREKT;ADM
+MITVERWEND. FREMDS;MV
+MITVERWENDUNG  L1;MV1
+MITVERWENDUNG  L2;MV2
+MITVERWENDUNG  L3;MV3
+MITVERWENDUNG  L4A;MV4A
+MITVERWENDUNG  L5A;MV5A
+FACHTH. UNTER. G.;KFTG
+K. LABOR MB;KLAM
+TURNSAALEINRICHTG.;KTSE
+KOMMUNIKATIONSTR.;KMT
+LABOR E-TECHNIK;KLAE
+LABOR N-TECHNIK;KLAN
+EL.DV U. BETR.INF;EBIN
+Programmieren und Projektentwicklung;PRPE
+Mechanik;ME
+Mechanik und Maschinenelemente;MME
+WERKSTOFF U.FERTT.;WSFT
+FERTIGUNGSTECHNIK;FET
+MITARBEITERF?HRUNG;MITF
+ENERGIE-UMWELTTECH;EUTG
+B?CHEREI;NBU
+EL.MASCH.U.LEISTUN;EML
+STEUER-REGELUNGST.;SRUT
+ANG. MATHEMATIK;AM
+Betriebsinformatik;BINF
+ANGE. INFORMATIK;AINF
+ALLG. E-TECHNIK;AET
+ANG. PHYSIK UND CH;APHC
+GRUNDL. ET. U. EL.;GETE
+NEBENLEISTG. DVA;NDVA
+NEBENLEISTG. CAD;NCAD
+KONSTR. U. PRODUKT;KONP
+Konstruktion und Projektmanagement;KOP1
+Technische Mechanik und Berechnung;TMB
+LEIBES?BUNG;LU
+Komm. u. Pr?;KPR2
+Grundlagen der EDV;GEDV
+Netzwerktechnik;NWTK
+Ingenieurprojekt;ING1
+Indust. Elektronik;IE
+Telekomm.-Technik;TKTE
+HF-Technik;HFTE
+Impulstechnik;IT
+Telek.u.HF-Technik;TKHF
+KOMMUNIK. u. PR?S.;KPT2
+"Managementtechnik; L1";MMTE
+Nebenleistungen Abendschule;SKOR
+Nebenleistungen;P93
+Nebenleistungen einrechenbar;P93E
+bes.Nebenleistung.;P93A
+Mikroelektronik;MIL
+Verbrennungsmotore;VMOT
+Kolbenmaschinen;KM
+Netzwerktechnik;NWK
+Qual.Sich.u.Prod.M;QUPM
+Internet Engineering;INI1
+Automatisierungstechnik;AUT
+ELEKTRONIK;EL
+Elektrische Antriebe u. Anlagen;EAUA
+Betriebssysteme u. Netzwerke;BUN
+Industrielle Informationstechnik;INIT
+Projektengineering;PEN
+Qualit?s- und Produktmanagement;QPMA
+Softwareengineering;SEN
+Mikroelektronik und Digitaltechnik;MIDI
+Ethik;ETH
+Computertechnik;COT1
+Elektrische Anlagentechnik;EANT
+Naturwissenschaftliche Grundlagen;NWG
+Wirtschaftsgeschichte u. pol.Bildung;WGPB
+IT-Support;ITSU
+UPIS-RAP-Betreuung;UPIS
+Kommunikation und Projektmanagement;KOPM
+Naturwissenschaftliche Grundlagen;NWG2
+Naturwissenschaften;NW2
+Bewegung und Sport;BESP
+Darstellende Geometrie und Grundlagen der Konstruktion;DGKO
+Technische Physik;TNPH
+Betriebsinformatik und Programmieren;BIPR
+Maschinenelemente und Konstruktions?ungen;MELU
+Technisches Praktikum;TP5A
+Religion Altkatholisch;RAK
+;NWGL
+Deutsch und Kommunikation;DEKM
+Angwandte Physik des Fachgebietes;APHF
+Mechatronik;MTNK
+Werkst?te u.Produktionstechnik;WEPT
+Betriebsinformatik und betriebl. Informationssysteme;BIBI
+Projekte und Projektmanagement;PPM1
+Indurstrieinformatik, Produktion und Logistik;IPL
+;HY
+;ESF
+Grundlagen der Elektronik;GDE
+Wirtschaftsrecht;WRT3
+Deutsch und Kommunikation;DUK
+Betriebstechnik und technische Kalkulation;BTTK
+Grundlagen der Mechatronik;GMT
+Netzwerktechnik mit ?bungen;NWTU
+Informatik;INFO
+Physik;PH3
+Darstellende Geometrie;DG2
+Mathematik_2;M2
+AGR3;AGR3
+F?rungstechnik und Kommunikation;FTK3
+Physik des Fachgebietes;PHF
+;FTPM
+Physik und Chemie;PHC1
+Androgene Koordination;ANDK
+Betriebs- und Volkswirtschaft;BVW
+Rechnungswesen mit Computereinsatz;RWC
+Sprachfoerderung spezieller Zielgruppen;SSZ
+Fahrzeugtechnik;FTEC
+;BEGPB
+Neue Mittelschule-Deutsch;NMD
+Neue Mittelschule-Englisch;NME
+Neue Mittelschule Geographie;NMG3
+Mittleres Management;MMM
+Geografie, Geschichte und politische Bildung;GGP
+Messtechnik und Regelungssysteme;MTRS
+Digitale Systeme und Computersysteme;DIC1
+Kommunikationssysteme und -netze;KSN1
+Fachspezifische Softwaretechnik;FSST
+Prototypenbau elektronischer Systeme;PBE3
+Prototypenbau elektronischer Systeme;PBE4
+Sozial- und Personalkompetenz;SOPK
+Neue Mittelschule - Einf?rung in die Informatik;NMEI
+Bewegung und Sport - Knaben;BSPK
+Bewegung und Sport - M?chen;BSPM
+Neue Mittelschule-Lerncoaching;NMLC
+Neue Mittelschule - Deutsch Teamteaching;NMD3
+Neue Mittelschule - Englisch Teamteaching;NME3
+Neue Mittelschule - Mathematik;NMM
+Luftfahrzeugbau;LFB
+Zweitsprache Deutsch;ZD
+BIFI;BIFI
+Schulqualit?sprozessmanagement;SQPM
+Energiesysteme;ES1
+Computergest?zte Projektentwicklung;CPE
+Bildungsstandards;BIST
+Religion Buddhistisch;RBUD
+Hardwareentwicklung;HWE1
+Hardwareentwicklung;HWE-GET
+Hardwareentwicklung;HWE-EDT
+Hardwareentwicklung;HWE-FTKL
+Naturwissenschaftliche Grundlagen;NWG2-C
+Naturwissenschaftliche Grundlagen;NWG2-P
+Naturwissenschaften;NW2-C
+Naturwissenschaften;NW2-P
+Natutrwissenschaften;NW2-B
+Kommunikationssysteme und - netze;KSN1-INI
+Kommunikationssysteme und  -netze;KSN1-TKHF
+Geografie, Geschichte und politische Bildung;GGP-G
+Geografie, Geschichte und politische Bildung;GGP-H
+Fachspezifische Softwaretechnik;FSST-FTKL
+Messtechnik und Regelsysteme;MTRS-IE
+Messtechnik und Regelsysteme;MTRS-EDT
+Softwareentwicklung und Projektmanagement;SEPM
+Mechatronik;MT
+Informationssysteme;IS
+FTKL-Labor;LA-FTKL
+Propjektmamagement;PM
+Antriebstechnik;AT1
+Fachspezifische Informationstechnik;FI
+Deutsch;D3
+Hardware Laboratorium;HLA3
+;BN
+;XABS
+Pers?lichkeiitsbildung;PSB
+Geschichte und Geographie;GUG
+Sprechstunde;Sprech
+Erzieher;ERZ
+Coaching;COA3
+Automatisierungstechnik;AUT-E
+Automatisierungstechnik;AUT-W
+Automatisierungstechnik;AUT-CAD
+Automatisierungstechnik;AUT-K
+Netwerke und Embedded Software;NES
+Betriebstechnik;BET-M
+Unternehmensf?rung und Wirtschaftsrecht;UFW
+Unternehmensf?rung und Wirtschaftsrecht;UFW-B
+Unternehmensf?rung und Wirtschaftsrecht;UFW-P
+Informationssysteme;INFI
+Netzwerke und Embedded Software;NWES
+Netzwerke und Embedded Software;NWES-D
+Netzwerke und Embedded Software;NWES-E
+Softwareentwicklung und Projektmanagement;SWP
+Softwareentwicklung und Projektmanagement;SWP-SP
+Softwareentwicklung und Projektmanagement;SWP-OP
+Softwareentwicklung und Projektmanagement;SWP-W
+Softwareentwicklung und Projektmanagement;SWP-SEPM
+Informationssysteme;INFI-G
+Elektronik Labor;ELA
+Wirtschaft und Recht (Recht);WIR-R
+Wirtschaft und Recht (Wirtschaft);WIR-W
+Industrieelektronik 1;IE1
+Maschinen und Anlagen;MANL
+Content and language integrated learning;CLIL-FF
+Energiesysteme Vertiefung;ES2
+;AUT2
+;FI2
+Zentralausschuss BMHS;ZAB
+P?. Hochschule, Lehrt?igkeit;PHL
+P?. Hochschule, nicht unetrrichtl. T?igkeit;PHNL

@@ -26,7 +26,8 @@ $fields = array(
 	array( "clName", 	"Name: ", 				"text", 	"8",	"",		"",					""),
 	array( "seShort", 	"Abteilung: ", 			"dropdown", "5",	"",		$selectSections, 	""),
 	array( "teShort",	"Klassenvorstand: ", 	"dropdown",	"",		"",		$selectTeachers, 	""),
-	array( "roName", 	"Stammklasse: ", 		"dropdown",	"",		"",		$selectRooms, 		""),	
+	array( "roName", 	"Stammklasse: ", 		"dropdown",	"",		"",		$selectRooms, 		""),
+	array( "invisible", "Unsichtbar: ", 		"checkbox",	"",		"",		"",			 		""),		
 	);
 
 //Seitenheader

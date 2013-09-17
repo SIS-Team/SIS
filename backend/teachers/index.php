@@ -14,6 +14,11 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/form/form.php");					//Stell 
 include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/form/dropdownSelects.php");		//Stellt die Listen für die Dropdownmenüs zur Verfügung
 include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
 include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
+include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/database/inserts.php");			//Stellt die insert-Befehle zur Verf�gung
+
+if($_POST['save']!="")
+	teachers();
+
 
 //Formularmaske
 $fields = array(
@@ -21,7 +26,8 @@ $fields = array(
 	array( "teName", 	"Name: ", 				"text", 	"25",	"",		"",					""),
 	array( "teShort", 	"K&uuml;rzel: ", 		"text", 	"5",	"",		"",					""),
 	array( "display", 	"Kurzname: ", 			"text",		"20",	"",		"",					""),
-	array( "seShort",	"Stammabteilung: ", 	"dropdown",	"5",	"",		$selectSections,	""),	
+	array( "seShort",	"Stammabteilung: ", 	"dropdown",	"5",	"",		$selectSections,	""),
+	array( "invisible", "Unsichtbar: ", 		"checkbox",	"",		"",		"",			 		""),			
 	);
 
 //Seitenheader
