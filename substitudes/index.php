@@ -12,9 +12,9 @@
 	 * 	0.1.0:  09. 09. 2013, Weiland Mathias  - erste Version
 	 */
 	 
-include($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
-include($_SERVER['DOCUMENT_ROOT'] . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
-include($_SERVER['DOCUMENT_ROOT'] . "/modules/other/dateFunctions.php");		//Stellt Datumsfunktionen zur Verfügung
+include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
+include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
+include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/other/dateFunctions.php");		//Stellt Datumsfunktionen zur Verfügung
 
 
 $substitudes = array();
@@ -22,23 +22,27 @@ $substitudes = array();
 //Seitenheader
 pageHeader("Formular","main");
 
-printf("<table>");
-printf("<tr>");
+echo "<div class ='keys'>";
+echo "St. ... supplierte Stunde; ";
+echo "Sup. ...Supplierlehrer; ";
+echo "urs. ... ursprünglicher Lehrer; ";
+echo "</div>";
 for($counter = 0; $counter <=2; $counter++)
 {
-	printf("<td>"); 
+	echo "<div id='d" . $counter . "' class='column background'>";
 		$day = captureDate($counter);		//aktuelles Datum abfragen
-		printf("Supplierungen vom ".$day);
+		echo "Supplierungen vom ".$day;
 		 
 		//Tabellenkopfausgabe
-		printf("<table border = 1 frame = void >");
-		printf("<tr>");
-		printf("<td>Klasse</td>");
-		printf("<td>Stunde</td>");
-		printf("<td>Zu supplieren durch</td>");
-		printf("<td>Fach</td>");
-		printf("<td>Bemerkung</td>");
-		printf("</tr>");
+		echo "<table>";
+		echo "<tr>";
+		echo "<th>Klasse</th>";
+		echo "<th>St.</th>";
+		echo "<th>Sup</th>";
+		echo "<th>Fach</th>";
+		echo "<th>urs.</th>";
+		echo "<th>Bemerkung</th>";
+		echo "</tr>";
 		
 		
 		getSubstitude($day);		//Supplierungen des gewählten Datums abrufen
@@ -46,20 +50,22 @@ for($counter = 0; $counter <=2; $counter++)
 		for($count = 0;; $count++)	//Supplierungen ausgeben
 		{
 		  if(empty($substitudes[$count][2]) == true) break;		//Abbruch wenn keine weiteren Einträge
-		printf("<tr>");
-		 printf( "<td>".$substitudes[$count][2]."</td>");	//Klassenname
-		 printf( "<td>".$substitudes[$count][7]."</td>");	//supplierte Stunde
-		 printf( "<td>".$substitudes[$count][4]."</td>");	//supplierender Lehrer
-		 printf( "<td>".$substitudes[$count][3]."</td>");	//Fach
-		 printf( "<td>".$substitudes[$count][11]."</td>");	//Bemerkung
-		 printf( "</tr>");
+		 echo "<tr>";
+		 echo "<td>".$substitudes[$count][2]."</td>";	//Klassenname
+		 echo "<td>".$substitudes[$count][7]."</td>";	//supplierte Stunde
+		 echo "<td>".$substitudes[$count][4]."</td>";	//supplierender Lehrer
+		 echo "<td>".$substitudes[$count][3]."</td>";	//Fach
+	 	 echo "<td>".$substitudes[$count][15]."</td>";	//ursprünglicher Lehrer
+		 echo "<td class='comment background'>".$substitudes[$count][11]."</td>";	//Bemerkung
+		 echo "</tr>";
 		
 		}
 		$substitudes = array();
-	
-	printf("</td>");
+		
+		echo "</table>";
+	echo "</div>";
 }
-printf("</tr>");
+
 function getSubstitude($date){	//Supplierungen des gewählten Datums abrufen
 	global $substitudes;
 			$where = "time = '".$date."'";

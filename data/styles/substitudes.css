@@ -1,0 +1,43 @@
+.column {
+	position: absolute;
+	top: 150px;
+	width: 400px;
+	font-size: 20px;
+	
+}
+
+.column table td {
+ 	border-collapse: collapse;
+ 	border: solid 2px white;
+ 	
+}
+
+#d0 {
+	left: 5px;
+	border-right: solid 1px white;
+}
+
+#d1 {
+	left: 410px;
+	border-right: solid 1px white;
+}
+
+#d2 {
+	left: 815px;
+}
+
+.keys {
+ 	color: white;
+	display: inline;
+
+}
+
+.comment {
+	width: 100%;
+}
+
+.background {
+		/*background-color: #EEEEEE;*/
+	opacity: 1;
+	
+}
