@@ -228,6 +228,9 @@ $stHour = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort
 $enHour = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".$post["endHour"]."'"));
 $class = mysql_fetch_array(mysql_query("SELECT ID FROM classes WHERE name='".$post["clName"]."'"));
 $temp = mysql_fetch_array(mysql_query("SELECT lessons.ID FROM lessons INNER JOIN lessonsBase ON lessonsBase.ID = lessons.lessonBaseFK WHERE lessonsBase.startHourFK='".$stHour["ID"]."' AND lessonsBase.endHourFK='".$enHour["ID"]."' AND lessonsBase.classFK='".$class["ID"]."'"));
+
+findFK($post);
+
 $data["lessonFK"]=$temp["ID"];
 $temp = mysql_fetch_array(mysql_query("SELECT ID FROM subjects WHERE short LIKE '".$post["suShort"]."'"));
 $data["subjectFK"]=$temp["ID"];
@@ -333,5 +336,36 @@ mysql_query($sql);
 
 }
 
+function findFK($post){
+
+$day = weekday($post["time"]);
+$stHour = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".$post["startHour"]."'"));
+$enHour = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".$post["endHour"]."'"));
+$class = mysql_fetch_array(mysql_query("SELECT ID FROM classes WHERE name='".$post["clName"]."'"));
+
+$lessonsBaseID = mysql_fetch_array(mysql_query("SELECT lessonsBaes.ID FROM lessonsBase WHERE lessonsBase.startHourFK='".$stHour["ID"]."' AND lessonsBase.endHourFK='".$enHour["ID"]."' AND lessonsBase.classFK='".$class["ID"]."'"));
+
+$sql=" SELECT lessons.ID, lessons.teachersFK FROM lessons INNER JOIN lessonsBase ON lessonsBase.ID = lessons.lessonBaseFK WHERE lessonsBase.ID='".$lessonsBaseID."'";
+
+
+while($row = mysql_fetch_array(mysql_query($sql))){
+
+$lessons[]=$row;
+
+}
+
+$sql=" SELECT lessons.ID FROM lessons INNER JOIN lessonsBase ON lessonsBase.ID = lessons.lessonBaseFK WHERE lessonsBase.startHourFK='".$stHour["ID"]."' AND lessonsBase.endHourFK='".$enHour["ID"]."' AND lessonsBase.classFK='".$class["ID"]."'";
+
+
+while($row = mysql_fetch_array(mysql_query($sql))){
+
+
+
+
+}
+
+
+
+}
 
 ?>
