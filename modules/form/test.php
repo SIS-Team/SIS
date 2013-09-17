@@ -1,41 +1,90 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<script type="text/javascript">
+function Visibility() {
+	
+var temp = parseInt(document.getElementById('inputText').value);	
 
-<head>
-<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-<title>Ohne_Titel_1</title>
-</head>
-
-<body>
-<?php
-include($_SERVER['DOCUMENT_ROOT'] . "/modules/formular/formular.php");
-include($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Connect.php");
-include($_SERVER['DOCUMENT_ROOT'] . "/modules/database/selects.php");
-
-
-$select = array(
-	array( "test1", 	"Test1", 	""),
-	array( "test2", 	"Test2", 	""),
-	array( "test3", 	"Test3", 	""),
-	);
-
-
-$fields = array(
-	array( "ID", 	"",			 	 "hidden", 	"",		"",	"",	""),
-	array( "name", 	"Name: ", 		 "text", 	"10",	"",	"",	""),
-	array( "short", "K&uuml;rzel: ", "text", 	"10",		"",	"",	""),		
-	);
-
-$result = selectAll("days","","ID DESC");
-while ($row = mysql_fetch_array($result)){
-	form_new("get","",$fields,$row);
+switch(temp){
+	case 2: 
+		var zahl = 2; 
+		break;
+	case 3: 
+		var zahl = 3;
+		break; 
+	case 4: 
+		var zahl = 4; 
+		break;
+	case 5: 
+		var zahl = 5; 
+		break;
 }
 
-form_new("get","",$fields,false);
+var i=2;
+
+document.getElementById('visibleRow2').style.visibility="collapse";
+document.getElementById('visibleRow3').style.visibility="collapse";
+document.getElementById('visibleRow4').style.visibility="collapse";
+document.getElementById('visibleRow5').style.visibility="collapse";
+
+
+do{
+
+document.getElementById('visibleRow'+i).style.visibility="visible";
+
+i++;
+}while(i<=zahl);
+	
+
+}
+
+
+function test(){
+
+var texts;
+text=document.getElementById('test1').value;
+
+document.getElementById('test2').value=text;
+document.getElementById('test3').value=text;
+
+
+}
+</script>
+
+<html>
+
+<body>
+
+<?php
+function prevNextDay($d) {
+	$days = array("Mo", "Di", "Mi", "Do", "Fr");
+	$arr=array_keys($days,$d);
+	
+	$key=implode($arr);
+	
+	if($key>0 && $key<4){
+		$prev=$days[$key-1];
+		$next=$days[$key+1];
+	}
+	else if($key==0){
+		$prev="";
+		$next=$days[$key+1];
+	}
+	else if($key==4){
+		$next="";
+		$prev=$days[$key-1];
+	}
+
+	$array['prev']=$prev;
+	$array['next']=$next;
+	
+	return $array;
+
+prevNextDay("Fr");
+
+$_POST['Class']="1A";
+print_r($_POST);
 ?>
 
 
-
 </body>
-
 </html>
+

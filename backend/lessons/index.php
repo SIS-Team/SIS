@@ -23,24 +23,9 @@ include($_SERVER['DOCUMENT_ROOT'] . "/modules/database/selects.php");			//Stellt
 pageHeader("Formular","main");
 
 printf("<form method=\"post\" action=\"lessons.php\"> ");
-printf("Klasse w�hlen: <input autocomplete=\"off\" list=\"class\" name=\"class\" size=\"5\"><datalist id=\"class\">\n");
-					
-foreach($selectClasses as $p)							//Fï¿½r jeden Menï¿½eintrag im Array f einen Eintrag erstellen
-{
-	printf("<option value=\"%s\">\n", $p[0]);
-}
-
-printf("</datalist>\n");
-
-printf("Tag w�hlen: <input autocomplete=\"off\" list=\"day\" name=\"day\" size=\"3\" value=\"Mo\"><datalist id=\"day\">\n");
+printf("Klasse w�hlen: <input autocomplete=\"off\" list=\"clName\" name=\"class\" size=\"5\">");
+printf("Tag w�hlen: <input autocomplete=\"off\" list=\"day\" name=\"day\" size=\"3\" value=\"Mo\">\n");
 							
-foreach($selectDays as $p)							//Fï¿½r jeden Menï¿½eintrag im Array f einen Eintrag erstellen
-{
-	printf("<option value=\"%s\">\n", $p[0]);
-}
-
-printf("</datalist>\n");
-
 
 printf("<input type=\"submit\" name=\"ok\" value=\"Speichern\">\n");	//Submit Button erstellen
 printf("</form>");

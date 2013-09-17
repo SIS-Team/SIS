@@ -3,10 +3,10 @@
 	 * Autor: Handle Marco
 	 * Version: 1.0.0
 	 * Beschreibung:
-	 *	ERstellt die Dropdown Eintr�ge
+	 *	ERstellt die Dropdown Einträge
 	 *
 	 * Changelog:
-	 * 	1.0.0:  26. 08. 2013, Handle Marco - Selects f�r die Dropdownmen�s fertiggestellt
+	 * 	1.0.0:  26. 08. 2013, Handle Marco - Selects für die Dropdownmenüs fertiggestellt
 	 */
 	
 include($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Connect.php");			//Bindet die Datenbank ein
@@ -14,23 +14,23 @@ include($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Connect.php");			//Bindet 
 
 //Section
 $temp =  mysql_query("SELECT short FROM sections");
-$selectSections = create($temp);
+$selectSections = create($temp,"seShort");
 
 //Teacher
 $temp = mysql_query("SELECT short FROM teachers");
-$selectTeachers = create($temp);
+$selectTeachers = create($temp,"teShort");
 
 //Rooms
 $temp = mysql_query("SELECT name FROM rooms");
-$selectRooms = create($temp);
+$selectRooms = create($temp,"roName");
 
 //Subjects
 $temp = mysql_query("SELECT short FROM subjects");
-$selectSubjects = create($temp);
+$selectSubjects = create($temp,"suShort");
 
 //Classes
 $temp = mysql_query("SELECT name FROM classes");
-$selectClasses = create($temp);
+$selectClasses = create($temp,"clName");
 
 //Days
 $selectDays = array(
@@ -40,20 +40,40 @@ $selectDays = array(
 	array("Do", ""),
 	array("Fr", ""),
 	);
+	
+printf("<datalist id=\"day\">\n");
+							
+foreach($selectDays as $p)													//FÃƒÆ’Ã‚Â¯Ãƒâ€šÃ‚Â¿Ãƒâ€šÃ‚Â½r jeden MenÃƒÆ’Ã‚Â¯Ãƒâ€šÃ‚Â¿Ãƒâ€šÃ‚Â½eintrag im Array f einen Eintrag erstellen
+{
+	printf("<option value=\"%s\">\n", $p[0]);
+}
+
+printf("</datalist></td>\n\n");
 
 
 //Erstell aus den mysql querys die Arrays mit den Inhalten
 //$result ist der mysql_query
-function create($result){
+function create($result,$name){
 
 $array=array();	//Array erstellen
 
-while ($row = mysql_fetch_array($result)){	//F�hrt f�r jeden Datensatz die Schleife einmal aus
-	array_push($array,array($row[0],""));		//F�gt dem Array ein neues Array hinzu mit dem Inhalt und einem leeren Feld(wenn selected wird das zweite ben�tigt)
+while ($row = mysql_fetch_array($result)){	//Führt für jeden Datensatz die Schleife einmal aus
+	array_push($array,array($row[0],""));		//Fügt dem Array ein neues Array hinzu mit dem Inhalt und einem leeren Feld(wenn selected wird das zweite benötigt)
 }
 
-return $array;	//gibt das Fertige array zur�ck
+
+printf("<datalist id=\"%s\">\n",$name);
+							
+foreach($array as $p)													//FÃƒÆ’Ã‚Â¯Ãƒâ€šÃ‚Â¿Ãƒâ€šÃ‚Â½r jeden MenÃƒÆ’Ã‚Â¯Ãƒâ€šÃ‚Â¿Ãƒâ€šÃ‚Â½eintrag im Array f einen Eintrag erstellen
+{
+	printf("<option value=\"%s\">\n", $p[0]);
+}
+
+printf("</datalist></td>\n\n");
 
 }
+
+
+
 
 ?>
