@@ -19,9 +19,10 @@ return sprintf("%s", $days[$x["tm_wday"]]);
 }
 
 
-function captureDate()	{
-$date = date("Y-m-d");
-return $date;
+function captureDate($offset)	{
+	if (!isset($offset))
+		$offset = 0;
+	return date("Y.m.d", time() + 24 * 60 * 60 * $offset);
 }
 
 function prevNextDay($d) {
