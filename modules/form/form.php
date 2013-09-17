@@ -42,8 +42,12 @@ error_reporting(E_ALL);
  *$content- Inhalt des Formulars wenn leeres Formular false sonst array mit Inhalten
  *
  */
+ 
+ 
 function form_new($field,$content)
 {	
+$allowedSites = array('substitudes','missingTeacher','missingClasses','news');
+
 
 printf("<table>\n");	//Tabellen Tag auf
 	printf("<tr>\n");	//Zeilen 	Tag auf
@@ -98,14 +102,22 @@ printf("<table>\n");	//Tabellen Tag auf
 				
 			}
 			
+			$temp = explode("/", $_SERVER['REQUEST_URI']);
+			$temp = $temp[count($temp)-2];
+
 			if($content==false)
 			{
 				form_savedelete(true);
 			}
-			else
+			else if(array_search($temp,$allowedSites)!==false)
 			{
 				form_savedelete(false);
 			}
+			else
+			{
+				form_savedelete(true);
+			}
+
 				
 		printf("</form>\n");
   	printf("</tr>\n");
