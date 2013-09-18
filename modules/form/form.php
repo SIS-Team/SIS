@@ -184,23 +184,10 @@ printf("<table>\n");	//Tabellen Tag auf
 				if(isset($index))						//Wenn Content mitgeliefert wird und der Typ des aktuellen Inputs kein DropDown, dann Content austauschen
 				{
 					$f[5]=$stuff[$f[0]];					//Content des aktuellen Inputs austauschen, Name des Array-Indizes ist der name des Inputs
-				}
-				/*else if($f[2]=="dropdown" &&  isset($index))	//Wenn Content mitgeliefert wird und der Typ des des aktuellen Inputs ein DropDown ist, dann Sonderbehandlung
-				{
-					foreach($f[5] as $ii => $a)				//FÃƒÂ¯Ã‚Â¿Ã‚Â½r jeden Inhalt(EintrÃƒÂ¯Ã‚Â¿Ã‚Â½g der DropDown Liste) wird ÃƒÂ¯Ã‚Â¿Ã‚Â½berprÃƒÂ¯Ã‚Â¿Ã‚Â½ft ob der content mit dem Einrag in der DropDown Liste ÃƒÂ¯Ã‚Â¿Ã‚Â½bereinstimmt --> ausgewÃƒÂ¯Ã‚Â¿Ã‚Â½hlt
-					{
-						if($a[0]==$stuff[$f[0]])			//Wenn ein Eintrag mit dem mitgegebenen Eintrag ÃƒÂ¯Ã‚Â¿Ã‚Â½bereinstimmt, dann in dem Aktuellen Input, beim Inhalt und dem Entsprechenden Eintrag select auf true setzen
-						{	
-							$f[5][$ii][1]=true;
-							break;
-						}
-						else								//sonst leer
-						{
-							$f[5][$ii][1]="";
-						}
-					}
-				}*/
-				
+					$edit = "readonly";
+				}	
+				else
+					$edit = "";			
 				
 				
 				if($f[2] == "text") {
@@ -213,14 +200,14 @@ printf("<table>\n");	//Tabellen Tag auf
 							$f[0], $f[5]);
 
 					if($zeile1==1){
-						printf("<td>Teilung: <input type=\"text\" name=\"%s\" id=\"%s\" size=\"2px\" value=\"%s\" onchange=\"javascript:changeText(%s);\">\n",	//Textbox erstellen  			
-	  							"visibilityText".$hour,"visibilityText".$hour,$stuff['split'],$hour);
+						printf("<td>Teilung: <input type=\"text\" name=\"%s\" id=\"%s\" size=\"2px\" value=\"%s\" onchange=\"javascript:changeText(%s);\" %s>\n",	//Textbox erstellen  			
+	  							"visibilityText".$hour,"visibilityText".$hour,$stuff['split'],$hour,$edit);
 						printf("<td><input type=\"button\" size=\"4px\" value=\"OK\" onclick=\"javascript:Visibility(%s)\" >\n",	//Textbox erstellen  			
 	  							$hour);  						
 	  					printf("<td>Stunde: <input type=\"text\" name =\"hour\" size=\"3px\" value=\"%s\" readonly >\n",	//Textbox erstellen  			
 	  							$hour);
-	  					printf("<td>L&auml;nge: <input type=\"text\" name=\"length\" id=\"%s\" size=\"5px\" value=\"%s\" onchange=\"javascript:visibleHours(%s);\">\n",	//Textbox erstellen
-							"visibleHour".$hour, $stuff['length'], $hour);
+	  					printf("<td>L&auml;nge: <input type=\"text\" name=\"length\" id=\"%s\" size=\"5px\" value=\"%s\" onchange=\"javascript:visibleHours(%s);\" %s>\n",	//Textbox erstellen
+							"visibleHour".$hour, $stuff['length'], $hour,$edit);
 
 	  				}
 	  				else{
@@ -245,8 +232,12 @@ printf("<table>\n");	//Tabellen Tag auf
 				}
 				
 			}
-			
-			form_savedelete(true);
+			if($zeile1==1)
+				form_savedelete(false);
+			else{
+				printf("<td></td>\n");
+				form_savedelete(true);
+			}
 				
 		printf("</form>\n");
   	printf("</tr>\n");
@@ -316,14 +307,6 @@ printf("<table>\n");	//Tabellen Tag auf
 
 				}
 				else if($f[2] == "dropdown") {												//Dropdown MenÃƒÂ¯Ã‚Â¿Ã‚Â½ erstellen
-					$select="";
-					
-					foreach($f[5] as $p)													//F r jeden Men eintrag im Array f einen Eintrag erstellen
-						{
-							if($p[1]==true){													//wenn ausgew hlt selected
-								$select=$p[0];
-							}
-						}
 
 					printf("<td>%s <input value=\"%s\" autocomplete=\"off\" size=\"%s\" list=\"%s\" name=\"%s\"></td>\n",
 							$f[1], $f[5], $f[3], $f[0], $f[0]);							

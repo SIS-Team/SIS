@@ -5,6 +5,10 @@ if(document.getElementById('visibleRow'+id).style.visibility=="visible")
 else
 	document.getElementById('visibleRow'+id).style.visibility="visible";
 }
+function myFunction()
+{
+alert("I am an alert box!");
+}
 </script>
 
 <?php

@@ -4,13 +4,13 @@
 	 * Autor: Handle Marco
 	 * Version: 0.1.0
 	 * Beschreibung:
-	 *	Select Befehle fÃ¼r die Datenbank
+	 *	Select Befehle fÃƒÂ¼r die Datenbank
 	 *
 	 * Changelog:
 	 * 	0.1.0:  26. 08. 2013, Handle Marco - erste Version
 	 */
 	 
-	 include($_SERVER['DOCUMENT_ROOT'] . "/modules/other/dateFunctions.php");					//Stell Datumfunktionen zur Verf�gung
+	 include($_SERVER['DOCUMENT_ROOT'] . "/modules/other/dateFunctions.php");					//Stell Datumfunktionen zur Verfügung
 
 
 function classes(){
@@ -222,16 +222,19 @@ unset($post["save"]);
 $data=array("ID" => "","move" => "","lessonFK" => "","subjectFK" => "","teacherFK" => "","time" => "","roomFK" => "","startHourFK" => "","endHourFK" => "","hidden" => "","sure" => "","comment" => "");
 
 $data["ID"]=$post["ID"];
-$data["move"]=$post["move"];
+if(!empty($post["move"]))
+	$data["move"]=true;
 $day = weekday($post["time"]);
-$stHour = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".$post["startHour"]."'"));
-$enHour = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".$post["endHour"]."'"));
-$class = mysql_fetch_array(mysql_query("SELECT ID FROM classes WHERE name='".$post["clName"]."'"));
-$temp = mysql_fetch_array(mysql_query("SELECT lessons.ID FROM lessons INNER JOIN lessonsBase ON lessonsBase.ID = lessons.lessonBaseFK WHERE lessonsBase.startHourFK='".$stHour["ID"]."' AND lessonsBase.endHourFK='".$enHour["ID"]."' AND lessonsBase.classFK='".$class["ID"]."'"));
 
-findFK($post);
+if(empty($post["delete"])){
+	$lessonsID = findFK($post);
 
-$data["lessonFK"]=$temp["ID"];
+	if($lessonsID != 0)
+		$data["lessonFK"]=$lessonsID;
+	else{
+		printf("<script type=\"text/javascript\">myFunction();</script>");
+	}
+}
 $temp = mysql_fetch_array(mysql_query("SELECT ID FROM subjects WHERE short LIKE '".$post["suShort"]."'"));
 $data["subjectFK"]=$temp["ID"];
 $temp = mysql_fetch_array(mysql_query("SELECT ID FROM teachers WHERE short='".$post["teShort"]."'"));
@@ -239,10 +242,18 @@ $data["teacherFK"]=$temp["ID"];
 $data["time"]=$post["time"];
 $temp = mysql_fetch_array(mysql_query("SELECT ID FROM rooms WHERE name='".$post["roName"]."'"));
 $data["roomFK"]=$temp["ID"];
-$temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".$post["newStartHour"]."'"));
-$data["startHourFK"]=$temp["ID"];
-$temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".$post["newEndHour"]."'"));
-$data["endHourFK"]=$temp["ID"];
+if(!empty($post["move"])){
+	$temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".$post["newStartHour"]."'"));
+	$data["startHourFK"]=$temp["ID"];
+	$temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".$post["newEndHour"]."'"));
+	$data["endHourFK"]=$temp["ID"];
+}
+else{
+	$data["startHourFK"]="";
+	$data["endHourFK"]="";
+}
+
+
 if(!empty($post["hidden"]))
 	$data["hidden"]=true;
 if(!empty($post["sure"]))
@@ -338,33 +349,56 @@ mysql_query($sql);
 
 function findFK($post){
 
+print_r($post);
+
 $day = weekday($post["time"]);
 $stHour = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".$post["startHour"]."'"));
 $enHour = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".$post["endHour"]."'"));
 $class = mysql_fetch_array(mysql_query("SELECT ID FROM classes WHERE name='".$post["clName"]."'"));
+//echo $class["ID"];
+$lessonsBaseID = mysql_fetch_array(mysql_query("SELECT lessonsBase.ID FROM lessonsBase WHERE lessonsBase.startHourFK='".$stHour["ID"]."' AND lessonsBase.endHourFK='".$enHour["ID"]."' AND lessonsBase.classFK='".$class["ID"]."'"));
 
-$lessonsBaseID = mysql_fetch_array(mysql_query("SELECT lessonsBaes.ID FROM lessonsBase WHERE lessonsBase.startHourFK='".$stHour["ID"]."' AND lessonsBase.endHourFK='".$enHour["ID"]."' AND lessonsBase.classFK='".$class["ID"]."'"));
+//print_r($lessonsBaseID["ID"]);
 
-$sql=" SELECT lessons.ID, lessons.teachersFK FROM lessons INNER JOIN lessonsBase ON lessonsBase.ID = lessons.lessonBaseFK WHERE lessonsBase.ID='".$lessonsBaseID."'";
+$sql=" SELECT lessons.teachersFK FROM lessons INNER JOIN lessonsBase ON lessonsBase.ID = lessons.lessonBaseFK WHERE lessonsBase.ID='".$lessonsBaseID["ID"]."'";
+$result = mysql_query($sql);
 
+while($row = mysql_fetch_array($result)){
 
-while($row = mysql_fetch_array(mysql_query($sql))){
-
-$lessons[]=$row;
-
-}
-
-$sql=" SELECT lessons.ID FROM lessons INNER JOIN lessonsBase ON lessonsBase.ID = lessons.lessonBaseFK WHERE lessonsBase.startHourFK='".$stHour["ID"]."' AND lessonsBase.endHourFK='".$enHour["ID"]."' AND lessonsBase.classFK='".$class["ID"]."'";
-
-
-while($row = mysql_fetch_array(mysql_query($sql))){
-
-
-
+$lessons[]=end($row);
 
 }
 
+$sql=" SELECT missingTeachers.teacherFK FROM missingTeachers WHERE missingTeachers.startDay <= '".$post["time"]."' AND missingTeachers.endDay >= '".$post["time"]."' AND missingTeachers.startHourFK <= '".$stHour["ID"]."' AND missingTeachers.endHourFK >= '".$enHour["ID"]."'";
+$result = mysql_query($sql);
 
+while($row = mysql_fetch_array($result)){
+
+$missing[]=end($row);
+
+}
+
+//print_r($missing);
+
+foreach($lessons as $l){
+
+if(array_search($l,$missing)!==false){
+	$teacher=$l;
+	break;
+}
+
+
+
+}
+
+$sql="SELECT lessons.ID FROM lessons INNER JOIN lessonsBase ON lessonsBase.ID = lessons.lessonBaseFK WHERE lessonsBase.ID='".$lessonsBaseID["ID"]."' AND lessons.teachersFK='".$teacher."'";
+$result = mysql_fetch_array(mysql_query($sql));
+
+if($result["ID"]=="")
+	$result["ID"]=0;
+
+echo $result["ID"];
+return $result["ID"];
 
 }
 
