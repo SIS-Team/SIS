@@ -5,7 +5,7 @@
  *	Scripts für die Monitore
  *
  * Changelog:
- *	0.1.2:	20. 09. 2013, Buchberger Florian - 
+ *	0.1.2:	20. 09. 2013, Buchberger Florian - Bilder und Videos
  *	0.1.1:	09. 09. 2013, Buchberger Florian - Kommentare
  * 	0.1.0:  04. 09. 2013, Buchberger Florian - erste Version
  */
