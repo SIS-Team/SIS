@@ -12,3 +12,14 @@
 }
 .content{
 }
+
+.error {
+	border: red solid 1px;
+	color: red;
+	font-size: 20px;
+}
+
+.message {
+	border: white solid 1px;
+	font-size: 17px;
+}
