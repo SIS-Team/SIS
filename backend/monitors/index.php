@@ -7,13 +7,133 @@
 	 *	Erstellt die Formulare für die Eingabe der Monitore
 	 *
 	 * Changelog:
-	 * 	0.1.0:  09. 09 2013, Buchberger Florian - neue Version
+	 * 	1.0.0:	20. 09. 2013, Buchberger Florian - erste vollständige Version
+	 * 	0.1.0:  09. 09. 2013, Buchberger Florian - neue Version
 	 */
 
 	include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Main.php");
 	include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/monitors/Main.php");
+
+	// Wenn das Fomular abgeschickt wird
+	if (isset($_POST['sent'])) {
+		/*print_r($_POST);
+		print_r($_FILES['file']);
+		echo "<br /><br /><br />";*/
+
+		// Tests, ob alle Parameter vorhanden sind.
+		if (!isset($_POST['monitors'])) {
+			header("LOCATION: ?error=1");
+			die();
+		}
+		if (!isset($_POST['room'])) {
+			header("LOCATION: ?error=2");
+			die();
+		}
+		if (!isset($_POST['mode'])) {
+			header("LOCATION: ?error=3");
+			die();
+		}
+
+		$query = "";
+
+		// Wenn die Löschen-Checkbox gesetzt ist, dann Query auf Delete setzen.
+		if (isset($_POST['delete']))
+			$query .= "DELETE FROM `monitors` WHERE `id`=";
+		// Sonst Query auf Update setzen
+		else {
+			$query .= "UPDATE `monitors` SET ";
+
+			// Wenn Raum-Feld nicht leer, dann Raum ID holen und Query mit Raum ergänzen
+			if (!empty($_POST['room'])) {
+				$id = mysql_fetch_object(mysql_query("SELECT `ID` FROM `rooms` WHERE `name`='" . mysql_real_escape_string($_POST['room']) . "'"))->ID;
+				$query .= "`roomFK`=" . $id . " ";
+				if (!empty($_POST['mode']) || !empty($_FILES['file']['name']))
+					$query .= ", ";
+			}
+
+			// Wenn Modus-Feld nicht leer, dann Modus ID holen und Query mit Modus ergänzen
+			if (!empty($_POST['mode'])) {
+				$id = mysql_fetch_object(mysql_query("SELECT `ID` FROM `monitorMode` WHERE `name`='" . mysql_real_escape_string($_POST['mode']) . "'"))->ID;
+				$query .= "`modeFK`=" . $id . " ";
+				if (!empty($_FILES['file']['name']))
+					$query .= ", ";
+			}
+
+			// Wenn die mitgegebene Datei einen Namen hat, dann 
+			// 	wenn Datei zu groß -> Fehlermeldung
+			//	wenn keine Rechte im Zielverzeichnis (../../monitors/media/) -> Fehlermeldung
+			//	Dateinamen maskieren und mit Zeit ergänzen (gegen Kollisionen)
+			//	Datei verschieben
+			//	Query mit Dateinamen ergänzen
+			if (!empty($_FILES['file']['name'])) {
+				if ($_FILES['file']['size'] > 800 * 1024 * 1024) {
+					header("LOCATION: ?error=4");
+					die();
+				}
+				if ($_FILES['file']['size'] == 0) {
+					header("LOCATION: ?error=6");
+					die();
+				}
+				$filename = time() . "-" . mysql_real_escape_string(sanitize($_FILES['file']['name']));
+				if (!move_uploaded_file($_FILES['file']['tmp_name'], "../../monitors/media/" . $filename)) {
+					header("LOCATION: ?error=5");
+					die();
+				}
+				$query .= "`file`='" . $filename . "' ";
+			}
+			$query .= "WHERE `id`=";
+		}
+
+		// Monitor-Liste hole und den generierten Query für jeden Monitor anwenden
+		$monitors = $_POST['monitors'];
+		for ($i = 0; $i < count($monitors); $i++) {
+			$num = intval($monitors[$i]);
+			mysql_query($query . $num);
+		}
+		header("LOCATION: ?sent");
+		die();
+	}
+	
 	pageHeader("Monitore", "main");
 
+	// Error-Code-Handler, interpretiert Error-Code und gibt Fehlermeldung aus
+	if (isset($_GET['error'])) {
+		echo '<div class="error">';
+		switch ($_GET['error']) {
+		case 1:
+			echo "Sie m&uuml;ssen mindestens einen Monitor ausw&auml;hlen.";
+			break;
+		case 2:
+			echo "Ung&uuml;ltiger Raum.";
+			break;
+		case 3:
+			echo "Ung&uuml;ltiger Modus.";
+			break;
+		case 4:
+			echo "Datei zugro&szlig;!";
+			break;
+		case 5:
+			echo "Es ist ein schwerer interner Fehler aufgetreten!";
+			break;
+		case 6:
+			echo "Die hochgeladene Datei ist gr&ouml;&azlig;er, als die Maximal-Definition in php.ini. Bitte wenden Sie sich an den Administrator.";
+			break;
+		default:
+			echo "Unbekannter Fehler: " . htmlspecialchars($_GET['error']);
+			break;
+		}
+		echo '</div><br />';
+	}
+
+	if (isset($_GET['sent'])) {
+?>
+<div class="message">
+	Die &Aumlnderungen wurden erfolgreich gespeichert.
+</div>
+<?php
+	}
+
+	// Alle Parameter holen
 	$monitors = getAllMonitors();
 	$rooms = mysql_query("SELECT `name` FROM `rooms`");
 	$modes = mysql_query("SELECT `name` FROM `monitorMode`");
@@ -21,15 +141,17 @@
 <form action="?" method="post" enctype="multipart/form-data">
 	<datalist id="rooms">
 <?php
+	// alle Möglichkeiten für die Räume in eine Datalist schreiben
 	while ($room = mysql_fetch_object($rooms)) {
 		echo "		<option value=\"" . $room->name . "\"></option>";
 	}
 ?>
 	</datalist>
-	<datalist id="rooms">
+	<datalist id="modes">
 <?php
-	while ($modes = mysql_fetch_object($modes)) {
-		echo "		<option value=\"" . $modes->name . "\"></option>";
+	// alle Möglichkeiten für die Modi in eine Datalist schreiben
+	while ($mode = mysql_fetch_object($modes)) {
+		echo "		<option value=\"" . $mode->name . "\"></option>";
 	}
 ?>
 	</datalist>
@@ -42,13 +164,14 @@
 			<th>Datei</th>
 		</tr>
 <?php
+	// Monitor-Tabelle ausgeben
 	while ($monitor = mysql_fetch_object($monitors)) {
 		echo "	<tr>";
-		echo "		<td><input name=\"m" . $monitor->id . "\" type=\"checkbox\"></td>";
-		echo "		<td>" . $monitor->name . "</td>";
-		echo "		<td>" . $monitor->room . "</td>";
-		echo "		<td>" . $monitor->type . "</td>";
-		echo "		<td>" . $monitor->file . "</td>";
+		echo "		<td><input name=\"monitors[]\" value=\"" . $monitor->id . "\" type=\"checkbox\" /></td>";
+		echo "		<td>" . htmlspecialchars($monitor->name) . "</td>";
+		echo "		<td>" . htmlspecialchars($monitor->room) . "</td>";
+		echo "		<td>" . htmlspecialchars($monitor->type) . "</td>";
+		echo "		<td>" . htmlspecialchars($monitor->file) . "</td>";
 		echo "	</tr>";
 	}
 ?>
@@ -61,15 +184,20 @@
 		</tr>
 		<tr>
 			<td>Modus: (leer f&uuml;r unver&auml;ndert) </td>
-			<td><input type="text" autocomplete="off" list="modes" name="modes" style="width: 100%"></td>
+			<td><input type="text" autocomplete="off" list="modes" name="mode" style="width: 100%"></td>
 		</tr>
 		<tr>
 			<td>Datei: (leer f&uuml;r unver&auml;ndert) </td>
 			<td><input type="file" name="file" maxlength="800000000" accept="image/jpeg image/gif image/png video/mpeg" style="width: 100%"></td>
 		</tr>
 		<tr>
+			<td>L&ouml;schen? </td>
+			<td><input type="checkbox" name="delete"></td>
+		</tr>
+		<tr>
 			<td colspan="2">
 				<input type="submit" value="Absenden" style="width: 100%">
+				<input type="hidden" value="1" name="sent">
 			</td>
 		</tr>
 	</table>
