@@ -20,6 +20,10 @@ body {
 	text-align: center;
 }
 
+#name {
+	display: none;
+}
+
 #main * {
 	max-width: 100%;
 	max-height: 100%;
@@ -59,4 +63,40 @@ body {
 	font-size: 25px;
 	right: 0px;
 	text-align: center;
+}
+
+#errors {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+}
+
+.error {
+	position: absolute;
+	height: 200px;
+	width: 300px;
+	background-color: #eee;
+	padding: 10px;
+	padding-top: 35px;
+	color: #000;
+	border: outset 1px #666;
+}
+
+.error .title {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 25px;
+	text-align: center;
+	background-color: #333;
+	color: #eee;
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.error .title img {
+	position: absolute;
+	left: 0px;
+	opacity: 0.5;
 }
