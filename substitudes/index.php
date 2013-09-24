@@ -2,7 +2,7 @@
 
 
 
-	/* /backend/substitutesplan/index.php
+	/* /substitutes/index.php
 	 * Autor: Weiland Mathias
 	 * Version: 0.1.0
 	 * Beschreibung:
