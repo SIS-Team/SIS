@@ -357,7 +357,7 @@ function form_savedelete($new)
 if($new!=true)
 	printf("<td>L&ouml;schen<input type=\"checkbox\" name=\"delete\" value=\"delete\"></td>\n");		//Checkbox erstellen
 
-printf("<td><input type=\"submit\" name=\"save\" value=\"Speichern\"></td>\n");	//Submit Button erstellen
+printf("<td><input type=\"submit\" name=\"save\" value=\"&Uuml;bernehmen\"></td>\n");	//Submit Button erstellen
 
 }
 ?>
