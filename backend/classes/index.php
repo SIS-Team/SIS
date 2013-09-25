@@ -33,7 +33,9 @@ $fields = array(
 //Seitenheader
 pageHeader("Formular","main");
 
-$result = selectClass("","");	//Rückgabewert des Selects
+$sort = "classes.invisible,sections.short,classes.name";
+$result = selectClass("",$sort);	//Rückgabewert des Selects
+
 
 while ($row = mysql_fetch_array($result)){	//Fügt solange eine neue Formularzeile hinzu, solange ein Inhalt zur Verfügung steht
 	form_new($fields,$row);		//Formular wird erstellt

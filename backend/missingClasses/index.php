@@ -33,7 +33,7 @@ else {								//sonst zurückgegebenes Datum
 //Formularmaske
 $fields = array(
 	array( "ID", 		"",			 		"hidden", 	"",		"",		"",					""),
-	array( "clName", 	"Klasse: ", 		"dropdown", "5",	"",		$selectClasses,		""),
+	array( "clName", 	"Klasse: ", 		"dropdown", "8",	"",		$selectClasses,		""),
 	array( "startDay", 	"Starttag: ",		"text", 	"10",	"",		"",					""),
 	array( "startHour", "Start-Stunde: ",	"text",		"5",	"",		"",					""),
 	array( "endDay", 	"Endtag: ", 		"text",		"10",	"",		"",					""),
