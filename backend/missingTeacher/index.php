@@ -46,11 +46,14 @@ $fields = array(
 pageHeader("Formular","main");
 
 $date = dateChange($date);
+$fields["2"]["5"] = $date;
+$fields["4"]["5"] = $date;
 
-$where="missingClasses.endDay >= '".$date."'";
 
+$where = "missingTeachers.endDay >= '".$date."'";
+$sort = " startDay, hoursStart.hour, teachers.short";
 
-$result = selectMissingTeacher("","");		//RÃ¼ckgabewert des Selects
+$result = selectMissingTeacher($where,$sort);		//RÃ¼ckgabewert des Selects
 
 while ($row = mysql_fetch_array($result)){	//FÃ¼gt solange eine neue Formularzeile hinzu, solange ein Inhalt zur VerfÃ¼gung steht
 	form_new($fields,$row);		//Formular wird erstellt

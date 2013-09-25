@@ -107,6 +107,7 @@ $data["ID"]=$post["ID"];
 $temp = mysql_fetch_array(mysql_query("SELECT ID FROM classes WHERE name='".$post["clName"]."'"));
 $data["classFK"]=$temp["ID"];
 $day = weekday($post["startDay"]);
+echo $day;
 $data["startDay"]=$post["startDay"];
 $temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".$post["startHour"]."'"));
 $data["startHourFK"]=$temp["ID"];
@@ -232,7 +233,7 @@ if(empty($post["delete"])){
 	if($lessonsID != 0)
 		$data["lessonFK"]=$lessonsID;
 	else{
-		printf("<script type=\"text/javascript\">myFunction();</script>");
+		printf("<script type=\"text/javascript\">failAlert();</script>");
 	}
 }
 $temp = mysql_fetch_array(mysql_query("SELECT ID FROM subjects WHERE short LIKE '".$post["suShort"]."'"));
@@ -258,13 +259,13 @@ if(!empty($post["hidden"]))
 	$data["hidden"]=true;
 if(!empty($post["sure"]))
 	$data["sure"]=true;
+	
 $data["comment"]=$post["comment"];
 
-if(empty($post["delete"]))
+if(empty($post["delete"]) && $lessonsID != 0)
 	saveupdate($data,"substitudes");
-else
+else if(!empty($post["delete"]))
 	delete($data["ID"],"substitudes");
-	
 }
 
 function teachers(){
@@ -349,7 +350,7 @@ mysql_query($sql);
 
 function findFK($post){
 
-print_r($post);
+//print_r($post);
 
 $day = weekday($post["time"]);
 $stHour = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".$post["startHour"]."'"));
@@ -397,7 +398,7 @@ $result = mysql_fetch_array(mysql_query($sql));
 if($result["ID"]=="")
 	$result["ID"]=0;
 
-echo $result["ID"];
+//echo $result["ID"];
 return $result["ID"];
 
 }
