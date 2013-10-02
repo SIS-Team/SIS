@@ -45,7 +45,7 @@ $post=$_POST;
 //print_r($post);
 unset($post["save"]);
 
-$lessonsInsert=array("ID" => "","lessonBaseFK" => "","roomFK" => "","teachersFK" => "","subjectFK" => "");
+$lessonsInsert=array("ID" => "","lessonBaseFK" => "","roomFK" => "","teachersFK" => "","subjectFK" => "","comment"=>"");
 $lessonsBaseInsert=array("ID" => "","startHourFK" => "","endHourFK" => "","classFK" => "");
 
 $lessonsInsert["ID"]=$post["ID"];
@@ -73,7 +73,7 @@ $temp = mysql_fetch_array(mysql_query("SELECT ID FROM rooms WHERE name='".$post[
 $lessonsInsert["roomFK"] = $temp["ID"];
 $temp = mysql_fetch_array(mysql_query("SELECT ID FROM subjects WHERE short LIKE '".$post["suShort"]."'"));
 $lessonsInsert["subjectFK"]=$temp["ID"];
-
+$lessonsInsert["comment"]=$post["comment"];
 //print_r($lessonsBaseInsert);
 //echo ",";
 //print_r($lessonsInsert);

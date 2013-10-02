@@ -16,6 +16,13 @@ switch(temp){
 	case 5: 
 		var zahl = 5; 
 		break;
+	case 6: 
+		var zahl = 6; 
+		break;
+	case 7: 
+		var zahl = 7; 
+		break;
+
 	default: 
 		var zahl = 1;
 		break;
@@ -27,6 +34,8 @@ document.getElementById('visibleRow2'+hour).style.visibility="collapse";
 document.getElementById('visibleRow3'+hour).style.visibility="collapse";
 document.getElementById('visibleRow4'+hour).style.visibility="collapse";
 document.getElementById('visibleRow5'+hour).style.visibility="collapse";
+document.getElementById('visibleRow6'+hour).style.visibility="collapse";
+document.getElementById('visibleRow7'+hour).style.visibility="collapse";
 
 
 while(i<=zahl){
@@ -46,6 +55,8 @@ document.getElementsByName('visibilityText'+hour)[1].value=text;
 document.getElementsByName('visibilityText'+hour)[2].value=text;
 document.getElementsByName('visibilityText'+hour)[3].value=text;
 document.getElementsByName('visibilityText'+hour)[4].value=text;
+document.getElementsByName('visibilityText'+hour)[5].value=text;
+document.getElementsByName('visibilityText'+hour)[6].value=text;
 
 }
 
@@ -58,6 +69,8 @@ document.getElementsByName('visibilityText'+hour)[1].value=text;
 document.getElementsByName('visibilityText'+hour)[2].value=text;
 document.getElementsByName('visibilityText'+hour)[3].value=text;
 document.getElementsByName('visibilityText'+hour)[4].value=text;
+document.getElementsByName('visibilityText'+hour)[5].value=text;
+document.getElementsByName('visibilityText'+hour)[6].value=text;
 
 }
 
@@ -88,6 +101,9 @@ document.getElementById('visibleRow2'+ii).style.visibility="collapse";
 document.getElementById('visibleRow3'+ii).style.visibility="collapse";
 document.getElementById('visibleRow4'+ii).style.visibility="collapse";
 document.getElementById('visibleRow5'+ii).style.visibility="collapse";
+document.getElementById('visibleRow6'+ii).style.visibility="collapse";
+document.getElementById('visibleRow7'+ii).style.visibility="collapse";
+
 ii+=1;
 
 }
@@ -137,6 +153,7 @@ $fields = array(
 	array( "roName",	"Raum: ", 			"dropdown", "8",	"",		$selectRooms,		""),
 	array( "teShort", 	"Lehrer: ",	 		"dropdown",	"5",	"",		$selectTeachers,	""),
 	array( "suShort", 	"Fach: ", 			"dropdown",	"10",	"",		$selectSubjects,	""),
+	array( "comment", 	"Kommentar: ",		"text",		"20",	"",		"",					""),
 	);
 
 //Seitenheader
@@ -163,7 +180,7 @@ $result = selectLesson($where,"");	//Rückgabewert des Selects
 
 while ($row = mysql_fetch_array($result)){	//Fügt solange eine neue Formularzeile hinzu, solange ein Inhalt zur Verfügung steht
 
-  	$sql= "SELECT COUNT(*) FROM lessons INNER JOIN rooms ON rooms.ID = lessons.roomFK INNER JOIN teachers ON teachers.ID = lessons.teachersFK INNER JOIN subjects ON subjects.ID = lessons.subjectFK INNER JOIN lessonsBase ON lessonsBase.ID = lessons.lessonBaseFK INNER JOIN classes ON classes.ID = lessonsBase.classFK INNER JOIN hours as hoursStart ON hoursStart.ID = lessonsBase.startHourFK INNER JOIN hours as hoursEnd ON hoursEnd.ID = lessonsBase.endHourFK";	//Stamm sql-Befehl
+  	$sql= "SELECT COUNT(*) FROM lessons LEFT JOIN rooms ON rooms.ID = lessons.roomFK INNER JOIN teachers ON teachers.ID = lessons.teachersFK INNER JOIN subjects ON subjects.ID = lessons.subjectFK INNER JOIN lessonsBase ON lessonsBase.ID = lessons.lessonBaseFK INNER JOIN classes ON classes.ID = lessonsBase.classFK INNER JOIN hours as hoursStart ON hoursStart.ID = lessonsBase.startHourFK INNER JOIN hours as hoursEnd ON hoursEnd.ID = lessonsBase.endHourFK";	//Stamm sql-Befehl
 	$where2 = " AND " . "hoursStart.hour='".$row['startHour']."' AND hoursEnd.hour='".$row['endHour']."'";
 	$sql .= " WHERE " . $where.$where2; 
 	
@@ -172,7 +189,7 @@ while ($row = mysql_fetch_array($result)){	//Fügt solange eine neue Formularzei
 	$row['same']=$same;
 	$content[] = $row;
 }
-	$sql= "SELECT COUNT(*) FROM lessons INNER JOIN rooms ON rooms.ID = lessons.roomFK INNER JOIN teachers ON teachers.ID = lessons.teachersFK INNER JOIN subjects ON subjects.ID = lessons.subjectFK INNER JOIN lessonsBase ON lessonsBase.ID = lessons.lessonBaseFK INNER JOIN classes ON classes.ID = lessonsBase.classFK INNER JOIN hours as hoursStart ON hoursStart.ID = lessonsBase.startHourFK INNER JOIN hours as hoursEnd ON hoursEnd.ID = lessonsBase.endHourFK";	//Stamm sql-Befehl
+	$sql= "SELECT COUNT(*) FROM lessons LEFT JOIN rooms ON rooms.ID = lessons.roomFK INNER JOIN teachers ON teachers.ID = lessons.teachersFK INNER JOIN subjects ON subjects.ID = lessons.subjectFK INNER JOIN lessonsBase ON lessonsBase.ID = lessons.lessonBaseFK INNER JOIN classes ON classes.ID = lessonsBase.classFK INNER JOIN hours as hoursStart ON hoursStart.ID = lessonsBase.startHourFK INNER JOIN hours as hoursEnd ON hoursEnd.ID = lessonsBase.endHourFK";	//Stamm sql-Befehl
 	$sql .= " WHERE " . $where; 
 	//$content[] = mysql_result(mysql_query($sql),0);
 

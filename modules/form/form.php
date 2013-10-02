@@ -129,19 +129,19 @@ function form_lesson($field,$content)
 $zeile=0;
 printf("<table>\n");	//Tabellen Tag auf
 	do{
-				if(($zeile)%5==0){
+				if(($zeile)%7==0){
 					$zeile1=1;
-					$hour=(($zeile)/5)+1;
+					$hour=(($zeile)/7)+1;
 					$visibility="style=\"visibility:visible\"";
 				}
 				else{
 					$zeile1=0;
-					$hour=floor((($zeile)/5)+1);
+					$hour=floor((($zeile)/7)+1);
 					$visibility="style=\"visibility:collapse\"";
 
 				}
 				
-				$rowID="id=\"visibleRow".($zeile+1-(($hour-1)*5)).$hour."\"";
+				$rowID="id=\"visibleRow".($zeile+1-(($hour-1)*7)).$hour."\"";
 				$stuff=array('split'=>1,'length'=>1);	
 				
 				
@@ -158,7 +158,8 @@ printf("<table>\n");	//Tabellen Tag auf
 							$teacher=$c['teShort'];
 							$ID=$c['ID'];
 							$startHour = $c['startHour'];
-							$stuff=array('ID'=>$c['ID'],'split'=>$split,'length'=>$length,'roName'=>$room,'teShort'=>$teacher,'suShort'=>$subject);
+							$comment = $c['comment'];
+							$stuff=array('ID'=>$c['ID'],'split'=>$split,'length'=>$length,'roName'=>$room,'teShort'=>$teacher,'suShort'=>$subject, 'comment'=>$comment);
 		
 							unset($content[$i]);				
 						}
@@ -241,10 +242,10 @@ printf("<table>\n");	//Tabellen Tag auf
 				
 		printf("</form>\n");
   	printf("</tr>\n");
-  	if(($zeile+1-(($hour-1)*5))==5)
+  	if(($zeile+1-(($hour-1)*7))==7)
   		printf("<script type=\"text/javascript\">Visibility(%s);</script>",$hour);
   	$zeile+=1;
-   	}while($zeile<80);
+   	}while($zeile<112);
    	
 printf("</table>\n");
 }
