@@ -217,12 +217,15 @@ printf("<table>\n");	//Tabellen Tag auf
 						printf("<td><td>\n");	  						
 	  					printf("<td><input type=\"hidden\" name =\"hour\" size=\"3px\" value=\"%s\" readonly >\n",	//Textbox erstellen  			
 	  							$hour);
+	  					printf("<script type=\"text/javascript\">changeText(%s);</script>",$hour);
+
 
 	  				}
 	  					printf("<td><input type=\"hidden\" name =\"day\" value=\"%s\" >\n",	//Textbox erstellen  			
 	  							$_POST['day']);
 						printf("<td><input type=\"hidden\" name =\"class\" value=\"%s\" >\n",	//Textbox erstellen  			
 	  							$_POST['class']);
+	  					
 	  											
 				}
 				else if($f[2] == "dropdown") {												//Dropdown MenÃƒÂ¯Ã‚Â¿Ã‚Â½ erstellen
