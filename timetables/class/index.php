@@ -51,12 +51,25 @@ for ($i = 0; $i < count($array); $i++) {
 
 //print_r($hours[1]['Mo']);
  
-
-
-for ($i = 1; $i < 17; $i++) {
+$classType = checkContent($hours);	//kontrolliert ob Abendschule
+if($classType == 2)	//nur Abendschule
+	{$tableBegin = 12;
+	 $tableEnd=17;}
+	 
+else {	//nur erste 11 Stunden
+ 		if($classType == 1)
+ 			{$tableBegin = 1;
+ 			 $tableEnd = 12;
+ 			 }
+ 		else 	//alle Stunden
+		 	{$tableBegin = 1;
+ 			 $tableEnd = 17;
+ 			 }
+ 	}	
+for ($i = $tableBegin; $i < $tableEnd; $i++) {
  	echo "<tr>";
  	echo "<td style=\"width:50px\">".$i."</td>";			//gibt Stundennummer an
- 	if (!$hours[$i]){// echo "check";
+ 	if (!$hours[$i]){ //echo "check";
 		for ($j = 0; $j < 5; $j++) 
 			echo "<td>&#160;</td>"; //Ausgabe eines leeren Feldes, wenn keine Stunde vorhanden
 	} else {// echo "checkv2";
@@ -135,6 +148,24 @@ function ngetLessons($className) {		//Abfrage von Stunden im vorgegebenen Raum
 		$array[] = $row;
 	}
 	return $array;
+}
+
+function checkContent($hours)
+{
+ $check = 0;
+ for ($i = 1; $i < 12; $i++)	//wenn erste 11 Stunden leer -> Abendschule
+ 	{
+ 	 if (!$hours[$i]) $check++;
+ 	 }
+	if($check == 11) return 2;
+	
+	$check = 0;
+ for ($i = 12; $i < 17; $i++) //wenn erste 11 Stunden befüllt und letzte 5 Stunden leer -> normal
+ 	{
+ 	 if (!$hours[$i]) $check++;
+ 	 }	
+	if($check == 5) return 1;
+	else return 0;	//alle Stunden
 }
 
 pageFooter();
