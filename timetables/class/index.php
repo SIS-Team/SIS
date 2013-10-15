@@ -6,7 +6,7 @@
 	 * Autor: Weiland Mathias
 	 * Version: 0.1.0
 	 * Beschreibung:
-	 *	Gibt Stundenplan aus
+	 *	Gibt Stundenplan von Klasse aus
 	 *
 	 * Changelog:
 	 * 	0.1.0:  08. 10. 2013, Weiland Mathias  - erste Version
@@ -17,10 +17,10 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/database/selects.php");			//S
 
 
 $clName =$_GET['name'];
-if(!isset($clName))die("Kein Klassenname vorhanden");
+if(!isset($clName))die("Kein Klassenname vorhanden");	//abbruch wenn kein Klassenname übergeben
 
 pageHeader("Formular","main");
-echo "<div class ='timetable_column'>";
+echo "<div class ='timetable_column'>";	
 
 //Tabellenkopfausgabe
 		echo "<table border = 1>";
@@ -38,15 +38,16 @@ echo "<div class ='timetable_column'>";
 $array = ngetLessons($clName);  //fragt Studen ab, die in der gesuchten Klasse stattfinden
 $hours = array();			   //ertellt ein leeres Array
 for ($i = 0; $i < count($array); $i++) {	
- 	$index = $array[$i]->startHour;
-	if (!$hours[$index])
-		$hours[$index] = array();
-		if(isset($hours[$index][$array[$i]->weekdayShort]))
-		{
-		 if($hours[$index][$array[$i]->weekdayShort]->suShort != $array[$i]->suShort)
-		 		 if(!strpos($hours[$index][$array[$i]->weekdayShort]->suShort,$array[$i]->suShort)) $hours[$index][$array[$i]->weekdayShort]->suShort .= " | " .$array[$i]->suShort;
+ 	$index = $array[$i]->startHour; //Als Index wird die Startstunde verwendet
+	if (!$hours[$index])	
+		$hours[$index] = array(); //Wenn für die betreffende Startstunde kein Eintrag vorhanden -> leeres Array erstellen
+		if(isset($hours[$index][$array[$i]->weekdayShort])) //Kontrolle ob bereits ein Eintag vorhanden
+		{ 
+		 if($hours[$index][$array[$i]->weekdayShort]->suShort != $array[$i]->suShort) //Kontrolle ob  neuer Eintrag und vorhandener Eintrag unterschiedlich
+		 		 if(!strpos($hours[$index][$array[$i]->weekdayShort]->suShort,$array[$i]->suShort)) //Wenn neuer Eintrag nicht in altem Eintrag vorhanden -> zusammenhängen, getrennt mit |
+				   {$hours[$index][$array[$i]->weekdayShort]->suShort .= " | " .$array[$i]->suShort;}
 		}
-		else $hours[$index][$array[$i]->weekdayShort] = $array[$i] ;
+		else $hours[$index][$array[$i]->weekdayShort] = $array[$i] ; //erstellen eines Eintrages wenn keiner vorhanden
 }
 
 //print_r($hours[1]['Mo']);

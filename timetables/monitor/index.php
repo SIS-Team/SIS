@@ -38,34 +38,15 @@ pageHeader("Formular","main");
 
 $array = ngetLessons($roName);  //fragt Studen ab, die in der gesuchten Klasse stattfinden
 $hours = array();			   //ertellt ein leeres Array
-/*for ($i = 0; $i < count($array); $i++) {	
- 	$index = $array[$i]->startHour;
-	if (!$hours[$index])
-		$hours[$index] = array();
-		if(isset($hours[$index][$array[$i]->weekdayShort]))
-		{
-		 if($hours[$index][$array[$i]->weekdayShort]->clName != $array[$i]->clName)
-		    $hours[$index][$array[$i]->weekdayShort]->clName .= " | " .$array[$i]->clName;
-		}
-		
-	else	$hours[$index][$array[$i]->weekdayShort] = $array[$i];
-}*/
 
-//--------------------------------------------------------------------------------------------------------------------
-//$hours[startStunde][Tag]
 for($i=0; $i < count($array);$i++) {
  for($j = $array[$i]->startHour; $j <= $array[$i]->endHour;$j++) {
   
-  if(isset($hours[$j][$array[$i]->weekdayShort][1]))  $hours[$j][$array[$i]->weekdayShort][1] .= " | " .$array[$i]->clName;
-  else $hours[$j][$array[$i]->weekdayShort][1] = $array[$i]->clName;
+  if(isset($hours[$j][$array[$i]->weekdayShort][1]))  $hours[$j][$array[$i]->weekdayShort][1] .= " | " .$array[$i]->clName; //wenn Eintrag vorhanden anderen Eintrag mit | getrennt dazu hängen
+  else $hours[$j][$array[$i]->weekdayShort][1] = $array[$i]->clName; //neuen Eintrag erstellen
   if($hours[$j][$array[$i]->weekdayShort][2] != $array[$i]->teShort) $hours[$j][$array[$i]->weekdayShort][2] .= $array[$i]->teShort;
-  $hours[$j][$array[$i]->weekdayShort][3] .= $array[$i]->roName;
+  //$hours[$j][$array[$i]->weekdayShort][3] .= $array[$i]->roName;
  }}
-
-
-//--------------------------------------------------------------------------------------------------------------------
-
-
 
 //print_r($array[21]);
  
