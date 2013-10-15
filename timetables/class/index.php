@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 //	error_reporting(E_ALL);
 
 	/* /timetables/index.php
@@ -15,9 +15,10 @@
 include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
 include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
 
+if(!($_SESSION['loggedIn']))die("Critical Error </br> Bist du sicher, dass du angemeldet bist?");
 
-$clName =$_GET['name'];
-if(!isset($clName))die("Kein Klassenname vorhanden");	//abbruch wenn kein Klassenname übergeben
+$clName =$_SESSION['class'];
+if(!isset($clName))die("Critical Error </br> Bist du sicher, dass du einer Klasse zugeordnet bist?");	//abbruch wenn kein Klassenname übergeben
 
 pageHeader("Formular","main");
 echo "<div class ='timetable_column'>";	

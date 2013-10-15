@@ -20,11 +20,11 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/other/dateFunctions.php");		/
 //Seitenheader
 pageHeader("Formular","main");
 
-$result = selectAll("news");	//gesamte News-Tabelle abfragen
+$result = selectAll("news","","");	//gesamte News-Tabelle abfragen
 while ($row = mysql_fetch_object($result)) {
 		$array[] = $row;}
 //print_r($array);
-$date = CaptureDate();  //aktuelles Datum abfragen
+$date = CaptureDate("");  //aktuelles Datum abfragen
 echo "<h1><u> NEWS vom ".$date."</u></h1> </br>"; 
 $date = preg_replace('![^0-9]!', '', $date); 	//Nur Zahlen zulassen
 
@@ -38,7 +38,7 @@ for($i = 0;$i < count($array);$i++)
   $endDate = $array[$i]->endDay;		//Enddatum abfragen
   $endDate = preg_replace('![^0-9]!', '', $endDate); //Nur Zahlen zulassen
  
- if(($startDate <= $date) && ($endDate >= $date)) //nur anzeigen wenn aktuelles Datum zwischen Satrt- und Enddatum liegt
+ if(($startDate <= $date) && ($endDate >= $date) && ($array[$i]->display ==1)) //nur anzeigen wenn aktuelles Datum zwischen Satrt- und Enddatum liegt
  {echo "<h2>" . $array[$i]->title . "</h2></br>";
   echo $array[$i]->text;
   echo "</br></br></br></br></br>";
