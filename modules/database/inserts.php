@@ -25,16 +25,19 @@ $data["ID"]=$post["ID"];
 $data["name"]=$post["clName"];
 
 $temp = mysql_fetch_array(mysql_query("SELECT ID FROM sections WHERE short='".$post["seShort"]."'"));
+$ok1 = control($post["seShort"],$temp["ID"],"Abteilung");
 $data["sectionFK"] = $temp["ID"];
 $temp = mysql_fetch_array(mysql_query("SELECT ID FROM teachers WHERE short='".$post["teShort"]."'"));
+$ok2 = control($post["teShort"],$temp["ID"],"Lehrer");
 $data["teacherFK"] = $temp["ID"];
 $temp = mysql_fetch_array(mysql_query("SELECT ID FROM rooms WHERE name='".$post["roName"]."'"));
+$ok3 = control($post["roName"],$temp["ID"],"Raum");
 $data["roomFK"] = $temp["ID"];
+
 if(!empty($post["invisible"]))
 	$data["invisible"]=true;
 
-
-if(empty($post["delete"]))
+if(empty($post["delete"]) && ($ok1*$ok2*$ok3) == 1)
 	saveupdate($data,"classes");
 }
 
@@ -59,7 +62,22 @@ $lessonsBaseInsert["classFK"] = $temp["ID"];
 $temp = mysql_fetch_array(mysql_query("SELECT ID FROM lessonsBase WHERE startHourFK='".$lessonsBaseInsert["startHourFK"]."' AND classFK='".$lessonsBaseInsert["classFK"]."'"));
 $lessonsBaseInsert["ID"] = $temp["ID"];
 
-if($lessonsBaseInsert['ID']==""){
+
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM teachers WHERE short='".$post["teShort"]."'"));
+$ok1 = control($post["seShort"],$temp["ID"],"Lehrer");
+$lessonsInsert["teachersFK"] = $temp["ID"];
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM rooms WHERE name='".$post["roName"]."'"));
+$ok2 = control($post["roName"],$temp["ID"],"Raum");
+$lessonsInsert["roomFK"] = $temp["ID"];
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM subjects WHERE short = '".$post["suShort"]."'"));
+$ok3 = control($post["suShort"],$temp["ID"],"Fach");
+$lessonsInsert["subjectFK"]=$temp["ID"];
+$lessonsInsert["comment"]=$post["comment"];
+//print_r($lessonsBaseInsert);
+//echo ",";
+//print_r($lessonsInsert);
+
+if($lessonsBaseInsert['ID']=="" && ($ok1*$ok2*$ok3) == 1){
 	saveupdate($lessonsBaseInsert,"lessonsBase");
 	$temp = mysql_fetch_array(mysql_query("SELECT ID FROM lessonsBase WHERE startHourFK='".$lessonsBaseInsert["startHourFK"]."' AND endHourFK='".$lessonsBaseInsert["endHourFK"]."' AND classFK='".$lessonsBaseInsert["classFK"]."'"));
 	$lessonsBaseInsert["ID"] = $temp["ID"];
@@ -67,20 +85,11 @@ if($lessonsBaseInsert['ID']==""){
 
 $lessonsInsert["lessonBaseFK"]=$lessonsBaseInsert["ID"];
 
-$temp = mysql_fetch_array(mysql_query("SELECT ID FROM teachers WHERE short='".$post["teShort"]."'"));
-$lessonsInsert["teachersFK"] = $temp["ID"];
-$temp = mysql_fetch_array(mysql_query("SELECT ID FROM rooms WHERE name='".$post["roName"]."'"));
-$lessonsInsert["roomFK"] = $temp["ID"];
-$temp = mysql_fetch_array(mysql_query("SELECT ID FROM subjects WHERE short LIKE '".$post["suShort"]."'"));
-$lessonsInsert["subjectFK"]=$temp["ID"];
-$lessonsInsert["comment"]=$post["comment"];
-//print_r($lessonsBaseInsert);
-//echo ",";
-//print_r($lessonsInsert);
 
-if(empty($post["delete"]))
+if(empty($post["delete"]) && ($ok1*$ok2*$ok3) == 1)
 	saveupdate($lessonsInsert,"lessons");
-else{
+else if(($ok1*$ok2*$ok3) == 1)
+{
 
 $lessonsbaseID=$lessonsInsert["lessonBaseFK"];
 
@@ -401,6 +410,19 @@ if($result["ID"]=="")
 //echo $result["ID"];
 return $result["ID"];
 
+}
+
+
+
+function control($post,$select,$field)
+{
+
+if($post != "" && $select == ""){
+	printf("<script> window.alert('%s nicht gefunden!');</script> ",$field);
+	return 0;
+}
+else
+	return 1;
 }
 
 ?>

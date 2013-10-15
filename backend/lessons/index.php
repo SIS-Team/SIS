@@ -16,12 +16,13 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/form/dropdownSelects.php");		
 include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
 
 
-
-
+if(isset($_GET['fail']))
+	$fail = "Klasse oder Tag falsch eingegeben.<br>";
 //Seitenheader
 pageHeader("Formular","main");
 
 printf("<form method=\"post\" action=\"lessons.php\"> ");
+printf("%s",$fail);
 printf("Klasse wählen: <input autocomplete=\"off\" list=\"clName\" name=\"class\" size=\"8\">");
 printf("Tag wählen: <input autocomplete=\"off\" list=\"day\" name=\"day\" size=\"3\" value=\"Mo\">\n");
 							

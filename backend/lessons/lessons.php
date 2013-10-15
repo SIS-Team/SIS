@@ -1,3 +1,7 @@
+<?php
+	@ob_start();
+?>
+
 <script type="text/javascript">
 function Visibility(hour) {
 	
@@ -127,8 +131,10 @@ ii+=1;
 	 * 	0.1.0:  22. 07. 2013, Handle Marco - erste Version
 	 */
 
+
+
 if(empty($_POST['class'])){
-	header('Location: index.php');
+	header('Location: ./');
 	exit();
 }
 else if(empty($_POST['day']))
@@ -173,6 +179,13 @@ if($days['next']!="")
 	printf("<td style=\"text-align:right\"><input type=\"submit\" value=\"%s\" name=\"day\"></td>\n",$days['next']);
 printf("</tr></table></form>\n");
 
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM class WHERE name = '".$_POST["class"]."'"));
+$ok1 = control($_POST['class'],$temp["ID"],"Klasse");
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort = '".$_POST["day"]."'"));
+$ok2 = control($_POST['day'],$temp["ID"],"Tag");
+
+if(($ok1*$ok2!=1))
+	header("Location: ./?fail");
 
 $where="classes.name='".$_POST['class']."' AND hoursStart.weekdayShort='".$_POST['day']."'";
 $sort="hoursStart.hour ASC";
