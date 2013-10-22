@@ -17,6 +17,8 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/database/selects.php");			//S
 include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/other/dateFunctions.php");		//Stellt Datumsfunktionen zur Verfügung
 
 
+if(!($_SESSION['loggedIn']))die("Critical Error </br> Bist du sicher, dass du angemeldet bist?"); //Kontrolle ob angemeldet
+
 $substitudes = array();
 
 //Seitenheader

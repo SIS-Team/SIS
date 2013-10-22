@@ -15,11 +15,16 @@ session_start();
 include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
 include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
 
-if(!($_SESSION['loggedIn']))die("Critical Error </br> Bist du sicher, dass du angemeldet bist?");
+if(!($_SESSION['loggedIn']))die("Critical Error </br> Bist du sicher, dass du angemeldet bist?"); //Kontrolle ob angemeldet
+$isTeacher =$_SESSION['isTeacher'];
 
-$clName =$_SESSION['class'];
-if(!isset($clName))die("Critical Error </br> Bist du sicher, dass du einer Klasse zugeordnet bist?");	//abbruch wenn kein Klassenname übergeben
-
+if($isTeacher){ $name=$_SESSION['id'];	//Kontrolle ob Lehrer
+$mode = 1;}
+else{
+$name =$_SESSION['class'];
+if(!isset($name))die("Critical Error </br> Bist du sicher, dass du einer Klasse zugeordnet bist?");	//abbruch wenn kein Klassenname übergeben
+$mode = 0;
+}
 pageHeader("Formular","main");
 echo "<div class ='timetable_column'>";	
 
@@ -35,8 +40,7 @@ echo "<div class ='timetable_column'>";
 		echo "</tr>";
 		
 
-
-$array = ngetLessons($clName);  //fragt Studen ab, die in der gesuchten Klasse stattfinden
+$array = ngetLessons($name,$mode);  //fragt Studen ab, die in der gesuchten Klasse stattfinden
 $hours = array();			   //ertellt ein leeres Array
 for ($i = 0; $i < count($array); $i++) {	
  	$index = $array[$i]->startHour; //Als Index wird die Startstunde verwendet
@@ -140,9 +144,13 @@ echo "</div>";
 		echo "</table>";
 
 
-function ngetLessons($className) {		//Abfrage von Stunden im vorgegebenen Raum
-	if ($className) 
-		$where = "classes.name = '" . mysql_real_escape_string($className) . "'";
+function ngetLessons($name,$mode) {		//Abfrage von Stunden im vorgegebenen Raum
+	if($mode ==0){
+	if ($name) 
+		$where = "classes.name = '" . mysql_real_escape_string($name) . "'";}
+	else 
+	{	if ($name) 
+		$where = "teachers.short = '" . mysql_real_escape_string($name) . "'";}
 	$result = selectLesson($where, "");
 	$array = array();
 	echo mysql_error();
