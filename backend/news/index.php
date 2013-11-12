@@ -33,22 +33,22 @@ pageHeader("Formular","main");
 //ID,title,text,startDay,endDay
 if($isAdmin) {
 $fields = array(
-	array( "ID", 		"",			 				"hidden", 	"",		"",		"",					""),
-	array( "title", 	"Titel: ", 					"text", 	"8",	"",		"",					""),
-	array( "text", 		"Text: ",					"textarea", "20",	"5",	"",					""),	
-	array( "startDay",	"Anzeigebeginn-Datum: ",	"text",		"10",	"",		"",					""),
-	array( "endDay",	"Anzeigeend-Datum: ",		"text",		"10",	"",		"",					""),
-	array( "display",	"Anzeigen",					"checkbox",	"",		"",		"",					""),
+	array( "ID", 			"",			 							"hidden", 	"",		"",		"",					""),
+	array( "title", 		"Titel: ", 								"text", 	"8",	"",		"",					""),
+	array( "text", 			"Text: ",								"textarea", "20",	"5",	"",					""),	
+	array( "startDay",		"Anzeigebeginn-Datum: (YYYY-MM-DD) ",	"text",		"10",	"",		"",					""),
+	array( "endDay",		"Anzeigeend-Datum: (YYYY-MM-DD",		"text",		"10",	"",		"",					""),
+	array( "display",					"Anzeigen",					"checkbox",	"",		"",		"",					""),
 	);
 	}
 
 else {
  $fields = array(
-	array( "ID", 		"",			 				"hidden", 	"",		"",		"",					""),
-	array( "title", 	"Titel: ", 					"text", 	"8",	"",		"",					""),
-	array( "text", 		"Text: ",					"textarea", "20",	"5",	"",					""),	
-	array( "startDay",	"Anzeigebeginn-Datum: ",	"text",		"10",	"",		"",					""),
-	array( "endDay",	"Anzeigeend-Datum: ",		"text",		"10",	"",		"",					""),
+	array( "ID", 			"",			 							"hidden", 	"",		"",		"",					""),
+	array( "title", 		"Titel: ", 								"text", 	"8",	"",		"",					""),
+	array( "text", 			"Text: ",								"textarea", "20",	"5",	"",					""),	
+	array( "startDay",		"Anzeigebeginn-Datum: (YYYY-MM-DD) ",	"text",		"10",	"",		"",					""),
+	array( "endDay",		"Anzeigeend-Datum: (YYYY-MM-DD",		"text",		"10",	"",		"",					""),
 	);
  }
 	
@@ -75,10 +75,12 @@ unset($post["save"]);
 $data =array("ID"=>"","title"=>"","text"=>"","startDay"=>"","endDay"=>"","display"=>"");
 
 $data["ID"]=$post["ID"];
-$data["title"]=$post["title"];
-$data["text"]=$post["text"];
-$data["startDay"]=$post["startDay"];
-$data["endDay"]=$post["endDay"];
+$data["title"]=htmlentities($post["title"]);
+$data["text"]=htmlentities($post["text"]);
+if(check_date($post["startDay"],"Ymd","-")) $data["startDay"]=$post["startDay"];
+else $data["startDay"]= "2000-01-01";
+if(check_date($post["endDay"],"Ymd","-"))$data["endDay"]=$post["endDay"];
+else $data["endDay"]= "2999-12-31";
 if(isset($post["display"]) && $Admin == 1){$data["display"]=1;}
 else {$data["display"]=0;}
 //print_r($data);
@@ -86,6 +88,20 @@ if(empty($post["delete"])) saveupdate($data,"news");
 else delete($data["ID"],"news");
  
  }
+
+//von http://www.selfphp.de/kochbuch/kochbuch.php?code=17
+function check_date($date,$format,$sep)
+{    
+    
+    $pos1    = strpos($format, 'd');
+    $pos2    = strpos($format, 'm');
+    $pos3    = strpos($format, 'Y'); 
+    
+    $check    = explode($sep,$date);
+    
+    return checkdate($check[$pos2],$check[$pos1],$check[$pos3]);
+
+}
 
 	
 

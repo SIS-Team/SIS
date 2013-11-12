@@ -26,17 +26,14 @@ while ($row = mysql_fetch_object($result)) {
 //print_r($array);
 $date = CaptureDate("");  //aktuelles Datum abfragen
 echo "<h1><u> NEWS vom ".$date."</u></h1> </br>"; 
-$date = preg_replace('![^0-9]!', '', $date); 	//Nur Zahlen zulassen
 
 
 for($i = 0;$i < count($array);$i++)
 { //echo $i ;
  $startDate = $array[$i]->startDay;		//Startdatum abfragen
- $startDate = preg_replace('![^0-9]!', '', $startDate);	//Nur Zahlen zulassen
  //echo $newDate ."</br>";
  
   $endDate = $array[$i]->endDay;		//Enddatum abfragen
-  $endDate = preg_replace('![^0-9]!', '', $endDate); //Nur Zahlen zulassen
  
  if(($startDate <= $date) && ($endDate >= $date) && ($array[$i]->display ==1)) //nur anzeigen wenn aktuelles Datum zwischen Satrt- und Enddatum liegt
  {echo "<h2>" . $array[$i]->title . "</h2></br>";
