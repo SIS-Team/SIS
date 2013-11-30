@@ -15,18 +15,17 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Main.php");				//Stel
 include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
 include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/database/inserts.php");			//Stellt die insert-Befehle zur Verfügung
 
-$isAdmin = $_SESSION['rights']['E'] || $_SESSION['rights']['N'] || $_SESSION['rights']['W'] || $_SESSION['rights']['M'];
+$isAdmin = $_SESSION['rights']['E'] || $_SESSION['rights']['N'] || $_SESSION['rights']['W'] || $_SESSION['rights']['M'] || $_SESSION['rights']['root'];
 $isNews = $_SESSION['rights']['news'];
 
-if($_POST['save']!="")
-	news($isAdmin);
+
 
 if(!($_SESSION['loggedIn']))die("Critical Error </br> Bist du sicher, dass du angemeldet bist?"); //Kontrolle ob angemeldet
 
-
-
 if(!($isNews or $isAdmin)) die ("Critical Error </br> Du hast auf diese Funktionen keinen Zugriff. </br> Wende dich an einen Newsbeauftragten!");
 
+if($_POST['save']!="")
+	news($isAdmin);
 
 pageHeader("Formular","main");
 
@@ -37,7 +36,7 @@ $fields = array(
 	array( "title", 		"Titel: ", 								"text", 	"8",	"",		"",					""),
 	array( "text", 			"Text: ",								"textarea", "20",	"5",	"",					""),	
 	array( "startDay",		"Anzeigebeginn-Datum: (YYYY-MM-DD) ",	"text",		"10",	"",		"",					""),
-	array( "endDay",		"Anzeigeend-Datum: (YYYY-MM-DD",		"text",		"10",	"",		"",					""),
+	array( "endDay",		"Anzeigeend-Datum: (YYYY-MM-DD)",		"text",		"10",	"",		"",					""),
 	array( "display",					"Anzeigen",					"checkbox",	"",		"",		"",					""),
 	);
 	}
@@ -48,7 +47,7 @@ else {
 	array( "title", 		"Titel: ", 								"text", 	"8",	"",		"",					""),
 	array( "text", 			"Text: ",								"textarea", "20",	"5",	"",					""),	
 	array( "startDay",		"Anzeigebeginn-Datum: (YYYY-MM-DD) ",	"text",		"10",	"",		"",					""),
-	array( "endDay",		"Anzeigeend-Datum: (YYYY-MM-DD",		"text",		"10",	"",		"",					""),
+	array( "endDay",		"Anzeigeend-Datum: (YYYY-MM-DD)",		"text",		"10",	"",		"",					""),
 	);
  }
 	
@@ -75,8 +74,8 @@ unset($post["save"]);
 $data =array("ID"=>"","title"=>"","text"=>"","startDay"=>"","endDay"=>"","display"=>"");
 
 $data["ID"]=$post["ID"];
-$data["title"]=htmlentities($post["title"]);
-$data["text"]=htmlentities($post["text"]);
+$data["title"]=htmlspecialchars($post["title"]);
+$data["text"]=htmlspecialchars($post["text"]);
 if(check_date($post["startDay"],"Ymd","-")) $data["startDay"]=$post["startDay"];
 else $data["startDay"]= "2000-01-01";
 if(check_date($post["endDay"],"Ymd","-"))$data["endDay"]=$post["endDay"];
