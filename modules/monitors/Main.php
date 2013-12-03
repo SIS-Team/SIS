@@ -9,7 +9,7 @@
 	 * 	0.1.0: 09. 09. 2013, Buchberger Florian - erste Version
 	 */
 
-	include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Main.php");
+	include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Connect.php");
 
 	// gibt den Monitor als MySQL Objekt zurück
 	// Spalten: id, name, file, type, room, roomID
