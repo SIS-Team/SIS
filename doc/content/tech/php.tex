@@ -1,0 +1,30 @@
+\subsubsection{PHP}
+Die Abkürzung PHP steht für "PHP Hypertext Preprocessor". Es handelt sich hierbei um ein serverseitige Programmiersprache, die vorallem in der Webentwicklung zum Einsatz kommt. Die Syntax ist an Perl und C angelehnt.\\
+Als PHP-Module wurden nur php5-mysql sowie php5-ldap verwendet.\\
+PHP ist seit Version 5 vollständig objekt-orientiert, wurde aber imperativ/funktional verwendet.\\
+\\
+Ein PHP Programm kann im Gegensatz zu anderen serverseitigen Programmiersprachen direkt in den HTML-Quelltext der Website eingebunden werden. Gekennzeichnet werden diese eingebetteten Programme mit den PHP-Tags (siehe Programm-Code 3.1).
+\begin{lstlisting}[style=customPHP, caption={PHP-Tags}]
+<?php 
+	/* Programm-Code */
+?>
+\end{lstlisting}
+\paragraph{Probleme} 
+Die Typisierung in PHP ist sehr flexible (dynamisch), so kann einer Variable, die zum Beispiel eine Zahl enthält, eine Zeichenkette, oder ein Array neu zugewiesen werden.\\
+Manche Standard-Funktionen in PHP haben numerische Rückgabewerte und geben den bool'schen Wert false zurück, wenn ein Fehler auftritt. Da alle Werte, die nicht 0 sind, laut Definition gleich dem bool'schen true sind, kann es zu Fehlinterpretation des Rückgabewertes kommen. Um solche Situationen so vermeiden, sollte statt auf Wertegleichheit (==) auf Equivalenz (===), das bedeutet in diesem Zusammenhang Werte- und Typgleichheit (Bool != Integer, trotz dynamischer Typisierung), geprüft werden (Beispiel: siehe Programm-Code 3.2).
+\begin{lstlisting}[style=customPHP, caption={false}]
+<?php 
+	$string = "Hallo Welt";
+	$position = strpos("H", $string); 
+	// H liegt an Position 0
+	
+	// falsch:
+	if ($position == false) {
+		echo "Abfrage 1\n";
+	}
+	// richtig:
+		if ($position === false) {
+		echo "Abfrage 2\n";
+	}
+?>
+\end{lstlisting}
