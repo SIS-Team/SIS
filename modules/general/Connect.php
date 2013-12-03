@@ -8,6 +8,7 @@
 	 * Changelog:
 	 * 	1.0.0:  22. 06. 2013, Buchberger Florian - erste Version
 	 */
-	$connection = mysql_connect('localhost', 'sisadmin', 'passwd');
+	include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/general/MySQLpassword.php");
+	$connection = mysql_connect($host, $user, $password);
 	mysql_select_db('sis');
 ?>

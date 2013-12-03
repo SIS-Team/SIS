@@ -123,7 +123,7 @@ function selectClass($where,$order){
  *$where string zum Filtern
  *$order string zum Sortieren
  *	
- *ID,clName,roName,teShort,suShort,weekdayShort,startHour,endHour
+ *ID,clName,roName,teShort,suShort,weekdayShort,startHour,endHour,comment
  */
 
 function selectLesson($where,$order){

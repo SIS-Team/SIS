@@ -9,8 +9,8 @@
 	 * 	0.1.0:  24. 08. 2013, Buchberger Florian - erste Version
 	 */
 		
-	include("../../modules/general/Main.php");
-	include("../../modules/monitors/CheckIP.php");
+	include($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Main.php");
+	include($_SERVER['DOCUMENT_ROOT'] . "/modules/monitors/CheckIP.php");
 	if (!isset($_GET['name']) || empty($_GET['name'])) {
 		$response = array();
 		$response['error'] = "Name not given";

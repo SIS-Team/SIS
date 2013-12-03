@@ -162,6 +162,10 @@ $fields = array(
 	array( "comment", 	"Kommentar: ",		"text",		"20",	"",		"",					""),
 	);
 
+include($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Menu.php");
+generateAdminMenu();
+
+
 //Seitenheader
 pageHeader("Formular","main");
 printf("Klasse: <a href=\"index.php\" >%s</a> und der Tag: %s",$_POST['class'],$_POST['day']);
@@ -179,7 +183,7 @@ if($days['next']!="")
 	printf("<td style=\"text-align:right\"><input type=\"submit\" value=\"%s\" name=\"day\"></td>\n",$days['next']);
 printf("</tr></table></form>\n");
 
-$temp = mysql_fetch_array(mysql_query("SELECT ID FROM class WHERE name = '".$_POST["class"]."'"));
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM classes WHERE name = '".$_POST["class"]."'"));
 $ok1 = control($_POST['class'],$temp["ID"],"Klasse");
 $temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort = '".$_POST["day"]."'"));
 $ok2 = control($_POST['day'],$temp["ID"],"Tag");

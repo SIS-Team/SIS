@@ -16,6 +16,10 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/form/dropdownSelects.php");		
 include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
 
 
+include($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Menu.php");
+generateAdminMenu();
+
+
 if(isset($_GET['fail']))
 	$fail = "Klasse oder Tag falsch eingegeben.<br>";
 //Seitenheader

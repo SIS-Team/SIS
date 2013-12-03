@@ -39,11 +39,14 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/other/dateChange.php");			//S
 if($_POST['save']!="")
 	substitudes();
 
-if (empty($_POST["date"])) {		//wenn nichts zurückgegeben wird, dann heute
+if (empty($_POST["date"]) && empty($_POST['time'])) {		//wenn nichts zurückgegeben wird, dann heute
 	$date = strftime("%Y-%m-%d");
 }
-else {								//sonst zurückgegebenes Datum
+else if(empty($_POST['time'])){								//sonst zurückgegebenes Datum
 	$date = $_POST["date"];
+}
+else if(empty($_POST['date'])){								//sonst zurückgegebenes Datum
+	$date = $_POST["time"];
 }
 
 
@@ -69,11 +72,15 @@ $fieldsRow2 = array(
 	);
 
 
+include($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Menu.php");
+generateAdminMenu();
+
+
 //Seitenheader
 pageHeader("Formular","main");
 
 $date = dateChange($date);		//Datumsauswahl erzeugen
-$fieldsRow1["5"]["5"] = $date;	//Standartdatum ins Formular schreiben
+$fieldsRow1[5][5] = $date;	//Standartdatum ins Formular schreiben
 
 $where = "substitudes.time = '".$date."'";		//Filter
 $sort = "classes.name, hoursStart.hour";		//Sortierung nach dem Klassenname und der Startstunde

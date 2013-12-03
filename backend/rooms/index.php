@@ -28,6 +28,11 @@ $fields = array(
 	array( "teShort", 	"Zust&auml;ndige Lehrer: ", "dropdown", "5",	"",		$selectTeachers,	""),	
 	);
 
+
+include($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Menu.php");
+generateAdminMenu();
+
+
 //Seitenheader
 pageHeader("Formular","main");				
 

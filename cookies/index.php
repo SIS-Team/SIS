@@ -31,7 +31,7 @@
 	<h2>School Information Service</h2>
 	<p>
 		SIS ist eine Diplomarbeit einer Gruppe von Sch&uuml;lern der HTL Peter Anich, Abteilung Elektronik. <br />
-		Bei diesem Projekt geht es um ein System, das die Stundenpl&auml;ne, Supplierpl&auml;ne sowie die neuesten News f&uuml;r die HTL f&uuml;r die Sch&uuml;ler und Lehrer sch&ouml;n am Computer und Handy zur Verf&uuml;gung zu stellen. Als zus&auml;tzlicher Teil werden die Monitore, die in der Schule an verschiedenen Stellen angebracht werden, ebenfalls durch dieses System gemanaged.
+		Bei diesem Projekt geht es um ein System, das die Stundenpl&auml;ne, Supplierpl&auml;ne sowie die neuesten News f&uuml;r die HTL f&uuml;r die Sch&uuml;ler und Lehrer sch&ouml;n am Computer und Handy zur Verf&uuml;gung stellt. Als zus&auml;tzlicher Teil werden die Monitore, die in der Schule an verschiedenen Stellen angebracht werden, ebenfalls durch dieses System gemanaged.
 	</p>
 	<br />
 	<br />

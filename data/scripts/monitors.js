@@ -24,9 +24,9 @@ var main = function() {
 	// lade die uhr und aktualisiere jede Sekunde
 	clockUpdate();
 	window.setInterval(clockUpdate, 1000);
-	// lade den Inhalt und aktualisiere alle halben Minuten
-	updateContent();
-	window.setInterval(updateContent, 30000);
+	// lade den Inhalt und aktualisiere alle 10 Sekunden
+	loadContent();
+	window.setInterval(loadContent, 10000);
 	// passe die Höhe des Fensters an
 	document.getElementById("main").style.height = (window.innerHeight - 70) + "px";
 }
@@ -92,17 +92,21 @@ var register = function() {
 	// TODO
 }
 
-// läd den Seiteninhalt
-var updateContent = function() {
-
+// läd Seiteninhalt
+var loadContent = function () {
 	// sendet aktuellen Monitor-Hash zum Server
-	var response = reqGet("/monitors/api/getContent.php", "name=" + monitorName + "&hash=" + monitorHash, false, ret);
+	reqGet("/monitors/api/getContent.php", "name=" + monitorName + "&hash=" + monitorHash, true, updateContent);
+}
+
+// aktualisiert den Seiteninhalt
+var updateContent = function(response) {
+	console.log(response);
 	response = JSON.parse(response);
 	console.dir(response);
 
 	// Wenn Server-Fehler -> generiere Popup
 	if (response.error.length) {
-		makeError("server", "Server Message", respnse.error);
+		makeError("server", "Server Message", response.error);
 		return;
 	}
 

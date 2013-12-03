@@ -8,6 +8,11 @@
 * {
 	color: #fff;
 }
+
+a {
+	color: #000;
+}
+
 body {
 	background-color: #000;
 }
@@ -99,4 +104,22 @@ body {
 	position: absolute;
 	left: 0px;
 	opacity: 0.5;
+}
+
+.news {
+	width: 80%;
+	margin: auto auto;
+	margin-top: 35px;
+	border: 1px solid #aaa;
+	padding: 10px;
+}
+
+.news th {
+	font-size: 50px;
+}
+
+.news td {
+	font-size: 25px;
+	text-align: center;
+	padding-bottom: 20px;
 }

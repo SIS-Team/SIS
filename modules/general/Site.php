@@ -13,10 +13,12 @@
 	$siteContents = array();
 	$siteContents["header"] = "";
 	$siteContents["footer"] = "";
+	$siteContents["sidebar"] = "";
 
 	$seperators = array();
 	$seperators["main"] = "&main;";
 	$seperators["title"] = "&title;";
+	$seperators["sidebar"] = "&sidebar;";
 
 	/*
 	 * LÃ¤d die Design Datei und splittet sie nach dem seperator "main" auf.
@@ -46,7 +48,9 @@
 	function pageHeader($title, $design) {
 		global $siteContents, $seperators;
 		getDesignFile($_SERVER['DOCUMENT_ROOT'] . "/modules/design/" . $design . ".html");
-		echo str_replace($seperators["title"], $title, $siteContents["header"]);
+		$site = str_replace($seperators["title"], $title, $siteContents["header"]);
+		$site = str_replace($seperators["sidebar"], $siteContents["sidebar"], $site);
+		echo $site;
 	}
 
 	
@@ -54,7 +58,8 @@
 	 * Gibt den zuvor geladenen Teil des Designs ab dem "main" seperator aus.
 	 */
 	function pageFooter() {
-		global $siteContents;
-		echo $siteContents["footer"];
+		global $seperators, $siteContents;
+		$site = str_replace($seperators["sidebar"], $siteContents['sidebar'], $siteContents["footer"]);
+		echo $site;
 	}
 ?>
