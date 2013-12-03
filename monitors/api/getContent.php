@@ -17,7 +17,7 @@
 	$monitor = getMonitorByName($_GET['name']);
 	if (!$monitor) {
 		$response = array();
-		$response['error'] = "Monitor not found.";
+		$response['error'] = "Monitor nicht gefunden.<br />Klicken Sie <a href=\"?register&name=" . $_GET['name'] . "\">hier</a> um den Monitor zu registrieren.";
 		echo json_encode($response);
 		die();
 	}
@@ -42,6 +42,16 @@
 		// Seitentyp-Switch
 		switch($monitor->type) {
 		case "News":
+			$response['hash'] = 0;
+			$today = date("Y-m-d");
+			$sql = "SELECT * FROM `news` WHERE `startDay` <= '" . $today . "' AND `endDay` >= '" . $today . "' AND `display` = 1";
+			$result = mysql_query($sql);
+			$response['content'] .= "<table class=\"news\">";
+			while ($row = mysql_fetch_object($result)) {
+				$response['content'] .= "<tr><th>" . $row->title . "</th></tr>";
+				$response['content'] .= "<tr><td>" . $row->text  . "</td></tr>";
+			}
+			$response['content'] .= "</table>";
 			break;
 		case "Stundenplan":
 			break;
@@ -57,7 +67,7 @@
 			break;
 		}
 	}
-	
+
 	// Ergebnis JSON codieren und zurückgeben
 	echo json_encode($response);
 

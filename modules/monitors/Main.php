@@ -12,18 +12,21 @@
 	include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Main.php");
 
 	// gibt den Monitor als MySQL Objekt zurück
-	// Spalten: id, file, type, room, roomID
+	// Spalten: id, name, file, type, room, roomID
 	function getMonitorByName($name) {
 		$name = mysql_real_escape_string($name);
-		$sql = "SELECT mo.ID AS id, mo.file AS file, mod.name AS type, ro.name AS room, ro.ID AS roomID FROM monitors AS mo INNER JOIN monitorMode AS mod ON mo.modeFK=mod.ID AND INNER JOIN rooms AS ro ON mo.roomFK=ro.ID WHERE `name`='" . $name . "'";
+		$sql = "SELECT `monitors`.`ID` AS `id`, `monitors`.`name`, `monitors`.`file` AS `file`, `mod`.`name` AS `type`, `ro`.`name` AS `room`, `ro`.`ID` AS `roomID`, `monitors`.`ip` AS `ip`, `dm`.`name` AS `displayMode`, `monitors`.`displayStartDaytime` AS `startTime`, `monitors`.`displayEndDaytime` AS endTime, `monitors`.`time` AS `regTime` FROM `monitors` INNER JOIN `monitorMode` AS `mod` ON `monitors`.`modeFK`=`mod`.`ID` INNER JOIN `rooms` AS `ro` ON `monitors`.`roomFK`=`ro`.`ID` INNER JOIN `displayMode` AS `dm` ON `monitors`.`displayModeFK`=`dm`.`ID` WHERE `monitors`.`name`='" . $name . "'";
 		$result = mysql_query($sql);
+		echo mysql_error();
+		if (!mysql_num_rows($result))
+			return false;
 		return mysql_fetch_object($result);
 	}
 	
 	// gibt result für alle Monitors zurück
 	// Spalten: id, name, file, type, room, roomID
 	function getAllMonitors() {
-		$sql = "SELECT `monitors`.`ID` AS `id`, `monitors`.`name`, `monitors`.`file` AS `file`, `mod`.`name` AS `type`, `ro`.`name` AS `room`, `ro`.`ID` AS `roomID` FROM `monitors` INNER JOIN `monitorMode` AS `mod` ON `monitors`.`modeFK`=`mod`.`ID` INNER JOIN `rooms` AS `ro` ON `monitors`.`roomFK`=`ro`.`ID`";
+		$sql = "SELECT `monitors`.`ID` AS `id`, `monitors`.`name`, `monitors`.`file` AS `file`, `mod`.`name` AS `type`, `ro`.`name` AS `room`, `ro`.`ID` AS `roomID`, `monitors`.`ip` AS `ip`, `dm`.`name` AS `displayMode`, `monitors`.`displayStartDaytime` AS `startTime`, `monitors`.`displayEndDaytime` AS endTime, `monitors`.`time` AS `regTime` FROM `monitors` INNER JOIN `monitorMode` AS `mod` ON `monitors`.`modeFK`=`mod`.`ID` INNER JOIN `rooms` AS `ro` ON `monitors`.`roomFK`=`ro`.`ID` INNER JOIN `displayMode` AS `dm` ON `monitors`.`displayModeFK`=`dm`.`ID`";
 		return mysql_query($sql);
 	}
 
