@@ -1,13 +1,17 @@
 <script type="text/javascript">
+
+//Funktion zum ein und ausblenden der neuen Stunden
+//id = Zeilennummer
 function Visibility(id) {
-if(document.getElementById('visibleRow'+id).style.visibility=="visible")
-	document.getElementById('visibleRow'+id).style.visibility="collapse";
-else
-	document.getElementById('visibleRow'+id).style.visibility="visible";
+
+	if(document.getElementById('visibleRow'+id).style.visibility=="visible")	//Wenn die Zeile sichtbar
+		document.getElementById('visibleRow'+id).style.visibility="collapse";	//Zeile unsichtbar
+	else																		//sonst
+		document.getElementById('visibleRow'+id).style.visibility="visible";	//sichtbar machen
 }
-function myFunction()
-{
-alert("I am an alert box!");
+
+function failAlert(){ 
+	alert("Es konnte keine Stunde für\ndiese Supplierung gefunden werden.\nBitte tragen sie diesen Lehrer\nals fehlend ein, oder\nkorrigieren sie die Eingabe.");
 }
 </script>
 
@@ -29,9 +33,19 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/form/dropdownSelects.php");		
 include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
 include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
 include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/database/inserts.php");			//Stellt die insert-Befehle zur Verfügung
+include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/other/dateChange.php");			//Stell die Funktion für die Datumsauswahl zur VerfÃ¼gung
+
 
 if($_POST['save']!="")
 	substitudes();
+
+if (empty($_POST["date"])) {		//wenn nichts zurÃ¼ckgegeben wird, dann heute
+	$date = strftime("%Y-%m-%d");
+}
+else {								//sonst zurÃ¼ckgegebenes Datum
+	$date = $_POST["date"];
+}
+
 
 //Formularmaske
 $fieldsRow1 = array(
@@ -44,7 +58,7 @@ $fieldsRow1 = array(
 	array( "roName",	"Raum: ", 			"dropdown",		"8",	"",		$selectRooms,		""),
 	array( "startHour",	"Start-Std.: ", 	"text",			"5",	"",		"",					""),
 	array( "endHour",	"End-Std.: ",	 	"text",			"4",	"",		"",					""),
-	array( "hidden",	"Ausblednen? ", 	"checkbox",		"",		"",		"",					""),
+	array( "hidden",	"Ausblenden? ", 	"checkbox",		"",		"",		"",					""),
 	array( "sure", 		"Sicher? ", 		"checkbox",		"",		"",		"true",				""),
 	array( "comment", 	"Kommentar: ", 		"text",			"25",	"",		"",					""),
 	);
@@ -58,7 +72,13 @@ $fieldsRow2 = array(
 //Seitenheader
 pageHeader("Formular","main");
 
-$result = selectSubstitude("","");			//Rückgabewert des Selects
+$date = dateChange($date);		//Datumsauswahl erzeugen
+$fieldsRow1["5"]["5"] = $date;	//Standartdatum ins Formular schreiben
+
+$where = "substitudes.time = '".$date."'";		//Filter
+$sort = "classes.name, hoursStart.hour";		//Sortierung nach dem Klassenname und der Startstunde
+
+$result = selectSubstitude($where,$sort);			//Rückgabewert des Selects
 
 while ($row = mysql_fetch_array($result)){	//Fügt solange eine neue Formularzeile hinzu, solange ein Inhalt zur Verfügung steht
 	form_substitudes($fieldsRow1,$fieldsRow2 ,$row);		//Formular wird erstellt

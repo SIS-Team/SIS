@@ -23,9 +23,9 @@ if($_POST['save']!="")
 //Formularmaske
 $fields = array(
 	array( "ID", 		"",			 			"hidden", 	"",		"",		"",					""),
-	array( "seName",	"Name: ", 				"text", 	"25",	"",		"",					""),
+	array( "seName",	"Name: ", 				"text", 	"40",	"",		"",					""),
 	array( "seShort",	"Kürzel: ",			 	"text",	 	"5",	"",		"",					""),
-	array( "teShort",	"Abteilungsleiter: ", 	"dropdown", "15",	"",		$selectTeachers,	""),
+	array( "teShort",	"Abteilungsleiter: ", 	"dropdown", "5",	"",		$selectTeachers,	""),
 	);
 	
 //Seitenheader

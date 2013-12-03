@@ -1,0 +1,14 @@
+.timetable_column td{
+ 	text-align: center;
+	min-width: 110px;
+}
+
+.timetable_classes {
+ 	text-align: center;
+	min-width: 50px;
+	}
+
+.timetable_teachers {
+ 	text-align: center;
+	min-width: 20px;
+	}

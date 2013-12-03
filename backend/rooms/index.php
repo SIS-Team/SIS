@@ -25,13 +25,14 @@ if($_POST['save']!="")
 $fields = array(
 	array( "ID", 		"",			 				"hidden", 	"",		"",		"",					""),
 	array( "roName", 	"Name: ", 					"text", 	"8",	"",		"",					""),
-	array( "teShort", 	"Zust&auml;ndige Lehrer: ", "dropdown", "",		"",		$selectTeachers,	""),	
+	array( "teShort", 	"Zust&auml;ndige Lehrer: ", "dropdown", "5",	"",		$selectTeachers,	""),	
 	);
 
 //Seitenheader
 pageHeader("Formular","main");				
 
-$result = selectRooms("","");		//Rückgabewert des Selects
+$sort = "rooms.name";
+$result = selectRooms("",$sort);		//Rückgabewert des Selects
 
 while ($row = mysql_fetch_array($result)){	//Fügt solange eine neue Formularzeile hinzu, solange ein Inhalt zur Verfügung steht
 	form_new($fields,$row);		//Formular wird erstellt

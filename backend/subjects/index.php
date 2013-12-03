@@ -23,15 +23,16 @@ if($_POST['save']!="")
 //Formularmaske
 $fields = array(
 	array( "ID", 		"",			 		"hidden", 	"",		"",		"",		""),
-	array( "name", 		"Name: ", 			"text", 	"50",	"",		"",		""),
-	array( "short", 	"K&uuml;rzel: ", 	"text", 	"5",	"",		"",		""),
+	array( "name", 		"Name: ", 			"text", 	"60",	"",		"",		""),
+	array( "short", 	"K&uuml;rzel: ", 	"text", 	"10",	"",		"",		""),
 	array( "invisible", "Unsichtbar: ", 	"checkbox",	"",		"",		"",		""),		
 	);
 
 //Seitenheader
 pageHeader("Formular","main");
 
-$result = selectAll("subjects","","");		//Rückgabewert des Selects
+$sort = "invisible,short";
+$result = selectAll("subjects","",$sort);		//Rückgabewert des Selects
 
 while ($row = mysql_fetch_array($result)){	//Fügt solange eine neue Formularzeile hinzu, solange ein Inhalt zur Verfügung steht
 	form_new($fields,$row);		//Formular wird erstellt

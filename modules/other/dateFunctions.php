@@ -50,6 +50,21 @@ function prevNextDay($d) {
 	return $array;
 }
 
+//Datum um eins erhöhen
+function date_increase($d) {
+	$x = strptime($d, "%Y-%m-%d");
+	$y = mktime($x["tm_hour"], $x["tm_min"], $x["tm_sec"], 
+			$x["tm_mon"]+1, $x["tm_mday"]+1, 1900+$x["tm_year"] );
+	return strftime("%Y-%m-%d", $y);
+}
+
+//Datum um eins zurückstellen
+function date_decrease($d) {
+	$x = strptime($d, "%Y-%m-%d");
+	$y = mktime($x["tm_hour"], $x["tm_min"], $x["tm_sec"], 
+			$x["tm_mon"]+1, $x["tm_mday"]-1, 1900+$x["tm_year"] );
+	return strftime("%Y-%m-%d", $y);
+}
 
 
 

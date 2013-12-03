@@ -2,7 +2,7 @@
 
 
 
-	/* /backend/substitutesplan/index.php
+	/* /substitutes/index.php
 	 * Autor: Weiland Mathias
 	 * Version: 0.1.0
 	 * Beschreibung:
@@ -17,6 +17,8 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/database/selects.php");			//S
 include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/other/dateFunctions.php");		//Stellt Datumsfunktionen zur Verfügung
 
 
+if(!($_SESSION['loggedIn']))die("Critical Error </br> Bist du sicher, dass du angemeldet bist?"); //Kontrolle ob angemeldet
+
 $substitudes = array();
 
 //Seitenheader
@@ -27,10 +29,13 @@ echo "St. ... supplierte Stunde; ";
 echo "Sup. ...Supplierlehrer; ";
 echo "urs. ... ursprünglicher Lehrer; ";
 echo "</div>";
+$day_counter = 0;
 for($counter = 0; $counter <=2; $counter++)
-{
+{ 
+ if(date("w", time() + 24 * 60 * 60 * $day_counter)==0) $day_counter++;
+ if(date("w", time() + 24 * 60 * 60 * $day_counter)==6) $day_counter+2;
 	echo "<div id='d" . $counter . "' class='column background'>";
-		$day = captureDate($counter);		//aktuelles Datum abfragen
+		$day = captureDate($day_counter);		//aktuelles Datum abfragen
 		echo "Supplierungen vom ".$day;
 		 
 		//Tabellenkopfausgabe
@@ -64,6 +69,7 @@ for($counter = 0; $counter <=2; $counter++)
 		
 		echo "</table>";
 	echo "</div>";
+	$day_counter++;
 }
 
 function getSubstitude($date){	//Supplierungen des gewählten Datums abrufen

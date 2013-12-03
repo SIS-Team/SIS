@@ -23,7 +23,7 @@ if($_POST['save']!="")
 //Formularmaske
 $fields = array(
 	array( "ID", 		"",			 			"hidden", 	"",		"",		"",					""),
-	array( "teName", 	"Name: ", 				"text", 	"25",	"",		"",					""),
+	array( "teName", 	"Name: ", 				"text", 	"30",	"",		"",					""),
 	array( "teShort", 	"K&uuml;rzel: ", 		"text", 	"5",	"",		"",					""),
 	array( "display", 	"Kurzname: ", 			"text",		"20",	"",		"",					""),
 	array( "seShort",	"Stammabteilung: ", 	"dropdown",	"5",	"",		$selectSections,	""),
@@ -33,8 +33,8 @@ $fields = array(
 //Seitenheader
 pageHeader("Formular","main");
 
-
-$result = selectTeacher("","");				//Rückgabewert des Selects
+$sort = "teachers.invisible,sections.short,teachers.short";
+$result = selectTeacher("",$sort);				//Rückgabewert des Selects
 
 while ($row = mysql_fetch_array($result)){	//Fügt solange eine neue Formularzeile hinzu, solange ein Inhalt zur Verfügung steht
 	form_new($fields,$row);		//Formular wird erstellt
