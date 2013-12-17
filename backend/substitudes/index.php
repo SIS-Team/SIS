@@ -45,7 +45,6 @@ $fieldsRow1 = array(
 	array( "startHour",	"Start-Std.: ", 	"text",			"5",	"",		"",					""),
 	array( "endHour",	"End-Std.: ",	 	"text",			"4",	"",		"",					""),
 	array( "hidden",	"Ausblenden? ", 	"checkbox",		"",		"",		"",					""),
-	array( "sure", 		"Sicher? ", 		"checkbox",		"",		"",		"true",				""),
 	array( "comment", 	"Kommentar: ", 		"text",			"25",	"",		"",					""),
 	);
 	

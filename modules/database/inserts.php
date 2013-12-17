@@ -243,7 +243,9 @@ $temp = mysql_fetch_array(mysql_query("SELECT ID FROM rooms WHERE name='".$post[
 $data["roomFK"]=$temp["ID"];
 $data["time"]=$post["time"];
 $data["comment"]=$post["comment"];
-
+if($post["hidden"]=="hidden")
+	$data["hidden"]=true;
+	
 $temp = mysql_fetch_array(mysql_query("SELECT ID FROM classes WHERE name='".$post['clName']."'"));
 $class = $temp['ID'];
 
@@ -271,7 +273,7 @@ foreach($missTeacher as $i => $m){
 	
 }
 
-
+//print_r($data);
 
 /*
 if($post['move']=="move"){
