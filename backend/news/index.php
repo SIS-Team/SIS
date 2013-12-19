@@ -58,7 +58,9 @@ else {
 if($isAdmin){
 $result = selectAll("news","","");
 while ($row = mysql_fetch_array($result)){	//Fügt solange eine neue Formularzeile hinzu, solange ein Inhalt zur Verfügung steht
-	form_new($fields,$row);		//Formular wird erstellt
+	echo $row['endDay'];
+	if($row['endDay'] < (date("Y-m-d", time() - 30*60*60*24))) delete($row[ID],"news");
+	else form_new($fields,$row);		//Formular wird erstellt
 }
 }
 form_new($fields,false);
@@ -78,11 +80,11 @@ unset($post["save"]);
 $data =array("ID"=>"","title"=>"","text"=>"","startDay"=>"","endDay"=>"","display"=>"");
 
 $data["ID"]=$post["ID"];
-$data["title"]=htmlspecialchars($post["title"]);
-$data["text"]=htmlspecialchars($post["text"]);
-if(check_date($post["startDay"],"Ymd","-")) $data["startDay"]=$post["startDay"];
+$data["title"]=mysql_real_escape_string(htmlspecialchars($post["title"]));
+$data["text"]=mysql_real_escape_string(htmlspecialchars($post["text"]));
+if(check_date($post["startDay"],"Ymd","-")) $data["startDay"]=mysql_real_escape_string($post["startDay"]);
 else $data["startDay"]= "2000-01-01";
-if(check_date($post["endDay"],"Ymd","-"))$data["endDay"]=$post["endDay"];
+if(check_date($post["endDay"],"Ymd","-"))$data["endDay"]=mysql_real_escape_string($post["endDay"]);
 else $data["endDay"]= "2999-12-31";
 if(isset($post["display"]) && $Admin == 1){$data["display"]=1;}
 else {$data["display"]=0;}

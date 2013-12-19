@@ -25,6 +25,7 @@ $name =$_SESSION['class'];
 if(!isset($name))die("Critical Error </br> Bist du sicher, dass du einer Klasse zugeordnet bist?");	//abbruch wenn kein Klassenname übergeben
 $mode = 0;
 }
+
 pageHeader("Formular","main");
 echo "<div class ='timetable_column'>";	
 
@@ -54,9 +55,9 @@ for ($i = 0; $i < count($array); $i++) {
 		}
 		else $hours[$index][$array[$i]->weekdayShort] = $array[$i] ; //erstellen eines Eintrages wenn keiner vorhanden
 }
-
+//hours[Stunde][Tag]
 //print_r($hours[1]['Mo']);
- 
+ getSubstitude(date(),$name,$mode);
 $classType = checkContent($hours);	//kontrolliert ob Abendschule
 if($classType == 2)	//nur Abendschule
 	{$tableBegin = 12;
@@ -177,6 +178,21 @@ function checkContent($hours)
 	if($check == 5) return 1;
 	else return 0;	//alle Stunden
 }
+
+
+function getSubstitude($date,$name,$mode){	//Supplierungen des gewählten Datums abrufen
+	global $substitudes;
+		if($mode == "0")	$where = "time = '".mysql_real_escape_string($date)."' and classes.name = '" . mysql_real_escape_string($name) . "'";	
+		else $where = "time = '".mysql_real_escape_string($date)."' and newTeacher.short = '" . mysql_real_escape_string($name) . "'";
+			
+			$substitude_sql = selectSubstitude($where)	
+			or die("MySQL-Error: ".mysql_error());
+			while($substitude = mysql_fetch_array($substitude_sql)) {    
+		 	$substitudes[]=$substitude;
+			print_r($substitudes);  //Kontrolle des Ergebnis-Arrays
+			}	
+}
+
 
 pageFooter();
 ?>

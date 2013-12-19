@@ -74,9 +74,9 @@ for($counter = 0; $counter <=2; $counter++)
 
 function getSubstitude($date){	//Supplierungen des gewählten Datums abrufen
 	global $substitudes;
-			$where = "time = '".$date."'";
+			$where = "time = '".mysql_real_escape_string($date)."' and classes.name = '" . $_SESSION['class'] . "'";
 				
-			$substitude_sql = selectSubstitude($where,"clName")	
+			$substitude_sql = selectSubstitude($where,"startHour")	
 			or die("MySQL-Error: ".mysql_error());
 			while($substitude = mysql_fetch_array($substitude_sql)) {    
 		 	$substitudes[]=$substitude;
