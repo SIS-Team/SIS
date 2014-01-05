@@ -9,6 +9,7 @@ Ein PHP Programm kann im Gegensatz zu anderen serverseitigen Programmiersprachen
 	/* Programm-Code */
 ?>
 \end{lstlisting}
+Befindet sich der PHP Code eingebetet in HTML-Queltext, so ignoriert der Interpreter alles, das außerhalb der PHP-Tags steht.\\\\
 Eines der großen Vorteile an PHP ist, dass es vollständig serverseitig verarbeitet wird, das heißt am Client wird keine Rechenleistung für das Ausführen des PHP-Codes benötigt.
 \paragraph{Funktionsweise}
 Der Client fragt am Webserver eine Datei mit der Endung .php an. Anschließend lädt der Webserver die Datei und übergibt diese dem PHP Interpreter. Dieser generiert in den meisten Fällen eine HTML Datei, welche anschließend wieder dem Webserver übergeben wird. Dieser sendet die "fertige" Webseite an den Client. Der PHP Interpreter ist nicht nur auf HTML Dateien begrenzt, es können auch andere Dateitypen, wie Bilder oder PDF Dateien generiert werden. Diese Funktionsweise hat das Problem, dass die Seite bei jedem neuen Aufruf erneut generiert werden muss, dies führt zu einer höheren Auslastung am Webserver. Um dieses Problem zu vermiendern g
