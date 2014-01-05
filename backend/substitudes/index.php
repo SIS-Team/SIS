@@ -1,3 +1,20 @@
+<script type="text/javascript">
+
+//Funktion zum ein und ausblenden der neuen Stunden
+//id = Zeilennummer
+function Visibility(id) {
+
+	if(document.getElementById('visibleRow'+id).style.visibility=="visible")	//Wenn die Zeile sichtbar
+		document.getElementById('visibleRow'+id).style.visibility="collapse";	//Zeile unsichtbar
+	else																		//sonst
+		document.getElementById('visibleRow'+id).style.visibility="visible";	//sichtbar machen
+}
+
+function failAlert(){ 
+	alert("Es konnte keine Stunde für\ndiese Supplierung gefunden werden.\nBitte tragen sie diesen Lehrer\nals fehlend ein, oder\nkorrigieren sie die Eingabe.");
+}
+</script>
+
 <?php
 
 	/* /backend/substitude.php
@@ -45,6 +62,7 @@ $fieldsRow1 = array(
 	array( "startHour",	"Start-Std.: ", 	"text",			"5",	"",		"",					""),
 	array( "endHour",	"End-Std.: ",	 	"text",			"4",	"",		"",					""),
 	array( "hidden",	"Ausblenden? ", 	"checkbox",		"",		"",		"",					""),
+	array( "sure", 		"Sicher? ", 		"checkbox",		"",		"",		"true",				""),
 	array( "comment", 	"Kommentar: ", 		"text",			"25",	"",		"",					""),
 	);
 	
@@ -59,30 +77,12 @@ generateAdminMenu();
 
 
 //Seitenheader
-//pageHeader("Formular","main");
-?>
-<script type="text/javascript">
-
-//Funktion zum ein und ausblenden der neuen Stunden
-//id = Zeilennummer
-function Visibility(id) {
-
-	if(document.getElementById('visibleRow'+id).style.visibility=="visible")	//Wenn die Zeile sichtbar
-		document.getElementById('visibleRow'+id).style.visibility="collapse";	//Zeile unsichtbar
-	else																		//sonst
-		document.getElementById('visibleRow'+id).style.visibility="visible";	//sichtbar machen
-}
-
-function failAlert(){ 
-	alert("Es konnte keine Stunde für\ndiese Supplierung gefunden werden.\nBitte tragen sie diesen Lehrer\nals fehlend ein, oder\nkorrigieren sie die Eingabe.");
-}
-</script>
-<?php
+pageHeader("Formular","main");
 
 $date = dateChange($date);		//Datumsauswahl erzeugen
 $fieldsRow1[5][5] = $date;	//Standartdatum ins Formular schreiben
 
-$where = "substitudes.time = '".$date."' AND substitudes.display= 1";		//Filter
+$where = "substitudes.time = '".$date."'";		//Filter
 $sort = "classes.name, hoursStart.hour";		//Sortierung nach dem Klassenname und der Startstunde
 
 $result = selectSubstitude($where,$sort);			//Rückgabewert des Selects
@@ -94,5 +94,5 @@ while ($row = mysql_fetch_array($result)){	//Fügt solange eine neue Formularzeil
 form_substitudes($fieldsRow1,$fieldsRow2,false);			//Formular für einen neuen Eintrag
 
 //Seitenfooter
-//pageFooter();
+pageFooter();
 ?>

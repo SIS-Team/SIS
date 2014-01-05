@@ -2,11 +2,12 @@
 
 	/* /backend/monitors/index.php
 	 * Autor: Buchberger Florian
-	 * Version: 0.1.0
+	 * Version: 1.0.1
 	 * Beschreibung:
 	 *	Erstellt die Formulare für die Eingabe der Monitore
 	 *
 	 * Changelog:
+	 *	1.0.1:	24. 09. 2013, Buchberger Florian - IP-Adressen werden angezeigt
 	 * 	1.0.0:	20. 09. 2013, Buchberger Florian - erste vollständige Version
 	 * 	0.1.0:  09. 09. 2013, Buchberger Florian - neue Version
 	 */
@@ -43,21 +44,69 @@
 		else {
 			$query .= "UPDATE `monitors` SET ";
 
+			if (!empty($_POST['text'])) {
+				$query .= "`text`='" . mysql_real_escape_string($_POST['text']) . "' ";
+				if (!empty($_POST['room']) || !empty($_POST['section']) || !empty($_POST['mode']) || !empty($_FILES['file']['name']) || !empty($_POST['displayMode']) || !empty($_POST['displayOff']) || !empty($_POST['displayOn']))
+					$query .= ", ";
+			}
+			
 			// Wenn Raum-Feld nicht leer, dann Raum ID holen und Query mit Raum ergänzen
 			if (!empty($_POST['room'])) {
 				$id = mysql_fetch_object(mysql_query("SELECT `ID` FROM `rooms` WHERE `name`='" . mysql_real_escape_string($_POST['room']) . "'"))->ID;
 				$query .= "`roomFK`=" . $id . " ";
-				if (!empty($_POST['mode']) || !empty($_FILES['file']['name']))
+				if (!empty($_POST['section']) || !empty($_POST['mode']) || !empty($_FILES['file']['name']) || !empty($_POST['displayMode']) || !empty($_POST['displayOff']) || !empty($_POST['displayOn']))
 					$query .= ", ";
 			}
 
+			if (!empty($_POST['section'])) {
+				$id = mysql_fetch_object(mysql_query("SELECT `ID` FROM `sections` WHERE `name`='" . mysql_real_escape_string($_POST['section']) . "'"))->ID;
+				$query .= "`sectionFK`=" . $id . " ";
+				if (!empty($_POST['mode']) || !empty($_FILES['file']['name']) || !empty($_POST['displayMode']) || !empty($_POST['displayOff']) || !empty($_POST['displayOn']))
+					$query .= ", ";
+			}
+			
 			// Wenn Modus-Feld nicht leer, dann Modus ID holen und Query mit Modus ergänzen
 			if (!empty($_POST['mode'])) {
 				$id = mysql_fetch_object(mysql_query("SELECT `ID` FROM `monitorMode` WHERE `name`='" . mysql_real_escape_string($_POST['mode']) . "'"))->ID;
 				$query .= "`modeFK`=" . $id . " ";
+				if (!empty($_FILES['file']['name']) || !empty($_POST['displayMode']) || !empty($_POST['displayOff']) || !empty($_POST['displayOn']))
+					$query .= ", ";
+			}
+
+			if (!empty($_POST['displayMode'])) {
+				$id = mysql_fetch_object(mysql_query("SELECT `ID` FROM `displayMode` WHERE `name`='" .  mysql_real_escape_string($_POST['displayMode']) ."'"))->ID;
+				$query .= "`displayModeFK`=" . $id . " ";
+				if (!empty($_FILES['file']['name']) || !empty($_POST['displayOff']) || !empty($_POST['displayOn']))
+					$query .= ", ";
+                        }
+
+			if (!empty($_POST['displayOn'])) {
+				$array = explode(":", $_POST['displayOn']);
+				for ($i = count($array); $i < 3; $i++)
+					$array[$i] = 0;
+				$array = array_splice($array, 0, 3);
+				for ($i = 0; $i < 3; $i++)
+					$array[$i] = intval($array[$i]);
+				$time = mktime($array[0], $array[1], $array[2]);
+				$query .= "`displayStartDaytime`=" . $time . " ";
+				if (!empty($_FILES['file']['name']) || !empty($_POST['displayOff']))
+					$query .= ", ";
+			}
+
+			if (!empty($_POST['displayOff'])) {
+				$array = explode(":", $_POST['displayOff']);
+				for ($i = count($array); $i < 3; $i++) 
+					$array[$i] = 0;
+				$array = array_splice($array, 0, 3);
+				for ($i = 0; $i < 3; $i++)
+					$array[$i] = intval($array[$i]);
+				$time = mktime($array[0], $array[1], $array[2]);
+				$query .= "`displayEndDaytime`=" . $time . " ";
 				if (!empty($_FILES['file']['name']))
 					$query .= ", ";
 			}
+
+
 
 			// Wenn die mitgegebene Datei einen Namen hat, dann 
 			// 	wenn Datei zu groß -> Fehlermeldung
@@ -93,6 +142,9 @@
 		header("LOCATION: ?sent");
 		die();
 	}
+
+	include($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Menu.php");
+	generateAdminMenu();
 	
 	pageHeader("Monitore", "main");
 
@@ -134,9 +186,12 @@
 	}
 
 	// Alle Parameter holen
-	$monitors = getAllMonitors();
+	$monitors = getAllMonitors();	
+	echo mysql_error();
 	$rooms = mysql_query("SELECT `name` FROM `rooms`");
 	$modes = mysql_query("SELECT `name` FROM `monitorMode`");
+	$displayModes = mysql_query("SELECT `name` FROM `displayMode`");
+	$sections = mysql_query("SELECT `name` FROM `sections`");
 ?>
 <form action="?" method="post" enctype="multipart/form-data">
 	<datalist id="rooms">
@@ -144,6 +199,14 @@
 	// alle Möglichkeiten für die Räume in eine Datalist schreiben
 	while ($room = mysql_fetch_object($rooms)) {
 		echo "		<option value=\"" . $room->name . "\"></option>";
+	}
+?>
+	</datalist>
+	<datalist id="sections">
+<?php
+	// alle Möglichkeiten für die Räume in eine Datalist schreiben
+	while ($section = mysql_fetch_object($sections)) {
+		echo "		<option value=\"" . $section->name . "\"></option>";
 	}
 ?>
 	</datalist>
@@ -155,13 +218,26 @@
 	}
 ?>
 	</datalist>
+	<datalist id="displayModes">
+<?php
+	// alle Möglichkeiten für die Modi in eine Datalist schreiben
+	while ($mode = mysql_fetch_object($displayModes)) {
+		echo "          <option value=\"" . $mode->name . "\"></option>";
+	}
+?>
+        </datalist>
 	<table>
 		<tr>
 			<th></th>
 			<th>Name</th>
+			<th>Text</th>
 			<th>Raum</th>
+			<th>Abteilung</th>
 			<th>Modus</th>
 			<th>Datei</th>
+			<th>erstellt von</th>
+			<th>am</th>
+			<th>Monitor-Steuerung</th>
 		</tr>
 <?php
 	// Monitor-Tabelle ausgeben
@@ -169,9 +245,14 @@
 		echo "	<tr>";
 		echo "		<td><input name=\"monitors[]\" value=\"" . $monitor->id . "\" type=\"checkbox\" /></td>";
 		echo "		<td>" . htmlspecialchars($monitor->name) . "</td>";
+		echo "		<td>" . htmlspecialchars($monitor->text) . "</td>";
 		echo "		<td>" . htmlspecialchars($monitor->room) . "</td>";
+		echo "		<td>" . htmlspecialchars($monitor->section) . "</td>";
 		echo "		<td>" . htmlspecialchars($monitor->type) . "</td>";
 		echo "		<td>" . htmlspecialchars($monitor->file) . "</td>";
+		echo "		<td>" . htmlspecialchars($monitor->ip)   . "</td>";
+		echo "		<td>" . date("c", $monitor->regTime) . "</td>";
+		echo "		<td>" . (($monitor->displayMode == "permanent Ein") ? "immer ein" : (($monitor->displayMode == "permanent Aus") ? "immer aus" : ("ein zwischen " . date("G:i:s", $monitor->startTime) . " und " . date("G:i:s", $monitor->endTime)))) . "</td>";
 		echo "	</tr>";
 	}
 ?>
@@ -179,8 +260,16 @@
 	<br />
 	<table>
 		<tr>
+			<td>Text: (leer f&uuml;r unver&auml;ndert) </td>
+			<td><input type="text" name="text" style="width: 100%"></td>
+		</tr>
+		<tr>
 			<td>Raum: (leer f&uuml;r unver&auml;ndert) </td>
 			<td><input type="text" autocomplete="off" list="rooms" name="room" style="width: 100%"></td>
+		</tr>
+		<tr>
+			<td>Abteilung: (leer f&uuml;r unver&auml;ndert) </td>
+			<td><input type="text" autocomplete="off" list="sections" name="section" style="width: 100%"></td>
 		</tr>
 		<tr>
 			<td>Modus: (leer f&uuml;r unver&auml;ndert) </td>
@@ -189,6 +278,18 @@
 		<tr>
 			<td>Datei: (leer f&uuml;r unver&auml;ndert) </td>
 			<td><input type="file" name="file" maxlength="800000000" accept="image/jpeg image/gif image/png video/mpeg" style="width: 100%"></td>
+		</tr>
+		<tr>
+			<td>Display-Modus: (leer f&uuml; unver&auml;ndert) </td>
+			<td><input type="text" autocomplete="off" list="displayModes" name="displayMode" style="width: 100%"></td>
+		</tr>
+		<tr>
+			<td>Einschalt-Zeit (leer f&uuml; unver&auml;ndert) </td>
+			<td><input type="text" name="displayOn" style="width: 100%"></td>
+		</tr>
+		<tr>
+			<td>Ausschalt-Zeit (leer f&uuml; unver&auml;ndert) </td>
+			<td><input type="text" name="displayOff" style="width: 100%"></td>
 		</tr>
 		<tr>
 			<td>L&ouml;schen? </td>
