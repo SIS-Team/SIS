@@ -1,15 +1,182 @@
 \subsubsection{LDAP (Buchberger)}
 
-LDAP (Lightweight Directory Access Protocol) ist ein Protokoll für den Zugriff auf Verzeichnis-Datenbanken, wie Microsoft Active Directory, Apple Open Directory, openLDAP oder Novell eDirectory.
+LDAP (Lightweight Directory Access Protocol) ist ein Protokoll für den Zugriff auf Verzeichnis-Datenbanken, wie Microsoft Active Directory, Apple Open Directory, openLDAP oder Novell eDirectory.\\
+\\
+Verzeichnis-Dienste werden dazu verwendet, um Informationen über Personen oder Rechner-Konfigurationen zu speichern und abzufragen.\\
 
-Verzeichnis-Dienste werden dazu verwendet, um Informationen über Personen oder Rechner-Konfigurationen zu speichern und abzufragen.
+\paragraph{LDAP-Datenstruktur}
 
-Eine LDAP-Datenstruktur ist Baum-förmig aufgebaut.
+Eine LDAP-Datenstruktur ist Baum-förmig (DIT - Directory Information Tree) aufgebaut.\\
+Dies hat den Grund, dass man so geografische und/oder organisatorische Gegebenheiten besser in der Datenbank darstellen kann.
+\\
+Man unterscheidet zwischen Container-Objekten (enthalten ihrerseits weitere Objekte) und Blatt-Objekten (Sie stellen Enden des Baumes dar).\\
+\\
+LDAP ist objektorientiert aufgebaut, das heißt, es gibt Objekt-Klassen (wird durch das Schema difiniert), welche Eigenschaften der Objekte vorgeben. Ein LDAP-Objekt besitzt mindestens eine Klasse.\\
+\\
+Alle Objekte sind durch ihren DN (Distinguished Name) vollständig identifiziert. 
+Der DN besteht aus dem Attribut, das das Objekt innerhalb des darüberliegenden Container-Objektes eindeutig macht, zusätzlich zum DN des Container-Objektes.\\
+\\
+\textit{Beispiel: }\\
+uid=mueller,ou=beratung,ou=filliale1,c=at,o=firma\\
+\\
+Die uid=mueller identifiziert so ein Objekt (vermutlich ein Benutzer) in der ou=beratung. Diese ist wiederum einzigartig in der ou=filliale1, u.s.w.\\
+\\
+Das lässt sich nun so fortsetzen. Das obestere Container-Objekt wird als Root-Objekt bezeichnet. In den meisten Fällen wird dies mit dem Attribut o (für Organisation) gekennzeichnet.\\
+\\
+Die Eigenschaften der Objekt sind oft abgekürtzt.\\
+\\
+\textit{Häufige Abkürtzungen:}\\
+\begin{description}[style=nextline]
+	\item[o]
+		organisationName (Organisation)
+	\item[st]
+		stateOrProvinceName (Staat/Provinz)
+	\item[c]
+		country (Land)
+	\item[ou]
+		organizational unit (Organisations Einheit)
+	\item[cn]
+		common name (Allgemeiner Name)
+	\item[mail]
+		e-mail-address (E-Mail-Adresse)
+\end{description}
 
-Ein LDAP-Eintrag besteht aus:
+Die Objekt-Klassen definieren die Eigenschaften der Objekt.\\
+\\
+\textit{Beispiel: } Attribute der Objekt-Klasse inetOrgPerson (Definition des Standard-Schemas initOrgPerson von openLDAP in der Version 1.4.2.6)\\
 
 \begin{description}[style=nextline]
-	\item[text]
-
-
+	\item[erbt von]
+		organizationalPerson
+		\begin{description}[style=nextline]
+			\item[erbt von]
+				person
+				\begin{description}[style=nextline]
+					\item[erbt von]
+						top	(abstrakte Klasse; keine Attribute)
+					\item[!sn]
+						sur name (Nachname)
+					\item[!cn]
+						common name (Allgemeiner Name)
+					\item[userPassword]
+						Benutzerpasswort
+					\item[telephoneNumber]
+						Telefon Nummer
+					\item[seeAlso]
+						Verweiß (als dn)
+					\item[description]
+						Beschreibung
+				\end{description}
+			\item[title]
+				Titel
+			\item[x121Address]
+				wurde für das x.121-Protokoll verwendet
+			\item[registeredAddress]
+				Registrierungs Adresse
+			\item[destinationIndicator]
+				wurde für Telegram-Services verwendet
+			\item[preferredDeliveryMethod]
+				Bevorzugte Liefer Methode
+			\item[telexNumber]
+				wurde für Telex verwendet
+			\item[teletexTerminalIdentifier]
+				wurde für Teletex verwendet
+			\item[telephoneNumber]
+				Telefon Nummer
+			\item[internationaliSDNNumber]
+				ISDN Nummer
+			\item[facsimileTelephoneNumber]
+				Fax Nummer
+			\item[street]
+				Staßen Adresse
+			\item[postOfficeBox]
+				Postfach
+			\item[postalCode]
+				Postleitzahl
+			\item[postalAddress]
+				Post Adresse
+			\item[physicalDeliveryOfficeName]
+				Postbüro Name
+			\item[ou]
+				organisation unit (Organisations Einheit)
+			\item[st]
+				stateOrProvinceName (Staat/Provinz)
+			\item[l]
+				localityName (Ort/Ortschaft)
+		\end{description}
+	\item[audio]
+		Audio
+	\item[businessCategory]
+		Geschäfts-Kategorie
+	\item[carLicense]
+		Fahrzeug-Lizenz
+	\item[departmentNumber]
+		Abteilung innerhalb eines Unternehmens
+	\item[displayName]
+		bevorzugter Anzeigename
+	\item[employeeNumber]
+		Angestellten Nummer
+	\item[employeeType]
+		Anstellungsart
+	\item[givenName]
+		Vorname(n)
+	\item[homePhone]
+		Heim-Telefon-Nummer
+	\item[homePostalAddress]
+		Heim-Andresse
+	\item[initials]
+		Initialen
+	\item[jpegPhoto]
+		JPEG Foto
+	\item[labeledURI]
+		Uniforme Resourcen ID mit optimaler Bezeichnung
+	\item[mail]
+		e-mail-address (E-Mail-Adresse)
+	\item[manager]
+		dn des Managers
+	\item[mobile]
+		mobile Telefon-Nummer
+	\item[o]
+		organisationName (Organisation)
+	\item[pager]
+		Telefon-Nummer des Pagers
+	\item[photo]
+		Foto
+	\item[roomNumber]
+		Raum Nummer
+	\item[secretary]
+		dn des Sekretärs
+	\item[uid]
+		Benutzer Kennung
+	\item[userCertificate]
+		Beuntzer Zertifikat		
+	\item[x500uniqueIdentifier]
+		ID für das X.500 Protokoll
+	\item[preferredLanguage]
+		bevorzugte Sprache
+	\item[userSMIMECertificate]
+		SignedData für S/MIME
+	\item[userPKCS12]
+		PKCS \#12 PFX PDU für den Austausch von persönlichen Identitäts-Informationen
 \end{description}
+
+\paragraph{LDAP-Suche}
+
+Für die Suche in einer LDAP-Datenstruktur wird als erstes ein baseDN festgelegt, dieser entspricht dem Objekt, ab dem im Baum gesucht werden soll. Weiters wird der Scope festgelegt, hierbei gibt es 3 verschiedene Möglichkeiten:
+
+\begin{description}[style=nextline]
+	\item[base]
+		Hierbei wird nur das Objekt mit dem baseDN durchsucht.
+	\item[one]
+		Eine Ebene unterhalb des baseDN wird gesucht.
+	\item[sub]
+		Alle darunter liegende Objekte sowie das, durch den baseDN referenzierte, werden durchsucht.
+\end{description}
+Die Suchkriterien werden in der Polnischen Notation (Präfixnotation) geschrieben und dürfen Wildcards enthalten.\\
+\\
+\textit{Beispiel:}\\
+baseDN: ou=STUDENTS,o=HTLinn\\
+scope: sub\\
+(\&(l=5*H*)(mail=Andreas*)(cn=2009*))\\
+\\
+Diese Suchanfrage würde alle Objecte liefern, die unterhalb von ou=STUDENTS,o=HTLinn liegen und die die Eigenschaften mail, l und cn enthalten, und bei denen der cn mit 2009 beginnt und die E-Mail-Adresse mit Andreas beginnt und deren Ort-Attribut mit 5 beginnt und ein H enthällt.
