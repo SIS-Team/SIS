@@ -1,4 +1,4 @@
-\documentclass[12pt, twoside, titlepage, a4paper, openright]{book}
+\documentclass[12pt, oneside, titlepage, a4paper]{book}
 
 \pagestyle{headings}
 
@@ -45,8 +45,7 @@
 
 \begin{document}
 
-\frontmatter 
-
+\frontmatter
 \maketitle
 
 % Inhalsverzeichnis, etc
@@ -61,10 +60,11 @@
 \input{content/pflichtenheft}
 \input{content/systemdokumentation}
 
-\appendix 
+%\appendix 
 % Zusätze
 \chapter[Anleitungen]{Betriebsanleitungen}
-\input{instructions/main}
+\input{instructions/user}
+\input{instructions/admin}
 
 \input{attachments/buchberger}
 \input{attachments/handle}
