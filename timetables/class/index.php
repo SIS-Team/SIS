@@ -57,7 +57,7 @@ for ($i = 0; $i < count($array); $i++) {
 }
 //hours[Stunde][Tag]
 //print_r($hours[1]['Mo']);
- getSubstitude(date(),$name,$mode);
+ getSubstitude(date("Y.m.d"),$name,$mode);
 $classType = checkContent($hours);	//kontrolliert ob Abendschule
 if($classType == 2)	//nur Abendschule
 	{$tableBegin = 12;
@@ -182,9 +182,12 @@ function checkContent($hours)
 
 function getSubstitude($date,$name,$mode){	//Supplierungen des gewählten Datums abrufen
 	global $substitudes;
-		if($mode == "0")	$where = "time = '".mysql_real_escape_string($date)."' and classes.name = '" . mysql_real_escape_string($name) . "'";	
-		else $where = "time = '".mysql_real_escape_string($date)."' and newTeacher.short = '" . mysql_real_escape_string($name) . "'";
-			
+		if($mode == "0")
+		{$where = "time = '".mysql_real_escape_string($date)."' and classes.name = '" . mysql_real_escape_string($name) . "'";	
+		}
+		else 
+		{$where = "time = '".mysql_real_escape_string($date)."' and newTeacher.short = '" . mysql_real_escape_string($name) . "'";
+		}	
 			$substitude_sql = selectSubstitude($where)	
 			or die("MySQL-Error: ".mysql_error());
 			while($substitude = mysql_fetch_array($substitude_sql)) {    
