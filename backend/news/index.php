@@ -22,7 +22,7 @@ $isNews = $_SESSION['rights']['news'];
 
 if(!($_SESSION['loggedIn']))die("Critical Error </br> Bist du sicher, dass du angemeldet bist?"); //Kontrolle ob angemeldet
 
-if(!($isNews or $isAdmin)) die ("Critical Error </br> Du hast auf diese Funktionen keinen Zugriff. </br> Wende dich an einen Newsbeauftragten!");
+if(!($isNews or $isAdmin)) die ("Critical Error </br> Du hast auf diese Funktionen keinen Zugriff. </br> Wende dich an einen Newsbeauftragten!"); //Kontrolle wegen Berechtigungen
 
 if($_POST['save']!="")
 	news($isAdmin);
@@ -78,11 +78,11 @@ unset($post["save"]);
 $data =array("ID"=>"","title"=>"","text"=>"","startDay"=>"","endDay"=>"","display"=>"");
 
 $data["ID"]=$post["ID"];
-$data["title"]=htmlspecialchars($post["title"]);
-$data["text"]=htmlspecialchars($post["text"]);
-if(check_date($post["startDay"],"Ymd","-")) $data["startDay"]=$post["startDay"];
+$data["title"]=mysql_real_escape_string(htmlspecialchars($post["title"]));
+$data["text"]=mysql_real_escape_string(htmlspecialchars($post["text"]));
+if(check_date($post["startDay"],"Ymd","-")) $data["startDay"]=mysql_real_escape_string($post["startDay"]);
 else $data["startDay"]= "2000-01-01";
-if(check_date($post["endDay"],"Ymd","-"))$data["endDay"]=$post["endDay"];
+if(check_date($post["endDay"],"Ymd","-"))$data["endDay"]=mysql_real_escape_string($post["endDay"]);
 else $data["endDay"]= "2999-12-31";
 if(isset($post["display"]) && $Admin == 1){$data["display"]=1;}
 else {$data["display"]=0;}
