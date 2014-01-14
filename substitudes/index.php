@@ -33,7 +33,7 @@ $day_counter = 0;
 for($counter = 0; $counter <=2; $counter++)
 { 
  if(date("w", time() + 24 * 60 * 60 * $day_counter)==0) $day_counter++;
- if(date("w", time() + 24 * 60 * 60 * $day_counter)==6) $day_counter+2;
+ if(date("w", time() + 24 * 60 * 60 * $day_counter)==6) $day_counter+=2;
 	echo "<div id='d" . $counter . "' class='column background'>";
 		$day = captureDate($day_counter);		//aktuelles Datum abfragen
 		echo "Supplierungen vom ".$day;
@@ -74,7 +74,7 @@ for($counter = 0; $counter <=2; $counter++)
 
 function getSubstitude($date){	//Supplierungen des gewählten Datums abrufen
 	global $substitudes;
-			$where = "time = '".mysql_real_escape_string($date)."' and classes.name = '" . $_SESSION['class'] . "'";
+			$where = "time = '".mysql_real_escape_string($date)."' and classes.name = '" . mysql_real_escape_string($_SESSION['class']) . "'";
 				
 			$substitude_sql = selectSubstitude($where,"startHour")	
 			or die("MySQL-Error: ".mysql_error());

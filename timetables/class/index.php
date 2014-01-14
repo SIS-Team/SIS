@@ -57,7 +57,27 @@ for ($i = 0; $i < count($array); $i++) {
 }
 //hours[Stunde][Tag]
 //print_r($hours[1]['Mo']);
- getSubstitude(date(),$name,$mode);
+//-------------------------------------------------------------------------------------------------------
+$offset = 0;
+//Setzen des ersten Tags der Woche
+	if(date("w", time() + 24 * 60 * 60 * $offset)==0) $offset=1;
+	if(date("w", time() + 24 * 60 * 60 * $offset)==6) $offset=2;
+	if(date("w", time() + 24 * 60 * 60 * $offset)==5) $offset=-4;
+	if(date("w", time() + 24 * 60 * 60 * $offset)==4) $offset=-3;
+	if(date("w", time() + 24 * 60 * 60 * $offset)==3) $offset=-2;
+	if(date("w", time() + 24 * 60 * 60 * $offset)==2) $offset=-1;
+for($j = 0; $j<=4; $j++)
+{
+//Supplierungen des Tages abrufen
+	getSubstitude(date("Y.m.d",time() + 24 * 60 * 60 * $offset),$name,$mode);
+	$offset++;
+ //echo $hours[1][$substitudes[0]['weekdayShort']]->suShort."--------------";
+	 
+	 
+	 
+	
+}
+//-------------------------------------------------------------------------------------------------------
 $classType = checkContent($hours);	//kontrolliert ob Abendschule
 if($classType == 2)	//nur Abendschule
 	{$tableBegin = 12;
@@ -182,14 +202,18 @@ function checkContent($hours)
 
 function getSubstitude($date,$name,$mode){	//Supplierungen des gewählten Datums abrufen
 	global $substitudes;
-		if($mode == "0")	$where = "time = '".mysql_real_escape_string($date)."' and classes.name = '" . mysql_real_escape_string($name) . "'";	
-		else $where = "time = '".mysql_real_escape_string($date)."' and newTeacher.short = '" . mysql_real_escape_string($name) . "'";
-			
+		
+		if($mode == "0")
+		{$where = "time = '".mysql_real_escape_string($date)."' and classes.name = '" . mysql_real_escape_string($name) . "'";	
+		}
+		else 
+		{$where = "time = '".mysql_real_escape_string($date)."' and newTeacher.short = '" . mysql_real_escape_string($name) . "'";
+		}	
 			$substitude_sql = selectSubstitude($where)	
 			or die("MySQL-Error: ".mysql_error());
 			while($substitude = mysql_fetch_array($substitude_sql)) {    
 		 	$substitudes[]=$substitude;
-			print_r($substitudes);  //Kontrolle des Ergebnis-Arrays
+	//		print_r($substitudes);  //Kontrolle des Ergebnis-Arrays
 			}	
 }
 
