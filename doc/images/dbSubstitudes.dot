@@ -1,0 +1,18 @@
+digraph database {
+	rankdir=LR;
+	
+	node [shape=box];
+
+	Abteilungen -> Lehrer;
+	Klassen -> {Abteilungen Lehrer Räume};
+	BasisStunden -> {Klassen Zeiten Zeiten};
+	Stunden -> {BasisStunden Lehrer Fächer Räume};
+	Supplierungen -> {Stunden Lehrer Zeiten Zeiten Fächer Räume};
+	"fehlende Lehrer" -> Lehrer;
+	"fehlende Klassen" -> Klassen;
+
+	{rank=same; News}
+	{rank=same; Lehrer Räume Zeiten Fächer Abteilungen}
+	{rank=same; "fehlende Klassen" "fehlende Lehrer" Klassen}
+	{rank=same; BasisStunden Stunden News Supplierungen}
+}
