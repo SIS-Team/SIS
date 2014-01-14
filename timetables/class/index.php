@@ -2,7 +2,9 @@
 session_start();
 //	error_reporting(E_ALL);
 
-	/* /timetables/index.php
+// TODO für klasse oder lehrer
+
+	/* /timetables/class/index.php
 	 * Autor: Weiland Mathias
 	 * Version: 0.1.0
 	 * Beschreibung:
@@ -14,16 +16,21 @@ session_start();
 	 
 include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
 include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
-
-if(!($_SESSION['loggedIn']))die("Critical Error </br> Bist du sicher, dass du angemeldet bist?"); //Kontrolle ob angemeldet
+// TODO formatting
+if(!($_SESSION['loggedIn']))
+	die("Critical Error </br> Bist du sicher, dass du angemeldet bist?"); //Kontrolle ob angemeldet
 $isTeacher =$_SESSION['isTeacher'];
 
-if($isTeacher){ $name=$_SESSION['id'];	//Kontrolle ob Lehrer
-$mode = 1;}
-else{
-$name =$_SESSION['class'];
-if(!isset($name))die("Critical Error </br> Bist du sicher, dass du einer Klasse zugeordnet bist?");	//abbruch wenn kein Klassenname übergeben
-$mode = 0;
+if($isTeacher) {
+	$name=$_SESSION['id'];	//Kontrolle ob Lehrer
+// TODO benannte konstante "lehrer" anstatt 1
+	$mode = 1;
+}
+else {
+	$name =$_SESSION['class'];
+	if(!isset($name)) 	//abbruch wenn kein Klassenname übergeben
+		die("Critical Error </br> Bist du sicher, dass du einer Klasse zugeordnet bist?");
+	$mode = 0;
 }
 
 pageHeader("Formular","main");
@@ -41,25 +48,31 @@ echo "<div class ='timetable_column'>";
 		echo "</tr>";
 		
 
-$array = ngetLessons($name,$mode);  //fragt Studen ab, die in der gesuchten Klasse stattfinden
-$hours = array();			   //ertellt ein leeres Array
+// TODO why nget
+$array = ngetLessons($name,$mode);  //fragt Stunden ab, die in der gesuchten Klasse stattfinden
+$hours = array();
 for ($i = 0; $i < count($array); $i++) {	
  	$index = $array[$i]->startHour; //Als Index wird die Startstunde verwendet
 	if (!$hours[$index])	
 		$hours[$index] = array(); //Wenn für die betreffende Startstunde kein Eintrag vorhanden -> leeres Array erstellen
-		if(isset($hours[$index][$array[$i]->weekdayShort])) //Kontrolle ob bereits ein Eintag vorhanden
-		{ 
+	if(isset($hours[$index][$array[$i]->weekdayShort])) //Kontrolle ob bereits ein Eintag vorhanden
+	{ 
 		 if($hours[$index][$array[$i]->weekdayShort]->suShort != $array[$i]->suShort) //Kontrolle ob  neuer Eintrag und vorhandener Eintrag unterschiedlich
-		 		 if(!strpos($hours[$index][$array[$i]->weekdayShort]->suShort,$array[$i]->suShort)) //Wenn neuer Eintrag nicht in altem Eintrag vorhanden -> zusammenhängen, getrennt mit |
-				   {$hours[$index][$array[$i]->weekdayShort]->suShort .= " | " .$array[$i]->suShort;}
-		}
-		else $hours[$index][$array[$i]->weekdayShort] = $array[$i] ; //erstellen eines Eintrages wenn keiner vorhanden
+		 	if(!strpos($hours[$index][$array[$i]->weekdayShort]->suShort,$array[$i]->suShort)) //Wenn neuer Eintrag nicht in altem Eintrag vorhanden -> zusammenhängen, getrennt mit |
+			{
+				$hours[$index][$array[$i]->weekdayShort]->suShort .= " | " .$array[$i]->suShort;
+			}
+	}
+	else {
+		$hours[$index][$array[$i]->weekdayShort] = $array[$i] ; //erstellen eines Eintrages wenn keiner vorhanden
+	}
 }
 //hours[Stunde][Tag]
 //print_r($hours[1]['Mo']);
 //-------------------------------------------------------------------------------------------------------
 $offset = 0;
 //Setzen des ersten Tags der Woche
+// TODO date wochentag verwenden 
 	if(date("w", time() + 24 * 60 * 60 * $offset)==0) $offset=1;
 	if(date("w", time() + 24 * 60 * 60 * $offset)==6) $offset=2;
 	if(date("w", time() + 24 * 60 * 60 * $offset)==5) $offset=-4;
