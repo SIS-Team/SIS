@@ -1,5 +1,6 @@
 <?php
-	include($_SERVER['DOCUMENT_ROOT'] . "/modules/monitors/Main.php");
+	include("../../config.php");
+	include(ROOT_LOCATION . "/modules/monitors/Main.php");
 
 	$monitor = getMonitorByName($_GET['name']);
 

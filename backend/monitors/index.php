@@ -12,8 +12,9 @@
 	 * 	0.1.0:  09. 09. 2013, Buchberger Florian - neue Version
 	 */
 
-	include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Main.php");
-	include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/monitors/Main.php");
+	include_once("../../config.php");
+	include_once(ROOT_LOCATION . "/modules/general/Main.php");
+	include_once(ROOT_LOCATION . "/modules/monitors/Main.php");
 
 	// Wenn das Fomular abgeschickt wird
 	if (isset($_POST['sent'])) {
