@@ -1,3 +1,3 @@
 <?php
-	define("ROOT_LOCATION", $_SERVER['$_SERVER['DOCUMENT_ROOT']']);
+	define("ROOT_LOCATION", $_SERVER['DOCUMENT_ROOT']);
 ?>
