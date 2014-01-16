@@ -1,7 +1,4 @@
 <?php
-
-
-
 	/* /substitutes/index.php
 	 * Autor: Weiland Mathias
 	 * Version: 0.1.0
@@ -15,7 +12,6 @@
 include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
 include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
 include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/other/dateFunctions.php");		//Stellt Datumsfunktionen zur Verfügung
-
 
 if(!($_SESSION['loggedIn']))die("Critical Error </br> Bist du sicher, dass du angemeldet bist?"); //Kontrolle ob angemeldet
 
@@ -32,29 +28,29 @@ echo "</div>";
 $day_counter = 0;
 for($counter = 0; $counter <=2; $counter++)
 { 
- if(date("w", time() + 24 * 60 * 60 * $day_counter)==0) $day_counter++;
- if(date("w", time() + 24 * 60 * 60 * $day_counter)==6) $day_counter+=2;
+	if(date("w", time() + 24 * 60 * 60 * $day_counter)==0) $day_counter++;
+	if(date("w", time() + 24 * 60 * 60 * $day_counter)==6) $day_counter+=2;
 	echo "<div id='d" . $counter . "' class='column background'>";
-		$day = captureDate($day_counter);		//aktuelles Datum abfragen
-		echo "Supplierungen vom ".$day;
+	$day = captureDate($day_counter);		//aktuelles Datum abfragen
+	echo "Supplierungen vom ".$day;
 		 
-		//Tabellenkopfausgabe
-		echo "<table>";
-		echo "<tr>";
-		echo "<th>Klasse</th>";
-		echo "<th>St.</th>";
-		echo "<th>Sup</th>";
-		echo "<th>Fach</th>";
-		echo "<th>urs.</th>";
-		echo "<th>Bemerkung</th>";
-		echo "</tr>";
+	//Tabellenkopfausgabe
+	echo "<table>";
+	echo "<tr>";
+	echo "<th>Klasse</th>";
+	echo "<th>St.</th>";
+	echo "<th>Sup</th>";
+	echo "<th>Fach</th>";
+	echo "<th>urs.</th>";
+	echo "<th>Bemerkung</th>";
+	echo "</tr>";
 		
 		
-		getSubstitude($day);		//Supplierungen des gewählten Datums abrufen
+	getSubstitude($day);		//Supplierungen des gewählten Datums abrufen
 		
-		for($count = 0;; $count++)	//Supplierungen ausgeben
+	for($count = 0;; $count++)	//Supplierungen ausgeben
 		{
-		  if(empty($substitudes[$count][2]) == true) break;		//Abbruch wenn keine weiteren Einträge
+		 if(empty($substitudes[$count][2]) == true) break;		//Abbruch wenn keine weiteren Einträge
 		 echo "<tr>";
 		 echo "<td>".$substitudes[$count][2]."</td>";	//Klassenname
 		 echo "<td>".$substitudes[$count][7]."</td>";	//supplierte Stunde
@@ -63,29 +59,22 @@ for($counter = 0; $counter <=2; $counter++)
 	 	 echo "<td>".$substitudes[$count][15]."</td>";	//ursprünglicher Lehrer
 		 echo "<td class='comment background'>".$substitudes[$count][11]."</td>";	//Bemerkung
 		 echo "</tr>";
-		
 		}
-		$substitudes = array();
-		
-		echo "</table>";
+	$substitudes = array();
+	echo "</table>";
 	echo "</div>";
 	$day_counter++;
 }
 
 function getSubstitude($date){	//Supplierungen des gewählten Datums abrufen
 	global $substitudes;
-			$where = "time = '".mysql_real_escape_string($date)."' and classes.name = '" . mysql_real_escape_string($_SESSION['class']) . "'";
-				
-			$substitude_sql = selectSubstitude($where,"startHour")	
-			or die("MySQL-Error: ".mysql_error());
-			while($substitude = mysql_fetch_array($substitude_sql)) {    
-		 	$substitudes[]=$substitude;
-			 
-			//print_r($substitudes);  //Kontrolle des Ergebnis-Arrays
-			}	
+	$where = "time = '".mysql_real_escape_string($date)."' and classes.name = '" . mysql_real_escape_string($_SESSION['class']) . "'";	
+	$substitude_sql = selectSubstitude($where,"startHour")	
+	or die("MySQL-Error: ".mysql_error());
+	while($substitude = mysql_fetch_array($substitude_sql)) {    
+ 	$substitudes[]=$substitude;
+	}	
 }
-
-
 
 pageFooter();
 ?>
