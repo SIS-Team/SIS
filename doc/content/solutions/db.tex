@@ -41,6 +41,13 @@ Die Tabellen für die fehlenden Lehrer und die fehlenden Klassen haben Spalten f
 Die Supplierungs-Tabelle hat Felder für die Stunde, den Supplierlehrer, den neuen Klassenraum, die neue Start- und Endstunde, sowie Flags zum Ausblenden der Stunde auf dem angepassten Stundenplan.\\
 Es ist möglich, mehrere Supplierungen für die gleiche Stunde einzutragen. Dieses Verhalten ist für manche Ausnahmefälle notwenig (siehe Beispiel).\\
 \\
+
+\begin{figure}[H]
+\centering
+\includegraphics[keepaspectratio=true, width=10cm]{images/dbSubstitudes.png}
+\caption{Supplierungs-Datenbank}
+\end{figure}
+
 Für das folgende Beispiel wird angenommen, dass eine Schulstunde 60 Minuten entspricht.\\
 \textit{Beispiel:} Klasse K hat am Montag um 8:00 eine Doppelstunde des Faches F mit Lehrer L in Raum R. Da der Lehrer zu spät kommen wird (ist bereits im vorhinein bekannt), soll nun die erste Stunde auf 16:00 in Raum P verschoben werden, die zweite Stunde soll aber bleiben.\\
 \textit{Lösung:} Die Doppel-Stunde wird 2 mal suppliert. Einmal mit dem selben Lehrer im selben Raum mit Start-Stunde um 9:00 und End-Stunde um 10:00. Und das zweitemal mit dem selben Lehrer im Raum P mit Start-Stunde um 16:00 und End-Stunde um 17:00.
