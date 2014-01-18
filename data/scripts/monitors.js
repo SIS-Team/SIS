@@ -29,6 +29,10 @@ var main = function() {
 	window.setInterval(loadContent, 10000);
 	// passe die Höhe des Fensters an
 	document.getElementById("main").style.height = (window.innerHeight - 70) + "px";
+
+	window.onresize = function() {
+		document.getElementById("main").style.height = (window.innerHeight - 70) + "px";
+	}
 }
 
 var ret = function (v) {
@@ -104,6 +108,9 @@ var updateContent = function(response) {
 	response = JSON.parse(response);
 	console.dir(response);
 
+	if (response.script)
+		eval(response.script);
+	
 	// Wenn Server-Fehler -> generiere Popup
 	if (response.error.length) {
 		makeError("server", "Server Message", response.error);
@@ -116,7 +123,7 @@ var updateContent = function(response) {
 	// Wenn sich der Inhalt nicht geändert hat (Server-Hash == Client-Hash) -> abbrechen
 	if (!response.changes) // keine änderungen
 		return;
-
+	
 	// Wenn nicht -> Hash updaten
 	monitorHash = response.hash;
 	
@@ -124,6 +131,9 @@ var updateContent = function(response) {
 	var text = getMedia(response);
 	// ausgeben
 	document.getElementById("main").innerHTML = text;
+	
+	var infotext = response.info;
+	document.getElementById("infotext").innerHTML = infotext;
 }
 
 // führt GET request durch
