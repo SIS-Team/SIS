@@ -8,11 +8,12 @@
 	 * Changelog:
 	 * 	0.1.0:  15. 10. 2013, Buchberger Florian - erste Version
 	 */
-	include($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Main.php");
+	include("../config.php");
+	include(ROOT_LOCATION . "/modules/general/Main.php");
 
 	logout();
 
-	include($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Menu.php");
+	include(ROOT_LOCATION . "/modules/general/Menu.php");
 	generateDefaultMenu();
 
 
