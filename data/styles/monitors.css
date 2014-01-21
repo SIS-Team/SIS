@@ -5,17 +5,62 @@
 	src:url('../fonts/digital-7.ttf');
 }
 
-* {
-	color: #fff;
+@font-face { 
+	font-family: gothic;
+	font-style: normal;
+	font-weight: normal;
+	src:url('../fonts/gothic.ttf');
 }
 
-a {
+@font-face { 
+	font-family: gothic;
+	font-style: normal;
+	font-weight: bold;
+	src:url('../fonts/gothicb.ttf');
+}
+
+@font-face { 
+	font-family: abduction;
+	font-style: normal;
+	font-weight: normal;
+	src:url('../fonts/abduction2002.ttf');
+}
+
+
+* {
+	color: #fff;
+	font-family: gothic;
+}
+
+a { 
 	color: #000;
 }
 
 body {
 	background-color: #000;
+	background-image: url("../images/background.png");
 }
+
+
+#logo{
+	position:absolute;
+	top:20%;
+	height:60%;
+	width:98%;
+	z-index:-1;
+}
+
+#info{
+	margin-top:20px;
+	font-family:abduction;
+	font-size:50px;
+	color:#000;
+	width:99%;
+	height:10%;
+	opacity:0.8;
+	
+}
+
 
 #main {
 	position: absolute;
@@ -109,17 +154,19 @@ body {
 .news {
 	width: 80%;
 	margin: auto auto;
-	margin-top: 35px;
-	border: 1px solid #aaa;
-	padding: 10px;
+	margin-top: 80px;
+	border-radius:30px;
+	padding:1%;
+	background-color:rgba(0,0,0,0.5);
 }
 
 .news th {
-	font-size: 50px;
+	font-size: 53px;
+	font-weight: bold;
 }
 
 .news td {
-	font-size: 25px;
+	font-size: 28px;
 	text-align: center;
 	padding-bottom: 20px;
 }
