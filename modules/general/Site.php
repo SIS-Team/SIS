@@ -36,7 +36,8 @@
 			$content .= $tmp;
 		}
 	
-		$tmp = str_replace($seperators['root'], RELATIVE_ROOT, $tmp)
+		$tmp = str_replace($seperators['root'], RELATIVE_ROOT, $tmp);
+		// BUG ? $tmp is overwritten : shuld it be $content ?
 
 		$tmp = strpos($content, $seperators["main"]);
 		$siteContents["header"] = substr($content, 0, $tmp);
