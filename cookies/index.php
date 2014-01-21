@@ -8,7 +8,8 @@
 	 * Changelog:
 	 * 	1.0.0:  22.06.2013, Buchberger Florian - erste Version
 	 */
-	
+ 	include_once("../config.php");
+ 	
 	if (isset($_POST['okay'])) {
 		setcookie("allowed", "true", time() + (60 * 60 * 24 * 100), "/"); // 100 Tage keine Abfrage
 		header("LOCATION: " . $_POST['return']);
@@ -16,7 +17,7 @@
 	}
 
 	if (!isset($_GET['return']))
-		$_GET['return'] = "/";
+		$_GET['return'] = RELATIVE_ROOT;
 
 	$_GET['return'] = str_replace("<", "", $_GET['return']);
 	$_GET['return'] = str_replace(">", "", $_GET['return']);
@@ -24,7 +25,7 @@
 	$_GET['return'] = str_replace("\"", "", $_GET['return']);
 	$_GET['return'] = str_replace("'", "", $_GET['return']);
 
-	include($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Site.php");
+	include(ROOT_LOCATION . "/modules/general/Site.php");
 	pageHeader("Cookies erlauben", "cookies");
 ?>
 	<h1>Willkommen bei SIS</h1>

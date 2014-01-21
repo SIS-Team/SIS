@@ -1,3 +1,20 @@
 \subsection{HTTP (Weiland)}
 
+Das "'Hypertext Transfer Protocol"' ist ein Protokoll des Application Layers des OSI-Layer-Modells.
+\\
+HTTP ist ein zustandsloses Protokoll. Anfragen werden stets getrennt behandelt, auch wenn sie vom selben Client stammen. Dies kann durch eine Session geändert werden.
+\subsubsection{Verbindungsvorgang}
+
+Zu Beginn wird die Zieladresse in eine IP-Adresse umgewandelt. Anschließend wird eine TCP-Verbindung  mit dem Server aufgebaut. 
+Dann wird eine Anfrage an den Server gesendet.
+\\
+GET /index.html HTTP/1.1
+\\
+In diesem Fall würde die Datei "'index.html"' mittels HTTP1.1 angefordert werden.
+
+\subsubsection{Versionen}
+Aktuell sind zwei verschiedene Versionen von HTTP im Einsatz, HTTP/1.0 und HTTP/1.1.
+\\
+Diese unterscheiden sich insofern, dass bei HTTP/1.0 für jede Anfrage eine neue Verbindung zum Server aufgebaut wird. Dies wirkt sich nachteilig auf die Geschwindigkeit aus, da z.B. auf einer Website mit vielen Bildern, für jedes Bild eine neue Verbindung hergestellt werden muss und diese Verbindungen durch die Eigenschaften von TCP-Verbindungen (z.B. Slow-start ) entsprechend langsam sind.
+
 \subsection{HTTPS (Weiland)}

@@ -11,7 +11,7 @@
 	 */
 
 	if(!isset($_COOKIE['allowed']) || (!$_COOKIE['allowed'])) {
-		header("LOCATION: /cookies/?return=" . urlencode($_SERVER['REQUEST_URI']));
+		header("LOCATION: " . RELATIVE_ROOT . "/cookies/?return=" . urlencode($_SERVER['REQUEST_URI']));
 		die();
 	}
 	setcookie("allowed", true, time() + (60 * 60 * 24 * 100), "/"); // cookie wieder für 100 Tage speichern
