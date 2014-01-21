@@ -19,7 +19,6 @@
 -- Table structure for table `classes`
 --
 
-DROP TABLE IF EXISTS `classes`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `classes` (
@@ -37,7 +36,6 @@ SET character_set_client = @saved_cs_client;
 -- Table structure for table `displayMode`
 --
 
-DROP TABLE IF EXISTS `displayMode`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `displayMode` (
@@ -51,7 +49,6 @@ SET character_set_client = @saved_cs_client;
 -- Table structure for table `hours`
 --
 
-DROP TABLE IF EXISTS `hours`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `hours` (
@@ -69,7 +66,6 @@ SET character_set_client = @saved_cs_client;
 -- Table structure for table `lessons`
 --
 
-DROP TABLE IF EXISTS `lessons`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `lessons` (
@@ -87,7 +83,6 @@ SET character_set_client = @saved_cs_client;
 -- Table structure for table `lessonsBase`
 --
 
-DROP TABLE IF EXISTS `lessonsBase`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `lessonsBase` (
@@ -103,7 +98,6 @@ SET character_set_client = @saved_cs_client;
 -- Table structure for table `missingClasses`
 --
 
-DROP TABLE IF EXISTS `missingClasses`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `missingClasses` (
@@ -123,7 +117,6 @@ SET character_set_client = @saved_cs_client;
 -- Table structure for table `missingTeachers`
 --
 
-DROP TABLE IF EXISTS `missingTeachers`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `missingTeachers` (
@@ -143,7 +136,6 @@ SET character_set_client = @saved_cs_client;
 -- Table structure for table `monitorMode`
 --
 
-DROP TABLE IF EXISTS `monitorMode`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `monitorMode` (
@@ -157,7 +149,6 @@ SET character_set_client = @saved_cs_client;
 -- Table structure for table `monitors`
 --
 
-DROP TABLE IF EXISTS `monitors`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `monitors` (
@@ -181,7 +172,6 @@ SET character_set_client = @saved_cs_client;
 -- Table structure for table `news`
 --
 
-DROP TABLE IF EXISTS `news`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `news` (
@@ -199,7 +189,6 @@ SET character_set_client = @saved_cs_client;
 -- Table structure for table `rooms`
 --
 
-DROP TABLE IF EXISTS `rooms`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `rooms` (
@@ -214,7 +203,6 @@ SET character_set_client = @saved_cs_client;
 -- Table structure for table `sections`
 --
 
-DROP TABLE IF EXISTS `sections`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `sections` (
@@ -230,7 +218,6 @@ SET character_set_client = @saved_cs_client;
 -- Table structure for table `subjects`
 --
 
-DROP TABLE IF EXISTS `subjects`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `subjects` (
@@ -246,7 +233,6 @@ SET character_set_client = @saved_cs_client;
 -- Table structure for table `substitudes`
 --
 
-DROP TABLE IF EXISTS `substitudes`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `substitudes` (
@@ -270,7 +256,6 @@ SET character_set_client = @saved_cs_client;
 -- Table structure for table `teachers`
 --
 
-DROP TABLE IF EXISTS `teachers`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `teachers` (
