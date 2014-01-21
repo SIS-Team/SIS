@@ -13,7 +13,8 @@
 	 */
 
 	include("../config.php");		
-	include(ROOT_LOCATION . "/modules/general/Main.php");
+	include(ROOT_LOCATION . "/modules/general/Connect.php");
+	include(ROOT_LOCATION . "/modules/general/Site.php");
 	
 	if (!isset($_GET['name']) || empty($_GET['name'])) 
 		die("no name given");
