@@ -1,7 +1,8 @@
 <?php
-	include($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Main.php");
+	include("../config.php");
+	include(ROOT_LOCATION . "/modules/general/Main.php");
 
-	include($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Menu.php");
+	include(ROOT_LOCATION . "/modules/general/Menu.php");
         generateAdminMenu();
 
 	pageHeader("Admin-Bereich", "main");
