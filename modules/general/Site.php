@@ -47,7 +47,7 @@
 	 */
 	function pageHeader($title, $design) {
 		global $siteContents, $seperators;
-		getDesignFile($_SERVER['DOCUMENT_ROOT'] . "/modules/design/" . $design . ".html");
+		getDesignFile(ROOT_LOCATION . "/modules/design/" . $design . ".html");
 		$site = str_replace($seperators["title"], $title, $siteContents["header"]);
 		$site = str_replace($seperators["sidebar"], $siteContents["sidebar"], $site);
 		echo $site;

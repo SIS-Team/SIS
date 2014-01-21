@@ -8,7 +8,7 @@
 	 * Changelog:
 	 * 	1.0.0:  22. 06. 2013, Buchberger Florian - erste Version
 	 */
-	include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/general/MySQLpassword.php");
+	include_once(ROOT_LOCATION . "/modules/general/MySQLpassword.php");
 	$connection = mysql_connect($host, $user, $password);
 	mysql_select_db('sis');
 ?>
