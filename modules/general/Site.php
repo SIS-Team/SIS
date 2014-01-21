@@ -3,7 +3,7 @@
 	 * Autor: Buchberger Florian
 	 * Version: 0.1.0
 	 * Beschreibung:
-	 *	Stellt Funktionen fÃ¼r den Seitenaufbau zur VerfÃ¼gung
+	 *	Stellt Funktionen für den Seitenaufbau zur Verfügung
 	 *
 	 * Changelog:
 	 * 	0.1.0:  22. 06. 2013, Buchberger Florian - erste Version
@@ -19,9 +19,10 @@
 	$seperators["main"] = "&main;";
 	$seperators["title"] = "&title;";
 	$seperators["sidebar"] = "&sidebar;";
+	$seperators["root"] = "&root;";
 
 	/*
-	 * LÃ¤d die Design Datei und splittet sie nach dem seperator "main" auf.
+	 * Läd die Design Datei und splittet sie nach dem seperator "main" auf.
 	 * Parameter: $filename - Dateiname als String
 	 */
 	function getDesignFile($filename) {
@@ -35,6 +36,8 @@
 			$content .= $tmp;
 		}
 	
+		$tmp = str_replace($seperators['root'], RELATIVE_ROOT, $tmp)
+
 		$tmp = strpos($content, $seperators["main"]);
 		$siteContents["header"] = substr($content, 0, $tmp);
 		$siteContents["footer"] = substr($content, $tmp + strlen($seperators["main"]));
