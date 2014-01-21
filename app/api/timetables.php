@@ -2,10 +2,11 @@
 	SCRIPT.PHP
 ***************/
 <?php
-	include($_SERVER['DOCUMENT_ROOT'] . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
+	include("../../config.php");
+	include(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
 	//die nächste datei würde dei db connect ersetzen
-	include($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Connect.php");
-	include($_SERVER['DOCUMENT_ROOT'] . "/modules/general/SessionManager.php");			//Stellt die select-Befehle zur Verfügung
+	include(ROOT_LOCATION . "/modules/general/Connect.php");
+	include(ROOT_LOCATION . "/modules/general/SessionManager.php");			//Stellt die select-Befehle zur Verfügung
 
 	header('Content-Type: application/javascript; charset=UTF-8');	
 	

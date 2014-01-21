@@ -24,7 +24,7 @@
 	}
 
 	function LDAP_getUser($cn) {
-		include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/general/LDAPpassword.php");
+		include_once(ROOT_LOCATION . "/modules/general/LDAPpassword.php");
 		$con = ldap_connect("ldaps://ldap.server.htlinn.ac.at");
 		$ok  = ldap_bind($con, $user, $passwd);
 		$res = ldap_search($con, "o=HTLinn", "cn=" . $cn);
@@ -96,7 +96,9 @@
 	}
 
 	function getFullName($ent) {
-		return $ent[0]["givenname"][0] . " " . $ent[0]["sn"][0];
+		$fn =  $ent[0]["givenname"][0];
+		$array = explode(" ", $fn);
+		return $array[0] . " " . $ent[0]["sn"][0];
 	}
 	
 	function getInitials($ent) {

@@ -144,7 +144,7 @@
 		die();
 	}
 
-	include($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Menu.php");
+	include(ROOT_LOCATION . "/modules/general/Menu.php");
 	generateAdminMenu();
 	
 	pageHeader("Monitore", "main");

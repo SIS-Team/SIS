@@ -1,6 +1,6 @@
 <?php
 
-include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/other/dateFunctions.php");
+include_once(ROOT_LOCATION . "/modules/other/dateFunctions.php");
 
 function dateChange($date){
 

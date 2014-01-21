@@ -2,7 +2,7 @@
 
 //	error_reporting(E_ALL);
 
-	/* /timetables/index.php
+	/* /timetables/monitor_timetables.php
 	 * Autor: Weiland Mathias
 	 * Version: 0.1.0
 	 * Beschreibung:
@@ -12,9 +12,11 @@
 	 * 	0.1.0:  24. 09. 2013, Weiland Mathias  - erste Version
 	 *  0.2.0:  01. 10. 2013, Weiland Mathias  - zweite Version
 	 */
-	 
-include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
-include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
+
+include("../config.php");
+ 
+include_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
+include_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
 
 
 $roName =$_GET['name'];
