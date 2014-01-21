@@ -1,6 +1,6 @@
 <?php
 
-	/* /backend/news.php
+	/* /backend/news/index.php
 	 * Autor: Handle Marco
 	 * Version: 0.1.0
 	 * Beschreibung:
@@ -10,10 +10,11 @@
 	 * 	0.1.0:  15. 10. 2013, Mathias Weiland - erste Version
 	 */
 
-include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/form/form.php");					//Stell die Formularmasken zur Verfügung
-include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
-include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
-include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/database/inserts.php");			//Stellt die insert-Befehle zur Verfügung
+include_once("../../config.php");
+include_once(ROOT_LOCATION . "/modules/form/form.php");					//Stell die Formularmasken zur Verfügung
+include_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
+include_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
+include_once(ROOT_LOCATION . "/modules/database/inserts.php");			//Stellt die insert-Befehle zur Verfügung
 
 $isAdmin = $_SESSION['rights']['E'] || $_SESSION['rights']['N'] || $_SESSION['rights']['W'] || $_SESSION['rights']['M'] || $_SESSION['rights']['root'];
 $isNews = $_SESSION['rights']['news'];

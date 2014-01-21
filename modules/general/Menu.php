@@ -3,7 +3,7 @@
 		global $siteContents;
 		$bar = '<ul><li><a href="/">Startseite</a></li>';
 		if ($_SESSION['loggedIn']) {
-			$bar .= '<li><a href="/timetables/classes/">Stundenplan</a></li>';
+			$bar .= '<li><a href="/timetables/">Stundenplan</a></li>';
 			$bar .= '<li><a href="/substitudes/">Supplierplan</a></li>';
 			$bar .= '<li><a href="/logout/">Logout</a></li>';
 		} else {
