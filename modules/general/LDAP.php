@@ -9,6 +9,7 @@
          *      0.1.0:  15. 10. 2013, Buchberger Florian - erste Version
          */
 	
+
 	function LDAP_getDN($ent) {
 		$dn = $ent[0]["dn"];
 		if ($dn == "") {
@@ -18,14 +19,15 @@
 	}
 
 	function LDAP_login($dn, $pass) {
-		$con = ldap_connect("ldaps://ldap.server.htlinn.ac.at");
+		include_once(ROOT_LOCATION . "/modules/general/LDAPpassword.php");
+		$con = ldap_connect($host);
 		$ok  = ldap_bind($con, $dn, $pass);
 		return $ok;
 	}
 
 	function LDAP_getUser($cn) {
 		include_once(ROOT_LOCATION . "/modules/general/LDAPpassword.php");
-		$con = ldap_connect("ldaps://ldap.server.htlinn.ac.at");
+		$con = ldap_connect($host);
 		$ok  = ldap_bind($con, $user, $passwd);
 		$res = ldap_search($con, "o=HTLinn", "cn=" . $cn);
 		$ent = ldap_get_entries($con, $res);	
