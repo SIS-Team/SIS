@@ -50,6 +50,9 @@
 	 */
 	function pageHeader($title, $design) {
 		global $siteContents, $seperators;
+
+		header('Content-Type: text/html; charset=UTF-8');
+
 		getDesignFile(ROOT_LOCATION . "/modules/design/" . $design . ".html");
 		$site = str_replace($seperators["title"], $title, $siteContents["header"]);
 		$site = str_replace($seperators["sidebar"], $siteContents["sidebar"], $site);
