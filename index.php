@@ -3,40 +3,45 @@
 
 	include(ROOT_LOCATION . "/modules/general/Main.php");
 
-	include(ROOT_LOCATION . "/modules/general/Menu.php");
-	generateDefaultMenu();
+	include(ROOT_LOCATION . "/modules/menu/Main.php");
 
-
-	pageHeader("Startseite", "main");
 	if (!$_SESSION['loggedIn']) {
-?>
-Sie sind im Moment nicht angemeldet. Melden Sie sich jetzt an:
-<div id="login">
-	<form method="POST" action="login/?return=%2F">
-		<table>
-			<tr>
-				<td>
-					Benutzername: 
-				</td>
-				<td>
-					<input type="text" name="user"><br />
-				</td>
-				<td>
-					Passwort: 
-				</td>
-				<td>
-					<input type="password" name="password"><br />
-				</td>
-			</tr>
-		</table>
-		<input type="submit" value="Absenden">
-	</form>
-</div>
-<?php
-	} else {
-?>
-<h1>Hallo <?php echo $_SESSION['name']; ?>!</h1><h2>Willkommen bei SIS</h2>
-<?php
+		header("LOCATION: " . RELATIVE_ROOT . "/login/?return=" . urlencode($_SERVER['REQUEST_URI']));
+		exit();
 	}
-	pageFooter();
+		
+	$back = RELATIVE_ROOT . "?";
+	$headerText = "SIS.Web Access";
+	$name = $_SESSION['name'];
+	
+	$buttons[1]['displayed'] = true;
+	$buttons[1]['enabled'] = true;
+	$buttons[1]['svg'] = ROOT_LOCATION . "/data/images/web-access/timetable.svg";
+	$buttons[1]['text'] = "Stundenplan";
+	$buttons[1]['url'] = RELATIVE_ROOT . "/timetables/";
+	$buttons[1]['jsurl'] = RELATIVE_ROOT . "/timetables/?js";
+
+	$buttons[2]['displayed'] = true;
+	$buttons[2]['enabled'] = true;
+	$buttons[2]['svg'] = ROOT_LOCATION . "/data/images/web-access/substitudes.svg";
+	$buttons[2]['text'] = "Supplierplan";
+	$buttons[2]['url'] = RELATIVE_ROOT . "/substitudes/";
+	$buttons[2]['jsurl'] = RELATIVE_ROOT . "/substitudes/?js";
+
+	$buttons[5]['displayed'] = true;
+	$buttons[5]['enabled'] = true;
+	$buttons[5]['svg'] = ROOT_LOCATION . "/data/images/web-access/news.svg";
+	$buttons[5]['text'] = "News";
+	$buttons[5]['url'] = RELATIVE_ROOT . "/news/";
+	$buttons[5]['jsurl'] = RELATIVE_ROOT . "/news/?js";
+	
+	$buttons[6]['displayed'] = true;
+	$buttons[6]['enabled'] = false;
+	$buttons[6]['svg'] = ROOT_LOCATION . "/data/images/web-access/inputs.svg";
+	$buttons[6]['text'] = "Eingaben";	
+	$buttons[6]['url'] = RELATIVE_ROOT . "/backend/";
+	$buttons[6]['jsurl'] = RELATIVE_ROOT . "/backend/?js";
+
+	generateMenu();
+
 ?>

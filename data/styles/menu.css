@@ -1,0 +1,305 @@
+@font-face { 
+	font-family: gothic;
+	font-style: normal;
+	font-weight: normal;
+	src:url('../fonts/gothic.ttf');
+}
+
+@font-face { 
+	font-family: gothic;
+	font-style: normal;
+	font-weight: bold;
+	src:url('../fonts/gothicb.ttf');
+}
+
+@font-face { 
+	font-family: abduction;
+	font-style: normal;
+	font-weight: normal;
+	src:url('../fonts/abduction2002.ttf');
+}
+
+body {
+	overflow: hidden;
+}
+
+#background {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	background-image: url('../images/background.jpg');
+}
+
+.point {
+	width: 0px;
+	height: 0px;
+	overflow: visible;	
+}
+
+.hCenter {
+	position: absolute;
+	left: 50%;
+}
+
+.vCenter {
+	position: absolute;
+	top: 50%;
+}
+
+.sameWidth {
+	position: absolute;
+	width: 1200px;
+	left: -600px;
+}
+
+#menuContainer {
+	position: absolute;
+	height: 350px;
+	top: -175px;
+	opacity: 0.8;
+	/*background-color: #f00;*/
+}
+
+#menuUp {
+	position: absolute;
+	height: 175px;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	/*background-color: #0f0;*/
+}
+
+#menuDown {
+	position: absolute;
+	height: 175px;
+	bottom: 0px;
+	left: 0px;
+	width: 100%;
+	/*background-color: #00f;*/
+}
+
+.mid {
+	height: 350px;
+	width: 350px;
+	position: absolute;
+	left: 425px;	
+	pointer-events: none;
+}
+
+.mid svg {
+	height: 100%;
+	width: 100%;
+}
+
+#menuUp .mid {
+	top: 0px;
+}
+
+#menuDown .mid {
+	bottom: 0px;
+}
+
+#menuUp .menuPoint {
+	top: 0px;
+}
+
+#menuDown .menuPoint {
+	bottom: 0px;
+}
+
+#menuUp .subtext {
+	position: absolute;
+	bottom: 0px;
+}
+
+#menuDown .subtext {
+	position: absolute;
+	top: 0px;
+}
+
+#menuUp svg {
+	top: 0px;
+}
+
+#menuDown svg {
+	bottom: 0px;
+}
+
+.subtext a {
+	text-decoration: none;
+	color: #fff;
+	pointer-events: auto;
+}
+
+.subtext a:hover {
+	color: #000;
+}
+
+.menuPoint {
+	position: absolute;
+	font-family: gothic;
+	color: #fff;
+	height: 160px;
+	width: 314px;
+}
+
+g, div {
+	pointer-events: none;
+}
+
+#background {	
+	pointer-events: all;
+}
+
+.mid g {
+	pointer-events: all;
+}
+
+.overlayButton {
+	opacity: 0.01;
+	pointer-events: all;
+}
+
+.menuPoint div.subtext {
+	font-family: gothic;
+	color: #fff;
+	width: 175px;
+	text-align: center;
+	display: inline-block;
+	position: relative;
+}
+
+.menuPoint div.linkAdr {
+	display: none;
+}
+
+.menuPoint svg {
+	position: absolute;
+	height: 138px;
+	width: 314px;
+	display: block;
+}
+
+.menuPoint.notUsed {
+	display: none;
+}
+
+.menuLeftLevel1 {
+	left: 200px;
+	text-align: left;
+}
+
+.menuLeftLevel2 {
+	left: 0px;
+	text-align: left;
+}
+
+.menuRightLevel2 {
+	right: 0px;
+	text-align: right;
+}
+
+.menuRightLevel1 {
+	right: 200px;
+	text-align: right;
+}
+
+.menuRightLevel1 .subtext, .menuRightLevel2 .subtext {
+	right: 0px;
+}
+
+.menuLeftLevel1 .subtext, .menuLeftLevel2 {
+	left: 0px;
+}
+
+#headerCenter {
+	top: 0px;
+}
+
+#header {
+	position: absolute;
+	top: 0px;
+	height: 100px;
+	opacity: 0.8;
+}
+
+#userInfo {
+	font-family: abduction;
+	position: absolute;
+	right: 0px;
+	bottom: 20px;
+	font-size: 20px;
+}
+
+#userInfo span {
+	font-family: gothic;
+	font-size: 26px;
+	font-weight: bold;
+	opacity: 0.80;
+}
+
+#title a{
+	text-decoration: none;
+	color: #000;
+	font-family: abduction;
+	position: absolute;
+	left: 0px;
+	bottom: 20px;
+	font-size: 40px;
+}
+#title span {
+	font-size: 15px;
+}
+
+#footerCenter {
+	bottom: 0px;
+}
+
+#footer {
+	position: absolute;
+	bottom: 0px;
+	height: 80px;
+	font-family: gothic;
+	color: #fff;
+	text-align: center;
+}
+
+#footer a {
+	text-decoration: none;
+	color: #fff;
+}
+
+#windowContainer {
+	position: absolute;
+	width: 100%;
+	left: 0px;
+	top: 50%;
+	height: 0px;
+	overflow: visible;
+}
+
+#innerWindow {
+	position: absolute;
+	width: 100%;
+	left: 0%;
+	height: 0px;
+	bottom: 0px;
+	height: 0px;
+	pointer-events: all;
+}
+
+#innerWindow iframe {
+	height: 100%;
+	width: 100%;
+}
+
+.link {
+	pointer-events: all;
+}
+
+#userInfo a {
+	text-decoration: none;
+	color: #000;
+}
