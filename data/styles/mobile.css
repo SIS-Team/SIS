@@ -1,0 +1,40 @@
+@font-face { 
+	font-family: gothic;
+	font-style: normal;
+	font-weight: bold;
+	src:url('../fonts/gothicb.ttf') format('truetype');
+	src:url('../fonts/gothicb.woff') format('woff');
+}
+
+body {
+	background-image: url("../images/background.jpg");
+	background-repeat: repeat-y;
+	background-attachment: fixed;
+	background-position: center center;
+	background-color: #000;
+}
+
+#content {
+    position:absolute;
+	width:100&;	
+}
+
+img {
+	width:25%;
+	margin-left: 2%;
+	margin-right: 2%;	
+	opacity: 0.7;
+}
+
+h1 {
+	text-align: center;
+	font-family:gothic;
+	font-style:bold;
+	font-size:70px;
+	color:#FFF;
+}
+
+a:link { text-decoration:none; }
+a:visited { text-decoration:none; }
+a:focus { text-decoration:underline; }
+a:hover { text-decoration:none; }

@@ -26,8 +26,9 @@
 	<head>
 		<link rel="stylesheet" href="<?php echo RELATIVE_ROOT; ?>/data/styles/menu.css" />
 		<script src="<?php echo RELATIVE_ROOT; ?>/data/scripts/menu.js"></script>
+		<script src="<?php echo RELATIVE_ROOT; ?>/data/script/miscellaneous.js"></script>
 	</head>
-	<body<?php echo (!isset($_GET['noJS'])) ? ' onload="main()"' : ""; ?>>
+	<body<?php echo (!isset($_GET['noJS'])) ? ' onload="' . ((!isset($_GET['noMobile'])) ? 'checkMobile(\'' . RELATIVE_ROOT . '\'); ' : '') . 'main();"' : ""; ?>>
 		<div class="linkAdr" id="middleLink"><?php echo $back; ?></div>
 		<div id="background" onclick="closeLink()">
 		</div>

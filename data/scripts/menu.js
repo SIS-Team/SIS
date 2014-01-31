@@ -1,3 +1,7 @@
+var Exception = function() {
+
+}
+
 var animation = function() {
 }
 animation.block = false;
@@ -98,6 +102,13 @@ var dehoverLinkMiddle = function () {
 	tmp = document.getElementsByClassName("half")[1].getElementsByClassName("mid")[0].getElementsByTagName("g")[0];
 	tmp.attributes["fill"].value = "#000";
 	tmp.style.opacity = 1;
+}
+
+var checkMobile = function(root) {
+	if (isMobile())
+		window.location.href = root + "/mobile/";
+		throw new Exception();
+	}
 }
 
 var main = function() {
