@@ -22,7 +22,7 @@ pageHeader("Formular","main");
 echo "<div class ='keys'>";
 echo "St. ... supplierte Stunde; ";
 echo "Sup. ...Supplierlehrer; ";
-echo "urs. ... ursprünglicher Lehrer; ";
+echo "urs. ... urspr&uumlnglicher Lehrer; ";
 echo "</div>";
 $day_counter = 0;
 for($counter = 0; $counter <=2; $counter++)
@@ -56,7 +56,7 @@ for($counter = 0; $counter <=2; $counter++)
 		 echo "<td>".$substitudes[$count][4]."</td>";	//supplierender Lehrer
 		 echo "<td>".$substitudes[$count][3]."</td>";	//Fach
 	 	 echo "<td>".$substitudes[$count][15]."</td>";	//ursprünglicher Lehrer
-		 echo "<td class='comment background'>".$substitudes[$count][11]."</td>";	//Bemerkung
+		 echo "<td class='comment background'>".htmlspecialchars($substitudes[$count][11])."</td>";	//Bemerkung
 		 echo "</tr>";
 		}
 	$substitudes = array();
