@@ -295,6 +295,10 @@ g, div {
 #innerWindow iframe {
 	height: 100%;
 	width: 100%;
+	border-left: none;
+	border-right: none;
+	border-top: 3px #fff solid;
+	border-bottom: 3px #fff solid;
 }
 
 .link {

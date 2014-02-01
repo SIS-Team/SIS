@@ -70,6 +70,9 @@ var openLink = function(link) {
 		return;
 	animation.open();
 	document.getElementById("innerWindow").innerHTML = "<iframe src='" + link + "'>Ihr Browser unterstützt keine iFrames, drücken Sie bitte <a href='" + link + "'>hier</a></iframe>";
+	document.getElementById("innerWindow").getElementsByTagName("iframe")[0].onload = function () {
+		document.getElementById("innerWindow").getElementsByTagName("iframe")[0].contentWindow.document.getElementById("closeLink").href = "javascript:parent.closeLink();";
+	}
 }
 
 var hoverLink = function(half, row) {
@@ -105,7 +108,7 @@ var dehoverLinkMiddle = function () {
 }
 
 var checkMobile = function(root) {
-	if (isMobile())
+	if (isMobile()) {
 		window.location.href = root + "/mobile/";
 		throw new Exception();
 	}
