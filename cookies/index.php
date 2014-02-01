@@ -28,7 +28,7 @@
 	include(ROOT_LOCATION . "/modules/general/Site.php");
 	pageHeader("Cookies erlauben", "cookies");
 ?>
-	<h1>Willkommen bei SIS</h1>
+	<h1>Willkommen bei SIS 1</h1>
 	<h2>School Information Service</h2>
 	<p>
 		SIS ist eine Diplomarbeit einer Gruppe von Sch&uuml;lern der HTL Peter Anich, Abteilung Elektronik. <br />
