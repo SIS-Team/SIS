@@ -8,7 +8,7 @@
 
 body {
 	background-image: url("../images/background.jpg");
-	background-repeat: repeat-y;
+	background-repeat: repeat;
 	background-attachment: fixed;
 	background-position: center center;
 	background-color: #000;
