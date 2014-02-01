@@ -8,12 +8,10 @@
 	 * Changelog:
 	 * 	0.1.0:  09. 09. 2013, Weiland Mathias  - erste Version
 	 */
-
-include("../config.php");	 
+include_once("../config.php");	 
 include_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
 include_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
 include_once(ROOT_LOCATION . "/modules/other/dateFunctions.php");		//Stellt Datumsfunktionen zur Verfügung
-
 if(!($_SESSION['loggedIn']))die("Critical Error </br> Bist du sicher, dass du angemeldet bist?"); //Kontrolle ob angemeldet
 
 $substitudes = array();
@@ -54,7 +52,7 @@ for($counter = 0; $counter <=2; $counter++)
 		 if(empty($substitudes[$count][2]) == true) break;		//Abbruch wenn keine weiteren Einträge
 		 echo "<tr>";
 		 echo "<td>".$substitudes[$count][2]."</td>";	//Klassenname
-		 echo "<td>".$substitudes[$count][7]."</td>";	//supplierte Stunde
+		 echo "<td>".$substitudes[$count][12]."</td>";	//supplierte Stunde
 		 echo "<td>".$substitudes[$count][4]."</td>";	//supplierender Lehrer
 		 echo "<td>".$substitudes[$count][3]."</td>";	//Fach
 	 	 echo "<td>".$substitudes[$count][15]."</td>";	//ursprünglicher Lehrer
