@@ -55,3 +55,7 @@ body {
 	position: absolute;
 	top: 60px;
 }
+
+input {
+	color: #000;
+}
