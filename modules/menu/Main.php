@@ -26,7 +26,9 @@
 	<head>
 		<link rel="stylesheet" href="<?php echo RELATIVE_ROOT; ?>/data/styles/menu.css" />
 		<script src="<?php echo RELATIVE_ROOT; ?>/data/scripts/menu.js"></script>
-		<script src="<?php echo RELATIVE_ROOT; ?>/data/script/miscellaneous.js"></script>
+		<script src="<?php echo RELATIVE_ROOT; ?>/data/scripts/miscellaneous.js"></script>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<link href="<?php echo RELATIVE_ROOT; ?>/favicon.png" type="image/png" rel="shortcut icon" />
 	</head>
 	<body<?php echo (!isset($_GET['noJS'])) ? ' onload="' . ((!isset($_GET['noMobile'])) ? 'checkMobile(\'' . RELATIVE_ROOT . '\'); ' : '') . 'main();"' : ""; ?>>
 		<div class="linkAdr" id="middleLink"><?php echo $back; ?></div>
