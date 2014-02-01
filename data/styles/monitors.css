@@ -9,14 +9,16 @@
 	font-family: gothic;
 	font-style: normal;
 	font-weight: normal;
-	src:url('../fonts/gothic.ttf');
+	src:url('../fonts/gothic.ttf') format('truetype');
+	src:url('../fonts/gothic.woff') format('woff');
 }
 
 @font-face { 
 	font-family: gothic;
 	font-style: normal;
 	font-weight: bold;
-	src:url('../fonts/gothicb.ttf');
+	src:url('../fonts/gothicb.ttf') format('truetype');
+	src:url('../fonts/gothicb.woff') format('woff');
 }
 
 @font-face { 
@@ -38,7 +40,7 @@ a {
 
 body {
 	background-color: #000;
-	background-image: url("../images/background.png");
+	background-image: url("../images/background.jpg");
 }
 
 
