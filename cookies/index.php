@@ -1,12 +1,13 @@
 <?php
-	/* /modules/general/ForceHTTPS.php
+	/* /cookies/index.php
 	 * Autor: Buchberger Florian
-	 * Version: 1.0.0
+	 * Version: 1.0.1
 	 * Beschreibung:
 	 *	Fragt den Benutzer, ob er Cookies erlaubt.
 	 *
 	 * Changelog:
 	 * 	1.0.0:  22.06.2013, Buchberger Florian - erste Version
+ 	 * 	1.0.1:  28.01.2014, Philipp Machac - Ueberarbeitung Text
 	 */
  	include_once("../config.php");
  	
@@ -28,24 +29,23 @@
 	include(ROOT_LOCATION . "/modules/general/Site.php");
 	pageHeader("Cookies erlauben", "cookies");
 ?>
-	<h1>Willkommen bei SIS 1</h1>
-	<h2>School Information Service</h2>
+	<h1>Herzlich Willkommen bei SIS</h1>
 	<p>
-		SIS ist eine Diplomarbeit einer Gruppe von Sch&uuml;lern der HTL Peter Anich, Abteilung Elektronik. <br />
-		Bei diesem Projekt geht es um ein System, das die Stundenpl&auml;ne, Supplierpl&auml;ne sowie die neuesten News f&uuml;r die HTL f&uuml;r die Sch&uuml;ler und Lehrer sch&ouml;n am Computer und Handy zur Verf&uuml;gung stellt. Als zus&auml;tzlicher Teil werden die Monitore, die in der Schule an verschiedenen Stellen angebracht werden, ebenfalls durch dieses System gemanaged.
+		Das School Information Service (SIS) ist die Diplomarbeit einer Gruppe von Sch&uuml;lern der HTLinn, Abteilung Elektronik. <br />
+		Ziel des Projektes ist es ein System zu entwerfen, welches Stundenpl&auml;ne, Supplierpl&auml;ne sowie News f&uuml;r Sch&uuml;ler und Lehrer elektronisch bereitzustellen. Der Zugriff soll sowohl in Form dieses Portales, als auch mittels einer eigenen App f&uuml;r die bekanntesten Smartphoneplattformen m&ouml;glich sein. Au&szlig;erdem werden die Monitore, welche an diversen Stellen in der Schule montiert sind, mit diesem System angesteuert.
 	</p>
 	<br />
 	<br />
 	<p>
-		Die EU schreibt vor, dass wir Sie dar&uuml;ber informieren m&uuml;ssen, dass diese Seite Cookies verwendet. Diese Cookies werden dazu verwendet, Sie als Sch&uuml;ler/Lehrer zu identifizieren. So gesehen ist es nur logisch, aber Gesetz ist Gesetz...<br />
-		Wenn Sie damit einverstanden sind, dass wir ein Session Cookie anlegen, so klicken Sie bitte auf "Cookies erlauben".<br />
-		Sollten Sie aber nicht einverstanden sein, so k&ouml;nnen Sie gleich wieder gehen, denn diese Seite kann ohne die Speicherung der Session nicht funktionieren.
+		Die EU schreibt vor, dass du als Benutzer dar&uuml;ber informiert wirst, wenn eine Seite Cookies verwendet. Die Cookies auf dieser Seite werden daf&uuml;r verwendet, dich als Sch&uuml;ler/Lehrer zu identifizieren.<br />
+		Wenn du damit einverstanden bist, dass wir ein Session Cookie anlegen, so klicke einfach auf "Cookies erlauben".<br />
+		Solltest du aber nicht einverstanden sein, so m&uuml;ssen wir dir leider die traurige Nachricht &uuml;berbringen, dass du diesen Service nicht verwenden kannst. 
 	</p>
 	<br />
 	<form action="?" method="post">
 		<input type="hidden" name="return" value="<?php echo $_GET['return']; ?>">
 		<input type="hidden" name="okay" value="1">
-		<input type="submit" value="Cookies erlauben : )">
+		<input type="submit" value="Cookies erlauben  : )">
 	</form>
 <?php
 	pageFooter();
