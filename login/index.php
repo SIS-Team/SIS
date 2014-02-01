@@ -18,6 +18,7 @@
 				if (!isset($_GET['return']))
 					$_GET['return'] = "./";
 				header("LOCATION: " . $_GET['return']);
+				exit();
 			} catch (Exception $e) {
 				$error = "<h1>: (</h1><h2>Benutzername oder Passwort falsch</h2>" . $e->getMessage();
 			}
@@ -25,15 +26,13 @@
 	}
 
 	include(ROOT_LOCATION . "/modules/general/Menu.php");
-	generateDefaultMenu();
-	
 
 	pageHeader("Login", "main");
 	if (!$_SESSION['loggedIn']) {	
 		if (isset($error))
 			echo $error;
 ?>
-<form action="?" method="post">
+<form action="?return=<?php echo (isset($_GET['return'])) ? urlencode($_GET['return']) : urlencode("./"); ?>" method="post">
 	<input type="text" name="user"><br />
 	<input type="password" name="password"><br />
 	<input type="submit">
