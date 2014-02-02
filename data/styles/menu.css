@@ -242,15 +242,19 @@ g, div {
 	opacity: 0.80;
 }
 
-#title a{
-	text-decoration: none;
-	color: #000;
+#title {
 	font-family: abduction;
 	position: absolute;
 	left: 0px;
 	bottom: 20px;
 	font-size: 40px;
 }
+
+#title a {
+	text-decoration: none;
+	color: #000;
+}
+
 #title span {
 	font-size: 15px;
 }

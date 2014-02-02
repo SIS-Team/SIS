@@ -20,28 +20,71 @@
 				header("LOCATION: " . $_GET['return']);
 				exit();
 			} catch (Exception $e) {
-				$error = "<h1>: (</h1><h2>Benutzername oder Passwort falsch</h2>" . $e->getMessage();
+				$error = "<h2>: ( </h2> Irgendwas war falsch";
 			}
 		}
 	}
-
-	include(ROOT_LOCATION . "/modules/general/Menu.php");
-
-	pageHeader("Login", "main");
 	if (!$_SESSION['loggedIn']) {	
-		if (isset($error))
-			echo $error;
 ?>
-<form action="?return=<?php echo (isset($_GET['return'])) ? urlencode($_GET['return']) : urlencode("./"); ?>" method="post">
-	<input type="text" name="user"><br />
-	<input type="password" name="password"><br />
-	<input type="submit">
-</form>
-<?php
-	} else {
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" href="<?php echo RELATIVE_ROOT; ?>/data/styles/menu.css" />
+		<link rel="stylesheet" href="<?php echo RELATIVE_ROOT; ?>/data/styles/login.css" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<link href="<?php echo RELATIVE_ROOT; ?>/favicon.png" type="image/png" rel="shortcut icon" />
+	</head>
+	<body>
+		<div id="background">
+		</div>
+		<div id="headerCenter" class="point hCenter">
+			<div id="header" class="sameWidth">
+				<div id="title" class="link">
+					<?php
+						echo str_replace(" ", "<span> </span>", "SIS.Web Access");
+					?>
+				</div>
+			</div>
+		</div>
+		<div class="point vCenter hCenter">
+			<div id="menuContainer" class="sameWidth">
+				<div class="mid">
+					<?php include(ROOT_LOCATION . "/data/images/up.svg"); ?>
+				</div>
+				<div class="mid">
+					<?php include(ROOT_LOCATION . "/data/images/down.svg"); ?>
+				</div>
+			</div>
+			<div id="login">
+				<h1>Login</h1>
+<?php	
+	if (isset($error))
+		echo '<div class="error">' . $error . "</div>";
 ?>
-<h1>Sie sind nun angemeldet... : )</h1>
+				<form action="?return=<?php echo (isset($_GET['return'])) ? urlencode($_GET['return']) : urlencode("./"); ?>" method="post">
+					<hr />					
+					<?php include(ROOT_LOCATION . "/data/images/user.svg"); ?>
+					<input placeholder="Benutzername" type="text" name="user" autofocus>
+					<hr />
+					<?php include(ROOT_LOCATION . "/data/images/pass.svg"); ?>
+					<input placeholder="Kennwort" type="password" name="password">
+					<hr />
+					<input type="checkbox" name="keep">Angemeldet bleiben
+					<div id="send">
+						<input type="submit" value="Anmelden">
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<div id="footerCenter" class="point hCenter">
+			<div id="footer" class="sameWidth link">
+				<a href="<?php echo RELATIVE_ROOT; ?>/impressum/">Impressum</a> | <a href="<?php echo RELATIVE_ROOT; ?>/impressum/#privacy">Datenschutz</a> | <a href="<?php echo RELATIVE_ROOT; ?>/impressum/#terms">Nutzungsbedingungen</a> | <a href="<?php echo RELATIVE_ROOT; ?>/help/">Hilfe</a>
+			</div>
+		</div>
+	</body>
+</html>
 <?php
 	}
-	pageFooter();
+	header("LOCATION: " . RELATIVE_ROOT . "/");
 ?>
