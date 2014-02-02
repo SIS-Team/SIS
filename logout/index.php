@@ -13,13 +13,6 @@
 
 	logout();
 
-	include(ROOT_LOCATION . "/modules/general/Menu.php");
-	generateDefaultMenu();
+	header("LOCATION: " . RELATIVE_ROOT . "/");
 
-
-	pageHeader("Logout", "main");
-?>
-<h1>Sie sind nun abgemeldet... : )</h1>
-<?php
-	pageFooter();
 ?>
