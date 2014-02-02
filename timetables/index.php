@@ -4,7 +4,7 @@ session_start();
 
 // TODO für klasse oder lehrer -> done
 
-	/* /timetables/class/index.php
+	/* /timetables/index.php
 	 * Autor: Weiland Mathias
 	 * Version: 0.1.0
 	 * Beschreibung:
@@ -88,6 +88,14 @@ for($j = 0; $j<=4; $j++)
 	$offset++;
  //echo $hours[1][$substitudes[0]['weekdayShort']]->suShort."--------------";	
 }
+
+for($j = 0; $j < count($substitudes);$j++)
+{
+//	$hours[$substitudes[$j][7]][$substitudes[$j][14]] = $substitudes[$j][];
+	
+}
+
+//print_r($substitudes);
 //-------------------------------------------------------------------------------------------------------
 $classType = isEvening($hours);	//kontrolliert ob Abendschule
 if($classType == "evening")	//nur Abendschule
@@ -179,8 +187,9 @@ function getSubstitude($date,$name,$mode){	//Supplierungen des gewählten Datums 
 			or die("MySQL-Error: ".mysql_error());
 			while($substitude = mysql_fetch_array($substitude_sql)) {    
 		 	$substitudes[]=$substitude;
-	//		print_r($substitudes);  //Kontrolle des Ergebnis-Arrays
 			}	
+			
+		//	print_r($substitudes);  //Kontrolle des Ergebnis-Arrays
 }
 
 pageFooter();
