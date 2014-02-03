@@ -99,7 +99,7 @@ var register = function() {
 // läd Seiteninhalt
 var loadContent = function () {
 	// sendet aktuellen Monitor-Hash zum Server
-	reqGet("/monitors/api/getContent.php", "name=" + monitorName + "&hash=" + monitorHash, true, updateContent);
+	reqGet("api/getContent.php", "name=" + monitorName + "&hash=" + monitorHash, true, updateContent);
 }
 
 // aktualisiert den Seiteninhalt
