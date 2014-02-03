@@ -20,6 +20,9 @@
 
 	function LDAP_login($dn, $pass) {
 		include_once(ROOT_LOCATION . "/modules/general/LDAPpassword.php");
+		if (!isset($host)) {
+			return ($dn == "test") && ($pass == "sister");
+		}
 		$con = ldap_connect($host);
 		$ok  = ldap_bind($con, $dn, $pass);
 		return $ok;
@@ -27,6 +30,23 @@
 
 	function LDAP_getUser($cn) {
 		include_once(ROOT_LOCATION . "/modules/general/LDAPpassword.php");
+
+		if (!isset($host)) {
+			$ent = array();
+			$ent[0] = array();
+			$ent[0]["dn"] = "cn=123345678,ou=STUDENTS,o=HTLinn";
+			$ent[0]["groupmembership"] = array();
+			$ent[0]["groupmembership"][0] = "cn=5YHELT,ou=GROUPS,ou=PUBLIC,o=HTLinn";
+			$ent[0]["ou"] = array();
+			$ent[0]["ou"][0] = "N";
+			$ent[0]["givenname"] = array();
+			$ent[0]["givenname"][0] = "Sister";
+			$ent[0]["sn"] = array();
+			$ent[0]["sn"][0] = "Anich";
+			$ent[0]["initials"] = array();
+			$ent[0]["initials"][0] = "SA";
+			return $ent;
+		}
 		$con = ldap_connect($host);
 		$ok  = ldap_bind($con, $user, $passwd);
 		$res = ldap_search($con, "o=HTLinn", "cn=" . $cn);
