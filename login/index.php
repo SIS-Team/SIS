@@ -7,6 +7,7 @@
 	 *
 	 * Changelog:
 	 * 	0.1.0:  15. 10. 2013, Buchberger Florian - erste Version
+	 *	0.2.0:	03. 02. 2014, Machac Philipp - HTL-Background entfernt
 	 */
 	include("../config.php");
 	include(ROOT_LOCATION . "/modules/general/Main.php");
@@ -32,7 +33,7 @@
 		<link rel="stylesheet" href="<?php echo RELATIVE_ROOT; ?>/data/styles/menu.css" />
 		<link rel="stylesheet" href="<?php echo RELATIVE_ROOT; ?>/data/styles/login.css" />
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<link href="<?php echo RELATIVE_ROOT; ?>/favicon.png" type="image/png" rel="shortcut icon" />
+		<link href="<?php echo RELATIVE_ROOT; ?>/favicon.ico" type="image/x-ico" rel="shortcut icon" />
 	</head>
 	<body>
 		<div id="background">
@@ -47,14 +48,6 @@
 			</div>
 		</div>
 		<div class="point vCenter hCenter">
-			<div id="menuContainer" class="sameWidth">
-				<div class="mid">
-					<?php include(ROOT_LOCATION . "/data/images/up.svg"); ?>
-				</div>
-				<div class="mid">
-					<?php include(ROOT_LOCATION . "/data/images/down.svg"); ?>
-				</div>
-			</div>
 			<div id="login">
 				<h1>Login</h1>
 <?php	
