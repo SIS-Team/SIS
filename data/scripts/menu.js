@@ -73,15 +73,15 @@ var closeLink = function() {
 	animation.close();
 }
 
-var openLink = function(link) {
+var openLink = function(link) {	
+	if (animation.block)
+		return;
 	if (animation.distance > 0) {
 		eval("var tmp = function() { openLink('" + link + "'); }");
 		animation.after = tmp;
 		animation.close();
 		return;
 	}
-	if (animation.block)
-		return;
 	animation.open();
 	document.getElementById("innerWindow").innerHTML = "<iframe src='" + link + "'>Ihr Browser unterstützt keine iFrames, drücken Sie bitte <a href='" + link + "'>hier</a></iframe>";
 	document.getElementById("innerWindow").getElementsByTagName("iframe")[0].onload = function () {
