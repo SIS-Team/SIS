@@ -106,6 +106,7 @@ for($j = 0; $j < count($substitudes);$j++)
 	 	$hours[$substitudes[$j]['newStartHour']][$day]->moved = true;
 	 	$hours[$substitudes[$j]['newStartHour']][$day]->teShort = $hours[$hour][$day]->teShort;
 	 	$hours[$substitudes[$j]['newStartHour']][$day]->suShort = $hours[$hour][$day]->suShort;
+	 	$hours[$substitudes[$j]['newStartHour']][$day]->endHour = $hours[$hour][$day]->endHour;
 	 	
 	}
 	else $hours[$hour][$day]->moved = false;
@@ -133,13 +134,15 @@ $days=array(0=> "Mo",1=> "Di",2=> "Mi",3=>"Do",4=>"Fr");
 for ($i = $tableBegin; $i < $tableEnd; $i++) {
  	echo "<tr>";
  	echo "<td style=\"width:50px\">".$i."</td>";			//gibt Stundennummer an
- 	if (!$hours[$i]){ //echo "check";
+ 	if (!isset($hours[$i])){ //echo "check";
 		for ($j = 0; $j < 5; $j++) 
 			echo "<td>&#160;</td>"; //Ausgabe eines leeren Feldes, wenn keine Stunde vorhanden
 	} 
 	else {// echo "checkv2";
 		for ($j = 0; $j < 5; $j++) {
 			if(isset($hours[$i][$days[$j]])){
+			 //echo "</br>\$hours[".$i."][".$days[$j]."]:";
+			 //print_r($hours[$i][$days[$j]]);
 				if($hours[$i][$days[$j]]->moved == true) {
 					echo "<td style = \"color : #00FF00\">";
 				}
@@ -158,11 +161,18 @@ for ($i = $tableBegin; $i < $tableEnd; $i++) {
 			 echo $hours[$i][$days[$j]]->suShort ."&#160;</td>";	//gibt 	Fach aus
 			 	if (isset($hours[$i][$days[$j]])) {
 					if(($hours[$i][$days[$j]]->endHour) > $i) {//kopiert aktuelle Stunde in nächste Stunde, wenn mehr als eine Stunde nacheinander stattfindet
+						$hours[$i+1][$days[$j]] = NULL;
+						$hours[$i+1][$days[$j]] = (array) $hours[$i+1][$days[$j]];
+						$hours[$i+1][$days[$j]]['moved'] = "";
+						$hours[$i+1][$days[$j]]['deleted'] = "";
+						$hours[$i+1][$days[$j]] = (object) $hours[$i+1][$days[$j]];
+						
+						
 						$hours[$i+1][$days[$j]]->suShort = $hours[$i][$days[$j]]->suShort;
 						 $hours[$i+1][$days[$j]]->teShort = $hours[$i][$days[$j]]->teShort;
 						 $hours[$i+1][$days[$j]]->endHour = $hours[$i][$days[$j]]->endHour;	
 						 $hours[$i+1][$days[$j]]->deleted = $hours[$i][$days[$j]]->deleted;		 
-						 if(!empty($hours[$i][$days[$j]]->moved))  $hours[$i+1][$days[$j]]->moved = $hours[$i][$days[$j]]->moved;		
+						 if($hours[$i][$days[$j]]->moved)  $hours[$i+1][$days[$j]]->moved = $hours[$i][$days[$j]]->moved;		
 					}
 				}
 			}
