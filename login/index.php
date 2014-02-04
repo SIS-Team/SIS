@@ -34,8 +34,17 @@
 		<link rel="stylesheet" href="<?php echo RELATIVE_ROOT; ?>/data/styles/login.css" />
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<link href="<?php echo RELATIVE_ROOT; ?>/favicon.ico" type="image/x-ico" rel="shortcut icon" />
+		<script src="<?php echo RELATIVE_ROOT; ?>/data/scripts/miscellaneous.js"></script>
+		<script>
+			var checkMobile = function() {
+				if (isMobile()) {
+					window.location.href = "<?php echo RELATIVE_ROOT; ?>/mobile/";
+					throw new Exception();
+				}
+			}
+		</script>
 	</head>
-	<body>
+	<body <?php echo (!isset($_GET['noMobile'])) ? 'onload="checkMobile()"' : ''; ?>>
 		<div id="background">
 		</div>
 		<div id="headerCenter" class="point hCenter">

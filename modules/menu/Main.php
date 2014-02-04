@@ -63,7 +63,7 @@
 						<?php include(BASE_LR); ?>
 						<?php include($buttons[2]['svg']); ?>
 						<div class="subtext">
-							<a<?php echo ($buttons[2]['enabled'] ? "" : 'class="noLink"'); ?> href="<?php echo $buttons[2]['url']; ?>">
+							<a<?php echo ($buttons[2]['enabled'] ? "" : ' class="noLink"'); ?> href="<?php echo $buttons[2]['url']; ?>">
 								<?php echo $buttons[2]['text']; ?>
 							</a>
 						</div>
@@ -91,7 +91,7 @@
 						<?php include(BASE_RL); ?>
 						<?php include($buttons[1]['svg']); ?>
 						<div class="subtext">
-							<a<?php echo ($buttons[1]['enabled'] ? "" : 'class="noLink"'); ?> href="<?php echo $buttons[1]['url']; ?>">
+							<a<?php echo ($buttons[1]['enabled'] ? "" : ' class="noLink"'); ?> href="<?php echo $buttons[1]['url']; ?>">
 								<?php echo $buttons[1]['text']; ?>
 							</a>
 						</div>
@@ -105,7 +105,7 @@
 						<?php include(BASE_RL); ?>
 						<?php include($buttons[0]['svg']); ?>
 						<div class="subtext">
-							<a<?php echo ($buttons[0]['enabled'] ? "" : 'class="noLink"'); ?> href="<?php echo $buttons[0]['url']; ?>">
+							<a<?php echo ($buttons[0]['enabled'] ? "" : ' class="noLink"'); ?> href="<?php echo $buttons[0]['url']; ?>">
 								<?php echo $buttons[0]['text']; ?>
 							</a>
 						</div>
@@ -124,7 +124,7 @@
 						<?php include(BASE_RL); ?>
 						<?php include($buttons[6]['svg']); ?>
 						<div class="subtext">
-							<a<?php echo ($buttons[6]['enabled'] ? "" : 'class="noLink"'); ?> href="<?php echo $buttons[6]['url']; ?>">
+							<a<?php echo ($buttons[6]['enabled'] ? "" : ' class="noLink"'); ?> href="<?php echo $buttons[6]['url']; ?>">
 								<?php echo $buttons[6]['text']; ?>
 							</a>
 						</div>
@@ -138,7 +138,7 @@
 						<?php include(BASE_RL); ?>
 						<?php include($buttons[7]['svg']); ?>
 						<div class="subtext">
-							<a<?php echo ($buttons[7]['enabled'] ? "" : 'class="noLink"'); ?> href="<?php echo $buttons[7]['url']; ?>">
+							<a<?php echo ($buttons[7]['enabled'] ? "" : ' class="noLink"'); ?> href="<?php echo $buttons[7]['url']; ?>">
 								<?php echo $buttons[7]['text']; ?>
 							</a>
 						</div>
@@ -152,7 +152,7 @@
 						<?php include(BASE_LR); ?>
 						<?php include($buttons[5]['svg']); ?>
 						<div class="subtext">
-							<a<?php echo ($buttons[5]['enabled'] ? "" : 'class="noLink"'); ?> href="<?php echo $buttons[5]['url']; ?>">
+							<a<?php echo ($buttons[5]['enabled'] ? "" : ' class="noLink"'); ?> href="<?php echo $buttons[5]['url']; ?>">
 								<?php echo $buttons[5]['text']; ?>
 							</a>
 						</div>
