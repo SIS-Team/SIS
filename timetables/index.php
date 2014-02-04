@@ -35,7 +35,7 @@ else {
 	$mode = "schueler";
 }
 
-pageHeader("Formular","main");
+pageHeader("Stundenplan","main");
 echo "<div class ='timetable_column'>";	
 
 //Tabellenkopfausgabe
@@ -54,7 +54,7 @@ $lessons = getLessons($name,$mode);  //fragt Stunden ab, die in der gesuchten Kl
 $hours = array();
 for ($i = 0; $i < count($lessons); $i++) {	
  	$index = $lessons[$i]->startHour; //Als Index wird die Startstunde verwendet
-	if (!$hours[$index])	
+	if (!isset($hours[$index]))	
 		$hours[$index] = array(); //Wenn für die betreffende Startstunde kein Eintrag vorhanden -> leeres Array erstellen
 	if(isset($hours[$index][$lessons[$i]->weekdayShort])) //Kontrolle ob bereits ein Eintag vorhanden
 	{ 
@@ -67,6 +67,11 @@ for ($i = 0; $i < count($lessons); $i++) {
 	else {
 		$hours[$index][$lessons[$i]->weekdayShort] = $lessons[$i] ; //erstellen eines Eintrages wenn keiner vorhanden
 	}
+	
+	$hours[$index][$lessons[$i]->weekdayShort] = (array) $hours[$index][$lessons[$i]->weekdayShort];
+	$hours[$index][$lessons[$i]->weekdayShort]['moved'] = "";
+	$hours[$index][$lessons[$i]->weekdayShort]['deleted'] = "";
+	$hours[$index][$lessons[$i]->weekdayShort] = (object) $hours[$index][$lessons[$i]->weekdayShort];
 }
 //hours[Stunde][Tag]
 //print_r($hours);
@@ -88,12 +93,24 @@ for($j = 0; $j<=4; $j++)
 	$offset++;
  //echo $hours[1][$substitudes[0]['weekdayShort']]->suShort."--------------";	
 }
-
 for($j = 0; $j < count($substitudes);$j++)
 {
-//	$hours[$substitudes[$j][7]][$substitudes[$j][14]] = $substitudes[$j][];
-	
+
+
+	$hour = $substitudes[$j]['startHour'];
+	$day =  $substitudes[$j]['weekdayShort'];
+	if($substitudes[$j]['hidden'] == 1)$hours[$hour][$day]->deleted = true;
+	else $hours[$hour][$day]->deleted = false;
+	if($substitudes[$j]['startHour'] != $substitudes[$j]['newStartHour'] && !empty($substitudes[$j]['newStartHour'])){
+	 	$hours[$hour][$day]->deleted  = true;
+	 	$hours[$substitudes[$j]['newStartHour']][$day]->moved = true;
+	 	$hours[$substitudes[$j]['newStartHour']][$day]->teShort = $hours[$hour][$day]->teShort;
+	 	$hours[$substitudes[$j]['newStartHour']][$day]->suShort = $hours[$hour][$day]->suShort;
+	 	
+	}
+	else $hours[$hour][$day]->moved = false;
 }
+//print_r($hours['7']['Mi']);
 
 //print_r($substitudes);
 //-------------------------------------------------------------------------------------------------------
@@ -119,16 +136,41 @@ for ($i = $tableBegin; $i < $tableEnd; $i++) {
  	if (!$hours[$i]){ //echo "check";
 		for ($j = 0; $j < 5; $j++) 
 			echo "<td>&#160;</td>"; //Ausgabe eines leeren Feldes, wenn keine Stunde vorhanden
-	} else {// echo "checkv2";
+	} 
+	else {// echo "checkv2";
 		for ($j = 0; $j < 5; $j++) {
-		 
-		 echo "<td>" . $hours[$i][$days[$j]]->suShort ."&#160;</td>";	//gibt 	Fach aus
-					if(($hours[$i][$days[$j]]->endHour) > $i) //kopiert aktuelle Stunde in nächste Stunde, wenn mehr als eine Stunde nacheinander stattfindet
-					{$hours[$i+1][$days[$j]]->suShort = $hours[$i][$days[$j]]->suShort;
-					 $hours[$i+1][$days[$j]]->teShort = $hours[$i][$days[$j]]->teShort;
-					 $hours[$i+1][$days[$j]]->endHour = $hours[$i][$days[$j]]->endHour;	
+			if(isset($hours[$i][$days[$j]])){
+				if($hours[$i][$days[$j]]->moved == true) {
+					echo "<td style = \"color : #00FF00\">";
+				}
+				else{
+					if($hours[$i][$days[$j]]->deleted == true){
+						echo "<td style = \"color : #FF0000\">";
 					}
+					else {
+					 echo "<td>";
+					}
+					 
+				}
+			
+			
+			 
+			 echo $hours[$i][$days[$j]]->suShort ."&#160;</td>";	//gibt 	Fach aus
+			 	if (isset($hours[$i][$days[$j]])) {
+					if(($hours[$i][$days[$j]]->endHour) > $i) {//kopiert aktuelle Stunde in nächste Stunde, wenn mehr als eine Stunde nacheinander stattfindet
+						$hours[$i+1][$days[$j]]->suShort = $hours[$i][$days[$j]]->suShort;
+						 $hours[$i+1][$days[$j]]->teShort = $hours[$i][$days[$j]]->teShort;
+						 $hours[$i+1][$days[$j]]->endHour = $hours[$i][$days[$j]]->endHour;	
+						 $hours[$i+1][$days[$j]]->deleted = $hours[$i][$days[$j]]->deleted;		 
+						 if(!empty($hours[$i][$days[$j]]->moved))  $hours[$i+1][$days[$j]]->moved = $hours[$i][$days[$j]]->moved;		
+					}
+				}
+			}
+			else {
+				echo "<td>&#160;</td>";
+		}		
 		}
+		
 	}
 	echo "</tr>";
 }		
@@ -161,14 +203,14 @@ function isEvening($hours)
  $check = 0;
  for ($i = 1; $i < 12; $i++)	//wenn erste 11 Stunden leer -> Abendschule
  	{
- 	 if (!$hours[$i]) $check++;
+ 	 if (!isset($hours[$i])) $check++;
 	  }
 	if($check == 11) return "evening";;
 	
 	$check = 0;
  for ($i = 12; $i < 17; $i++) //wenn erste 11 Stunden befüllt und letzte 5 Stunden leer -> normal
  	{
- 	 if (!$hours[$i]) $check++;
+ 	 if (!isset($hours[$i])) $check++;
  	 }	
 	if($check == 5) return "normal";
 	else return "all";	//alle Stunden
@@ -183,7 +225,7 @@ function getSubstitude($date,$name,$mode){	//Supplierungen des gewählten Datums 
 		else {
 			$where = "time = '".mysql_real_escape_string($date)."' and newTeacher.short = '" . mysql_real_escape_string($name) . "'";
 		}	
-			$substitude_sql = selectSubstitude($where)	
+			$substitude_sql = selectSubstitude($where,"")	
 			or die("MySQL-Error: ".mysql_error());
 			while($substitude = mysql_fetch_array($substitude_sql)) {    
 		 	$substitudes[]=$substitude;
