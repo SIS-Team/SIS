@@ -303,6 +303,7 @@ g, div {
 	border-right: none;
 	border-top: 3px #fff solid;
 	border-bottom: 3px #fff solid;
+	background-image: url('../images/backgroundSub.jpg');
 }
 
 .link {
