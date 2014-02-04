@@ -14,14 +14,14 @@ include_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die se
 include_once(ROOT_LOCATION . "/modules/other/dateFunctions.php");		//Stellt Datumsfunktionen zur Verfügung
 
 //Seitenheader
-pageHeader("Formular","main");
+pageHeader("News","main");
 
 $result = selectAll("news","","");	//gesamte News-Tabelle abfragen
 while ($row = mysql_fetch_object($result)) {
 		$news[] = $row;
 }
 $date = CaptureDate("");  //aktuelles Datum abfragen
-echo "<h1><u> NEWS vom ".$date."</u></h1> </br>"; 
+echo "<h1><u> ".$date."</u></h1> </br>"; 
 for($i = 0;$i < count($news);$i++)
 { 
 	$startDate = $news[$i]->startDay;		//Startdatum abfragen

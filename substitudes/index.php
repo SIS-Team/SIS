@@ -17,7 +17,7 @@ if(!($_SESSION['loggedIn']))die("Critical Error </br> Bist du sicher, dass du an
 $substitudes = array();
 
 //Seitenheader
-pageHeader("Formular","main");
+pageHeader("Supplierplan","main");
 
 echo "<div class ='keys'>";
 echo "St. ... supplierte Stunde; ";
