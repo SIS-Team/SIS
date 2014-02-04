@@ -153,4 +153,9 @@ var main = function() {
 		mid.getElementsByTagName("g")[0].setAttribute("onmouseleave", "dehoverLinkMiddle()");
 		mid.getElementsByTagName("g")[0].style.cursor = "pointer";	
 	}
+
+	var array = document.getElementById("footer").getElementsByTagName("a");
+	for (var i = 0; i < array.length; i++) {
+		array[i].setAttribute("href", "javascript:openLink('" + array[i].href + "')");
+	}
 }
