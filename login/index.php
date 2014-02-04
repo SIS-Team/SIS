@@ -42,9 +42,10 @@
 					throw new Exception();
 				}
 			}
+			<?php echo (!isset($_GET['noMobile'])) ? 'checkMobile();' : ''; ?>
 		</script>
 	</head>
-	<body <?php echo (!isset($_GET['noMobile'])) ? 'onload="checkMobile()"' : ''; ?>>
+	<body>
 		<div id="background">
 		</div>
 		<div id="headerCenter" class="point hCenter">
