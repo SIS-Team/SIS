@@ -1,3 +1,26 @@
+@font-face { 
+	font-family: gothic;
+	font-style: normal;
+	font-weight: normal;
+	src:url('../fonts/gothic.ttf') format('truetype');
+	src:url('../fonts/gothic.woff') format('woff');
+}
+
+@font-face { 
+	font-family: gothic;
+	font-style: normal;
+	font-weight: bold;
+	src:url('../fonts/gothicb.ttf') format('truetype');
+	src:url('../fonts/gothicb.woff') format('woff');
+}
+
+@font-face { 
+	font-family: abduction;
+	font-style: normal;
+	font-weight: normal;
+	src:url('../fonts/abduction2002.ttf');
+}
+
 body {
 	background-image: url("../images/background.jpg");
 	background-repeat: repeat;
@@ -6,25 +29,68 @@ body {
 	background-color: #000;
 }
 
+* {
+	font-family: gothic;
+	color: #fff;
+}
+
 .middle {
-	height: 1px;
-	width: 1px;
+	height: 0px;
+	width: 0px;
 	position: absolute;
 	top: 50%;
 	left: 50%;
 }
 
-.content.bg {
-	background-color: #ccc;
-	opacity: 0.7;
+.point {
+	width: 0px;
+	height: 0px;
+	overflow: visible;	
+}
+
+.hCenter {
+	position: absolute;
+	left: 50%;
+}
+
+.sameWidth {
+	position: absolute;
+	width: 1200px;
+	left: -600px;
+}
+
+#headerCenter {
+	top: 0px;
+}
+
+#header {
+	position: absolute;
+	top: 0px;
+	height: 100px;
+	opacity: 0.8;
+}
+
+#title {
+	font-family: abduction;
+	position: absolute;
+	left: 0px;
+	bottom: 20px;
+	font-size: 40px;
+	color: #000;
+}
+
+#title span {
+	font-size: 15px;
 }
 
 .content {
-	height:600px;
-	width: 1000px;
+	height: 500px;
+	width: 800px;
 	position: absolute;
-	top: -300px;
-	left: -500px;
+	top: -240px;
+	left: -400px;
+	background-color: #000;
+	opacity: 0.8;
 }
 
 h1 {
@@ -45,5 +111,14 @@ input {
 	display: block;
 	margin: auto auto;
 	width: 200px;
-	font-size: 15px;
+	font-size: 20px;
+	color: #000;
+	height: 30px;
+	width: 300px;
+	background-color: #fff;
+	margin-top: 10px;
+}
+
+input:hover {
+	background-color: #ddd;
 }
