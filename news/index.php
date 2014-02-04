@@ -4,7 +4,6 @@
 	 * Version: 0.1.0
 	 * Beschreibung:
 	 *	Gibt News aus
-	 *
 	 * Changelog:
 	 * 	0.1.0:  12. 10. 2013, Weiland Mathias  - erste Version
 	 */	 
@@ -28,9 +27,9 @@ for($i = 0;$i < count($news);$i++)
 	$endDate = $news[$i]->endDay;		//Enddatum abfragen
  
  	if(($startDate <= $date) && ($endDate >= $date) && ($news[$i]->display ==1)){ //nur wenn aktuelles Datum zwischen Start- und Enddatum 
-		echo "<h2>" . $news[$i]->title . "</h2></br>";
+		echo "<h2>" . $news[$i]->title . "</h2>";
   		echo $news[$i]->text;
-  		echo "</br></br></br></br></br>";
+  		echo "</br></br></br>";
 	}
 }
 pageFooter();
