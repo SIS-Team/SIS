@@ -49,9 +49,57 @@
 		$response['content'] .= "</table>";
 		$hash .= md5($response['content']); // ugly
 		break;
+		
 	case "Stundenplan":
-		$hash .= md5($monitor->room);
+		$sql = "SELECT 
+		`su`.`short` AS `suShort`,
+		`sH`.`weekdayShort` AS `weekday`,
+		`sH`.`hour` AS `startHour`,
+		`eH`.`hour` AS `endHour`
+		FROM `lessons` AS `l`
+		INNER JOIN `rooms` AS `r` ON `l`.`roomFK`=`r`.`ID`
+		INNER JOIN `subjects` AS `su` ON `l`.`subjectFK` = `su`.`ID`
+		INNER JOIN `lessonsBase` AS `lb` ON `l`.`lessonBaseFK` = `lb`.`ID`
+		INNER JOIN `hours` AS `sH` ON `lb`.`startHourFK` = `sH`.`ID`
+		INNER JOIN `hours` AS `eH` ON `lb`.`endHourFK` = `eH`.`ID`
+		WHERE `r`.`name` = '". $monitor->room."'";
+		$result = mysql_query($sql);
+		$response['content'] .= "<table border=1 >";
+		$response['content'] .= "<tr><th>" . "Stunde" . "</th>";
+		$response['content'] .= "<th>" . "Montag" . "</th>";
+		$response['content'] .= "<th>" . "Dienstag" . "</th>";
+		$response['content'] .= "<th>" . "Mittwoch" . "</th>";
+		$response['content'] .= "<th>" . "Donnerstag" . "</th>";
+		$response['content'] .= "<th>" . "Freitag" . "</th></tr>";
+		while ($row = mysql_fetch_object($result)) {
+				$results[] = $row;
+		}
+		$lesson = array();
+		for($i=0;$i<count($results);$i++){
+			$lesson[$results[$i]->startHour][$results[$i]->weekday]=  $results[$i]->suShort;
+			
+		}
+		
+		$days=array(0=> "Mo",1=> "Di",2=> "Mi",3=>"Do",4=>"Fr");
+		for($i = 1; $i<11 ;$i++){
+		 	$response['content'] .= "<tr><td>".$i."</td>";
+			for($j=0;$j<5;$j++){
+			 if(isset($lesson[$i][$days[$j]])){
+				$response['content'] .= "<td>". $lesson[$i][$days[$j]] ."</td>";	
+			 }
+			else $response['content'] .= "<td> &#160; </td>";
+			}
+			$response['content'] .= "</tr>";
+		}
+	
+		$response['content'] .= "</table>";
+//	for($i=0;$i =< 1 ;$i++) {$response['content'] .= "°-°";}
+		$response['content'] .= "^-^";
+		
+		
+		$hash .= md5($response['content']);
 		break;
+		
 	case "Supplierplan":
 		$sql = "SELECT 
 				`hb`.`weekdayShort` AS startWeekDay, 
