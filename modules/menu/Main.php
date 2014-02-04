@@ -185,7 +185,7 @@
 
 			<div id="footerCenter" class="point hCenter">
 				<div id="footer" class="sameWidth link">
-					<a href="<?php echo RELATIVE_ROOT; ?>/impressum/">Impressum</a> | <a href="<?php echo RELATIVE_ROOT; ?>/impressum/#privacy">Datenschutz</a> | <a href="<?php echo RELATIVE_ROOT; ?>/impressum/#terms">Nutzungsbedingungen</a> | <a href="<?php echo RELATIVE_ROOT; ?>/help/">Hilfe</a>
+					<a href="<?php echo RELATIVE_ROOT; ?>/impressum/">Impressum</a> | <a href="<?php echo RELATIVE_ROOT; ?>/impressum/">Datenschutz</a> | <a href="<?php echo RELATIVE_ROOT; ?>/impressum/">Nutzungsbedingungen</a> | <a href="<?php echo RELATIVE_ROOT; ?>/help/">Hilfe</a>
 				</div>
 			</div>
 			<div id="windowContainer">
