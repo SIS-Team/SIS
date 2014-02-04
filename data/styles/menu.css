@@ -253,7 +253,7 @@ g, div {
 #title a {
 	text-decoration: none;
 	color: #000;
-}
+} 	
 
 #title span {
 	font-size: 15px;
@@ -321,4 +321,8 @@ g, div {
 
 #userInfo a:hover {
 	color: #fff;
+}
+
+a.noLink {
+	pointer-events: none;
 }
