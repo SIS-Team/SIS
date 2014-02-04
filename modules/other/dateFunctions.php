@@ -13,9 +13,10 @@
 
 
 function weekday($d) {
-$days = array("So", "Mo", "Di", "Mi", "Do", "Fr", "Sa");
-$x = strptime($d, "%Y-%m-%d");
-return sprintf("%s", $days[$x["tm_wday"]]);
+	$days = array("So", "Mo", "Di", "Mi", "Do", "Fr", "Sa");
+	$x = strptime($d, "%Y-%m-%d");
+	// TODO why sprintf ?
+	return sprintf("%s", $days[$x["tm_wday"]]);
 }
 
 
