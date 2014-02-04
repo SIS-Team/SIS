@@ -19,8 +19,11 @@
 	}
 
 	function LDAP_login($dn, $pass) {
-		include_once(ROOT_LOCATION . "/modules/general/LDAPpassword.php");
+		include(ROOT_LOCATION . "/modules/general/LDAPpassword.php");
 		if (!isset($host)) {
+			$fh = fopen(ROOT_LOCATION . "/logs/ldap-fails", "a");
+			fwrite($fh, time() . ": no host, login, user: " . urlencode($dn) . "\n");
+			fclose($fh);
 			return ($dn == "test") && ($pass == "sister");
 		}
 		$con = ldap_connect($host);
@@ -29,9 +32,12 @@
 	}
 
 	function LDAP_getUser($cn) {
-		include_once(ROOT_LOCATION . "/modules/general/LDAPpassword.php");
+		include(ROOT_LOCATION . "/modules/general/LDAPpassword.php");
 
 		if (!isset($host)) {
+			$fh = fopen(ROOT_LOCATION . "/logs/ldap-fails", "a");
+			fwrite($fh, time() . ": no host, get user, cn: " . urlencode($cn) . "\n");
+			fclose($fh);
 			$ent = array();
 			$ent[0] = array();
 			$ent[0]["dn"] = "cn=123345678,ou=STUDENTS,o=HTLinn";
