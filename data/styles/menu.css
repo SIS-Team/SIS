@@ -255,6 +255,10 @@ g, div {
 	color: #000;
 }
 
+#title a:hover {
+	color: #fff;
+}
+
 #title span {
 	font-size: 15px;
 }
@@ -275,6 +279,10 @@ g, div {
 #footer a {
 	text-decoration: none;
 	color: #fff;
+}
+
+#footer a:hover {
+	color: #000;
 }
 
 #windowContainer {
@@ -313,4 +321,8 @@ g, div {
 #userInfo a {
 	text-decoration: none;
 	color: #000;
+}
+
+#userInfo a:hover {
+	color: #fff;
 }
