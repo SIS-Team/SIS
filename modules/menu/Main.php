@@ -24,6 +24,12 @@
 <!DOCTYPE xhtml>
 <html>
 	<head>
+		<script>
+			// let's do some framebusting; we want this to be executed before the page loads
+			if (parent.frames.length > 0) {
+				top.location.replace(document.location);
+			}
+		</script>
 		<link rel="stylesheet" href="<?php echo RELATIVE_ROOT; ?>/data/styles/menu.css" />
 		<script src="<?php echo RELATIVE_ROOT; ?>/data/scripts/menu.js"></script>
 		<script src="<?php echo RELATIVE_ROOT; ?>/data/scripts/miscellaneous.js"></script>
