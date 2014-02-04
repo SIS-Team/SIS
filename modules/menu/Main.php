@@ -21,7 +21,7 @@
 	function generateMenu() {
 		global $back, $headerText, $buttons, $name;
 ?>
-<!DOCTYPE html>
+<!DOCTYPE xhtml>
 <html>
 	<head>
 		<link rel="stylesheet" href="<?php echo RELATIVE_ROOT; ?>/data/styles/menu.css" />
@@ -44,7 +44,7 @@
 					</a>
 				</div>
 				<div id="userInfo" class="link">
-					<?php echo $name; ?><span> | </span><a href="<?php echo RELATIVE_ROOT; ?>/logout/">Logout<a>
+					<?php echo $name; ?><span> | </span><a href="<?php echo RELATIVE_ROOT; ?>/logout/">Logout</a>
 				</div>
 			</div>
 		</div>
@@ -63,6 +63,7 @@
 						<?php include(BASE_LR); ?>
 						<?php include($buttons[2]['svg']); ?>
 						<div class="subtext">
+							
 							<a<?php echo ($buttons[2]['enabled'] ? "" : ' class="noLink"'); ?> href="<?php echo $buttons[2]['url']; ?>">
 								<?php echo $buttons[2]['text']; ?>
 							</a>
