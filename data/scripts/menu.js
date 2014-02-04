@@ -21,8 +21,13 @@ animation.open = function() {
 
 	if (animation.distance < animation.targetDistance)
 		window.setTimeout(animation.open, 10);
-	else
-		animation.block = false;
+	else {
+		animation.block = false;	
+		if (animation.after)
+			animation.after();
+		animation.after = false;
+		return;
+	}
 	animation.distance += 5;
 }
 
@@ -46,6 +51,9 @@ animation.close = function() {
 		animation.distance = 0;
 		move(0);
 		animation.block = false;
+		if (animation.after)
+			animation.after();
+		animation.after = false;
 		return;	
 	}
 
@@ -66,6 +74,12 @@ var closeLink = function() {
 }
 
 var openLink = function(link) {
+	if (animation.distance > 0) {
+		eval("var tmp = function() { openLink('" + link + "'); }");
+		animation.after = tmp;
+		animation.close();
+		return;
+	}
 	if (animation.block)
 		return;
 	animation.open();
