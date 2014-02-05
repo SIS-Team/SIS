@@ -39,8 +39,8 @@
 	$buttons[6]['enabled'] = false;
 	$buttons[6]['svg'] = ROOT_LOCATION . "/data/images/web-access/inputs.svg";	
 	$buttons[6]['text'] = "Eingaben";		
-	$buttons[6]['url'] = RELATIVE_ROOT . "/backend/";
-	$buttons[6]['jsurl'] = RELATIVE_ROOT . "/backend/?js";
+	$buttons[6]['url'] = RELATIVE_ROOT . "/backend/?noJS" . (isset($_GET['noMobile']) ? "&noMobile" : "");
+	$buttons[6]['jsurl'] = RELATIVE_ROOT . "/backend/?js");
 	
 	foreach ($_SESSION['rights'] as $value) {
 		if ($value)			

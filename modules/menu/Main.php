@@ -12,7 +12,7 @@
 		$buttons[$i] = array();
 		$buttons[$i]['displayed'] 	= false;
 		$buttons[$i]['enabled'] 	= false;
-		$buttons[$i]['svg'] 		= ROOT_LOCATION . "/data/images/base.svg";
+		$buttons[$i]['svg'] 		= ROOT_LOCATION . "/";
 		$buttons[$i]['text']		= "Button";
 		$buttons[$i]['url'] 		= RELATIVE_ROOT . "/";
 		$buttons[$i]['jsurl'] 		= RELATIVE_ROOT . "/";
