@@ -124,8 +124,8 @@ var updateContent = function(response) {
 	if (!response.changes) // keine änderungen
 		return;
 	
-	if (response.info)
-		document.getElementById("info").innerHTML = "SIS." + response.info;
+	if (response.modus)
+		document.getElementById("info").innerHTML = "SIS." + response.modus;
 
 	// Wenn nicht -> Hash updaten
 	monitorHash = response.hash;

@@ -32,6 +32,7 @@
 	$response['success'] = true;
 	$response['content'] = "";
 	$response['media'] = array();
+	$response['modus'] = "";
 	
 	$response['changes'] = true;
 	
@@ -51,6 +52,7 @@
 		break;
 		
 	case "Stundenplan":
+		$response['modus'] = "Stundenplan";
 		$sql = "SELECT 
 		`su`.`short` AS `suShort`,
 		`sH`.`weekdayShort` AS `weekday`,
