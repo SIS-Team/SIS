@@ -16,6 +16,11 @@
 	include_once(ROOT_LOCATION . "/modules/general/Main.php");
 	include_once(ROOT_LOCATION . "/modules/monitors/Main.php");
 
+	if (!$_SESSION['loggedIn'])
+		exit();
+	if (!($_SESSION['rights']['root'] || $_SESSION['rights']['N'] || $_SESSION['rights']['W'] || $_SESSION['rights']['E'] || $_SESSION['rights']['M']))
+		exit();
+
 	// Wenn das Fomular abgeschickt wird
 	if (isset($_POST['sent'])) {
 		/*print_r($_POST);
