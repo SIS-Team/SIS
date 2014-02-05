@@ -10,41 +10,57 @@
 	}
 		
 	$back = RELATIVE_ROOT . "/";
-	$headerText = "SIS.Inputs";
+	$headerText = "SIS.Data Inputs";
 	$name = $_SESSION['name'];
 	
-	/*$buttons[1]['displayed'] = true;
-	$buttons[1]['enabled'] = true;
-	$buttons[1]['svg'] = ROOT_LOCATION . "/data/images/web-access/timetable.svg";
-	$buttons[1]['text'] = "Stundenplan";
-	$buttons[1]['url'] = RELATIVE_ROOT . "/timetables/";
-	$buttons[1]['jsurl'] = RELATIVE_ROOT . "/timetables/?js";
+	$buttons[1]['displayed'] = true;
+	$buttons[1]['enabled'] = $_SESSION['rights']['root'] || $_SESSION['rights']['N'] || $_SESSION['rights']['W'] || $_SESSION['rights']['E'] || $_SESSION['rights']['M'];
+	$buttons[1]['svg'] = ROOT_LOCATION . "/data/images/data-input/monitors.svg";
+	$buttons[1]['text'] = "Monitore verwalten";
+	$buttons[1]['url'] = RELATIVE_ROOT . "/backend/monitors/";
+	$buttons[1]['jsurl'] = RELATIVE_ROOT . "/backend/monitors/?js";
 
 	$buttons[2]['displayed'] = true;
-	$buttons[2]['enabled'] = true;
-	$buttons[2]['svg'] = ROOT_LOCATION . "/data/images/web-access/substitudes.svg";
-	$buttons[2]['text'] = "Supplierplan";
-	$buttons[2]['url'] = RELATIVE_ROOT . "/substitudes/";
-	$buttons[2]['jsurl'] = RELATIVE_ROOT . "/substitudes/?js";
+	$buttons[2]['enabled'] = $_SESSION['rights']['root'] || $_SESSION['rights']['N'] || $_SESSION['rights']['W'] || $_SESSION['rights']['E'] || $_SESSION['rights']['M'];
+	$buttons[2]['svg'] = ROOT_LOCATION . "/data/images/data-input/absentees.svg";
+	$buttons[2]['text'] = "Fehlende eintragen";
+	$buttons[2]['url'] = RELATIVE_ROOT . "/backend/missing/";
+	$buttons[2]['jsurl'] = RELATIVE_ROOT . "/backend/missing/?js";
+
+	$buttons[3]['displayed'] = true;
+	$buttons[3]['enabled'] = $buttons[2]['enabled'];
+	$buttons[3]['svg'] = ROOT_LOCATION . "/data/images/data-input/substitudes.svg";
+	$buttons[3]['text'] = "Supplierung anlegen";
+
+	$add = "";
+	if (!$_SESSION['rights']['root'])
+		$add .= "form/";
+
+	if ($_SESSION['rights']['N'])
+		$add .= "?section=N";
+	else if ($_SESSION['rights']['W'])
+		$add .= "?section=W";
+	else if ($_SESSION['rights']['M'])
+		$add .= "?section=N";
+	else if ($_SESSION['rights']['E'])
+		$add .= "?section=E";
+
+	$buttons[3]['url'] = RELATIVE_ROOT . "/backend/substitudes/" . $add;
+	$buttons[3]['jsurl'] = RELATIVE_ROOT . "/backend/substitudes/" . $add . (empty($add) ? "?" : "&") . "js";
 
 	$buttons[5]['displayed'] = true;
-	$buttons[5]['enabled'] = true;
-	$buttons[5]['svg'] = ROOT_LOCATION . "/data/images/web-access/news.svg";
-	$buttons[5]['text'] = "News";
-	$buttons[5]['url'] = RELATIVE_ROOT . "/news/";
-	$buttons[5]['jsurl'] = RELATIVE_ROOT . "/news/?js";
+	$buttons[5]['enabled'] = $_SESSION['rights']['root'] || $_SESSION['rights']['N'] || $_SESSION['rights']['W'] || $_SESSION['rights']['E'] || $_SESSION['rights']['M'] || $_SESSION['rights']['news'];
+	$buttons[5]['svg'] = ROOT_LOCATION . "/data/images/data-input/news.svg";
+	$buttons[5]['text'] = "News hinzufügen";
+	$buttons[5]['url'] = RELATIVE_ROOT . "/backend/news/";
+	$buttons[5]['jsurl'] = RELATIVE_ROOT . "/backend/news/?js";
 	
 	$buttons[6]['displayed'] = true;	
-	$buttons[6]['enabled'] = false;
-	$buttons[6]['svg'] = ROOT_LOCATION . "/data/images/web-access/inputs.svg";	
-	$buttons[6]['text'] = "Eingaben";		
-	$buttons[6]['url'] = RELATIVE_ROOT . "/backend/";
-	$buttons[6]['jsurl'] = RELATIVE_ROOT . "/backend/?js";
-	
-	foreach ($_SESSION['rights'] as $value) {
-		if ($value)			
-			$buttons[6]['enabled'] = true;
-	}*/
+	$buttons[6]['enabled'] = $_SESSION['rights']['root'];
+	$buttons[6]['svg'] = ROOT_LOCATION . "/data/images/data-input/administration.svg";	
+	$buttons[6]['text'] = "Administration";		
+	$buttons[6]['url'] = RELATIVE_ROOT . "/backend/administration/";
+	$buttons[6]['jsurl'] = RELATIVE_ROOT . "/backend/administration/?js";
 
 	generateMenu();
 
