@@ -118,7 +118,7 @@ Zuständig für:<br />
 
 <h3>Sonstige Mitarbeiter</h3>
 
-Philipp MACHAĈ<br />
+Philipp MACHAC<br />
 Zuständig für:<br />
 <ul>
 	<li>
