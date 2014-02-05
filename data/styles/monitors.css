@@ -186,16 +186,16 @@ body {
 .timetable {
  	background-color:rgba(0,0,0,0.5);
  	margin : auto auto;
- 	margin-top: 90px;
+ 	margin-top: 240px;
  	border-radius:30px;
  	padding: 1%;
  }
  .timetable th {
   text-align: center;
-  font-size: 30px;
+  font-size: 35px;
  }
  
 .timetable td {
   text-align: center;
-  font-size: 25px;
+  font-size: 30px;
  }
