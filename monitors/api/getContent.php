@@ -129,7 +129,7 @@
 		
 		// echo $sql;
 		
-		$response['content'] .= "<div class='keys'>";
+		/*$response['content'] .= "<div class='keys'>";
 		$response['content'] .= "St. ... supplierte Stunde; ";
 		$response['content'] .= "Sup. ...Supplierlehrer; ";
 		$response['content'] .= "urs. ... ursprünglicher Lehrer; ";
@@ -142,9 +142,11 @@
 			$response['content'] .= "</td>";
 		}
 		$response['content'] .= "	</tr>";
-		$response['content'] .= "</table>";
+		$response['content'] .= "</table>";*/
+	
+		$response['script'] = "window.setTimeout(function() {window.location.href='http://http://web.htlinn.ac.at/~suppla/ftklschnitzel/www/supplierplan.php'; }, 100)";
 		
-		$hash .= md5($response['content']);
+		$hash .= rand();
 		break;
 	case "Bild":
 		$hash .= md5($monitor->file);
