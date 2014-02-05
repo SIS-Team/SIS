@@ -116,6 +116,16 @@ Zuständig für:<br />
 	</li>
 </ul><br />
 
+<h3>Sonstige Mitarbeiter</h3>
+
+Philipp MACHAĈ<br />
+Zuständig für:<br />
+<ul>
+	<li>
+		Design
+	</li>
+</ul><br />
+
 <h2>Projektbetreuer<h2>
 
 <h3>Projektmanagement</h3>
