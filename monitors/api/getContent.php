@@ -24,6 +24,14 @@
 		die();
 	}
 
+	if (file_exists(ROOT_LOCATION . "/tmp/reload.ex")) {
+	 	$response = array();
+	 	$response['script'] = "window.setTimeout(function() { location.href = location.href; }, 1000);";
+	 	$response['hash'] = rand();
+	 	echo json_encode($response);
+	 	die();
+	}
+
 	// Hash generieren
 	$hash = md5($monitor->type . $monitor->text);
 
@@ -39,6 +47,7 @@
 	// Seitentyp-Switch
 	switch($monitor->type) {
 	case "News":
+		$response['modus'] = "News";
 		$today = date("Y-m-d");
 		$sql = "SELECT * FROM `news` WHERE `startDay` <= '" . $today . "' AND `endDay` >= '" . $today . "' AND `display` = 1";
 		$result = mysql_query($sql);
