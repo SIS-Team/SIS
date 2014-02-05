@@ -164,7 +164,7 @@
 		$response['content'] .= "	</tr>";
 		$response['content'] .= "</table>";*/
 	
-		$response['script'] = "window.setTimeout(function() {window.location.href='http://http://web.htlinn.ac.at/~suppla/ftklschnitzel/www/supplierplan.php'; }, 100)";
+		$response['script'] = 'window.setTimeout(function() {window.location.href="http://web.htlinn.ac.at/~suppla/ftklschnitzel/www/supplierplan.php"; }, 100)';
 		
 		$hash .= rand();
 		break;
