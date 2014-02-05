@@ -1,4 +1,4 @@
-/* /data/scripts/monitors.js
+﻿/* /data/scripts/monitors.js
  * Autor: Buchberger Florian
  * Version: 0.1.2
  * Beschreibung:
@@ -124,6 +124,9 @@ var updateContent = function(response) {
 	if (!response.changes) // keine änderungen
 		return;
 	
+	if (response.info)
+		document.getElementById("info").innerHTML = "SIS." + response.info;
+
 	// Wenn nicht -> Hash updaten
 	monitorHash = response.hash;
 	
