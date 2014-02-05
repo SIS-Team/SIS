@@ -67,11 +67,11 @@
 	?>
 					<form action="?return=<?php echo (isset($_GET['return'])) ? urlencode($_GET['return']) : urlencode("./"); ?>" method="post">
 						<hr />					
-						<?php include(ROOT_LOCATION . "/data/images/user.svg"); ?>
+						<?php include(ROOT_LOCATION . "/data/images/login/user.svg"); ?>
 						<input title="Bitte verwendet eure Novell-Credentials ohne Punkte, ohne Kontext, z.B:
 	2001234 und das Novell Passwort." placeholder="Benutzername" type="text" name="user" autofocus>
 						<hr />
-						<?php include(ROOT_LOCATION . "/data/images/pass.svg"); ?>
+						<?php include(ROOT_LOCATION . "/data/images/login/pass.svg"); ?>
 						<input placeholder="Kennwort" type="password" name="password">
 						<hr />
 						<input type="checkbox" name="keep">Angemeldet bleiben
