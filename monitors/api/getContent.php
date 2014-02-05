@@ -55,46 +55,55 @@
 		`su`.`short` AS `suShort`,
 		`sH`.`weekdayShort` AS `weekday`,
 		`sH`.`hour` AS `startHour`,
-		`eH`.`hour` AS `endHour`
+		`eH`.`hour` AS `endHour`,
+		`t`.`short` AS `teShort`,
+		`c`.`name` AS `className`
 		FROM `lessons` AS `l`
 		INNER JOIN `rooms` AS `r` ON `l`.`roomFK`=`r`.`ID`
 		INNER JOIN `subjects` AS `su` ON `l`.`subjectFK` = `su`.`ID`
 		INNER JOIN `lessonsBase` AS `lb` ON `l`.`lessonBaseFK` = `lb`.`ID`
 		INNER JOIN `hours` AS `sH` ON `lb`.`startHourFK` = `sH`.`ID`
 		INNER JOIN `hours` AS `eH` ON `lb`.`endHourFK` = `eH`.`ID`
+		INNER JOIN `teachers` AS `t` ON `l`.`teachersFK` = `t`.`ID`
+		INNER JOIN `classes` AS `c` ON `lb`.`classFK` = `c`.`ID`
 		WHERE `r`.`name` = '". $monitor->room."'";
 		$result = mysql_query($sql);
 		$response['content'] .= "<table border=1 >";
 		$response['content'] .= "<tr><th>" . "Stunde" . "</th>";
-		$response['content'] .= "<th>" . "Montag" . "</th>";
-		$response['content'] .= "<th>" . "Dienstag" . "</th>";
-		$response['content'] .= "<th>" . "Mittwoch" . "</th>";
-		$response['content'] .= "<th>" . "Donnerstag" . "</th>";
-		$response['content'] .= "<th>" . "Freitag" . "</th></tr>";
+		$response['content'] .= "<th colspan =2>" . "Montag" . "</th>";
+		$response['content'] .= "<th colspan =2>" . "Dienstag" . "</th>";
+		$response['content'] .= "<th colspan =2>" . "Mittwoch" . "</th>";
+		$response['content'] .= "<th colspan =2>" . "Donnerstag" . "</th>";
+		$response['content'] .= "<th colspan =2>" . "Freitag" . "</th></tr>";
 		while ($row = mysql_fetch_object($result)) {
 				$results[] = $row;
 		}
 		$lesson = array();
 		for($i=0;$i<count($results);$i++){
-			$lesson[$results[$i]->startHour][$results[$i]->weekday]=  $results[$i]->suShort;
+		 $index = $results[$i]->startHour;
+		 $day = $results[$i]->weekday;
+		 $lesson[$index][$day] =  array('suShort'=> $results[$i]->suShort,'endHour'=> $results[$i]->endHour,'startHour'=> $index,'teShort'=> $results[$i]->teShort,'className'=> $results[$i]->className);
 			
 		}
 		
 		$days=array(0=> "Mo",1=> "Di",2=> "Mi",3=>"Do",4=>"Fr");
-		for($i = 1; $i<11 ;$i++){
+		for($i = 1; $i<12 ;$i++){
 		 	$response['content'] .= "<tr><td>".$i."</td>";
 			for($j=0;$j<5;$j++){
 			 if(isset($lesson[$i][$days[$j]])){
-				$response['content'] .= "<td>". $lesson[$i][$days[$j]] ."</td>";	
+				$response['content'] .= "<td>". $lesson[$i][$days[$j]]['suShort'] ."</td>";	
+				$response['content'] .= "<td>". $lesson[$i][$days[$j]]['className'] ."</td>";
+				if($lesson[$i][$days[$j]]['endHour']> $i){
+				   $lesson[$i+1][$days[$j]] = $lesson[$i][$days[$j]];
+				}
+				
 			 }
-			else $response['content'] .= "<td> &#160; </td>";
+			else $response['content'] .= "<td> &#160; </td><td> &#160; </td>";
 			}
 			$response['content'] .= "</tr>";
 		}
 	
 		$response['content'] .= "</table>";
-//	for($i=0;$i =< 1 ;$i++) {$response['content'] .= "°-°";}
-		$response['content'] .= "^-^";
 		
 		
 		$hash .= md5($response['content']);
