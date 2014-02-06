@@ -61,6 +61,41 @@
 		break;
 		
 	case "Stundenplan":
+	//Supplierplan wegen Entwicklung hier	
+	/*	$response['modus'] = "Supplierplan";
+		$response['content'] = "Wegen eines Tests des Supplierplans wird hier nicht der Stundenplan angezeigt";
+		$sql = "SELECT 
+		`su`.`short` AS suShort,
+		`c`.`name` AS className,
+		`s`.`time`
+		FROM `substitudes` AS `s`
+		INNER JOIN `subjects` AS `su` ON `s`.`subjectFK` = `su`.`ID`
+		INNER JOIN `lessons` AS `l` ON `s`.`lessonFK` = `l`.`ID`
+		INNER JOIN `lessonsBase` AS `lb` ON `l`.`lessonBaseFK` = `lb`.`ID`
+		INNER JOIN `classes` AS `c` ON `lb`.`classFK` = `c`.`ID`
+			WHERE `s`.`time` >= '" . date("Y.m.d")."'";
+		$result = mysql_query($sql);
+		
+		while ($row = mysql_fetch_object($result)) {
+			$results[] = $row;
+		}		
+		
+		$response['content'] .= "<table>"; 
+		$response['content'] .= "<tr><th>Klasse</th><th>Fach</th></tr>";
+		if(isset($results)){
+			for ($i = 0; $i<count($results);$i++){
+			 	$response['content'] .= "<tr>";
+				$response['content'] .= "<td> ". $results[$i]->className ."</td>";
+				$response['content'] .= "<td> ". $results[$i]->suShort ."</td>";
+				$response['content'] .= "</tr>";
+			}
+		}
+		$response['content'] .= "</table>";
+		
+		$hash .= md5($response['content']);
+		break; */
+		
+		
 		$response['modus'] = "Stundenplan";
 		$sql = "SELECT 
 		`su`.`short` AS `suShort`,
