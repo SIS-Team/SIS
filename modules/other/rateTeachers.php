@@ -14,6 +14,19 @@
 	 * < 100 -> nicht perfekt, aber möglich
 	 * > 100 -> ziemlich gut
 	 *
+	 * Berücksichtigt:
+	 *	- Lehrer fehlt
+	 *		: * 0
+	 *	- Lehrer unterrichtet zur selben Zeit die selbe Klasse im selben Fach
+	 *		: * 3
+	 *	- Lehrer unterrichtet zur selben zeit eine andere Klasse
+	 *		: * 0.1
+	 *	- Lehrer hat keine Stunde am selben Tag
+	 *		: * 0.5
+	 *	
+	 * TODO:
+	 *	- Lehrer hat keine Mittagspause
+	 *		: * 0.5
 	 */
 
 	function rateTeachers ($teacherId, $classId, $subjectId, $startHour, $endHour) {
@@ -45,12 +58,22 @@
 				AND lessons.teacherFK=" . $teacherId;
 		$result3 = mysql_query($sql);
 
+		$sql = "SELECT * FROM lessons
+				INNER JOIN lessonsBase ON lessons.lessonsBaseFK=lessonsBase.ID
+				INNER JOIN hours ON lessonsBase.startHourFK=hours.ID
+			WHERE lessons.teacherFK=" . $teacherId . "
+				AND hours.weekdayShort=(SELECT weekdayShort FROM hours WEHERE ID=" . $startHour . ")";
+		$result4 = mysql_query($sql);
+
+
 		if (mysql_num_rows($result1))
 			$base *= 0;
 		if (mysql_num_rows($result2))
 			$base *= 3;
 		if (mysql_num_rows($result3))
 			$base *= 0.1;
+		if (!mysql_num_rows($result3))
+			$base *= 0.5;
 
 		// TODO
 
