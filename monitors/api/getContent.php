@@ -67,31 +67,35 @@
 		$sql = "SELECT 
 		`su`.`short` AS suShort,
 		`c`.`name` AS className,
-		`s`.`time`
+		`s`.`time`,
+		`s`.`comment`
 		FROM `substitudes` AS `s`
 		INNER JOIN `subjects` AS `su` ON `s`.`subjectFK` = `su`.`ID`
 		INNER JOIN `lessons` AS `l` ON `s`.`lessonFK` = `l`.`ID`
 		INNER JOIN `lessonsBase` AS `lb` ON `l`.`lessonBaseFK` = `lb`.`ID`
 		INNER JOIN `classes` AS `c` ON `lb`.`classFK` = `c`.`ID`
-			WHERE `s`.`time` >= '" . date("Y.m.d")."'";
+		WHERE `s`.`time` >= '" . date("Y.m.d")."'";
 		$result = mysql_query($sql);
 		
 		while ($row = mysql_fetch_object($result)) {
 			$results[] = $row;
 		}		
-		
-		$response['content'] .= "<table>"; 
-		$response['content'] .= "<tr><th>Klasse</th><th>Fach</th></tr>";
-		if(isset($results)){
-			for ($i = 0; $i<count($results);$i++){
-			 	$response['content'] .= "<tr>";
-				$response['content'] .= "<td> ". $results[$i]->className ."</td>";
-				$response['content'] .= "<td> ". $results[$i]->suShort ."</td>";
-				$response['content'] .= "</tr>";
+		for($j = 0; $j<3;$j++){
+			$response['content'] .= "<div id='t".$j."'>";
+			$response['content'] .= "Supplierungen vom ". date("d.M",time() + 24*60*60*$j);
+			$response['content'] .= "<table>"; 
+			$response['content'] .= "<tr><th>Klasse</th><th>Fach</th></tr>";
+			if(isset($results)){
+				for ($i = 0; $i<count($results);$i++){
+				 	$response['content'] .= "<tr>";
+					$response['content'] .= "<td> ". $results[$i]->className ."</td>";
+					$response['content'] .= "<td> ". $results[$i]->suShort ."</td>";
+					$response['content'] .= "<td> ". $results[$i]->comment ."</td>";
+					$response['content'] .= "</tr>";
+				}
 			}
-		}
-		$response['content'] .= "</table>";
-		
+			$response['content'] .= "</table></div>";
+		}	
 		$hash .= md5($response['content']);
 		break; */
 		
