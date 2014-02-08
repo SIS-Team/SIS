@@ -43,7 +43,25 @@
 	$response['modus'] = "";
 	
 	$response['changes'] = true;
-	
+
+	if ($monitor->type == "Supplierplan & News") {
+		if (!isset($_GET['submode']) || ($_GET['submode'] == "0")) {
+			$monitor->type = "Supplierplan";
+			$response['submode'] = 0;
+		} else {
+			$monitor->type = "News";
+			$response['submode'] = 1;
+		}
+		if (!isset($_GET['submodeChange'])) {
+			$response['submodeChange'] = time();
+		} else {
+			if (intval($_GET['submodeChange']) > time() - 5) {
+				$response['submodeChange'] = time();
+				$response['submode'] = !$response['submode'];
+			}
+		}
+	}
+
 	// Seitentyp-Switch
 	switch($monitor->type) {
 	case "News":
