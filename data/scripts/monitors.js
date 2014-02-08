@@ -16,6 +16,9 @@ var monitorName = "";
 // enthält aktuellen hash des monitors
 var monitorHash = "";
 
+var submode = undefined;
+var submodeChange = undefined;
+
 // wenn die seite läd
 var main = function() {
 	// lese monitor name und schreibe globale variable
@@ -91,15 +94,10 @@ var drawHand = function(context, angle, length) {
 	context.restore();
 }
 
-// registriert monitor
-var register = function() {
-	// TODO
-}
-
 // läd Seiteninhalt
 var loadContent = function () {
 	// sendet aktuellen Monitor-Hash zum Server
-	reqGet("api/getContent.php", "name=" + monitorName + "&hash=" + monitorHash, true, updateContent);
+	reqGet("api/getContent.php", "name=" + monitorName + "&hash=" + monitorHash + (submode ? ("&submode=" + submode) : "") . (submodeChange ? ("&submodeChange=" + submodeChange)), true, updateContent);
 }
 
 // aktualisiert den Seiteninhalt
@@ -126,6 +124,9 @@ var updateContent = function(response) {
 	
 	if (response.modus)
 		document.getElementById("info").innerHTML = "SIS." + response.modus;
+
+	monitorSubmode = response.submode;
+	monitorSubmodeChange = response.submodeChange;
 
 	// Wenn nicht -> Hash updaten
 	monitorHash = response.hash;
