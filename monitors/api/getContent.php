@@ -86,15 +86,19 @@
 		`su`.`short` AS suShort,
 		`c`.`name` AS className,
 		`s`.`time`,
-		`s`.`comment`
+		`s`.`comment`,
+ 		`sH`.`hour` AS `startHour`,
+ 		`nsH`.`hour` AS `newStartHour`
 		FROM `substitudes` AS `s`
 		INNER JOIN `subjects` AS `su` ON `s`.`subjectFK` = `su`.`ID`
 		INNER JOIN `lessons` AS `l` ON `s`.`lessonFK` = `l`.`ID`
 		INNER JOIN `lessonsBase` AS `lb` ON `l`.`lessonBaseFK` = `lb`.`ID`
 		INNER JOIN `classes` AS `c` ON `lb`.`classFK` = `c`.`ID`
+		INNER JOIN `hours` AS `sH` ON `lb`.`startHourFK` = `sH`.`ID`
+		INNER JOIN `hours` AS `nsH` ON `s`.`startHourFK` = `nsH`.`ID` 
 		WHERE `s`.`time` >= '" . date("Y.m.d")."'";
 		$result = mysql_query($sql);
-		
+		//Fehler bei LEFT JOIN `hours` AS `nsH` ON `s`.`startHourFK` = `nsH`.`ID`
 		while ($row = mysql_fetch_object($result)) {
 			$results[] = $row;
 		}		
@@ -102,11 +106,13 @@
 			$response['content'] .= "<div id='t".$j."'>";
 			$response['content'] .= "Supplierungen vom ". date("d.M",time() + 24*60*60*$j);
 			$response['content'] .= "<table>"; 
-			$response['content'] .= "<tr><th>Klasse</th><th>Fach</th></tr>";
+			$response['content'] .= "<tr><th>Klasse</th><th>Stunde</th><th>Fach</th><th>Kommentar</th></tr>";
 			if(isset($results)){
 				for ($i = 0; $i<count($results);$i++){
 				 	$response['content'] .= "<tr>";
 					$response['content'] .= "<td> ". $results[$i]->className ."</td>";
+					if(empty($results[$i]->newStartHour)){ $response['content'] .= "<td> ". $results[$i]->startHour ."</td>";}
+					else {$response['content'] .= "<td> ". $results[$i]->newStartHour ."</td>";}
 					$response['content'] .= "<td> ". $results[$i]->suShort ."</td>";
 					$response['content'] .= "<td> ". $results[$i]->comment ."</td>";
 					$response['content'] .= "</tr>";
@@ -175,7 +181,7 @@
 		
 		
 		$hash .= md5($response['content']);
-		break;
+		break; 
 		
 	case "Supplierplan":
 		$sql = "SELECT 
