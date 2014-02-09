@@ -97,7 +97,7 @@ var drawHand = function(context, angle, length) {
 // läd Seiteninhalt
 var loadContent = function () {
 	// sendet aktuellen Monitor-Hash zum Server
-	reqGet("api/getContent.php", "name=" + monitorName + "&hash=" + monitorHash + (submode ? ("&submode=" + submode) : "") . (submodeChange ? ("&submodeChange=" + submodeChange)), true, updateContent);
+	reqGet("api/getContent.php", "name=" + monitorName + "&hash=" + monitorHash + (submode ? ("&submode=" + submode) : "") + (submodeChange ? ("&submodeChange=" + submodeChange) : ""), true, updateContent);
 }
 
 // aktualisiert den Seiteninhalt
