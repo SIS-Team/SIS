@@ -8,8 +8,8 @@
 	 * Changelog:
 	 * 	1.0.0:  26. 08. 2013, Handle Marco - Selects für die Dropdownmenüs fertiggestellt
 	 */
-	
-include($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Connect.php");			//Bindet die Datenbank ein
+include("../../../config.php");
+include(ROOT_LOCATION . "/modules/general/Connect.php");			//Bindet die Datenbank ein
 
 
 //Section
