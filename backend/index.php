@@ -24,8 +24,8 @@
 	$buttons[2]['enabled'] = $_SESSION['rights']['root'] || $_SESSION['rights']['N'] || $_SESSION['rights']['W'] || $_SESSION['rights']['E'] || $_SESSION['rights']['M'];
 	$buttons[2]['svg'] = ROOT_LOCATION . "/data/images/data-input/absentees.svg";
 	$buttons[2]['text'] = "Fehlende eintragen";
-	$buttons[2]['url'] = RELATIVE_ROOT . "/backend/missing/?noJS" . (isset($_GET['noMobile']) ? "&noMobile" : "");
-	$buttons[2]['jsurl'] = RELATIVE_ROOT . "/backend/missing/?js";
+	$buttons[2]['url'] = RELATIVE_ROOT . "/backend/absentees/?noJS" . (isset($_GET['noMobile']) ? "&noMobile" : "");
+	$buttons[2]['jsurl'] = RELATIVE_ROOT . "/backend/absentees/?js";
 
 	$buttons[3]['displayed'] = true;
 	$buttons[3]['enabled'] = $buttons[2]['enabled'];

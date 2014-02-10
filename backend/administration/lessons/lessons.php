@@ -142,7 +142,7 @@ else if(empty($_POST['day']))
 
 
 
-include("../../config.php");
+include("../../../config.php");
 include_once(ROOT_LOCATION . "/modules/form/form.php");					//Stell die Formularmasken zur Verfügung
 include_once(ROOT_LOCATION . "/modules/form/dropdownSelects.php");		//Stellt die Listen für die Dropdownmenüs zur Verfügung
 include_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Design zur Verfügung

@@ -10,7 +10,7 @@
 	 * 	0.1.0:  22. 07. 2013, Handle Marco - erste Version
 	 */
 
-include("../../config.php");
+include("../../../config.php");
 
 include_once(ROOT_LOCATION . "/modules/form/form.php");					//Stell die Formularmasken zur Verfügung
 include_once(ROOT_LOCATION . "/modules/form/dropdownSelects.php");		//Stellt die Listen für die Dropdownmenüs zur Verfügung
