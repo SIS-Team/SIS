@@ -80,7 +80,7 @@
 		
 	case "Stundenplan":
 	//Supplierplan wegen Entwicklung hier	
-	/*	$response['modus'] = "Supplierplan";
+		$response['modus'] = "Supplierplan";
 		$response['content'] = "Wegen eines Tests des Supplierplans wird hier nicht der Stundenplan angezeigt";
 		$sql = "SELECT 
 		`su`.`short` AS suShort,
@@ -88,42 +88,58 @@
 		`s`.`time`,
 		`s`.`comment`,
  		`sH`.`hour` AS `startHour`,
- 		`nsH`.`hour` AS `newStartHour`
+ 		`nsH`.`hour` AS `newStartHour`,
+ 		`t`.`display` AS `newTeacher`
 		FROM `substitudes` AS `s`
 		INNER JOIN `subjects` AS `su` ON `s`.`subjectFK` = `su`.`ID`
 		INNER JOIN `lessons` AS `l` ON `s`.`lessonFK` = `l`.`ID`
 		INNER JOIN `lessonsBase` AS `lb` ON `l`.`lessonBaseFK` = `lb`.`ID`
 		INNER JOIN `classes` AS `c` ON `lb`.`classFK` = `c`.`ID`
 		INNER JOIN `hours` AS `sH` ON `lb`.`startHourFK` = `sH`.`ID`
-		INNER JOIN `hours` AS `nsH` ON `s`.`startHourFK` = `nsH`.`ID` 
+		LEFT JOIN `hours` AS `nsH` ON `s`.`startHourFK` = `nsH`.`ID`
+		LEFT JOIN `teachers` AS `t` ON `s`.`teacherFK` = `t`.`ID`
 		WHERE `s`.`time` >= '" . date("Y.m.d")."'";
 		$result = mysql_query($sql);
-		//Fehler bei LEFT JOIN `hours` AS `nsH` ON `s`.`startHourFK` = `nsH`.`ID`
 		while ($row = mysql_fetch_object($result)) {
 			$results[] = $row;
-		}		
-		for($j = 0; $j<3;$j++){
-			$response['content'] .= "<div id='t".$j."'>";
-			$response['content'] .= "Supplierungen vom ". date("d.M",time() + 24*60*60*$j);
-			$response['content'] .= "<table>"; 
-			$response['content'] .= "<tr><th>Klasse</th><th>Stunde</th><th>Fach</th><th>Kommentar</th></tr>";
-			if(isset($results)){
-				for ($i = 0; $i<count($results);$i++){
-				 	$response['content'] .= "<tr>";
-					$response['content'] .= "<td> ". $results[$i]->className ."</td>";
-					if(empty($results[$i]->newStartHour)){ $response['content'] .= "<td> ". $results[$i]->startHour ."</td>";}
-					else {$response['content'] .= "<td> ". $results[$i]->newStartHour ."</td>";}
-					$response['content'] .= "<td> ". $results[$i]->suShort ."</td>";
-					$response['content'] .= "<td> ". $results[$i]->comment ."</td>";
-					$response['content'] .= "</tr>";
-				}
-			}
-			$response['content'] .= "</table></div>";
 		}	
+		$day_counter = 0;
+		for($j = 0; $j<3;$j++){
+		 	if(date("w", time() + 24 * 60 * 60 * $day_counter)==0) $day_counter++;
+			if(date("w", time() + 24 * 60 * 60 * $day_counter)==6) $day_counter+=2;
+			$response['content'] .= "<div id='t".$j."'>";
+			$response['content'] .= "Supplierungen vom ". date("d.M",time() + 24*60*60*$day_counter);
+			$response['content'] .= "<table border = 1>"; 
+			$response['content'] .= "<tr><th>Klasse</th><th>Std.</th><th>Suppl. durch</th><th>Fach</th><th>Bemerkung</th></tr>";
+			$empty = 0;
+			if(isset($results)){
+				for ($i = 0; $i<count($results);$i++){ 
+				 	if($results[$i]->time == date("Y-m-d",time() + 24 * 60 * 60 * $day_counter)) {
+					 	$response['content'] .= "<tr>";
+						$response['content'] .= "<td> ". $results[$i]->className ."</td>";
+						if(empty($results[$i]->newStartHour)){ $response['content'] .= "<td> ". $results[$i]->startHour ."</td>";}
+						else {$response['content'] .= "<td> ". $results[$i]->newStartHour ."</td>";} 
+						if(!empty($results[$i]->newTeacher)){ $response['content'] .= "<td> ". $results[$i]->newTeacher ."</td>";}
+						else {$response['content'] .= "<td> &#160;</td>";}
+						$response['content'] .= "<td> ". $results[$i]->suShort ."</td>";
+						$response['content'] .= "<td> ". $results[$i]->comment ."</td>";
+						$response['content'] .= "</tr>"; 
+						}
+					else $empty++;
+					
+				}
+				if($empty == count($results)) $response['content'] .= "<tr><th colspan = 5>F&uuml;r diesen Tag sind keine Supplierungen vorgesehen.</th></tr>" ;
+			
+			} 
+			else $response['content'] .= "<tr><th colspan = 5>F&uuml;r diesen Tag sind keine Supplierungen vorgesehen.</th></tr>";
+			$response['content'] .= "</table></div>";
+		$day_counter++;
+		}	
+		
 		$hash .= md5($response['content']);
-		break; */
+		break; 
 		
-		
+		/*
 		$response['modus'] = "Stundenplan";
 		$sql = "SELECT 
 		`su`.`short` AS `suShort`,
@@ -181,7 +197,7 @@
 		
 		
 		$hash .= md5($response['content']);
-		break; 
+		break; */
 		
 	case "Supplierplan":
 		$sql = "SELECT 
