@@ -10,7 +10,6 @@
 	 *	0.1.1:	19. 09. 2013, Buchberger Florian - Cookie check
 	 * 	0.1.0:  22. 06. 2013, Buchberger Florian - erste Version
 	 */
-	include_once("/home/sis/config.php");
 	include_once(ROOT_LOCATION . "/modules/general/CheckCookies.php");
 	include_once(ROOT_LOCATION . "/modules/general/ForceHTTPS.php");
 	include_once(ROOT_LOCATION . "/modules/general/SessionManager.php");
