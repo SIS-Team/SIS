@@ -253,11 +253,11 @@
 		echo "		<td>" . htmlspecialchars($monitor->name) . "</td>";
 		echo "		<td>" . htmlspecialchars($monitor->text) . "</td>";
 		echo "		<td>" . htmlspecialchars($monitor->room) . "</td>";
-		echo "		<td>" . htmlspecialchars($monitor->section) . "</td>";
+		echo "		<td>" . htmlspecialchars($monitor->sectionShort) . "</td>";
 		echo "		<td>" . htmlspecialchars($monitor->type) . "</td>";
 		echo "		<td>" . htmlspecialchars($monitor->file) . "</td>";
 		echo "		<td>" . htmlspecialchars($monitor->ip)   . "</td>";
-		echo "		<td>" . date("c", $monitor->regTime) . "</td>";
+		echo "		<td>" . date("d. m. Y", $monitor->regTime) . "</td>";
 		echo "		<td>" . (($monitor->displayMode == "permanent Ein") ? "immer ein" : (($monitor->displayMode == "permanent Aus") ? "immer aus" : ("ein zwischen " . date("G:i:s", $monitor->startTime) . " und " . date("G:i:s", $monitor->endTime)))) . "</td>";
 		echo "	</tr>";
 	}
