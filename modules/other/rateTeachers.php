@@ -26,7 +26,12 @@
 	 *	
 	 * TODO:
 	 *	- Lehrer hat keine Mittagspause
+	 *		+ Wenn Stunde zwischen 10:50 und 13:20
+	 *		+ Wenn Anzahl der zuhaltenden Stunden des Lehrers an diesem Tag zwischen 
+	 *		  10:50 und 12:20 > 2
 	 *		: * 0.5
+	 *	- Lehrer suppliert bereits eine andere Klasse zu dieser Zeit
+	 *		: * 0.1
 	 */
 
 	function rateTeachers ($teacherId, $classId, $subjectId, $startHour, $endHour) {
@@ -76,6 +81,7 @@
 			$base *= 0.5;
 
 		// TODO
-
+		
+		return $base;
 	}
 ?>
