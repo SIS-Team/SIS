@@ -1,0 +1,53 @@
+function substitudes(){
+
+$post=$_POST;
+//print_r($post);
+unset($post["save"]);
+
+$data=array("ID" => "","move" => "","lessonFK" => "","subjectFK" => "","teacherFK" => "","time" => "","roomFK" => "","startHourFK" => "","endHourFK" => "","hidden" => "","sure" => "","comment" => "");
+
+$data["ID"]=$post["ID"];
+if(!empty($post["move"]))
+	$data["move"]=true;
+$day = weekday($post["time"]);
+
+if(empty($post["delete"])){
+	$lessonsID = findFK($post);
+
+	if($lessonsID != 0)
+		$data["lessonFK"]=$lessonsID;
+	else{
+		printf("<script type=\"text/javascript\">failAlert();</script>");
+	}
+}
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM subjects WHERE short LIKE '".$post["suShort"]."'"));
+$data["subjectFK"]=$temp["ID"];
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM teachers WHERE short='".$post["teShort"]."'"));
+$data["teacherFK"]=$temp["ID"];
+$data["time"]=$post["time"];
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM rooms WHERE name='".$post["roName"]."'"));
+$data["roomFK"]=$temp["ID"];
+if(!empty($post["move"])){
+	$temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".$post["newStartHour"]."'"));
+	$data["startHourFK"]=$temp["ID"];
+	$temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".$post["newEndHour"]."'"));
+	$data["endHourFK"]=$temp["ID"];
+}
+else{
+	$data["startHourFK"]="";
+	$data["endHourFK"]="";
+}
+
+
+if(!empty($post["hidden"]))
+	$data["hidden"]=true;
+if(!empty($post["sure"]))
+	$data["sure"]=true;
+	
+$data["comment"]=$post["comment"];
+
+if(empty($post["delete"]) && $lessonsID != 0)
+	saveupdate($data,"substitudes");
+else if(!empty($post["delete"]))
+	delete($data["ID"],"substitudes");
+}
