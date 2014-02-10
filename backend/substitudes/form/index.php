@@ -1,20 +1,3 @@
-<script type="text/javascript">
-
-//Funktion zum ein und ausblenden der neuen Stunden
-//id = Zeilennummer
-function Visibility(id) {
-
-	if(document.getElementById('visibleRow'+id).style.visibility=="visible")	//Wenn die Zeile sichtbar
-		document.getElementById('visibleRow'+id).style.visibility="collapse";	//Zeile unsichtbar
-	else																		//sonst
-		document.getElementById('visibleRow'+id).style.visibility="visible";	//sichtbar machen
-}
-
-function failAlert(){ 
-	alert("Es konnte keine Stunde für\ndiese Supplierung gefunden werden.\nBitte tragen sie diesen Lehrer\nals fehlend ein, oder\nkorrigieren sie die Eingabe.");
-}
-</script>
-
 <?php
 
 	/* /backend/substitude/index.php
@@ -36,8 +19,11 @@ include_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die se
 include_once(ROOT_LOCATION . "/modules/database/inserts.php");			//Stellt die insert-Befehle zur Verfügung
 include_once(ROOT_LOCATION . "/modules/other/dateChange.php");			//Stell die Funktion für die Datumsauswahl zur VerfÃ¼gung
 
+if (!($_SESSION['rights']['root'] || $_SESSION['rights']['N'] || $_SESSION['rights']['W'] || $_SESSION['rights']['E'] || $_SESSION['rights']['M']))
+	exit();
 
-if($_POST['save']!="")
+
+if(!empty($_POST['save']) && $_POST['save']!="")
 	substitudes();
 
 if (empty($_POST["date"]) && empty($_POST['time'])) {		//wenn nichts zurÃ¼ckgegeben wird, dann heute
@@ -78,6 +64,9 @@ generateAdminMenu();
 
 //Seitenheader
 pageHeader("Formular","main");
+
+printf("<script language=\"javascript\" type=\"text/javascript\" src=\"%s/data/scripts/substitudes.js\"></script>",RELATIVE_ROOT);
+
 
 $date = dateChange($date);		//Datumsauswahl erzeugen
 $fieldsRow1[5][5] = $date;	//Standartdatum ins Formular schreiben
