@@ -435,11 +435,11 @@ return $result["ID"];
 
 
 
-function control()
+function control($post,$select,$field)
 {
 
-if(1){
-	printf("<script> window.alert(' nicht gefunden!');</script> ");
+if($post != "" && $select == ""){
+	printf("<script> window.alert('%s nicht gefunden!');</script> ",$field);
 	return 0;
 }
 else
