@@ -80,7 +80,7 @@
 		
 	case "Stundenplan":
 	//Supplierplan wegen Entwicklung hier	
-		$response['modus'] = "Supplierplan";
+	/*	$response['modus'] = "Supplierplan";
 		$response['content'] = "Wegen eines Tests des Supplierplans wird hier nicht der Stundenplan angezeigt";
 		$sql = "SELECT 
 		`su`.`short` AS suShort,
@@ -137,9 +137,9 @@
 		}	
 		
 		$hash .= md5($response['content']);
-		break; 
+		break; */
 		
-		/*
+		
 		$response['modus'] = "Stundenplan";
 		$sql = "SELECT 
 		`su`.`short` AS `suShort`,
@@ -197,7 +197,7 @@
 		
 		
 		$hash .= md5($response['content']);
-		break; */
+		break; 
 		
 	case "Supplierplan":
 		$sql = "SELECT 
