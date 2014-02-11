@@ -9,7 +9,7 @@
 		exit();
 	}
 		
-	$back = RELATIVE_ROOT . "/";
+	$back = RELATIVE_ROOT . "/backend/";
 	$headerText = "SIS.Administration";
 	$name = $_SESSION['name'];
 	
