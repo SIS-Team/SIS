@@ -13,43 +13,49 @@ include(ROOT_LOCATION . "/modules/general/Connect.php");			//Bindet die Datenban
 
 
 //Section
-$temp =  mysql_query("SELECT short FROM sections");
-$selectSections = create($temp,"seShort");
-
-//Teacher
-$temp = mysql_query("SELECT short FROM teachers WHERE invisible = 'FALSE' ");
-$selectTeachers = create($temp,"teShort");
-
-//Rooms
-$temp = mysql_query("SELECT name FROM rooms");
-$selectRooms = create($temp,"roName");
-
-//Subjects
-$temp = mysql_query("SELECT short FROM subjects WHERE invisible = 'FALSE' ");
-$selectSubjects = create($temp,"suShort");
-
-//Classes
-$temp = mysql_query("SELECT name FROM classes WHERE invisible = 'FALSE' ");
-$selectClasses = create($temp,"clName");
-
-//Days
-$selectDays = array(
-	array("Mo", ""),
-	array("Di", ""),
-	array("Mi", ""),
-	array("Do", ""),
-	array("Fr", ""),
-	);
-	
-printf("<datalist id=\"day\">\n");
-							
-foreach($selectDays as $p)													//FÃƒÆ’Ã‚Â¯Ãƒâ€šÃ‚Â¿Ãƒâ€šÃ‚Â½r jeden MenÃƒÆ’Ã‚Â¯Ãƒâ€šÃ‚Â¿Ãƒâ€šÃ‚Â½eintrag im Array f einen Eintrag erstellen
-{
-	printf("<option value=\"%s\">\n", $p[0]);
+if(array_search("Sections",$dropDown)!==false){
+	$temp =  mysql_query("SELECT short FROM sections");
+	$selectSections = create($temp,"seShort");
 }
-
-printf("</datalist>\n\n");
-
+//Teacher
+if(array_search("Teachers",$dropDown)!==false){
+	$temp = mysql_query("SELECT short FROM teachers WHERE invisible = 'FALSE' ");
+	$selectTeachers = create($temp,"teShort");
+}
+//Rooms
+if(array_search("Rooms",$dropDown)!==false){
+	$temp = mysql_query("SELECT name FROM rooms");
+	$selectRooms = create($temp,"roName");
+}
+//Subjects
+if(array_search("Subjects",$dropDown)!==false){
+	$temp = mysql_query("SELECT short FROM subjects WHERE invisible = 'FALSE' ");
+	$selectSubjects = create($temp,"suShort");
+}
+//Classes
+if(array_search("Classes",$dropDown)!==false){
+	$temp = mysql_query("SELECT name FROM classes WHERE invisible = 'FALSE' ");
+	$selectClasses = create($temp,"clName");
+}
+//Days
+if(array_search("Days",$dropDown)!==false){
+	$selectDays = array(
+		array("Mo", ""),
+		array("Di", ""),
+		array("Mi", ""),
+		array("Do", ""),
+		array("Fr", ""),
+		);
+		
+	printf("<datalist id=\"day\">\n");
+								
+	foreach($selectDays as $p)													//FÃƒÆ’Ã‚Â¯Ãƒâ€šÃ‚Â¿Ãƒâ€šÃ‚Â½r jeden MenÃƒÆ’Ã‚Â¯Ãƒâ€šÃ‚Â¿Ãƒâ€šÃ‚Â½eintrag im Array f einen Eintrag erstellen
+	{
+		printf("<option value=\"%s\">\n", $p[0]);
+	}
+	
+	printf("</datalist>\n\n");
+}
 
 //Erstell aus den mysql querys die Arrays mit den Inhalten
 //$result ist der mysql_query
