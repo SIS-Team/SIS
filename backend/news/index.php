@@ -28,8 +28,7 @@ if(!($isNews or $isAdmin)) //Kontrolle wegen Berechtigungen
 if($_POST['save']!="") {
 	news($isAdmin);
 }
-include($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Menu.php");
-generateAdminMenu();
+
 
 pageHeader("Formular","main");
 
