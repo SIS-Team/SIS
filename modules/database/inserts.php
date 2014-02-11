@@ -21,7 +21,7 @@ unset($post["save"]);
 $data=array("ID" => "","name" => "","sectionFK" => "","teacherFK" => "","roomFK" => "","invisible" => "");
 
 $data["ID"]=$post["ID"];
-$data["name"]=$post["clName"];
+$data["name"]=htmlentities($post["clName"]);
 
 $temp = mysql_fetch_array(mysql_query("SELECT ID FROM sections WHERE short='".$post["seShort"]."'"));
 $ok1 = control($post["seShort"],$temp["ID"],"Abteilung");
@@ -93,7 +93,7 @@ $lessonsInsert["roomFK"] = $temp["ID"];
 $temp = mysql_fetch_array(mysql_query("SELECT ID FROM subjects WHERE short = '".$post["suShort"]."'"));
 $ok3 = control($post["suShort"],$temp["ID"],"Fach");
 $lessonsInsert["subjectFK"]=$temp["ID"];
-$lessonsInsert["comment"]=$post["comment"];
+$lessonsInsert["comment"]=htmlspecialchars($post["comment"]);
 //print_r($lessonsBaseInsert);
 //echo ",";
 //print_r($lessonsInsert);
@@ -146,7 +146,7 @@ $temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='
 $data["endHourFK"]=$temp["ID"];
 if(!empty($post["sure"]))
 	$data["sure"]=true;
-$data["reason"]=$post["reason"];
+$data["reason"]=htmlspecialchars($post["reason"]);
 
 if(empty($post["delete"]))
 	saveupdate($data,"missingClasses");
@@ -177,7 +177,7 @@ $temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='
 $data["endHourFK"]=$temp["ID"];
 if(!empty($post["sure"]))
 	$data["sure"]=true;
-$data["reason"]=$post["reason"];
+$data["reason"]=htmlspecialchars($post["reason"]);
 
 if(empty($post["delete"]))
 	saveupdate($data,"missingTeachers");
@@ -195,7 +195,7 @@ unset($post["save"]);
 $data=array("ID" => "","name" => "","teacherFK" => "");
 
 $data["ID"]=$post["ID"];
-$data["name"]=$post["roName"];
+$data["name"]=htmlspecialchars($post["roName"]);
 $temp = mysql_fetch_array(mysql_query("SELECT ID FROM teachers WHERE short='".$post["teShort"]."'"));
 $data["teacherFK"]=$temp["ID"];
 
@@ -213,7 +213,7 @@ unset($post["save"]);
 $data=array("ID" => "","name" => "","short" => "","teacherFK" => "");
 
 $data["ID"]=$post["ID"];
-$data["name"]=$post["seName"];
+$data["name"]=htmlspecialchars($post["seName"]);
 $data["short"]=$post["seShort"];
 $temp = mysql_fetch_array(mysql_query("SELECT ID FROM teachers WHERE short='".$post["teShort"]."'"));
 $data["teacherFK"]=$temp["ID"];
@@ -232,8 +232,8 @@ unset($post["save"]);
 $data=array("ID" => "","name" => "","short" => "","invisible" => "");
 
 $data["ID"]=$post["ID"];
-$data["name"]=$post["name"];
-$data["short"]=$post["short"];
+$data["name"]=htmlspecialchars($post["name"]);
+$data["short"]=htmlspecialchars($post["short"]);
 if(!empty($post["invisible"]))
 	$data["invisible"]=true;
 
@@ -263,7 +263,7 @@ $startHour=$temp["ID"];
 $temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".$post["endHour"]."'"));
 $endHour=$temp["ID"];
 $data["time"]=$post["time"];
-$data["comment"]=$post["comment"];
+$data["comment"]=htmlspecialchars($post["comment"]);
 if($post["hidden"]=="hidden")
 	$data["hidden"]=true;
 if($post["move"]=="move")
@@ -303,32 +303,19 @@ foreach($missTeacher as $i => $m){
 	
 }
 
-//print_r($data);
-
-/*
-if($post['move']=="move"){
-	$temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".$post["newStartHour"]."'"));
-	$data["newStartHourFK"]=$temp["ID"];
-	$temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".$post["newEndHour"]."'"));
-	$data["newEndHourFK"]=$temp["ID"];
-}
-*/
-
-
 }
 
 function teachers(){
 
 $post=$_POST;
-//print_r($post);
 unset($post["save"]);
 
 $data=array("ID" => "","name" => "","short" => "","display" => "","sectionFK" => "","invisible" => "");
 
 $data["ID"]=$post["ID"];
-$data["name"]=$post["teName"];
+$data["name"]=htmlspecialchars($post["teName"]);
 $data["short"]=$post["teShort"];
-$data["display"]=$post["display"];
+$data["display"]=htmlspecialchars($post["display"]);
 $temp = mysql_fetch_array(mysql_query("SELECT ID FROM sections WHERE short='".$post["seShort"]."'"));
 $data["sectionFK"] = $temp["ID"];
 if(!empty($post["invisible"]))
