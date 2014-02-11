@@ -17,15 +17,15 @@
 	$buttons[1]['enabled'] = $_SESSION['rights']['root'] || $_SESSION['rights']['N'] || $_SESSION['rights']['W'] || $_SESSION['rights']['E'] || $_SESSION['rights']['M'];
 	$buttons[1]['svg'] = ROOT_LOCATION . "/data/images/absentees/teachers.svg";
 	$buttons[1]['text'] = "Fehlende Lehrer";
-	$buttons[1]['url'] = RELATIVE_ROOT . "/backend/missing/teachers/";
-	$buttons[1]['jsurl'] = RELATIVE_ROOT . "/backend/missing/teachers/?js";
+	$buttons[1]['url'] = RELATIVE_ROOT . "/backend/absentees/teachers/";
+	$buttons[1]['jsurl'] = RELATIVE_ROOT . "/backend/absentees/teachers/?js";
 
 	$buttons[2]['displayed'] = true;
 	$buttons[2]['enabled'] = $_SESSION['rights']['root'] || $_SESSION['rights']['N'] || $_SESSION['rights']['W'] || $_SESSION['rights']['E'] || $_SESSION['rights']['M'];
 	$buttons[2]['svg'] = ROOT_LOCATION . "/data/images/absentees/classes.svg";
 	$buttons[2]['text'] = "Fehlende Klassen";
-	$buttons[2]['url'] = RELATIVE_ROOT . "/backend/missing/classes/";
-	$buttons[2]['jsurl'] = RELATIVE_ROOT . "/backend/missing/classes/?js";
+	$buttons[2]['url'] = RELATIVE_ROOT . "/backend/absentees/classes/";
+	$buttons[2]['jsurl'] = RELATIVE_ROOT . "/backend/absentees/classes/?js";
 
 	generateMenu();
 
