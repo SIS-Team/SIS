@@ -11,9 +11,8 @@
 	 */
 
 include_once("../../config.php");
-
-include_once(ROOT_LOCATION . "/modules/general/Main.php");
 include_once(ROOT_LOCATION . "/modules/form/form.php");					//Stell die Formularmasken zur Verfügung
+include_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
 include_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
 include_once(ROOT_LOCATION . "/modules/database/inserts.php");			//Stellt die insert-Befehle zur Verfügung
 
@@ -31,6 +30,8 @@ if($_POST['save']!="") {
 }
 include($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Menu.php");
 generateAdminMenu();
+
+pageHeader("Formular","main");
 
 //ID,title,text,startDay,endDay
 if($isAdmin) {
