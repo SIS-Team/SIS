@@ -9,7 +9,6 @@
 	 * Changelog:
 	 * 	0.1.0:  26. 08. 2013, Handle Marco - erste Version
 	 */
-include("../../../config.php");	 
 include(ROOT_LOCATION . "/modules/other/dateFunctions.php");					//Stell Datumfunktionen zur VerfÃ¼gung
 
 
