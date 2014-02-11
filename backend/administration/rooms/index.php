@@ -13,21 +13,18 @@
 include("../../../config.php");
 
 include_once(ROOT_LOCATION . "/modules/form/form.php");					//Stell die Formularmasken zur Verfügung
-include_once(ROOT_LOCATION . "/modules/form/dropdownSelects.php");		//Stellt die Listen für die Dropdownmenüs zur Verfügung
 include_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
 include_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
 include_once(ROOT_LOCATION . "/modules/database/inserts.php");			//Stellt die insert-Befehle zur Verfügung
 
-if($_POST['save']!="")
+if (!($_SESSION['rights']['root']))
+	exit();
+
+
+if(!empty($_POST['save']) && $_POST['save']!="")
 	rooms();
 
 
-//Formularmaske
-$fields = array(
-	array( "ID", 		"",			 				"hidden", 	"",		"",		"",					""),
-	array( "roName", 	"Name: ", 					"text", 	"8",	"",		"",					""),
-	array( "teShort", 	"Zust&auml;ndige Lehrer: ", "dropdown", "5",	"",		$selectTeachers,	""),	
-	);
 
 
 include(ROOT_LOCATION . "/modules/general/Menu.php");
@@ -36,6 +33,15 @@ generateAdminMenu();
 
 //Seitenheader
 pageHeader("Formular","main");				
+
+include_once(ROOT_LOCATION . "/modules/form/dropdownSelects.php");		//Stellt die Listen für die Dropdownmenüs zur Verfügung
+//Formularmaske
+$fields = array(
+	array( "ID", 		"",			 				"hidden", 	"",		"",		"",					""),
+	array( "roName", 	"Name: ", 					"text", 	"8",	"",		"",					""),
+	array( "teShort", 	"Zust&auml;ndige Lehrer: ", "dropdown", "5",	"",		$selectTeachers,	""),	
+	);
+
 
 $sort = "rooms.name";
 $result = selectRooms("",$sort);		//Rückgabewert des Selects
