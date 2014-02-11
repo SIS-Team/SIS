@@ -20,10 +20,6 @@ if (!($_SESSION['rights']['root'] || $_SESSION['rights']['N'] || $_SESSION['righ
 	exit();
 
 
-include(ROOT_LOCATION . "/modules/general/Menu.php");
-generateAdminMenu();
-
-
 $fail = "";
 if(!empty($_GET['fail']) && isset($_GET['fail']))
 	$fail = "Klasse oder Tag falsch eingegeben.<br>";
