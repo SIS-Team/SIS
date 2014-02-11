@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>SIS.Web Access - &title;</title>
+		<link rel="stylesheet" href="&root;/data/styles/menu.css" />
+		<link rel="stylesheet" href="&root;/data/styles/login.css" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<link href="&root;/favicon.ico" type="image/x-ico" rel="shortcut icon" />
+		<script src="&root;/data/scripts/miscellaneous.js"></script>
+		<script>
+			var checkMobile = function() {
+				if (isMobile()) {
+					window.location.href = "&root;/mobile/";
+					throw new Exception();
+				}
+			}
+			if (&mobile;)
+				checkMobile();
+		</script>
+	</head>
+	<body>
+		<div id="allContainer">
+			<div id="background">
+			</div>
+			<div id="headerCenter" class="point hCenter">
+				<div id="header" class="sameWidth">
+					<div id="title" class="link">
+						SIS.Web<span> </span>Access
+					</div>
+				</div>
+			</div>
+			&main;
+			<div id="footerCenter" class="point hCenter">
+				<div id="footer" class="sameWidth link">
+					<a href="&root;/impressum/">Impressum</a> | <a href="&root;/impressum/#privacy">Datenschutz</a> | <a href="&root;/impressum/#terms">Nutzungsbedingungen</a> | <a href="&root;/help/">Hilfe</a>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

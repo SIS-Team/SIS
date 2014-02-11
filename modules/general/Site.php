@@ -20,6 +20,7 @@
 	$seperators["title"] = "&title;";
 	$seperators["sidebar"] = "&sidebar;";
 	$seperators["root"] = "&root;";
+	$seperators["mobile"] = "&mobile;";
 
 	/*
 	 * Läd die Design Datei und splittet sie nach dem seperator "main" auf.
@@ -48,7 +49,7 @@
 	 * Parameter: $title - Titel der Seite als String
 	 * 	      $design - Designname als String
 	 */
-	function pageHeader($title, $design) {
+	function pageHeader($title, $design, $mobile) {
 		global $siteContents, $seperators;
 
 		header('Content-Type: text/html; charset=UTF-8');
@@ -56,6 +57,11 @@
 		getDesignFile(ROOT_LOCATION . "/modules/design/" . $design . ".html");
 		$site = str_replace($seperators["title"], $title, $siteContents["header"]);
 		$site = str_replace($seperators["sidebar"], $siteContents["sidebar"], $site);
+		
+		if (!isset($mobile))
+			$mobile = true;
+		$content = str_replace($seperators['mobile'], $mobile, $content);
+		
 		echo $site;
 	}
 
