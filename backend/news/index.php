@@ -29,7 +29,8 @@ if(!($isNews or $isAdmin)) //Kontrolle wegen Berechtigungen
 if($_POST['save']!="") {
 	news($isAdmin);
 }
-
+include($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Menu.php");
+generateAdminMenu();
 
 //ID,title,text,startDay,endDay
 if($isAdmin) {
