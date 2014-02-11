@@ -148,9 +148,6 @@
 		header("LOCATION: ?sent");
 		die();
 	}
-
-	include(ROOT_LOCATION . "/modules/general/Menu.php");
-	generateAdminMenu();
 	
 	pageHeader("Monitore", "main");
 
