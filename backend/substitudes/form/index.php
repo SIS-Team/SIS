@@ -14,7 +14,6 @@
 include("../../../config.php");
 include_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
 include_once(ROOT_LOCATION . "/modules/form/form.php");					//Stell die Formularmasken zur Verfügung
-include_once(ROOT_LOCATION . "/modules/form/dropdownSelects.php");		//Stellt die Listen für die Dropdownmenüs zur Verfügung
 include_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
 include_once(ROOT_LOCATION . "/modules/database/inserts.php");			//Stellt die insert-Befehle zur Verfügung
 include_once(ROOT_LOCATION . "/modules/other/dateChange.php");			//Stell die Funktion für die Datumsauswahl zur VerfÃ¼gung
@@ -35,6 +34,14 @@ else if(empty($_POST['time'])){								//sonst zurÃ¼ckgegebenes Datum
 else if(empty($_POST['date'])){								//sonst zurÃ¼ckgegebenes Datum
 	$date = $_POST["time"];
 }
+
+
+
+
+//Seitenheader
+pageHeader("Formular","main");
+
+include_once(ROOT_LOCATION . "/modules/form/dropdownSelects.php");		//Stellt die Listen für die Dropdownmenüs zur Verfügung
 
 
 //Formularmaske
@@ -58,12 +65,7 @@ $fieldsRow2 = array(
 	);
 
 
-include(ROOT_LOCATION . "/modules/general/Menu.php");
-generateAdminMenu();
 
-
-//Seitenheader
-pageHeader("Formular","main");
 
 printf("<script language=\"javascript\" type=\"text/javascript\" src=\"%s/data/scripts/substitudes.js\"></script>",RELATIVE_ROOT);
 
