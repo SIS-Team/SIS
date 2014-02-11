@@ -48,7 +48,7 @@ foreach($selectDays as $p)													//FÃƒÆ’Ã‚Â¯Ãƒâ€šÃ‚Â¿
 	printf("<option value=\"%s\">\n", $p[0]);
 }
 
-printf("</datalist></td>\n\n");
+printf("</datalist>\n\n");
 
 
 //Erstell aus den mysql querys die Arrays mit den Inhalten
@@ -69,7 +69,7 @@ foreach($array as $p)													//FÃƒÆ’Ã‚Â¯Ãƒâ€šÃ‚Â¿Ãƒ�
 	printf("<option value=\"%s\">\n", $p[0]);
 }
 
-printf("</datalist></td>\n\n");
+printf("</datalist>\n\n");
 
 }
 

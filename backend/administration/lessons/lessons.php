@@ -11,6 +11,16 @@
 	 * 	0.1.0:  22. 07. 2013, Handle Marco - erste Version
 	 */
 
+
+
+
+include("../../../config.php");
+include_once(ROOT_LOCATION . "/modules/form/form.php");					//Stell die Formularmasken zur Verfügung
+include_once(ROOT_LOCATION . "/modules/form/dropdownSelects.php");		//Stellt die Listen für die Dropdownmenüs zur Verfügung
+include_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
+include_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
+include_once(ROOT_LOCATION . "/modules/database/inserts.php");			//Stellt die insert-Befehle zur Verf�gung
+
 if (!($_SESSION['rights']['root'] || $_SESSION['rights']['N'] || $_SESSION['rights']['W'] || $_SESSION['rights']['E'] || $_SESSION['rights']['M']))
 	exit();
 
@@ -21,15 +31,6 @@ if(empty($_POST['class'])){
 }
 else if(empty($_POST['day']))
 	$_POST['day']="Mo";
-
-
-
-include("../../../config.php");
-include_once(ROOT_LOCATION . "/modules/form/form.php");					//Stell die Formularmasken zur Verfügung
-include_once(ROOT_LOCATION . "/modules/form/dropdownSelects.php");		//Stellt die Listen für die Dropdownmenüs zur Verfügung
-include_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
-include_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
-include_once(ROOT_LOCATION . "/modules/database/inserts.php");			//Stellt die insert-Befehle zur Verf�gung
 
 	
 if(!empty($_POST['save']) && $_POST['save']!="")
@@ -77,12 +78,12 @@ $temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort =
 $ok2 = control($_POST['day'],$temp["ID"],"Tag");
 
 if(($ok1*$ok2!=1))
-	header("Location: ./?fail");
+	header("Location: ./?fail=fail");
 
 $where="classes.name='".$_POST['class']."' AND hoursStart.weekdayShort='".$_POST['day']."'";
 $sort="hoursStart.hour ASC";
 $result = selectLesson($where,"");	//Rückgabewert des Selects
-
+$content = "";
 while ($row = mysql_fetch_array($result)){	//Fügt solange eine neue Formularzeile hinzu, solange ein Inhalt zur Verfügung steht
 
   	$sql= "SELECT COUNT(*) FROM lessons LEFT JOIN rooms ON rooms.ID = lessons.roomFK INNER JOIN teachers ON teachers.ID = lessons.teachersFK INNER JOIN subjects ON subjects.ID = lessons.subjectFK INNER JOIN lessonsBase ON lessonsBase.ID = lessons.lessonBaseFK INNER JOIN classes ON classes.ID = lessonsBase.classFK INNER JOIN hours as hoursStart ON hoursStart.ID = lessonsBase.startHourFK INNER JOIN hours as hoursEnd ON hoursEnd.ID = lessonsBase.endHourFK";	//Stamm sql-Befehl
@@ -94,11 +95,9 @@ while ($row = mysql_fetch_array($result)){	//Fügt solange eine neue Formularzei
 	$row['same']=$same;
 	$content[] = $row;
 }
-	$sql= "SELECT COUNT(*) FROM lessons LEFT JOIN rooms ON rooms.ID = lessons.roomFK INNER JOIN teachers ON teachers.ID = lessons.teachersFK INNER JOIN subjects ON subjects.ID = lessons.subjectFK INNER JOIN lessonsBase ON lessonsBase.ID = lessons.lessonBaseFK INNER JOIN classes ON classes.ID = lessonsBase.classFK INNER JOIN hours as hoursStart ON hoursStart.ID = lessonsBase.startHourFK INNER JOIN hours as hoursEnd ON hoursEnd.ID = lessonsBase.endHourFK";	//Stamm sql-Befehl
-	$sql .= " WHERE " . $where; 
-	//$content[] = mysql_result(mysql_query($sql),0);
 
 //print_r(end($content));
+//print_r($content);
 form_lesson($fields,$content);		//Formular wird erstellt
 
 

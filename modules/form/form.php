@@ -129,51 +129,51 @@ function form_lesson($field,$content)
 $zeile=0;
 printf("<table>\n");	//Tabellen Tag auf
 	do{
-				if(($zeile)%7==0){
-					$zeile1=1;
-					$hour=(($zeile)/7)+1;
-					$visibility="style=\"visibility:visible\"";
-				}
-				else{
-					$zeile1=0;
-					$hour=floor((($zeile)/7)+1);
-					$visibility="style=\"visibility:collapse\"";
-
-				}
-				
-				$rowID="id=\"visibleRow".($zeile+1-(($hour-1)*7)).$hour."\"";
-				$stuff=array('split'=>1,'length'=>1);	
-				
-				
-				if($content!=""){
-					unset($index);			
-					foreach($content as $i => $c){
-						if($c['startHour']==$hour)
-						{
-							$index=$i;
-							$split=$c['same'];
-							$length=$c['endHour'] - $c['startHour']+1;
-							$room=$c['roName'];
-							$subject=$c['suShort'];
-							$teacher=$c['teShort'];
-							$ID=$c['ID'];
-							$startHour = $c['startHour'];
-							$comment = $c['comment'];
-							$stuff=array('ID'=>$c['ID'],'split'=>$split,'length'=>$length,'roName'=>$room,'teShort'=>$teacher,'suShort'=>$subject, 'comment'=>$comment);
+		if(($zeile)%7==0){
+			$zeile1=1;
+			$hour=(($zeile)/7)+1;
+			$visibility="style=\"visibility:visible\"";
+		}
+		else{
+			$zeile1=0;
+			$hour=floor((($zeile)/7)+1);
+			$visibility="style=\"visibility:collapse\"";
+	
+		}
 		
-							unset($content[$i]);				
-						}
-						if(isset($index)){
-							break;
-							}
-					}
-					if($length>1 && $startHour != $hour && $zeile1==1){
-											
-						$length--;
-						$visibility="style=\"visibility:collapse\"";
-					
-					}
+		$rowID="id=\"visibleRow".($zeile+1-(($hour-1)*7)).$hour."\"";
+		$stuff=array('split'=>1,'length'=>1);	
+		
+		//print_r($content);
+		if($content!=""){
+			unset($index);			
+			foreach($content as $i => $c){
+				if($c['startHour']==$hour)
+				{
+					$index=$i;
+					$split=$c['same'];
+					$length=$c['endHour'] - $c['startHour']+1;
+					$room=$c['roName'];
+					$subject=$c['suShort'];
+					$teacher=$c['teShort'];
+					$ID=$c['ID'];
+					$startHour = $c['startHour'];
+					$comment = $c['comment'];
+					$stuff=array('ID'=>$c['ID'],'split'=>$split,'length'=>$length,'roName'=>$room,'teShort'=>$teacher,'suShort'=>$subject, 'comment'=>$comment);
+	
+					unset($content[$i]);				
 				}
+				if(isset($index)){
+					break;
+				}
+			}
+			if(!empty($length) && $length>1 && $startHour != $hour && $zeile1==1){
+									
+				$length--;
+				$visibility="style=\"visibility:collapse\"";
+			
+			}
+		}
 					
 	printf("<tr %s %s>\n",$rowID,$visibility);	//Zeilen 	Tag auf
   		printf("<form method=\"post\">\n");	//Formular Anfang Tag
