@@ -1,4 +1,5 @@
 <?php
+	@ob_start();
 
 	/* /backend/lessons.php
 	 * Autor: Handle Marco
