@@ -8,6 +8,7 @@
 	 * 	0.1.0:  12. 10. 2013, Weiland Mathias  - erste Version
 	 */	 
 include("../config.php");
+include_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
 include_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
 include_once(ROOT_LOCATION . "/modules/other/dateFunctions.php");		//Stellt Datumsfunktionen zur Verfügung
 
