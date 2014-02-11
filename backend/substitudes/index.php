@@ -9,7 +9,7 @@
 	}
 		
 	$back = RELATIVE_ROOT . "/backend/";
-	$headerText = "SIS.Data Input";
+	$headerText = "SIS.Data Inputs";
 	$name = $_SESSION['name'];
 	
 	$buttons[1]['displayed'] = true;
