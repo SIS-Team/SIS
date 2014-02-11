@@ -2,40 +2,68 @@ var Exception = function() {
 
 }
 
+window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+
 var animation = function() {
 }
 animation.block = false;
+animation.start = null;
+animation.lastTimestamp = 0;
 animation.windowDistance = parseInt(72 / 2);
 animation.targetDistance = parseInt(window.innerHeight) / 2 - 30;
 animation.distance = 0;
-animation.open = function() {
+animation.open = function(timestamp) {
 	animation.block = true;
+	
+	if (timestamp === undefined) {
+		window.requestAnimationFrame(animation.open);
+		return;
+	}
+	
+	if (animation.start === null) {
+ 		animation.start = timestamp;
+		animation.lastTimestamp = timestamp;
+	}
+	
 	if (animation.distance > animation.windowDistance) {
 		var innerWindow = document.getElementById("innerWindow");
-		var diff = animation.distance - animation.windowDistance;
+		var diff = parseInt(animation.distance - animation.windowDistance);
 		innerWindow.style.height = 2 * diff + "px";
-		innerWindow.style.bottom = (- diff) + "px";		
+		innerWindow.style.bottom = (- diff) + "px";
 		innerWindow.style.display = "block";
 	}
 	move(animation.distance);
 
 	if (animation.distance < animation.targetDistance)
-		window.setTimeout(animation.open, 10);
+		window.requestAnimationFrame(animation.open);
 	else {
-		animation.block = false;	
+		animation.start = null;
+		animation.block = false;
 		if (animation.after)
 			animation.after();
 		animation.after = false;
 		return;
 	}
-	animation.distance += 5;
+	animation.distance += (timestamp - animation.lastTimestamp) / 2;
+	animation.lastTimestamp = timestamp;
 }
 
-animation.close = function() {
+animation.close = function(timestamp) {
 	animation.block = true;
+	
+	if (timestamp === undefined) {
+		window.requestAnimationFrame(animation.close);
+		return;
+	}
+	
+	if (animation.start === null) {
+ 		animation.start = timestamp;
+		animation.lastTimestamp = timestamp;
+	}
+	
 	if (animation.distance > animation.windowDistance) {
 		var innerWindow = document.getElementById("innerWindow");
-		var diff = animation.distance - animation.windowDistance;
+		var diff = parseInt(animation.distance - animation.windowDistance);
 		innerWindow.style.height = 2 * diff + "px";
 		innerWindow.style.bottom = (- diff) + "px";
 	} else {
@@ -45,22 +73,24 @@ animation.close = function() {
 	}
 	move(animation.distance);
 
-	if (animation.distance >= 0)
-		window.setTimeout(animation.close, 10);
+	if (animation.distance > 0)
+		window.requestAnimationFrame(animation.close);
 	else {
+		animation.start = null;
 		animation.distance = 0;
 		move(0);
 		animation.block = false;
 		if (animation.after)
 			animation.after();
 		animation.after = false;
-		return;	
+		return;
 	}
-
-	animation.distance -= 5;
+	animation.distance -= (timestamp - animation.lastTimestamp) / 2;
+	animation.lastTimestamp = timestamp;
 }
 
 var move = function(x) {
+	x = parseInt(x);
 	document.getElementById("menuUp").style.top = -x + "px";
 	document.getElementById("menuDown").style.bottom = -x + "px";
 	document.getElementById("header").style.top = -x + "px";
