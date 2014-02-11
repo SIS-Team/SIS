@@ -46,7 +46,7 @@ error_reporting(E_ALL);
  
 function form_new($field,$content)
 {	
-$allowedSites = array('substitudes','missingTeacher','missingClasses','news');
+$allowedSites = array('substitudes','absentees','news');
 
 
 printf("<table>\n");	//Tabellen Tag auf
@@ -103,8 +103,9 @@ printf("<table>\n");	//Tabellen Tag auf
 			}
 			
 			$temp = explode("/", $_SERVER['REQUEST_URI']);
-			$temp = $temp[count($temp)-2];
-
+			//print_r($temp);
+			$temp = $temp[count($temp)-3];
+			print_r($temp);
 			if($content==false)
 			{
 				form_savedelete(true);
