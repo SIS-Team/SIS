@@ -81,6 +81,8 @@ body {
 
 #title span {
 	font-size: 15px;
+	width: 9px;
+	display: inline-block;
 }
 
 .content {
