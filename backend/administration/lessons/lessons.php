@@ -1,5 +1,4 @@
 <?php
-	@ob_start();
 
 	/* /backend/lessons.php
 	 * Autor: Handle Marco
@@ -35,6 +34,13 @@ else if(empty($_POST['day']))
 if(!empty($_POST['save']) && $_POST['save']!="")
 	lessons();
 
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM classes WHERE name = '".$_POST["class"]."'"));
+$ok1 = control($_POST['class'],$temp["ID"],"Klasse");
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort = '".$_POST["day"]."'"));
+$ok2 = control($_POST['day'],$temp["ID"],"Tag");
+
+if(($ok1*$ok2!=1))
+	header("Location: ./?fail=fail");
 
 
 //Seitenheader
@@ -71,13 +77,6 @@ if($days['next']!="")
 	printf("<td style=\"text-align:right\"><input type=\"submit\" value=\"%s\" name=\"day\"></td>\n",$days['next']);
 printf("</tr></table></form>\n");
 
-$temp = mysql_fetch_array(mysql_query("SELECT ID FROM classes WHERE name = '".$_POST["class"]."'"));
-$ok1 = control($_POST['class'],$temp["ID"],"Klasse");
-$temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort = '".$_POST["day"]."'"));
-$ok2 = control($_POST['day'],$temp["ID"],"Tag");
-
-if(($ok1*$ok2!=1))
-	header("Location: ./?fail=fail");
 
 $where="classes.name='".$_POST['class']."' AND hoursStart.weekdayShort='".$_POST['day']."'";
 $sort="hoursStart.hour ASC";
