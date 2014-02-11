@@ -19,9 +19,9 @@ if (isset($_REQUEST['links_x']) && $_REQUEST['links_x']!="0")	//Wenn nach links 
 printf("<form method=\"post\">");
 	printf("<table >");
 		printf("<tr style=\"vertical-align:bottom\">");
-			printf("<input type=\"image\" name=\"links\" src=\"%s\" align=\"absmiddle\">", "/modules/other/Pfeil_l.png");	//Pfeil zurück
+			printf("<input type=\"image\" name=\"links\" src=\"%s\" align=\"absmiddle\">", RELATIVE_ROOT."/data/images/absentees/Pfeil_l.png");	//Pfeil zurück
 			printf( "&nbsp%s <input name=\"date\" value=\"%s\" size=\"10\">  ",weekday($date),$date);			//Textformular ausgeben
- 	      	printf("&nbsp<input type=\"image\" name=\"rechts\" src=\"%s\" align=\"absmiddle\">","/modules/other/Pfeil_r.png");	//Pfeil vor
+ 	      	printf("&nbsp<input type=\"image\" name=\"rechts\" src=\"%s\" align=\"absmiddle\">",RELATIVE_ROOT."/data/images/absentees/Pfeil_r.png");	//Pfeil vor
     	printf("</tr>");
 	printf("</table>");
 printf("</form>");
