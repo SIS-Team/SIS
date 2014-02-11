@@ -33,9 +33,6 @@ $fields = array(
 	array( "invisible", "Unsichtbar: ", 	"checkbox",	"",		"",		"",		""),		
 	);
 
-include(ROOT_LOCATION . "/modules/general/Menu.php");
-generateAdminMenu();
-
 
 //Seitenheader
 pageHeader("Formular","main");
