@@ -40,6 +40,28 @@ if(empty($post["delete"]) && ($ok1*$ok2*$ok3) == 1)
 	saveupdate($data,"classes");
 }
 
+function hours(){
+
+$post=$_POST;
+//print_r($post);
+unset($post["save"]);
+
+$data=array("ID" => "","weekday" => "","weekdayShort" => "","hour" => "","startTime" => "","endTime" => "");
+
+$data["ID"]=$post["ID"];
+$data["weekday"]=$post["weekday"];
+$data["weekdayShort"]=$post["weekdayShort"];
+$data["hour"]=$post["hour"];
+$data["startTime"]=$post["startTime"];
+$data["endTime"]=$post["endTime"];
+
+
+if(empty($post["delete"]))
+	saveupdate($data,"hours");
+else
+	delete($data["ID"],"hours");
+
+}
 
 function lessons(){
 
