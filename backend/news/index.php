@@ -25,7 +25,7 @@ if(!($_SESSION['loggedIn'])) //Kontrolle ob angemeldet
 if(!($isNews or $isAdmin)) //Kontrolle wegen Berechtigungen
 	die ("Critical Error </br> Du hast auf diese Funktionen keinen Zugriff. </br> Wende dich an einen Newsbeauftragten!"); 
 
-if($_POST['save']!="") {
+if(isset($_POST['save']) && $_POST['save'] !="") {
 	news($isAdmin);
 }
 

@@ -83,7 +83,7 @@ if(date("N", time())>5) {
  	$offset = date("N",time())-8;
  }
 else {
- 	$offset = date("N",time())-1;
+ 	$offset = -(date("N",time())-1);
  }
 
 for($j = 0; $j<=4; $j++)
@@ -241,7 +241,7 @@ function getSubstitude($date,$name,$mode){	//Supplierungen des gewählten Datums 
 		 	$substitudes[]=$substitude;
 			}	
 			
-		//	print_r($substitudes);  //Kontrolle des Ergebnis-Arrays
+			//print_r($substitudes);  //Kontrolle des Ergebnis-Arrays
 }
 
 pageFooter();
