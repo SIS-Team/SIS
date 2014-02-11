@@ -35,7 +35,7 @@ $fields = array(
 
 
 //Seitenheader
-pageHeader("Formular","main");
+pageHeader("F&auml;cher","main");
 
 $sort = "invisible,short";
 $result = selectAll("subjects","",$sort);		//Rückgabewert des Selects

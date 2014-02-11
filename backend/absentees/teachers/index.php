@@ -35,8 +35,9 @@ else {								//sonst zurückgegebenes Datum
 
 
 //Seitenheader
-pageHeader("Formular","main");
+pageHeader("Fehlende Lehrer","main");
 
+$dropDown=array("Teachers");
 include_once(ROOT_LOCATION . "/modules/form/dropdownSelects.php");		//Stellt die Listen für die Dropdownmenüs zur Verfügung
 //Formularmaske
 $fields = array(

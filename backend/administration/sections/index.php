@@ -11,8 +11,7 @@
 	 *  0.2.0:  27. 08. 2013, Handle Marco - Update,Save,delete implementiert
 	 */
 	
-	include("../../../config.php");
-
+include("../../../config.php");
 include_once(ROOT_LOCATION . "/modules/form/form.php");					//Stell die Formularmasken zur Verfügung
 include_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
 include_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
@@ -27,8 +26,9 @@ if(!empty($_POST['save']) && $_POST['save']!="")
 
 	
 //Seitenheader
-pageHeader("Formular","main");
+pageHeader("Abteilungen","main");
 
+$dropDown=array("Teachers");
 include_once(ROOT_LOCATION . "/modules/form/dropdownSelects.php");		//Stellt die Listen für die Dropdownmenüs zur Verfügung
 //Formularmaske
 $fields = array(

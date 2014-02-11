@@ -26,8 +26,9 @@ if(!empty($_POST['save']) && $_POST['save']!="")
 
 
 //Seitenheader
-pageHeader("Formular","main");				
+pageHeader("R&auml;ume","main");				
 
+$dropDown=array("Teachers");
 include_once(ROOT_LOCATION . "/modules/form/dropdownSelects.php");		//Stellt die Listen für die Dropdownmenüs zur Verfügung
 //Formularmaske
 $fields = array(

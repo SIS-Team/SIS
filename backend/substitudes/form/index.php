@@ -36,11 +36,10 @@ else if(empty($_POST['date'])){								//sonst zurÃ¼ckgegebenes Datum
 }
 
 
-
-
 //Seitenheader
-pageHeader("Formular","main");
+pageHeader("Supplierungen eintragen","main");
 
+$dropDown=array("Classes","Subjects","Teachers","Rooms");
 include_once(ROOT_LOCATION . "/modules/form/dropdownSelects.php");		//Stellt die Listen für die Dropdownmenüs zur Verfügung
 
 

@@ -24,8 +24,9 @@ $fail = "";
 if(!empty($_GET['fail']) && isset($_GET['fail']))
 	$fail = "Klasse oder Tag falsch eingegeben.<br>";
 //Seitenheader
-pageHeader("Formular","main");
+pageHeader("Stundenpl&auml;ne","main");
 
+$dropDown=array("Classes","Days");
 include_once(ROOT_LOCATION . "/modules/form/dropdownSelects.php");		//Stellt die Listen für die Dropdownmenüs zur Verfügung
 
 printf("<form method=\"post\" action=\"lessons.php\"> ");
