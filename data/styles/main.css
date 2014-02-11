@@ -37,6 +37,7 @@ body {
 }
 
 #close {
+	z-index: 999999;
 	position: fixed;
 	right: 20px;
 	top: 10px;
