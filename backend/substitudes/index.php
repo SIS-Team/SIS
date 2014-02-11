@@ -1,7 +1,6 @@
 <?php
-	include("../config.php");
+	include("../../config.php");
 	include(ROOT_LOCATION . "/modules/general/Main.php");
-
 	include(ROOT_LOCATION . "/modules/menu/Main.php");
 
 	if (!$_SESSION['loggedIn']) {
