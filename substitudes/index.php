@@ -52,8 +52,14 @@ for($counter = 0; $counter <=2; $counter++)
 		 if(empty($substitudes[$count][2]) == true) break;		//Abbruch wenn keine weiteren Einträge
 		 echo "<tr>";
 		 echo "<td>".$substitudes[$count][2]."</td>";	//Klassenname
+		 if(!empty($substitudes[$count][12])){
 		 echo "<td>".$substitudes[$count][12]."</td>";	//supplierte Stunde
+		 }
+		 else {echo "<td>&#160;</td>";}
+		 if(!empty($substitudes[$count][4])){
 		 echo "<td>".$substitudes[$count][4]."</td>";	//supplierender Lehrer
+		 }
+		 else {echo "<td>&#160;</td>";}
 		 echo "<td>".$substitudes[$count][3]."</td>";	//Fach
 	 	 echo "<td>".$substitudes[$count][15]."</td>";	//ursprünglicher Lehrer
 		 echo "<td class='comment background'>".htmlspecialchars($substitudes[$count][11])."</td>";	//Bemerkung
