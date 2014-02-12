@@ -79,7 +79,7 @@ Mag. Günther LANER<br />
 Telefon: +43 (0) 512 - 59717 - 10<br />
 
 <a name="team" id="team"></a>
-<a href="#top" onclick="smoothScroll('terms'); return false;">Nutzungsbedingungen</a>
+<a href="#top" onclick="smoothScroll('top'); return false;">Zum Seitenanfang</a>
 <h2>Projektteam</h2>
 
 Florian BUCHBERGER<br />
@@ -151,6 +151,7 @@ Zuständig für:<br />
 </ul><br />
 
 <a name="advisors" id="advisors"></a>
+<a href="#top" onclick="smoothScroll('top'); return false;">Zum Seitenanfang</a>
 <h2>Projektbetreuer<h2>
 
 <h3>Projektmanagement</h3>
@@ -170,6 +171,7 @@ Dipl. Päd. Ing. Wolfram LASSNIG<br />
 VL Engelbert GRUBER<br />
 
 <a name="source" id="source"></a>
+<a href="#top" onclick="smoothScroll('top'); return false;">Zum Seitenanfang</a>
 <h1>Sourcecode</h1>
 
 Der Sourcecode dieses Projekt ist vollständig offen und der 
@@ -194,6 +196,7 @@ Für dieses Projekt wurden verschiedener Fremdcode verwendet.<br />
 <sup>1</sup>) Dieser Fremdcode wurde an die Gegebenheiten angepasst.
 
 <a name="privacy" id="privacy"></a>
+<a href="#top" onclick="smoothScroll('top'); return false;">Zum Seitenanfang</a>
 <h1>Datenschutz</h1>
 
 Mach dir keine Hoffnungen, wir sind die NSA...<br />
@@ -201,6 +204,7 @@ Mach dir keine Hoffnungen, wir sind die NSA...<br />
 // TODO <br />
 
 <a name="terms" id="terms"></a>
+<a href="#top" onclick="smoothScroll('top'); return false;">Zum Seitenanfang</a>
 <h1>Nutzungsbedingungen</h1>
 
 Wir verwenden deine Daten... MUAHAHAHAHA... *hust*<br />
