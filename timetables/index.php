@@ -95,10 +95,10 @@ if($displaytyp == "modificated"){
 	//Setzen des ersten Tags der Woche
 	// TODO date wochentag verwenden ->done 
 	if(date("N", time())>5) { 
-	 	$offset = date("N",time())-8;
+	 	$offset = 8-date("N",time());
 	 }
 	else {
-	 	$offset = -(date("N",time())-1);
+	 	$offset = 1-date("N",time());
 	 }
 	
 	for($j = 0; $j<=4; $j++)
@@ -108,11 +108,17 @@ if($displaytyp == "modificated"){
 		$offset++;
 	 //echo $hours[1][$substitudes[0]['weekdayShort']]->suShort."--------------";	
 	}
+	//print_r($substitudes[0]['suShort']);
 	for($j = 0; $j < count($substitudes);$j++)
 	{
 		$hour = $substitudes[$j]['startHour'];
 		$day =  $substitudes[$j]['weekdayShort'];
-		if($substitudes[$j]['hidden'] == 1)$hours[$hour][$day]->deleted = true;
+		if($substitudes[$j]['hidden'] == 1){
+			$hours[$hour][$day]->deleted = true;
+			$test = $hours[$substitudes[$j]['startHour']][$day]->suShort;
+			$hours[$substitudes[$j]['startHour']][$day]->suShort = str_replace($substitudes[$j]['suShort'],"<span style=\"color:#FF0000\">".$substitudes[$j]['suShort']."</span>",$hours[$substitudes[$j]['startHour']][$day]->suShort);
+
+		}
 		else $hours[$hour][$day]->deleted = false;
 		if($substitudes[$j]['startHour'] != $substitudes[$j]['newStartHour'] && !empty($substitudes[$j]['newStartHour'])){
 		 	$hours[$hour][$day]->deleted  = true;
@@ -153,18 +159,12 @@ for ($i = $tableBegin; $i < $tableEnd; $i++) {
 	else {// echo "checkv2";
 		for ($j = 0; $j < 5; $j++) {
 			if(isset($hours[$i][$days[$j]])){
-			 //echo "</br>\$hours[".$i."][".$days[$j]."]:";
-			 //print_r($hours[$i][$days[$j]]);
 				if($hours[$i][$days[$j]]->moved == true) {
 					echo "<td style = \"color : #00FF00\">";
 				}
 				else{
-					if($hours[$i][$days[$j]]->deleted == true){
-						echo "<td style = \"color : #FF0000\">";
-					}
-					else {
 					 echo "<td>";
-					}
+				
 					 
 				}
 			
