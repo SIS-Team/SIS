@@ -36,6 +36,21 @@ else {
 }
 
 pageHeader("Stundenplan","main");
+
+echo "<form  method = \"post\">";
+if(!isset($_POST['displaytyp'])) $displaytyp = "modificated";
+else $displaytyp = $_POST['displaytyp'];
+if($displaytyp == "normal"){
+	echo "<input type =\"radio\" name = \"displaytyp\" value = \"normal\" checked>normal";
+	echo "<input type =\"radio\" name = \"displaytyp\" value = \"modificated\">modifiziert";
+}
+else {
+	echo "<input type =\"radio\" name = \"displaytyp\" value = \"normal\">normal";
+	echo "<input type =\"radio\" name = \"displaytyp\" value = \"modificated\" checked>modifiziert";
+} 
+echo "<input type =\"submit\" value=\"Anzeige &auml;ndern\">"; 
+echo "</form>";
+
 echo "<div class ='timetable_column'>";	
 
 //Tabellenkopfausgabe
@@ -73,48 +88,45 @@ for ($i = 0; $i < count($lessons); $i++) {
 	$hours[$index][$lessons[$i]->weekdayShort]['deleted'] = "";
 	$hours[$index][$lessons[$i]->weekdayShort] = (object) $hours[$index][$lessons[$i]->weekdayShort];
 }
-//hours[Stunde][Tag]
-//print_r($hours);
-//-------------------------------------------------------------------------------------------------------
+
 $offset = 0;
-//Setzen des ersten Tags der Woche
-// TODO date wochentag verwenden ->done 
-if(date("N", time())>5) { 
- 	$offset = date("N",time())-8;
- }
-else {
- 	$offset = -(date("N",time())-1);
- }
-
-for($j = 0; $j<=4; $j++)
-{
-//Supplierungen des Tages abrufen
-	getSubstitude(date("Y.m.d",time() + 24 * 60 * 60 * $offset),$name,$mode);
-	$offset++;
- //echo $hours[1][$substitudes[0]['weekdayShort']]->suShort."--------------";	
-}
-for($j = 0; $j < count($substitudes);$j++)
-{
-
-
-	$hour = $substitudes[$j]['startHour'];
-	$day =  $substitudes[$j]['weekdayShort'];
-	if($substitudes[$j]['hidden'] == 1)$hours[$hour][$day]->deleted = true;
-	else $hours[$hour][$day]->deleted = false;
-	if($substitudes[$j]['startHour'] != $substitudes[$j]['newStartHour'] && !empty($substitudes[$j]['newStartHour'])){
-	 	$hours[$hour][$day]->deleted  = true;
-	 	$hours[$substitudes[$j]['newStartHour']][$day]->moved = true;
-	 	$hours[$substitudes[$j]['newStartHour']][$day]->teShort = $hours[$hour][$day]->teShort;
-	 	$hours[$substitudes[$j]['newStartHour']][$day]->suShort = $hours[$hour][$day]->suShort;
-	 	$hours[$substitudes[$j]['newStartHour']][$day]->endHour = $hours[$hour][$day]->endHour;
-	 	
+if($displaytyp == "modificated"){
+	 
+	//Setzen des ersten Tags der Woche
+	// TODO date wochentag verwenden ->done 
+	if(date("N", time())>5) { 
+	 	$offset = date("N",time())-8;
+	 }
+	else {
+	 	$offset = -(date("N",time())-1);
+	 }
+	
+	for($j = 0; $j<=4; $j++)
+	{
+	//Supplierungen des Tages abrufen
+		getSubstitude(date("Y.m.d",time() + 24 * 60 * 60 * $offset),$name,$mode);
+		$offset++;
+	 //echo $hours[1][$substitudes[0]['weekdayShort']]->suShort."--------------";	
 	}
-	else $hours[$hour][$day]->moved = false;
+	for($j = 0; $j < count($substitudes);$j++)
+	{
+		$hour = $substitudes[$j]['startHour'];
+		$day =  $substitudes[$j]['weekdayShort'];
+		if($substitudes[$j]['hidden'] == 1)$hours[$hour][$day]->deleted = true;
+		else $hours[$hour][$day]->deleted = false;
+		if($substitudes[$j]['startHour'] != $substitudes[$j]['newStartHour'] && !empty($substitudes[$j]['newStartHour'])){
+		 	$hours[$hour][$day]->deleted  = true;
+		 	$hours[$substitudes[$j]['newStartHour']][$day]->moved = true;
+		 	$hours[$substitudes[$j]['newStartHour']][$day]->teShort = $hours[$hour][$day]->teShort;
+		 	$hours[$substitudes[$j]['newStartHour']][$day]->suShort = $hours[$hour][$day]->suShort;
+		 	$hours[$substitudes[$j]['newStartHour']][$day]->endHour = $hours[$hour][$day]->endHour;	 	
+		}
+		else $hours[$hour][$day]->moved = false;
+	}
+	//print_r($hours['7']['Mi']);
+	
+	//print_r($substitudes);
 }
-//print_r($hours['7']['Mi']);
-
-//print_r($substitudes);
-//-------------------------------------------------------------------------------------------------------
 $classType = isEvening($hours);	//kontrolliert ob Abendschule
 if($classType == "evening")	//nur Abendschule
 	{$tableBegin = 12;
