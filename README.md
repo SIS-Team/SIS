@@ -1,4 +1,4 @@
-SIS
+﻿SIS
 ===
 
 School Information Service
@@ -63,3 +63,4 @@ Installation
 /{config.def.php -> config.php}   
 /modules/general/{MySQLpassword.def.php -> MySQLpassword.php}   
 /modules/general/{LDAPpassword.def.php -> LDAPpassword.php}
+/modules/external/fpdf -> fpdf.zip unzip ( from fpdf.org)
