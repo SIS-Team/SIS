@@ -47,24 +47,27 @@ for($counter = 0; $counter <=2; $counter++)
 		
 	getSubstitude($day);		//Supplierungen des gewählten Datums abrufen
 		
-	for($count = 0;; $count++)	//Supplierungen ausgeben
+	for($count = 0;$count<count($substitudes); $count++)	//Supplierungen ausgeben
 		{
-		 if(empty($substitudes[$count][2]) == true) break;		//Abbruch wenn keine weiteren Einträge
-		 echo "<tr>";
-		 echo "<td>".$substitudes[$count][2]."</td>";	//Klassenname
-		 if(!empty($substitudes[$count][12])){
-		 echo "<td>".$substitudes[$count][12]."</td>";	//supplierte Stunde
-		 }
-		 else {echo "<td>&#160;</td>";}
-		 if(!empty($substitudes[$count][4])){
-		 echo "<td>".$substitudes[$count][4]."</td>";	//supplierender Lehrer
-		 }
-		 else {echo "<td>&#160;</td>";}
-		 echo "<td>".$substitudes[$count][3]."</td>";	//Fach
-	 	 echo "<td>".$substitudes[$count][15]."</td>";	//ursprünglicher Lehrer
-		 echo "<td class='comment background'>".htmlspecialchars($substitudes[$count][11])."</td>";	//Bemerkung
-		 echo "</tr>";
+			echo "<tr>";
+			echo "<td>".$substitudes[$count]['clName']."</td>";	//Klassenname
+			if(!empty($substitudes[$count]['newStartHour'])){
+				echo "<td>".$substitudes[$count]['newStartHour']."</td>";	//supplierte Stunde
+			}
+			else {
+				echo "<td>".$substitudes[$count]['startHour']."</td>";
+			}
+			if(!empty($substitudes[$count]['teShort'])){
+				echo "<td>".$substitudes[$count]['teShort']."</td>";	//supplierender Lehrer
+			}
+			else {
+				echo "<td>&#160;</td>";}
+			echo "<td>".$substitudes[$count]['suShort']."</td>";	//Fach
+			echo "<td>".$substitudes[$count]['oldTeShort']."</td>";	//ursprünglicher Lehrer
+			echo "<td class='comment background'>".$substitudes[$count]['comment']."</td>";	//Bemerkung
+			echo "</tr>";
 		}
+	if(count($substitudes) == 0) echo "<tr><td colspan = 6 align = center> F&uuml;r diesen Tag sind keine Supplierungen vorgesehen</td></tr>";
 	$substitudes = array();
 	echo "</table>";
 	echo "</div>";

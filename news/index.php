@@ -14,22 +14,29 @@ include_once(ROOT_LOCATION . "/modules/other/dateFunctions.php");		//Stellt Datu
 
 //Seitenheader
 pageHeader("News","main");
-
-$result = selectAll("news","","");	//gesamte News-Tabelle abfragen
+$sql ="SELECT `ID` FROM sections WHERE `short` = '".$_SESSION['section']."'";
+$section_result  = mysql_query($sql);
+while ($row = mysql_fetch_object($section_result)) {
+		$section = $row;
+}
+$where  = " sectionFK = '".$section->ID."' OR sectionFK = '0'" ;
+$result = selectAll("news",$where,"");	//gesamte News-Tabelle abfragen wo die Abteilung des Bnutzers oder all Abteilungen eingetragen ist
 while ($row = mysql_fetch_object($result)) {
 		$news[] = $row;
 }
 $date = CaptureDate("");  //aktuelles Datum abfragen
 echo "<h1><u> ".$date."</u></h1> </br>"; 
-for($i = 0;$i < count($news);$i++)
-{ 
-	$startDate = $news[$i]->startDay;		//Startdatum abfragen
-	$endDate = $news[$i]->endDay;		//Enddatum abfragen
- 
- 	if(($startDate <= $date) && ($endDate >= $date) && ($news[$i]->display ==1)){ //nur wenn aktuelles Datum zwischen Start- und Enddatum 
-		echo "<h2>" . $news[$i]->title . "</h2>";
-  		echo $news[$i]->text;
-  		echo "</br></br></br>";
+if(isset($news)){
+	for($i = 0;$i < count($news);$i++)
+	{ 
+		$startDate = $news[$i]->startDay;		//Startdatum abfragen
+		$endDate = $news[$i]->endDay;		//Enddatum abfragen
+	 
+	 	if(($startDate <= $date) && ($endDate >= $date) && ($news[$i]->display ==1)){ //nur wenn aktuelles Datum zwischen Start- und Enddatum 
+			echo "<h2>" . $news[$i]->title . "</h2>";
+	  		echo $news[$i]->text;
+	  		echo "</br></br></br>";
+		}
 	}
 }
 pageFooter();
