@@ -14,6 +14,14 @@
 	src:url('../fonts/gothicb.woff') format('woff');
 }
 
+@font-face { 
+	font-family: abduction;
+	font-style: normal;
+	font-weight: normal;
+	src:url('../fonts/abduction2002.ttf') format('truetype');
+	src:url('../fonts/abduction2002.woff') format('woff');
+}
+
 * {
 	font-family: gothic;
 	color: #fff;
@@ -42,7 +50,16 @@ body {
 	right: 20px;
 	top: 10px;
 	width: 40px;
-	height: 40px;
+	height: 40px;#allContainer {
+	overflow: hidden;
+	min-width: 1200px;
+	min-height: 600px;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0px;
+	left: 0px;
+}
 	background-size: 40px 40px;
 	background-image: url('../images/closeLight.png');
 }
