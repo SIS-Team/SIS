@@ -115,7 +115,7 @@ var openLink = function(link) {
 	
 	var menu = link.split("?");
 	if (menu[1]) {
-		menu = menu[1].split("&amp;");
+		menu = menu[1].split("&");
 		for (var i = 0; i < menu.length; i++) {
 			if (menu[i] == "menu") {
 				location.href = link;
@@ -185,7 +185,9 @@ var main = function() {
 		for (var e = 0; e < rows.length; e++) {
 			if (rows[e].getElementsByClassName("linkAdr").length == 0)
 				continue;
-			var link = rows[e].getElementsByClassName("linkAdr")[0].innerHTML;		
+			var link = rows[e].getElementsByClassName("linkAdr")[0].innerHTML;
+			while (link.indexOf("&amp;") != -1) // just don't ask
+				link = link.replace("&amp;", "&");
 			console.log("link: " + link);
 			rows[e].getElementsByTagName("g")[0].setAttribute("onclick", "openLink('" + link + "')");
 			rows[e].getElementsByTagName("g")[0].setAttribute("onmouseenter", "hoverLink(" + i + ", " + e + ")");

@@ -35,7 +35,7 @@
 		<script src="<?php echo RELATIVE_ROOT; ?>/data/scripts/menu.js"></script>
 		<script src="<?php echo RELATIVE_ROOT; ?>/data/scripts/miscellaneous.js"></script>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<link href="<?php echo RELATIVE_ROOT; ?>/favicon.png" type="image/png" rel="shortcut icon" />
+		<link href="<?php echo RELATIVE_ROOT; ?>/favicon.ico" type="image/x-ico" rel="shortcut icon" />
 	</head>
 	<body<?php echo (!isset($_GET['noJS'])) ? ' onload="' . ((!isset($_GET['noMobile'])) ? 'checkMobile(\'' . RELATIVE_ROOT . '\'); ' : '') . 'main();"' : ""; ?>>	
 		<div id="allContainer">		

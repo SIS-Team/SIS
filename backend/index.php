@@ -46,7 +46,7 @@
 		$add .= "?section=E";
 
 	$buttons[3]['url'] = RELATIVE_ROOT . "/backend/substitudes/" . $add . (empty($add) ? "?" : "&") . "noJS" . (isset($_GET['noMobile']) ? "&noMobile" : "");
-	$buttons[3]['jsurl'] = RELATIVE_ROOT . "/backend/substitudes/" . $add . (empty($add) ? "?" : "&") . "js&menu";
+	$buttons[3]['jsurl'] = RELATIVE_ROOT . "/backend/substitudes/" . $add . (empty($add) ? "?" : "&") . "js" . ((strpos($add, "form") === false) ? "&menu" : "");
 
 	$buttons[5]['displayed'] = true;
 	$buttons[5]['enabled'] = $_SESSION['rights']['root'] || $_SESSION['rights']['N'] || $_SESSION['rights']['W'] || $_SESSION['rights']['E'] || $_SESSION['rights']['M'] || $_SESSION['rights']['news'];
