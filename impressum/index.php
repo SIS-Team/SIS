@@ -11,6 +11,26 @@
 	pageHeader("Impressum","main");
 ?>
 <a name="top" id="top"></a>
+
+Springe zu:
+<ul>
+	<li>
+		<a href="#team" onclick="smoothScroll('team'); return false;">Projektteam</a>
+	</li>
+	<li>
+		<a href="#advisors" onclick="smoothScroll('advisors'); return false;">Projektbetreuer</a>
+	</li>
+	<li>
+		<a href="#source" onclick="smoothScroll('source'); return false;">Sourcecode</a>
+	</li>
+	<li>
+		<a href="#privacy" onclick="smoothScroll('privacy'); return false;">Datenschutz</a>
+	</li>
+	<li>
+		<a href="#terms" onclick="smoothScroll('terms'); return false;">Nutzungsbedingungen</a>
+	</li>
+</ul>
+
 Höhere Technische Bundes Lehr- und Versuchsanstalt Anichstraße<br />
 Anichstraße 26 - 28<br />
 A-6020 Innsbruck<br />
@@ -57,6 +77,8 @@ A-6020 Innsbruck<br />
 Mag. Günther LANER<br />
 Telefon: +43 (0) 512 - 59717 - 10<br />
 
+<a name="team" id="team"></a>
+<a href="#top" onclick="smoothScroll('terms'); return false;">Nutzungsbedingungen</a>
 <h2>Projektteam</h2>
 
 Florian BUCHBERGER<br />
@@ -127,11 +149,12 @@ Zuständig für:<br />
 	</li>
 </ul><br />
 
+<a name="advisors" id="advisors"></a>
 <h2>Projektbetreuer<h2>
 
 <h3>Projektmanagement</h3>
 
-WL. FOL. Dipl. Päd. DI (FH) Helmut Stecher<br />
+WL. FOL. Dipl. Päd. DI (FH) Helmut STECHER<br />
 
 <h3>Technischer Betreuer</h3>
 
@@ -141,13 +164,33 @@ Prof. Mag. Dr. Michael WEISS<br />
 
 Dipl. Päd. Ing. Wolfram LASSNIG<br />
 
-<h3>Code-Review, etc</h3>
+<h3>Code-Review, etc.</h3>
 
 VL Engelbert GRUBER<br />
 
-<h1>Source Code</h1>
+<a name="source" id="source"></a>
+<h1>Sourcecode</h1>
 
-Wenn es dich interessiert: <a href="https://github.com/overflowerror/SIS">SIS auf github</a><br />
+Der Sourcecode dieses Projekt ist vollständig offen und der 
+<a target="_blank" href="http://www.gnu.org/licenses/gpl-2.0-standalone.html">GPLv2 (GNU Public License Version 2)</a>
+<a target="_blank" href="<?php echo RELATIVE_ROOT; ?>/LICENSE">[alternativer Link]</a><br />
+<br />
+
+<a target="_blank" href="https://github.com/overflowerror/SIS">SIS auf github</a><br />
+
+<h2>3rd Party Code</h2>
+
+Für dieses Projekt wurden verschiedener Fremdcode verwendet.<br />
+<ul>
+	<li>
+		<a target="_blank" href="http://www.fpdf.org/">FPDF</a> 
+	</li>
+	<li>
+		<a target="_blank" href="http://www.itnewb.com/tutorial/Creating-the-Smooth-Scroll-Effect-with-JavaScript">Smooth-Scroll</a> <sup>1</sup>
+	</li>
+</ul>
+
+<sup>1</sup>) Dieser Fremdcode wurde an die Gegebenheiten angepasst.
 
 <a name="privacy" id="privacy"></a>
 <h1>Datenschutz</h1>
@@ -159,7 +202,7 @@ Mach dir keine Hoffnungen, wir sind die NSA...<br />
 <a name="terms" id="terms"></a>
 <h1>Nutzungsbedingungen</h1>
 
-Wir verwenden deinen Daten... MUAHAHAHAHA... *hust*<br />
+Wir verwenden deine Daten... MUAHAHAHAHA... *hust*<br />
 
 <?php
 	pageFooter();
