@@ -30,7 +30,7 @@
 				top.location.replace(document.location);
 			}
 		</script>
-		<title><?php echo $name ?></title>
+		<title><?php echo $headerText ?></title>
 		<link rel="stylesheet" href="<?php echo RELATIVE_ROOT; ?>/data/styles/menu.css" />
 		<script src="<?php echo RELATIVE_ROOT; ?>/data/scripts/menu.js"></script>
 		<script src="<?php echo RELATIVE_ROOT; ?>/data/scripts/miscellaneous.js"></script>
