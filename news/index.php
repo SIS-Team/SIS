@@ -24,14 +24,13 @@ $result = selectAll("news",$where,"");	//gesamte News-Tabelle abfragen wo die Ab
 while ($row = mysql_fetch_object($result)) {
 		$news[] = $row;
 }
-$date = CaptureDate("");  //aktuelles Datum abfragen
-echo "<h1><u> ".$date."</u></h1> </br>"; 
+$date = date("Y-m-d");  //aktuelles Datum abfragen
+echo "<h1><u> ".str_replace("-",".",$date)."</u></h1> </br>"; 
 if(isset($news)){
 	for($i = 0;$i < count($news);$i++)
 	{ 
 		$startDate = $news[$i]->startDay;		//Startdatum abfragen
 		$endDate = $news[$i]->endDay;		//Enddatum abfragen
-	 
 	 	if(($startDate <= $date) && ($endDate >= $date) && ($news[$i]->display ==1)){ //nur wenn aktuelles Datum zwischen Start- und Enddatum 
 			echo "<h2>" . $news[$i]->title . "</h2>";
 	  		echo $news[$i]->text;
