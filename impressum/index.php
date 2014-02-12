@@ -9,6 +9,7 @@
 	include_once(ROOT_LOCATION . "/modules/general/Main.php");
 
 	pageHeader("Impressum","main");
+	
 ?>
 <a name="top" id="top"></a>
 Höhere Technische Bundes Lehr- und Versuchsanstalt Anichstraße<br />
