@@ -29,7 +29,6 @@ if(isset($_POST['save']) && $_POST['save'] !="") {
 	news($isAdmin);
 }
 
-
 pageHeader("Formular","main");
 
 //ID,title,text,startDay,endDay
@@ -37,10 +36,11 @@ if($isAdmin) {
 	$fields = array(
 		array( "ID", 			"",			 							"hidden", 	"",		"",		"",					""),
 		array( "title", 		"Titel: ", 								"text", 	"8",	"",		"",					""),
-		array( "text", 			"Text: ",								"textarea", "20",	"5",	"",					""),	
+		array( "text", 			"Text: ",								"textarea", "20",	"5",	"",					""),
+		array( "secShort", 		"Abteilung: ",							"dropdown", "",		"",		"",					""),	
 		array( "startDay",		"Anzeigebeginn-Datum: (YYYY-MM-DD) ",	"text",		"10",	"",		"",					""),
 		array( "endDay",		"Anzeigeend-Datum: (YYYY-MM-DD)",		"text",		"10",	"",		"",					""),
-		array( "display",					"Anzeigen",					"checkbox",	"",		"",		"",					""),
+		array( "display",		"Anzeigen",								"checkbox",	"",		"",		"",					""),
 	);
 }
 else {
@@ -52,9 +52,10 @@ else {
 		array( "endDay",		"Anzeigeend-Datum: (YYYY-MM-DD)",		"text",		"10",	"",		"",					""),
 	);
 }
-	
 if($isAdmin){
-	$result = selectAll("news","","");
+ $sql ="SELECT `news`.`ID`, `title`, `text`, `startDay` , `endDay`, `display`, `sections`.`short` AS secShort FROM `news` LEFT JOIN `sections` ON `news`.`sectionFK`= `sections`.`ID`";
+	$result = mysql_query($sql);
+	echo mysql_error();
 	while ($row = mysql_fetch_array($result)){	//Fügt solange eine neue Formularzeile hinzu, solange ein Inhalt zur Verfügung steht
 	form_new($fields,$row);		//Formular wird erstellt
 	}
@@ -66,9 +67,8 @@ pageFooter();
 function news($Admin)
 {
 	$post= $_POST;
-
 	unset($post["save"]);
-	$data =array("ID"=>"","title"=>"","text"=>"","startDay"=>"","endDay"=>"","display"=>"");
+	$data =array("ID"=>"","title"=>"","text"=>"","startDay"=>"","endDay"=>"","display"=>"","sectionFK"=>"");
 	$data["ID"]=$post["ID"];
 	$data["title"]=mysql_real_escape_string(htmlspecialchars($post["title"]));
 	$data["text"]=mysql_real_escape_string(htmlspecialchars($post["text"]));
@@ -90,12 +90,25 @@ function news($Admin)
 	else {
 		$data["display"]=0;
 	}
+	if(!empty($post["secShort"])){
+	$sql = "SELECT ID FROM sections WHERE short = '" .$post["secShort"]."'";
+	$section_result  = mysql_query($sql);
+		while ($row = mysql_fetch_object($section_result)) {
+			$section = $row;
+		}
+	$data["sectionFK"] = $section->ID;
+	}
+	else {
+	$data["sectionFK"]=0;
+	}
 	if(empty($post["delete"])){
 		saveupdate($data,"news");
+		echo "done";
 	}
 	else {
 		delete($data["ID"],"news");
  	}
+
  }
 
 //von http://www.selfphp.de/kochbuch/kochbuch.php?code=17
