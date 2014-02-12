@@ -10,6 +10,7 @@
 
 	pageHeader("Impressum","main");
 ?>
+<a name="top" id="top"></a>
 Höhere Technische Bundes Lehr- und Versuchsanstalt Anichstraße<br />
 Anichstraße 26 - 28<br />
 A-6020 Innsbruck<br />
@@ -148,14 +149,14 @@ VL Engelbert GRUBER<br />
 
 Wenn es dich interessiert: <a href="https://github.com/overflowerror/SIS">SIS auf github</a><br />
 
-<a name="privacy"></a>
+<a name="privacy" id="privacy"></a>
 <h1>Datenschutz</h1>
 
 Mach dir keine Hoffnungen, wir sind die NSA...<br />
 
 // TODO <br />
 
-<a name="terms"></a>
+<a name="terms" id="terms"></a>
 <h1>Nutzungsbedingungen</h1>
 
 Wir verwenden deinen Daten... MUAHAHAHAHA... *hust*<br />

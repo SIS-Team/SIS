@@ -113,10 +113,18 @@ var openLink = function(link) {
 		return;
 	}
 	animation.open();
-	document.getElementById("innerWindow").innerHTML = "<iframe src='" + link + "'>Ihr Browser unterstützt keine iFrames, drücken Sie bitte <a href='" + link + "'>hier</a></iframe>";
-	document.getElementById("innerWindow").getElementsByTagName("iframe")[0].onload = function () {
-		document.getElementById("innerWindow").getElementsByTagName("iframe")[0].contentWindow.document.getElementById("closeLink").href = "javascript:parent.closeLink();";
-	}
+	link = link.split("#")
+	document.getElementById("innerWindow").innerHTML = "<iframe src='" + link[0] + "'>Ihr Browser unterstützt keine iFrames, drücken Sie bitte <a href='" + link.join("#") + "'>hier</a></iframe>";
+	var tmp;
+	eval('tmp = function () {\
+		var frame = document.getElementById("innerWindow").getElementsByTagName("iframe")[0].contentWindow;\
+		' + ((link.length > 1) ? 'frame.scope = frame;\
+		frame.setTimeout(function() {\
+			frame.smoothScroll("' + link[1] + '");\
+		}, 500);' : "") + '\
+		frame.document.getElementById("closeLink").href = "javascript:parent.closeLink()";\
+	}');
+	document.getElementById("innerWindow").getElementsByTagName("iframe")[0].onload = tmp;
 }
 
 var hoverLink = function(half, row) {
