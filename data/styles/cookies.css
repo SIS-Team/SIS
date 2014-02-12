@@ -124,3 +124,14 @@ input {
 input:hover {
 	background-color: #ddd;
 }
+
+#allContainer {
+	overflow: hidden;
+	min-width: 1200px;
+	min-height: 620px;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0px;
+	left: 0px;
+}
