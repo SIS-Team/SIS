@@ -112,6 +112,18 @@ var openLink = function(link) {
 		animation.close();
 		return;
 	}
+	
+	var menu = link.split("?");
+	if (menu[1]) {
+		menu = menu[1].split("&amp;");
+		for (var i = 0; i < menu.length; i++) {
+			if (menu[i] == "menu") {
+				location.href = link;
+				return;
+			}
+		}
+	}
+	
 	animation.open();
 	link = link.split("#")
 	document.getElementById("innerWindow").innerHTML = "<iframe src='" + link[0] + "'>Ihr Browser unterstützt keine iFrames, drücken Sie bitte <a href='" + link.join("#") + "'>hier</a></iframe>";

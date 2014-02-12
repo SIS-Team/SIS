@@ -25,7 +25,7 @@
 	$buttons[2]['svg'] = ROOT_LOCATION . "/data/images/data-input/absentees.svg";
 	$buttons[2]['text'] = "Fehlende eintragen";
 	$buttons[2]['url'] = RELATIVE_ROOT . "/backend/absentees/?noJS" . (isset($_GET['noMobile']) ? "&noMobile" : "");
-	$buttons[2]['jsurl'] = RELATIVE_ROOT . "/backend/absentees/?js";
+	$buttons[2]['jsurl'] = RELATIVE_ROOT . "/backend/absentees/?js&menu";
 
 	$buttons[3]['displayed'] = true;
 	$buttons[3]['enabled'] = $buttons[2]['enabled'];
@@ -46,7 +46,7 @@
 		$add .= "?section=E";
 
 	$buttons[3]['url'] = RELATIVE_ROOT . "/backend/substitudes/" . $add . (empty($add) ? "?" : "&") . "noJS" . (isset($_GET['noMobile']) ? "&noMobile" : "");
-	$buttons[3]['jsurl'] = RELATIVE_ROOT . "/backend/substitudes/" . $add . (empty($add) ? "?" : "&") . "js";
+	$buttons[3]['jsurl'] = RELATIVE_ROOT . "/backend/substitudes/" . $add . (empty($add) ? "?" : "&") . "js&menu";
 
 	$buttons[5]['displayed'] = true;
 	$buttons[5]['enabled'] = $_SESSION['rights']['root'] || $_SESSION['rights']['N'] || $_SESSION['rights']['W'] || $_SESSION['rights']['E'] || $_SESSION['rights']['M'] || $_SESSION['rights']['news'];
@@ -60,7 +60,7 @@
 	$buttons[6]['svg'] = ROOT_LOCATION . "/data/images/data-input/administration.svg";	
 	$buttons[6]['text'] = "Administration";		
 	$buttons[6]['url'] = RELATIVE_ROOT . "/backend/administration/?noJS" . (isset($_GET['noMobile']) ? "&noMobile" : "");
-	$buttons[6]['jsurl'] = RELATIVE_ROOT . "/backend/administration/?js";
+	$buttons[6]['jsurl'] = RELATIVE_ROOT . "/backend/administration/?js&menu";
 
 	generateMenu();
 
