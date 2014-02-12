@@ -32,6 +32,10 @@ Springe zu:
 	</li>
 </ul>
 
+<br />
+<br />
+<br />
+
 Höhere Technische Bundes Lehr- und Versuchsanstalt Anichstraße<br />
 Anichstraße 26 - 28<br />
 A-6020 Innsbruck<br />
