@@ -23,6 +23,9 @@
 				throw new Exception("session exists");
 			}
 		}
+		public function exists() {
+			return isset($_SESSION['vSession'][$this->name]);
+		}
 		public function setAttribute($name, $value) {
 			$_SESSION['vSession'][$this->name][$name] = $value;
 		}
