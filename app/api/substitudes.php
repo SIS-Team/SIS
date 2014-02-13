@@ -3,14 +3,14 @@
 	include(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
 	//die nächste datei würde dei db connect ersetzen
 	include(ROOT_LOCATION . "/modules/general/Connect.php");
-	include(ROOT_OCATION . "/modules/general/SessionManager.php");			//Stellt die select-Befehle zur Verfügung
+	include(ROOT_LOCATION . "/modules/general/SessionManager.php");			//Stellt die select-Befehle zur Verfügung
 
 	header('Content-Type: application/javascript; charset=UTF-8');	
 	
 
 	
 	
-
+	//echo "Test"
 	//echo "console.log(".print_r($_SESSION).");";
 	$class = $_SESSION['class'];
 	$id = $_SESSION['id'];
