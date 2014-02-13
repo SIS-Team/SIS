@@ -1,17 +1,21 @@
+
+<!-------------------------------------------------->
+<!--Zuerst wird der PHP-Teil vom Server ausgeführt-->
+<!-------------------------------------------------->
+
 <?php
-	include("../../config.php");
-	include(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
-	//die nächste datei würde dei db connect ersetzen
-	include(ROOT_LOCATION . "/modules/general/Connect.php");
-	include(ROOT_LOCATION . "/modules/general/SessionManager.php");			//Stellt die select-Befehle zur Verfügung
+
+ 	include("../../config.php");
+    include(ROOT_LOCATION . "/modules/database/selects.php");		//Stellt die select-Befehle zur Verfügung
+
+    include(ROOT_LOCATION . "/modules/general/Connect.php");		//Stellt Verbindung mit der Datenbank her
+    include(ROOT_LOCATION . "/modules/general/SessionManager.php");	//SessionManager um Sessions für die App-Nutzung zu verwenden
+
 
 	header('Content-Type: application/javascript; charset=UTF-8');	
 	
 
-	
-	
-	//echo "Test"
-	//echo "console.log(".print_r($_SESSION).");";
+	//Die Session und die Klasse des Nutzers werden bestimmt 
 	$class = $_SESSION['class'];
 	$id = $_SESSION['id'];
 	$name = $_SESSION['name'];
@@ -21,30 +25,35 @@
 	$date = strftime("%Y-%m-%d");
 
 
-	if(!$_SESSION['isTeacher'])
+
+	if(!$_SESSION['isTeacher'])	//Wenn Schüler dann alle Einträge der selben Klasse
 	{
 		$where = "classes.name='".$class."' AND time >='".$date."'";
 		echo "var actualClass = '$class';\n";
 	}
-	else
+	else	//ansonsten(also Lehrer) alle Einträge des selben Lehrers
 	{
-		$where = "teachers.short='".$id."'";
+	{
+		$where = "newTeacher.short='".$id."' AND time >='".$date."'";
+
 		echo "var teacher = '$name';\n";
 	}
 
-
+	//Einträge werden aus Datenbank ausgelesen
 	$substitude_sql = selectSubstitude($where,"substitudes.time, hoursStart.hour");	
-	$substitudes = array();
+	$substitude = array();
 	while($substitude = mysql_fetch_array($substitude_sql)) {	//durchlauft die Schleife so oft wie es Datensätze gibt
 		$substitudes[]=$substitude;
 	}
-	$substitudes = json_encode($substitudes);
-
-	//echo "alert($lessons);";
-	echo "var subsObject = JSON.parse('" . $substitudes . "');\n";
+	$substitudes = json_encode($substitudes);	//die Daten aus der Datenbank werden in ein JSON-Objekt umgewandelt, um die Nutzung der Daten mit JS zu vereinfachen
+	
+	echo "var subsObject = JSON.parse('" . $substitudes . "');\n";	//echo damit diese Zeile in der geladenen JS-Skript Datei auch dasteht
 
 ?>
 
+<!---------------------------------------------------------------------->
+<!--Danach wird der JS-Teil geladen und lokal auf dem Gerät ausgeführt-->
+<!---------------------------------------------------------------------->
 
 $( document ).ready(function() {
 
@@ -55,16 +64,17 @@ $( document ).ready(function() {
 	for(aSubstitude in subsObject){					
 		var substitude = subsObject[aSubstitude];
 
-		/*console.log("startHour: " + substitude.startHour);
-		console.log("Hour: " + j)*/
+		console.log(substitude.subject);	//Darstellung der Daten in der Browserkonsole zur Überprüfung
+		
 		i = substitude.startHour;
-		if(j == 1)
+		if(j == 1)	//Falls mehrere Stunden mit der selben Startstunde(z.B. Doppelstunden) auftreten
 			iOld = i;
 
-		var newTR = document.createElement("tr");
-		newTR.id = "Supplierung";
+		va.r newTR = document.createElement("tr");
+		newTRid = "Supplierung";
 		document.getElementById("Tabelle").appendChild(newTR);
-								
+		
+		//Eine Zeile aus der Supplierplantabelle wird erzeugt und dargestellt						
 		var newTD = document.createElement("td");
 		newTD.id = i + j + "1";
 		newTR.appendChild(newTD);
@@ -82,9 +92,7 @@ $( document ).ready(function() {
 		newTR.appendChild(newTD);
 		
 		
-		//var i = lesson.startHour + j;			
-		//sdocument.write(lesson.seName);
-		console.log(i + j + "1");
+		//Der Inhalt wird in die Zeile eingetragen
 		document.getElementById(i + j + "1").innerHTML=substitude.time;
 		document.getElementById(i + j + "2").innerHTML=substitude.startHour;
 		document.getElementById(i + j + "3").innerHTML=substitude.suShort;
@@ -94,5 +102,5 @@ $( document ).ready(function() {
 		if(i != iOld)
 			j = 1;
 	}
-				
+
 });
