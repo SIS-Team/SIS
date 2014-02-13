@@ -2,6 +2,8 @@
 include_once("../config.php");	 
 require_once(ROOT_LOCATION . "/modules/external/fpdf/fpdf.php");
 include_once(ROOT_LOCATION . "/modules/general/Connect.php");				//Stellt das Design zur Verfügung
+include_once(ROOT_LOCATION . "/modules/general/SessionManager.php");
+if(!($_SESSION['loggedIn']))  exit();//die("Critical Error </br> Bist du sicher, dass du angemeldet bist?"); //Kontrolle ob angemeldet
 
 $sql = "SELECT 
 `su`.`short` AS suShort,
