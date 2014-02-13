@@ -51,7 +51,7 @@
 			$query .= "UPDATE `monitors` SET ";
 
 			if (!empty($_POST['text'])) {
-				$query .= "`text`='" . mysql_real_escape_string($_POST['text']) . "' ";
+				$query .= "`text`='" . mysql_real_escape_string(htmlspecialchars($_POST['text'])) . "' ";
 				if (!empty($_POST['room']) || !empty($_POST['section']) || !empty($_POST['mode']) || !empty($_FILES['file']['name']) || !empty($_POST['displayMode']) || !empty($_POST['displayOff']) || !empty($_POST['displayOn']))
 					$query .= ", ";
 			}
