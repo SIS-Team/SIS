@@ -21,13 +21,14 @@
 	$seperators["sidebar"] = "&sidebar;";
 	$seperators["root"] = "&root;";
 	$seperators["mobile"] = "&mobile;";
+	$seperators['js'] = "&js;";
 
 	/*
 	 * Läd die Design Datei und splittet sie nach dem seperator "main" auf.
 	 * Parameter: $filename - Dateiname als String
 	 */
 	function getDesignFile($filename) {
-		global $siteContents, $seperators;
+		global $siteContents, $seperators, $_GET;
 		$handle = fopen($filename, "r");
 		$content = "";
 		
@@ -38,7 +39,14 @@
 		}
 	
 		$content = str_replace($seperators['root'], RELATIVE_ROOT, $content);
-
+		if (isset($_GET['js']))
+			$js = "true";
+		else
+			$js = "false";
+			
+		$content = str_replace($seperators['js'], $js, $content);
+			
+			
 		$tmp = strpos($content, $seperators["main"]);
 		$siteContents["header"] = substr($content, 0, $tmp);
 		$siteContents["footer"] = substr($content, $tmp + strlen($seperators["main"]));
