@@ -80,7 +80,7 @@ printf("<script language=\"javascript\" type=\"text/javascript\" src=\"%s/data/s
 $date = dateChange($date);		//Datumsauswahl erzeugen
 $fieldsRow1[5][5] = $date;	//Standartdatum ins Formular schreiben
 
-$where = "substitudes.time = '".$date."' AND sections.short = '".$section."'";		//Filter
+$where = "substitudes.time = '".$date."' AND sections.short = '".$section."' AND substitudes.display = 1";		//Filter
 $sort = "classes.name, hoursStart.hour";		//Sortierung nach dem Klassenname und der Startstunde
 
 $result = selectSubstitude($where,$sort);			//Rückgabewert des Selects
