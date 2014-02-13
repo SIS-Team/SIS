@@ -33,7 +33,6 @@
 	}
 	else	//ansonsten(also Lehrer) alle Einträge des selben Lehrers
 	{
-	{
 		$where = "newTeacher.short='".$id."' AND time >='".$date."'";
 
 		echo "var teacher = '$name';\n";
@@ -70,7 +69,7 @@ $( document ).ready(function() {
 		if(j == 1)	//Falls mehrere Stunden mit der selben Startstunde(z.B. Doppelstunden) auftreten
 			iOld = i;
 
-		va.r newTR = document.createElement("tr");
+		var newTR = document.createElement("tr");
 		newTRid = "Supplierung";
 		document.getElementById("Tabelle").appendChild(newTR);
 		
