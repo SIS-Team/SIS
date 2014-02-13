@@ -113,9 +113,8 @@ if($displaytyp == "modificated"){
 	{
 		$hour = $substitudes[$j]['startHour'];
 		$day =  $substitudes[$j]['weekdayShort'];
-		if($substitudes[$j]['hidden'] == 1){
+		if($substitudes[$j]['hidden'] == 1 ){
 			$hours[$hour][$day]->deleted = true;
-			$test = $hours[$substitudes[$j]['startHour']][$day]->suShort;
 			$hours[$substitudes[$j]['startHour']][$day]->suShort = str_replace($substitudes[$j]['suShort'],"<span style=\"color:#FF0000\">".$substitudes[$j]['suShort']."</span>",$hours[$substitudes[$j]['startHour']][$day]->suShort);
 
 		}
@@ -163,14 +162,14 @@ for ($i = $tableBegin; $i < $tableEnd; $i++) {
 					echo "<td style = \"color : #00FF00\">";
 				}
 				else{
-					 echo "<td>";
-				
-					 
+					 echo "<td>";					 
 				}
 			
 			
-			 
-			 echo $hours[$i][$days[$j]]->suShort ."&#160;</td>";	//gibt 	Fach aus
+			 if(isset($hours[$i][$days[$j]]->deleted) && $hours[$i][$days[$j]]->deleted== true){
+				 echo str_replace($substitudes[$j]['suShort'],"<span style=\"color:#FF0000\">".$substitudes[$j]['suShort']."</span>",$hours[$i][$days[$j]]->suShort);}
+			 else { echo $hours[$i][$days[$j]]->suShort;}
+			 echo "</td>";
 			 	if (isset($hours[$i][$days[$j]])) {
 					if(($hours[$i][$days[$j]]->endHour) > $i) {//kopiert aktuelle Stunde in nächste Stunde, wenn mehr als eine Stunde nacheinander stattfindet
 						$hours[$i+1][$days[$j]] = NULL;
