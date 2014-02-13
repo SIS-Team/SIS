@@ -25,6 +25,14 @@ if (!($_SESSION['rights']['root'] || $_SESSION['rights']['N'] || $_SESSION['righ
 if(!empty($_POST['save']) && $_POST['save']!="")
 	substitudes();
 
+if(empty($_GET['section']) && empty($_POST['section']))
+	exit();
+else if($_GET['section']!="")
+	$section = $_GET['section'];
+else if($_POST['section']!="")
+	$section = $_POST['section'];
+
+
 if (empty($_POST["date"]) && empty($_POST['time'])) {		//wenn nichts zur√ºckgegeben wird, dann heute
 	$date = strftime("%Y-%m-%d");
 }
@@ -35,7 +43,7 @@ else if(empty($_POST['date'])){								//sonst zur√ºckgegebenes Datum
 	$date = $_POST["time"];
 }
 
-
+echo $section;
 //Seitenheader
 pageHeader("Supplierungen eintragen","main");
 
@@ -72,16 +80,16 @@ printf("<script language=\"javascript\" type=\"text/javascript\" src=\"%s/data/s
 $date = dateChange($date);		//Datumsauswahl erzeugen
 $fieldsRow1[5][5] = $date;	//Standartdatum ins Formular schreiben
 
-$where = "substitudes.time = '".$date."'";		//Filter
+$where = "substitudes.time = '".$date."' AND sections.short = '".$section."'";		//Filter
 $sort = "classes.name, hoursStart.hour";		//Sortierung nach dem Klassenname und der Startstunde
 
 $result = selectSubstitude($where,$sort);			//R¸ckgabewert des Selects
 
 while ($row = mysql_fetch_array($result)){	//F¸gt solange eine neue Formularzeile hinzu, solange ein Inhalt zur Verf¸gung steht
-	form_substitudes($fieldsRow1,$fieldsRow2 ,$row);		//Formular wird erstellt
+	form_substitudes($fieldsRow1,$fieldsRow2 ,$row,$section);		//Formular wird erstellt
 }
 
-form_substitudes($fieldsRow1,$fieldsRow2,false);			//Formular f¸r einen neuen Eintrag
+form_substitudes($fieldsRow1,$fieldsRow2,false,$section);			//Formular f¸r einen neuen Eintrag
 
 //Seitenfooter
 pageFooter();

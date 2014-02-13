@@ -253,11 +253,11 @@ printf("</table>\n");
 }
 
 
-function form_substitudes($fieldRow1,$fieldRow2,$content)
+function form_substitudes($fieldRow1,$fieldRow2,$content,$section)
 {	
 
 printf("<table>\n");	//Tabellen Tag auf
-	printf("<form method=\"post\">\n");	//Formular Anfang Tag
+	printf("<form action=\"?section=%s\" method=\"post\">\n",$section);	//Formular Anfang Tag
 		printf("<tr>\n");	//Zeilen 	Tag auf
   			//FÃƒÂ¯Ã‚Â¿Ã‚Â½r jeden Eintrag im Array field einmal diese Schleife durchlaufen
 			foreach($fieldRow1 as $f) {	
