@@ -28,6 +28,7 @@
 		}
 		$con = ldap_connect($host);
 		$ok  = ldap_bind($con, $dn, $pass);
+		ldap_unbind();
 		return $ok;
 	}
 
@@ -54,8 +55,12 @@
 			return $ent;
 		}
 		$con = ldap_connect($host);
-		$ok  = ldap_bind($con, $user, $passwd);
-		$res = ldap_search($con, "o=HTLinn", "cn=" . $cn);
+		
+		// temporär, weil der LDAP-Benutzer keine Rechte hat
+		//$ok  = ldap_bind($con, $user, $passwd);
+		
+		$res = ldap_search($con, "o=SIS", "cn=" . $cn, 
+			array("groupmembership", "ou", "givenname", "sn", "initials"), 0, 0, 0, LDAP_DEREF_ALWAYS);
 		$ent = ldap_get_entries($con, $res);	
 	
 		if (!isset($ent[0])) {
