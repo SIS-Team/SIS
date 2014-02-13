@@ -47,7 +47,7 @@ echo $section;
 //Seitenheader
 pageHeader("Supplierungen eintragen","main");
 
-$dropDown=array("Classes","Subjects","Teachers","Rooms");
+$dropDown=array("ClassesSub","Subjects","Teachers","Rooms");
 include_once(ROOT_LOCATION . "/modules/form/dropdownSelects.php");		//Stellt die Listen für die Dropdownmenüs zur Verfügung
 
 

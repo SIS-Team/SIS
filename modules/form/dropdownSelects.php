@@ -37,6 +37,12 @@ if(array_search("Classes",$dropDown)!==false){
 	$temp = mysql_query("SELECT name FROM classes WHERE invisible = 'FALSE' ");
 	$selectClasses = create($temp,"clName");
 }
+//Classes nur Abteilung
+if(array_search("ClassesSub",$dropDown)!==false){
+	$temp = mysql_query("SELECT classes.name FROM classes INNER JOIN sections ON sections.ID = classes.sectionFK WHERE classes.invisible = 'FALSE' AND sections.short = '".$section."'");
+	$selectClasses = create($temp,"clName");
+}
+
 //Days
 if(array_search("Days",$dropDown)!==false){
 	$selectDays = array(
