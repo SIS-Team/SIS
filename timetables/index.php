@@ -41,14 +41,14 @@ echo "<form  method = \"post\">";
 if(!isset($_POST['displaytyp'])) $displaytyp = "modificated";
 else $displaytyp = $_POST['displaytyp'];
 if($displaytyp == "normal"){
-	echo "<input type =\"radio\" name = \"displaytyp\" value = \"normal\" checked>normal";
-	echo "<input type =\"radio\" name = \"displaytyp\" value = \"modificated\">modifiziert";
+	echo "<input type =\"radio\" name = \"displaytyp\" onclick= \"this.form.submit()\" value = \"normal\" checked>normal";
+	echo "<input type =\"radio\" name = \"displaytyp\" onclick= \"this.form.submit()\" value = \"modificated\">modifiziert";
 }
 else {
-	echo "<input type =\"radio\" name = \"displaytyp\" value = \"normal\">normal";
-	echo "<input type =\"radio\" name = \"displaytyp\" value = \"modificated\" checked>modifiziert";
+	echo "<input type =\"radio\" name = \"displaytyp\" onclick= \"this.form.submit()\" value = \"normal\">normal";
+	echo "<input type =\"radio\" name = \"displaytyp\" onclick= \"this.form.submit()\" value = \"modificated\" checked>modifiziert";
 } 
-echo "<input type =\"submit\" value=\"Anzeige &auml;ndern\">"; 
+echo "<noscript><input type =\"submit\" value=\"Anzeige &auml;ndern\"></noscript>"; 
 echo "</form>";
 
 echo "<div class ='timetable_column'>";	
