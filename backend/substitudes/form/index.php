@@ -18,19 +18,18 @@ include_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die se
 include_once(ROOT_LOCATION . "/modules/database/inserts.php");			//Stellt die insert-Befehle zur Verfügung
 include_once(ROOT_LOCATION . "/modules/other/dateChange.php");			//Stell die Funktion für die Datumsauswahl zur VerfÃ¼gung
 
-if (!($_SESSION['rights']['root'] || $_SESSION['rights']['N'] || $_SESSION['rights']['W'] || $_SESSION['rights']['E'] || $_SESSION['rights']['M']))
-	exit();
-
-
-if(!empty($_POST['save']) && $_POST['save']!="")
-	substitudes();
-
 if(empty($_GET['section']) && empty($_POST['section']))
 	exit();
 else if($_GET['section']!="")
 	$section = $_GET['section'];
-else if($_POST['section']!="")
-	$section = $_POST['section'];
+
+
+if (!($_SESSION['rights']['root'] || $_SESSION['rights'][$section]))
+	exit();
+
+if(!empty($_POST['save']) && $_POST['save']!="")
+	substitudes();
+
 
 
 if (empty($_POST["date"]) && empty($_POST['time'])) {		//wenn nichts zurÃ¼ckgegeben wird, dann heute
@@ -43,7 +42,6 @@ else if(empty($_POST['date'])){								//sonst zurÃ¼ckgegebenes Datum
 	$date = $_POST["time"];
 }
 
-echo $section;
 //Seitenheader
 pageHeader("Supplierungen eintragen","main");
 
