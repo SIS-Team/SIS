@@ -1,10 +1,14 @@
 <?php
 include_once("../config.php");	 
 require_once(ROOT_LOCATION . "/modules/external/fpdf/fpdf.php");
-include_once(ROOT_LOCATION . "/modules/general/Connect.php");				//Stellt das Design zur Verfügung
+include_once(ROOT_LOCATION . "/modules/general/Connect.php");			
 include_once(ROOT_LOCATION . "/modules/general/SessionManager.php");
-if(!($_SESSION['loggedIn']))  exit();//die("Critical Error </br> Bist du sicher, dass du angemeldet bist?"); //Kontrolle ob angemeldet
+if(!($_SESSION['loggedIn']))  exit(); //Kontrolle ob angemeldet
 
+$isAdmin = $_SESSION['rights']['E'] || $_SESSION['rights']['N'] || $_SESSION['rights']['W'] || $_SESSION['rights']['M'] || $_SESSION['rights']['root'];
+if(!$isAdmin) exit();
+if(isset($_GET['date']))$date = $_GET['date'];
+else $date = date("Y-m-d");
 $sql = "SELECT 
 `su`.`short` AS suShort,
 `c`.`name` AS className,
@@ -12,7 +16,8 @@ $sql = "SELECT
 `s`.`comment`,
 `sH`.`hour` AS `startHour`,
 `nsH`.`hour` AS `newStartHour`,
-`t`.`display` AS `newTeacher`
+`t`.`display` AS `newTeacher`,
+`se`.`short` AS `section`
 FROM `substitudes` AS `s`
 INNER JOIN `subjects` AS `su` ON `s`.`subjectFK` = `su`.`ID`
 INNER JOIN `lessons` AS `l` ON `s`.`lessonFK` = `l`.`ID`
@@ -21,15 +26,20 @@ INNER JOIN `classes` AS `c` ON `lb`.`classFK` = `c`.`ID`
 INNER JOIN `hours` AS `sH` ON `lb`.`startHourFK` = `sH`.`ID`
 LEFT JOIN `hours` AS `nsH` ON `s`.`startHourFK` = `nsH`.`ID`
 LEFT JOIN `teachers` AS `t` ON `s`.`teacherFK` = `t`.`ID`
+INNER JOIN `sections` AS `se` ON `c`.`sectionFK` = `se`.`ID`
+WHERE `se`.`short` = '".$_SESSION['section']."' AND `time` = '".$date."'
 ORDER BY `startHour`";
-		
 $result = mysql_query($sql);
+echo mysql_error();
 	while($substitude = mysql_fetch_object($result)) {    
  	$substitudes[]=$substitude;
 	}
 
 $pdf = new FPDF();
 $pdf->AddPage();
+$pdf->SetFont('Arial','UI',20);
+$pdf->Cell('150','25','HTL Anichstraße','');
+$pdf->Cell('','25','Abteilung '.$_SESSION['section'],'','1');
 $pdf->SetFont('Arial','',12);
 $pdf->Cell(10,10,'','1');
 $pdf->Cell(40,10,'Klasse','1');
