@@ -68,38 +68,43 @@ $( document ).ready(function() {
 		i = substitude.startHour;
 		if(j == 1)	//Falls mehrere Stunden mit der selben Startstunde(z.B. Doppelstunden) auftreten
 			iOld = i;
+		
+		var start = substitude.startHour;
 
-		var newTR = document.createElement("tr");
-		newTRid = "Supplierung";
-		document.getElementById("Tabelle").appendChild(newTR);
-		
-		//Eine Zeile aus der Supplierplantabelle wird erzeugt und dargestellt						
-		var newTD = document.createElement("td");
-		newTD.id = i + j + "1";
-		newTR.appendChild(newTD);
-		var newTD = document.createElement("td");
-		newTD.id = i + j + "2";
-		newTR.appendChild(newTD);
-		var newTD = document.createElement("td");
-		newTD.id = i + j + "3";
-		newTR.appendChild(newTD);
-		var newTD = document.createElement("td");
-		newTD.id = i + j + "4";
-		newTR.appendChild(newTD);
-		var newTD = document.createElement("td");
-		newTD.id = i + j + "5";
-		newTR.appendChild(newTD);
-		
-		
-		//Der Inhalt wird in die Zeile eingetragen
-		document.getElementById(i + j + "1").innerHTML=substitude.time;
-		document.getElementById(i + j + "2").innerHTML=substitude.startHour;
-		document.getElementById(i + j + "3").innerHTML=substitude.suShort;
-		document.getElementById(i + j + "4").innerHTML=substitude.teShort;
-		document.getElementById(i + j + "5").innerHTML=substitude.comment;
-		j++;
-		if(i != iOld)
-			j = 1;
+		for(;parseInt(start) <= substitude.endHour; start=parseInt(start) + 1)
+		{
+			var newTR = document.createElement("tr");
+			newTRid = "Supplierung";
+			document.getElementById("Tabelle").appendChild(newTR);
+			
+			//Eine Zeile aus der Supplierplantabelle wird erzeugt und dargestellt						
+			var newTD = document.createElement("td");
+			newTD.id = i + j + "1";
+			newTR.appendChild(newTD);
+			var newTD = document.createElement("td");
+			newTD.id = i + j + "2";
+			newTR.appendChild(newTD);
+			var newTD = document.createElement("td");
+			newTD.id = i + j + "3";
+			newTR.appendChild(newTD);
+			var newTD = document.createElement("td");
+			newTD.id = i + j + "4";
+			newTR.appendChild(newTD);
+			var newTD = document.createElement("td");
+			newTD.id = i + j + "5";
+			newTR.appendChild(newTD);
+			
+			
+			//Der Inhalt wird in die Zeile eingetragen
+			document.getElementById(i + j + "1").innerHTML=substitude.time;
+			document.getElementById(i + j + "2").innerHTML=start;
+			document.getElementById(i + j + "3").innerHTML=substitude.suShort;
+			document.getElementById(i + j + "4").innerHTML=substitude.teShort;
+			document.getElementById(i + j + "5").innerHTML=substitude.comment;
+			j++;
+			if(i != iOld)
+				j = 1;
+		}
 	}
 
 });
