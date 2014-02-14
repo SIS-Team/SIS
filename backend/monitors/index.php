@@ -15,6 +15,9 @@
 	include_once("../../config.php");
 	include_once(ROOT_LOCATION . "/modules/general/Main.php");
 	include_once(ROOT_LOCATION . "/modules/monitors/Main.php");
+	include_once(ROOT_LOCATION . "/modules/form/HashGenerator.php");
+	
+	$hashGenerator = new HashGenerator("monitor-form", __FILE__);
 
 	if (!$_SESSION['loggedIn'])
 		exit();
@@ -23,22 +26,25 @@
 
 	// Wenn das Fomular abgeschickt wird
 	if (isset($_POST['sent'])) {
-		/*print_r($_POST);
-		print_r($_FILES['file']);
-		echo "<br /><br /><br />";*/
+		try {
+			$hashGenerator->check();
+		} catch (Exception $e) {
+			header("LOCATION: ?error=7");
+			exit();
+		}
 
 		// Tests, ob alle Parameter vorhanden sind.
 		if (!isset($_POST['monitors'])) {
 			header("LOCATION: ?error=1");
-			die();
+			exit();
 		}
 		if (!isset($_POST['room'])) {
 			header("LOCATION: ?error=2");
-			die();
+			exit();
 		}
 		if (!isset($_POST['mode'])) {
 			header("LOCATION: ?error=3");
-			die();
+			exit();
 		}
 
 		$query = "";
@@ -173,6 +179,8 @@
 		case 6:
 			echo "Die hochgeladene Datei ist gr&ouml;&azlig;er, als die Maximal-Definition in php.ini. Bitte wenden Sie sich an den Administrator.";
 			break;
+		case 7:
+			echo "Das Formular ist nicht mehr aktuell! Bitte versuchen Sie es sp&auml;ter wieder.";
 		default:
 			echo "Unbekannter Fehler: " . htmlspecialchars($_GET['error']);
 			break;
@@ -195,8 +203,13 @@
 	$modes = mysql_query("SELECT `name` FROM `monitorMode`");
 	$displayModes = mysql_query("SELECT `name` FROM `displayMode`");
 	$sections = mysql_query("SELECT `name` FROM `sections`");
+	
+	$hashGenerator->generate();
 ?>
 <form action="?" method="post" enctype="multipart/form-data">
+<?php
+	$hashGenerator->printForm();
+?>
 	<datalist id="rooms">
 <?php
 	// alle Möglichkeiten für die Räume in eine Datalist schreiben
