@@ -67,7 +67,9 @@
 	case "News":
 		$response['modus'] = "News";
 		$today = date("Y-m-d");
-		$sql = "SELECT * FROM `news` WHERE `startDay` <= '" . $today . "' AND `endDay` >= '" . $today . "' AND `display` = 1";
+		$sql = "SELECT * FROM `news` 
+		LEFT JOIN `sections` AS `se` ON `news`.`sectionFK` = `se`.`ID`
+		WHERE `startDay` <= '" . $today . "' AND `endDay` >= '" . $today . "' AND `display` = 1 AND (`se`.`name` = '".$monitor->section."' OR `news`.`sectionFK` = '0')";
 		$result = mysql_query($sql);
 		$response['content'] .= "<table class=\"news\">";
 		while ($row = mysql_fetch_object($result)) {
