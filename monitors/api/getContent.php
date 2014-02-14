@@ -83,13 +83,14 @@
 	/*	$response['modus'] = "Supplierplan";
 		$response['content'] = "Wegen eines Tests des Supplierplans wird hier nicht der Stundenplan angezeigt";
 		$sql = "SELECT 
-		`su`.`short` AS suShort,
-		`c`.`name` AS className,
+		`su`.`short` AS `suShort`,
+		`c`.`name` AS `className`,
 		`s`.`time`,
 		`s`.`comment`,
  		`sH`.`hour` AS `startHour`,
  		`nsH`.`hour` AS `newStartHour`,
- 		`t`.`display` AS `newTeacher`
+ 		`t`.`display` AS `newTeacher`,
+ 		`se`.`name` AS `section`
 		FROM `substitudes` AS `s`
 		INNER JOIN `subjects` AS `su` ON `s`.`subjectFK` = `su`.`ID`
 		INNER JOIN `lessons` AS `l` ON `s`.`lessonFK` = `l`.`ID`
@@ -98,7 +99,8 @@
 		INNER JOIN `hours` AS `sH` ON `lb`.`startHourFK` = `sH`.`ID`
 		LEFT JOIN `hours` AS `nsH` ON `s`.`startHourFK` = `nsH`.`ID`
 		LEFT JOIN `teachers` AS `t` ON `s`.`teacherFK` = `t`.`ID`
-		WHERE `s`.`time` >= '" . date("Y.m.d")."'";
+		INNER JOIN `sections` AS `se` ON `c`.`sectionFK` = `se`.`ID`
+		WHERE `s`.`time` >= '" . date("Y.m.d")."' AND `se`.`name` = '".$monitor->section."'";
 		$result = mysql_query($sql);
 		while ($row = mysql_fetch_object($result)) {
 			$results[] = $row;
@@ -138,7 +140,6 @@
 		
 		$hash .= md5($response['content']);
 		break; */
-		
 		
 		$response['modus'] = "Stundenplan";
 		$sql = "SELECT 
