@@ -1,4 +1,12 @@
 <?php
+	/* /modules/form/HashGenerator.php
+	 * Autor: Buchberger Florian
+	 * 
+	 * Beschreibung:
+	 *	Zum Erstellen, Ausgeben und Prüfen von Hashes
+	 *
+	 */
+
 	include_once(ROOT_LOCATION . "/modules/general/VirtualSessionManager.php");
 
 	
@@ -10,20 +18,24 @@
 		private $virtualSession;
 		public function __construct($name, $id) {
 			$this->name = $name;
-			$this->sessionName = $name;
+			$this->sessionName = $name; // default name
 			$this->id = $id;
 		}
 		public function generate() {
+		
+			// finden eines unbenützten Session-Namens
 			$this->virtualSession = new vSession($this->sessionName);
 			for ($i = 0; $this->virtualSession->exists(); i++) {
 				$this->sessionName = $this->name . $i;
 				$this->virtualSession = new vSession($this->sessionName);
 			}
 			
+			// init vSession
 			$this->virtualSession->init();
 			
 			$this->hash = hash("sha256", time() * rand());
 			
+			// Attribute setzen
 			$this->virtualSession->setAttribute("ID", $this->id);
 			$this->virtualSession->setAttribute("hash", $this->hash);
 			$this->virtualSession->setAttribute("time", time());
@@ -35,6 +47,7 @@
 		public function check() {
 			public $_POST;
 			
+			// Wenn kein SessionName angegeben ist, wird der default Name verwendet
 			if (isset($_POST['sessionName']))
 				$this->sessionName = $_POST['sessionName'];
 				
@@ -53,7 +66,7 @@
 			if ($this->virtualSession->getAttribute("time") < time() - 60*30)
 				throw new Exception("form older than 30 minutes");
 				
-			$this->virtualSession->destroy(); // vSession is not longer used
+			$this->virtualSession->destroy(); // vSession wird nicht mehr benutzt
 			
 			return true;
 		}
