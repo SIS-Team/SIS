@@ -131,7 +131,7 @@ $post=$_POST;
 //print_r($post);
 unset($post["save"]);
 
-$data=array("ID" => "","classFK" => "","startDay" => "","startHourFK" => "","endDay" => "","endHourFK" => "","sure" => "","reason" => "");
+$data=array("ID" => "","classFK" => "","startDay" => "","startHourFK" => "","endDay" => "","endHourFK" => "","reason" => "");
 
 $data["ID"]=$post["ID"];
 $temp = mysql_fetch_array(mysql_query("SELECT ID FROM classes WHERE name='".$post["clName"]."'"));
@@ -144,8 +144,6 @@ $day = weekday($post["endDay"]);
 $data["endDay"]=$post["endDay"];
 $temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".$post["endHour"]."'"));
 $data["endHourFK"]=$temp["ID"];
-if(!empty($post["sure"]))
-	$data["sure"]=true;
 $data["reason"]=htmlspecialchars($post["reason"]);
 
 if(empty($post["delete"]))
@@ -162,7 +160,7 @@ $post=$_POST;
 //print_r($post);
 unset($post["save"]);
 
-$data=array("ID" => "","teacherFK" => "","startDay" => "","startHourFK" => "","endDay" => "","endHourFK" => "","sure" => "","reason" => "");
+$data=array("ID" => "","teacherFK" => "","startDay" => "","startHourFK" => "","endDay" => "","endHourFK" => "","reason" => "");
 
 $data["ID"]=$post["ID"];
 $temp = mysql_fetch_array(mysql_query("SELECT ID FROM teachers WHERE short='".$post["teShort"]."'"));
@@ -175,8 +173,6 @@ $day = weekday($post["endDay"]);
 $data["endDay"]=$post["endDay"];
 $temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".$post["endHour"]."'"));
 $data["endHourFK"]=$temp["ID"];
-if(!empty($post["sure"]))
-	$data["sure"]=true;
 $data["reason"]=htmlspecialchars($post["reason"]);
 
 if(empty($post["delete"]))

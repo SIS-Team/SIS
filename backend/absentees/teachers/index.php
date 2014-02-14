@@ -47,7 +47,6 @@ $fields = array(
 	array( "startHour", "Start-Stunde: ",	"text",		"5",	"",		"",					""),
 	array( "endDay", 	"Endtag: ", 		"text",		"10",	"",		"",					""),
 	array( "endHour", 	"End-Stunde: ", 	"text",		"5",	"",		"",					""),
-	array( "sure", 		"Sicher? ", 		"checkbox",	"",		"",		"",					""),
 	array( "reason", 	"Grund: ", 			"text",		"30",	"",		"",					""),
 	);
 

@@ -148,7 +148,7 @@ function selectLesson($where,$order){
 
 function selectMissingTeacher($where,$order){
 
-  	$sql= "SELECT missingTeachers.ID, teachers.short as teShort, missingTeachers.startDay as startDay, hoursStart.hour as startHour, missingTeachers.endDay as endDay, hoursEnd.hour as endHour, missingTeachers.sure, missingTeachers.reason FROM missingTeachers INNER JOIN teachers ON teachers.ID = missingTeachers.teacherFK INNER JOIN hours as hoursStart ON hoursStart.ID = missingTeachers.startHourFK INNER JOIN hours as hoursEnd ON hoursEnd.ID = missingTeachers.endHourFK";		//Stamm sql-Befehl
+  	$sql= "SELECT missingTeachers.ID, teachers.short as teShort, missingTeachers.startDay as startDay, hoursStart.hour as startHour, missingTeachers.endDay as endDay, hoursEnd.hour as endHour, missingTeachers.reason FROM missingTeachers INNER JOIN teachers ON teachers.ID = missingTeachers.teacherFK INNER JOIN hours as hoursStart ON hoursStart.ID = missingTeachers.startHourFK INNER JOIN hours as hoursEnd ON hoursEnd.ID = missingTeachers.endHourFK";		//Stamm sql-Befehl
 
 	if (!empty($where)) $sql .= " WHERE " . $where; 	//Wenn where Variable gesetzt ist
 	if (!empty($order)) $sql .= " ORDER BY " . $order;	//Wenn order Variable gesetzt ist
@@ -168,7 +168,7 @@ function selectMissingTeacher($where,$order){
 
 function selectMissingClass($where,$order){
 
-  $sql= "SELECT missingClasses.ID, classes.name as clName, missingClasses.startDay as startDay, hoursStart.hour as startHour, missingClasses.endDay as endDay, hoursEnd.hour as endHour, missingClasses.sure, missingClasses.reason FROM missingClasses INNER JOIN classes ON classes.ID = missingClasses.classFK INNER JOIN hours as hoursStart ON hoursStart.ID = missingClasses.startHourFK INNER JOIN hours as hoursEnd ON hoursEnd.ID = missingClasses.endHourFK";	//Stamm sql-Befehl
+  $sql= "SELECT missingClasses.ID, classes.name as clName, missingClasses.startDay as startDay, hoursStart.hour as startHour, missingClasses.endDay as endDay, hoursEnd.hour as endHour, missingClasses.reason FROM missingClasses INNER JOIN classes ON classes.ID = missingClasses.classFK INNER JOIN hours as hoursStart ON hoursStart.ID = missingClasses.startHourFK INNER JOIN hours as hoursEnd ON hoursEnd.ID = missingClasses.endHourFK";	//Stamm sql-Befehl
 
 	if (!empty($where)) $sql .= " WHERE " . $where; 	//Wenn where Variable gesetzt ist
 	if (!empty($order)) $sql .= " ORDER BY " . $order;	//Wenn order Variable gesetzt ist
