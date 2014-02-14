@@ -26,14 +26,20 @@
 		}
 		public function exists() {
 			global $_SESSION;
-			return isset($_SESSION['vSession'][$this->name]);
+			return isset($_SESSION['vSession']) && isset($_SESSION['vSession'][$this->name]);
 		}
 		public function destroy() {
 			global $_SESSION;
 			unset($_SESSION['vSession'][$this->name]);
 		}
+		public function destroyAll() {
+			global $_SESSION;
+			unset($_SESSION['vSession']);
+		}
 		public function setAttribute($name, $value) {
 			global $_SESSION;
+			if (count($_SESSION['vSession']) > 15)
+				$this->deleteOldest();
 			$_SESSION['vSession'][$this->name][$name] = $value;
 		}
 		public function getAttribute($name) {
@@ -43,6 +49,20 @@
 		public function attributeIsset($name) {
 			global $_SESSION;
 			return isset($_SESSION['vSession'][$this->name][$name]);
+		}
+		private function deleteOldest() {
+			global $_SESSION;
+			$oldestKey = false;
+			$last = time() + 1;
+			foreach ($_SESSION['vSession'] as $key => $value) {
+				if ($value['modified'] < $last) {
+					$last = $value['modified'];
+					$oldestKey = $key;
+				}
+			}
+			if (!$oldestKey)
+				return;
+			unset($_SESSION['vSession'][$oldestKey]);
 		}
 	}
 ?>
