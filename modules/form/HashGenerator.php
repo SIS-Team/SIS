@@ -25,7 +25,7 @@
 		
 			// finden eines unbenützten Session-Namens
 			$this->virtualSession = new vSession($this->sessionName);
-			for ($i = 0; $this->virtualSession->exists(); i++) {
+			for ($i = 0; $this->virtualSession->exists(); $i++) {
 				$this->sessionName = $this->name . $i;
 				$this->virtualSession = new vSession($this->sessionName);
 			}
@@ -45,7 +45,7 @@
 			echo '<input type="hidden" name="hash" value="' . $this->hash . '" />';
 		}
 		public function check() {
-			public $_POST;
+			global $_POST;
 			
 			// Wenn kein SessionName angegeben ist, wird der default Name verwendet
 			if (isset($_POST['sessionName']))
@@ -57,7 +57,7 @@
 				throw new Exception("vSession doesn't exist");
 			
 			if (!$this->virtualSession->attributeIsset("ID") || 
-			    ($virtualSession->getAttribute("ID") != $this->id))
+			    ($this->virtualSession->getAttribute("ID") != $this->id))
 				throw new Exception("invalid form id");
 			
 			if (!isset($_POST['hash']) || $this->virtualSession->getAttribute("hash") != $_POST['hash'])

@@ -6,7 +6,9 @@
 	 *	Zum Erstellen Virtueller Sessions
 	 *
 	 */
-	 
+	
+	define("MAX_VSESSIONS", 15);
+	
 	class vSession {
 		private $name;
 		public function __construct($name) {
@@ -16,6 +18,8 @@
 			global $_SESSION;
 			if (!isset($_SESSION['vSession']))
 				$_SESSION['vSession'] = array();
+			if (count($_SESSION['vSession']) > MAX_VSESSIONS)
+				$this->deleteOldest();
 			if (!isset($_SESSION['vSession'][$this->name])) {
 				$_SESSION['vSession'][$this->name] = array();
 				$_SESSION['vSession'][$this->name]['created'] = time();
@@ -38,8 +42,9 @@
 		}
 		public function setAttribute($name, $value) {
 			global $_SESSION;
-			if (count($_SESSION['vSession']) > 15)
+			if (count($_SESSION['vSession']) > MAX_VSESSIONS)
 				$this->deleteOldest();
+			$_SESSION['vSession'][$this->name]['modified'] = time();
 			$_SESSION['vSession'][$this->name][$name] = $value;
 		}
 		public function getAttribute($name) {
