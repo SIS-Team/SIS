@@ -1,4 +1,5 @@
 <?php
+	include("../../config.php");
 	//die nächste datei würde dei db connect ersetzen
 	include(ROOT_LOCATION . "/modules/general/Connect.php");
 	include(ROOT_LOCATION . "/modules/general/SessionManager.php");	
@@ -18,7 +19,7 @@
 				*/
 			}
 
-
+	echo "var response =".$response."\n";
 	$response = json_encode($response);
 	$response = str_replace('\n',' ', $response);
 	$response = str_replace('\r','', $response);
