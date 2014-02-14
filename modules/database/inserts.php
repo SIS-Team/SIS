@@ -23,13 +23,13 @@ $data=array("ID" => "","name" => "","sectionFK" => "","teacherFK" => "","roomFK"
 $data["ID"]=$post["ID"];
 $data["name"]=htmlentities($post["clName"]);
 
-$temp = mysql_fetch_array(mysql_query("SELECT ID FROM sections WHERE short='".$post["seShort"]."'"));
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM sections WHERE short='".mysql_real_escape_string(htmlspecialchars($post["seShort"]))."'"));
 $ok1 = control($post["seShort"],$temp["ID"],"Abteilung");
 $data["sectionFK"] = $temp["ID"];
-$temp = mysql_fetch_array(mysql_query("SELECT ID FROM teachers WHERE short='".$post["teShort"]."'"));
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM teachers WHERE short='".mysql_real_escape_string(htmlspecialchars($post["teShort"]))."'"));
 $ok2 = control($post["teShort"],$temp["ID"],"Lehrer");
 $data["teacherFK"] = $temp["ID"];
-$temp = mysql_fetch_array(mysql_query("SELECT ID FROM rooms WHERE name='".$post["roName"]."'"));
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM rooms WHERE name='".mysql_real_escape_string(htmlspecialchars($post["roName"]))."'"));
 $ok3 = control($post["roName"],$temp["ID"],"Raum");
 $data["roomFK"] = $temp["ID"];
 
@@ -59,7 +59,7 @@ $data["endTime"]=$post["endTime"];
 if(empty($post["delete"]))
 	saveupdate($data,"hours");
 else
-	delete($data["ID"],"hours");
+	deleteID($data["ID"],"hours");
 
 }
 
@@ -74,29 +74,27 @@ $lessonsBaseInsert=array("ID" => "","startHourFK" => "","endHourFK" => "","class
 
 $lessonsInsert["ID"]=$post["ID"];
 
-$temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE hour='".$post["hour"]."' AND weekdayShort='".$post["day"]."'"));
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE hour='".intval($post["hour"])."' AND weekdayShort='".mysql_real_escape_string(htmlspecialchars($post["day"]))."'"));
 $lessonsBaseInsert["startHourFK"] = $temp["ID"];
-$temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE hour='".($post["hour"]+$post["length"]-1)."' AND weekdayShort='".$post["day"]."'"));
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE hour='".intval($post["hour"]+$post["length"]-1)."' AND weekdayShort='".mysql_real_escape_string(htmlspecialchars($post["day"]))."'"));
 $lessonsBaseInsert["endHourFK"] = $temp["ID"];
-$temp = mysql_fetch_array(mysql_query("SELECT ID FROM classes WHERE name='".$post["class"]."'"));
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM classes WHERE name='".mysql_real_escape_string(htmlspecialchars($post["class"]))."'"));
 $lessonsBaseInsert["classFK"] = $temp["ID"];
 $temp = mysql_fetch_array(mysql_query("SELECT ID FROM lessonsBase WHERE startHourFK='".$lessonsBaseInsert["startHourFK"]."' AND classFK='".$lessonsBaseInsert["classFK"]."'"));
 $lessonsBaseInsert["ID"] = $temp["ID"];
 
 
-$temp = mysql_fetch_array(mysql_query("SELECT ID FROM teachers WHERE short='".$post["teShort"]."'"));
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM teachers WHERE short='".mysql_real_escape_string(htmlspecialchars($post["teShort"]))."'"));
 $ok1 = control($post["seShort"],$temp["ID"],"Lehrer");
 $lessonsInsert["teachersFK"] = $temp["ID"];
-$temp = mysql_fetch_array(mysql_query("SELECT ID FROM rooms WHERE name='".$post["roName"]."'"));
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM rooms WHERE name='".mysql_real_escape_string(htmlspecialchars($post["roName"]))."'"));
 $ok2 = control($post["roName"],$temp["ID"],"Raum");
 $lessonsInsert["roomFK"] = $temp["ID"];
-$temp = mysql_fetch_array(mysql_query("SELECT ID FROM subjects WHERE short = '".$post["suShort"]."'"));
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM subjects WHERE short = '".mysql_real_escape_string(htmlspecialchars($post["suShort"]))."'"));
 $ok3 = control($post["suShort"],$temp["ID"],"Fach");
 $lessonsInsert["subjectFK"]=$temp["ID"];
 $lessonsInsert["comment"]=htmlspecialchars($post["comment"]);
-//print_r($lessonsBaseInsert);
-//echo ",";
-//print_r($lessonsInsert);
+
 
 if($lessonsBaseInsert['ID']=="" && ($ok1*$ok2*$ok3) == 1){
 	saveupdate($lessonsBaseInsert,"lessonsBase");
@@ -112,14 +110,12 @@ if(empty($post["delete"]) && ($ok1*$ok2*$ok3) == 1)
 else if(($ok1*$ok2*$ok3) == 1)
 {
 
-$lessonsbaseID=$lessonsInsert["lessonBaseFK"];
-
-$sql="DELETE FROM lessons WHERE lessonBaseFK = '".$lessonsbaseID."'";
-mysql_query($sql);
-$sql="DELETE FROM lessonsBase WHERE ID = '".$lessonsbaseID."'";
-mysql_query($sql);
-
-
+	$lessonsbaseID=$lessonsInsert["lessonBaseFK"];
+	
+	$sql="DELETE FROM lessons WHERE lessonBaseFK = '".$lessonsbaseID."'";
+	mysql_query($sql);
+	$sql="DELETE FROM lessonsBase WHERE ID = '".$lessonsbaseID."'";
+	mysql_query($sql);
 
 }
 
@@ -134,22 +130,22 @@ unset($post["save"]);
 $data=array("ID" => "","classFK" => "","startDay" => "","startHourFK" => "","endDay" => "","endHourFK" => "","reason" => "");
 
 $data["ID"]=$post["ID"];
-$temp = mysql_fetch_array(mysql_query("SELECT ID FROM classes WHERE name='".$post["clName"]."'"));
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM classes WHERE name='".mysql_real_escape_string(htmlspecialchars($post["clName"]))."'"));
 $data["classFK"]=$temp["ID"];
 $day = weekday($post["startDay"]);
 $data["startDay"]=$post["startDay"];
-$temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".$post["startHour"]."'"));
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".intval($post["startHour"])."'"));
 $data["startHourFK"]=$temp["ID"];
 $day = weekday($post["endDay"]);
 $data["endDay"]=$post["endDay"];
-$temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".$post["endHour"]."'"));
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".intval($post["endHour"])."'"));
 $data["endHourFK"]=$temp["ID"];
 $data["reason"]=htmlspecialchars($post["reason"]);
 
 if(empty($post["delete"]))
 	saveupdate($data,"missingClasses");
 else
-	delete($data["ID"],"missingClasses");
+	deleteID($data["ID"],"missingClasses");
 	
 }
 
@@ -163,22 +159,22 @@ unset($post["save"]);
 $data=array("ID" => "","teacherFK" => "","startDay" => "","startHourFK" => "","endDay" => "","endHourFK" => "","reason" => "");
 
 $data["ID"]=$post["ID"];
-$temp = mysql_fetch_array(mysql_query("SELECT ID FROM teachers WHERE short='".$post["teShort"]."'"));
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM teachers WHERE short='".mysql_real_escape_string(htmlspecialchars($post["teShort"]))."'"));
 $data["teacherFK"]=$temp["ID"];
 $day = weekday($post["startDay"]);
 $data["startDay"]=$post["startDay"];
-$temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".$post["startHour"]."'"));
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".intval($post["startHour"])."'"));
 $data["startHourFK"]=$temp["ID"];
 $day = weekday($post["endDay"]);
 $data["endDay"]=$post["endDay"];
-$temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".$post["endHour"]."'"));
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".intval($post["endHour"])."'"));
 $data["endHourFK"]=$temp["ID"];
 $data["reason"]=htmlspecialchars($post["reason"]);
 
 if(empty($post["delete"]))
 	saveupdate($data,"missingTeachers");
 else
-	delete($data["ID"],"missingTeachers");
+	deleteID($data["ID"],"missingTeachers");
 	
 }
 
@@ -192,7 +188,7 @@ $data=array("ID" => "","name" => "","teacherFK" => "");
 
 $data["ID"]=$post["ID"];
 $data["name"]=htmlspecialchars($post["roName"]);
-$temp = mysql_fetch_array(mysql_query("SELECT ID FROM teachers WHERE short='".$post["teShort"]."'"));
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM teachers WHERE short='".mysql_real_escape_string(htmlspecialchars($post["teShort"]))."'"));
 $data["teacherFK"]=$temp["ID"];
 
 if(empty($post["delete"]))
@@ -211,12 +207,11 @@ $data=array("ID" => "","name" => "","short" => "","teacherFK" => "");
 $data["ID"]=$post["ID"];
 $data["name"]=htmlspecialchars($post["seName"]);
 $data["short"]=$post["seShort"];
-$temp = mysql_fetch_array(mysql_query("SELECT ID FROM teachers WHERE short='".$post["teShort"]."'"));
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM teachers WHERE short='".mysql_real_escape_string(htmlspecialchars($post["teShort"]))."'"));
 $data["teacherFK"]=$temp["ID"];
 
 if(empty($post["delete"]))
 	saveupdate($data,"sections");
-	
 }
 
 function subjects(){
@@ -248,7 +243,7 @@ $data=array("ID" => "","move" => "","lessonFK" => "","subjectFK" => "","teacherF
 
 if($post["ID"]!=""){
 
-	$sql="SELECT move,subjectFK,teacherFK,time,roomFK,startHourFK,endHourFK,hidden FROM substitudes WHERE ID = '".$post['ID']."'";
+	$sql="SELECT move,subjectFK,teacherFK,time,roomFK,startHourFK,endHourFK,hidden FROM substitudes WHERE ID = '".intval($post['ID'])."'";
 	$result = mysql_query($sql);
 	$result = mysql_fetch_array($result);
 	
@@ -261,13 +256,10 @@ if($post["ID"]!=""){
 	
 	$IDs[] = $post["ID"];
 	foreach($tempIDs as $i){
-	
-	$IDs[] = $i["ID"];
-	
+		$IDs[] = $i["ID"];	
 	}
 	
 	foreach($IDs as $i){
-	
 		$sql="DELETE FROM substitudes WHERE ID=".$i;
 		mysql_query($sql);
 	}
@@ -277,15 +269,15 @@ if($post["ID"]!=""){
 
 if(!isset($post["delete"]) && $post["delete"]==""){
 	$day = weekday($post["time"]);
-	$temp = mysql_fetch_array(mysql_query("SELECT ID FROM subjects WHERE short='".$post["suShort"]."'"));
+	$temp = mysql_fetch_array(mysql_query("SELECT ID FROM subjects WHERE short='".mysql_real_escape_string(htmlspecialchars($post["suShort"]))."'"));
 	$data["subjectFK"]= $temp["ID"];
-	$temp = mysql_fetch_array(mysql_query("SELECT ID FROM teachers WHERE short='".$post["teShort"]."'"));
+	$temp = mysql_fetch_array(mysql_query("SELECT ID FROM teachers WHERE short='".mysql_real_escape_string(htmlspecialchars($post["teShort"]))."'"));
 	$data["teacherFK"]=$temp["ID"];
-	$temp = mysql_fetch_array(mysql_query("SELECT ID FROM rooms WHERE name='".$post["roName"]."'"));
+	$temp = mysql_fetch_array(mysql_query("SELECT ID FROM rooms WHERE name='".mysql_real_escape_string(htmlspecialchars($post["roName"]))."'"));
 	$data["roomFK"]=$temp["ID"];
-	$temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".$post["startHour"]."'"));
+	$temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".intval($post["startHour"])."'"));
 	$startHour=$temp["ID"];
-	$temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".$post["endHour"]."'"));
+	$temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".intval($post["endHour"])."'"));
 	$endHour=$temp["ID"];
 	$data["time"]=$post["time"];
 	$data["comment"]=htmlspecialchars($post["comment"]);
@@ -294,17 +286,17 @@ if(!isset($post["delete"]) && $post["delete"]==""){
 	if($post["move"]=="move")
 	{
 		$data["move"]=true;
-		$temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".$post["newStartHour"]."'"));
+		$temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".intval($post["newStartHour"])."'"));
 		$data["startHourFK"]=$temp["ID"];
-		$temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".$post["newEndHour"]."'"));
+		$temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".intval($post["newEndHour"])."'"));
 		$data["endHourFK"]=$temp["ID"];
 	
 	}
 		
-	$temp = mysql_fetch_array(mysql_query("SELECT ID FROM classes WHERE name='".$post['clName']."'"));
+	$temp = mysql_fetch_array(mysql_query("SELECT ID FROM classes WHERE name='".mysql_real_escape_string(htmlspecialchars($post['clName']))."'"));
 	$class = $temp['ID'];
 	
-	$sql = "SELECT missingTeachers.teacherFK FROM missingTeachers INNER JOIN hours as hourST ON hourST.ID = missingTeachers.startHourFK INNER JOIN hours as hourEN ON hourEN.ID = missingTeachers.endHourFK INNER JOIN lessons ON missingTeachers.teacherFK = lessons.teachersFK INNER JOIN lessonsBase ON lessonsBase.ID = lessons.lessonBaseFK WHERE missingTeachers.startDay <='".$post['time']."' AND missingTeachers.endDay >='".$post['time']."' AND hourST.hour <='".$post['startHour']."' AND hourEN.hour >='".$post['endHour']."' AND lessonsBase.startHourFK='".$startHour."' AND lessonsBase.endHourFK='".$endHour."' AND lessonsBase.classFK='".$class."'";
+	$sql = "SELECT missingTeachers.teacherFK FROM missingTeachers INNER JOIN hours as hourST ON hourST.ID = missingTeachers.startHourFK INNER JOIN hours as hourEN ON hourEN.ID = missingTeachers.endHourFK INNER JOIN lessons ON missingTeachers.teacherFK = lessons.teachersFK INNER JOIN lessonsBase ON lessonsBase.ID = lessons.lessonBaseFK WHERE missingTeachers.startDay <='".mysql_real_escape_string(htmlspecialchars($post['time']))."' AND missingTeachers.endDay >='".mysql_real_escape_string(htmlspecialchars($post['time']))."' AND hourST.hour <='".intval($post['startHour'])."' AND hourEN.hour >='".intval($post['endHour'])."' AND lessonsBase.startHourFK='".$startHour."' AND lessonsBase.endHourFK='".$endHour."' AND lessonsBase.classFK='".$class."'";
 	$temp = mysql_query($sql);
 	while($missTeacher[] = mysql_fetch_array($temp)){
 	}
@@ -323,10 +315,9 @@ if(!isset($post["delete"]) && $post["delete"]==""){
 			
 		if(empty($post["delete"]))
 			saveupdate($data,"substitudes");
-	
-		
 	}
 }
+
 }
 
 function teachers(){
@@ -340,14 +331,13 @@ $data["ID"]=$post["ID"];
 $data["name"]=htmlspecialchars($post["teName"]);
 $data["short"]=$post["teShort"];
 $data["display"]=htmlspecialchars($post["display"]);
-$temp = mysql_fetch_array(mysql_query("SELECT ID FROM sections WHERE short='".$post["seShort"]."'"));
+$temp = mysql_fetch_array(mysql_query("SELECT ID FROM sections WHERE short='".mysql_real_escape_string(htmlspecialchars($post["seShort"]))."'"));
 $data["sectionFK"] = $temp["ID"];
 if(!empty($post["invisible"]))
 	$data["invisible"]=true;
 
 if(empty($post["delete"]))
-	saveupdate($data,"teachers");
-	
+	saveupdate($data,"teachers");	
 }
 
 
@@ -401,13 +391,13 @@ mysql_query($sql);
 
 }
 
-function delete($ID,$table){
+function deleteID($ID,$table){
 
 $sql="DELETE FROM ".$table." WHERE ID = '".$ID."'";
 mysql_query($sql);
 
 }
-
+/*
 function findFK($post){
 
 print_r($post);
@@ -450,7 +440,7 @@ if(array_search($l,$missing)!==false){
 
 
 
-}*/
+}
 
 
 $sql="SELECT lessons.ID FROM lessons INNER JOIN lessonsBase ON lessonsBase.ID = lessons.lessonBaseFK WHERE lessonsBase.ID='".$lessonsBaseID["ID"]."'";
@@ -463,7 +453,7 @@ if($result["ID"]=="")
 //echo $result["ID"];
 return $result["ID"];
 
-}
+}*/
 
 
 
