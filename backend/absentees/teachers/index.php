@@ -24,11 +24,14 @@ if (!($_SESSION['rights']['root'] || $_SESSION['rights']['N'] || $_SESSION['righ
 if(!empty($_POST['save']) && $_POST['save']!="")
 	missingTeachers();
 
-if (empty($_POST["date"])) {		//wenn nichts zurückgegeben wird, dann heute
+if (empty($_POST["date"]) && empty($_POST['startDay'])) {		//wenn nichts zur�ckgegeben wird, dann heute
 	$date = strftime("%Y-%m-%d");
 }
-else {								//sonst zurückgegebenes Datum
+else if($_POST['date']!=""){								//sonst zur�ckgegebenes Datum
 	$date = $_POST["date"];
+}
+else{
+	$date = $_POST['startDay'];
 }
 
 
@@ -43,7 +46,7 @@ include_once(ROOT_LOCATION . "/modules/form/dropdownSelects.php");		//Stellt die
 $fields = array(
 	array( "ID", 		"",			 		"hidden", 	"",		"",		"",					""),
 	array( "teShort", 	"Lehrer: ", 		"dropdown", "5",	"",		$selectTeachers,	""),
-	array( "startDay", 	"Starttag: ",		"text", 	"10",	"",		"",					""),
+	array( "startDay", 	"Starttag: ",		"text", 	"10",	"",		"",					"readonly=\"true\""),
 	array( "startHour", "Start-Stunde: ",	"text",		"5",	"",		"",					""),
 	array( "endDay", 	"Endtag: ", 		"text",		"10",	"",		"",					""),
 	array( "endHour", 	"End-Stunde: ", 	"text",		"5",	"",		"",					""),
@@ -56,7 +59,7 @@ $fields["2"]["5"] = $date;
 $fields["4"]["5"] = $date;
 
 
-$where = "missingTeachers.endDay >= '".$date."'";
+$where = "missingTeachers.endDay >= '".$date."' AND missingTeachers.startDay <= '".$date."'";
 $sort = " startDay, hoursStart.hour, teachers.short";
 
 $result = selectMissingTeacher($where,$sort);		//RÃ¼ckgabewert des Selects

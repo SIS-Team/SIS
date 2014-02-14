@@ -11,7 +11,7 @@
 	 *  0.2.0:  27. 08. 2013, Handle Marco - Update,Save,delete implementiert
 	 */
 	 
-	include("../../../config.php");
+include("../../../config.php");
 include_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
 include_once(ROOT_LOCATION . "/modules/form/form.php");					//Stell die Formularmasken zur Verfügung
 include_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
@@ -24,13 +24,15 @@ if (!($_SESSION['rights']['root'] || $_SESSION['rights']['N'] || $_SESSION['righ
 if(!empty($_POST['save']) && $_POST['save']!="")
 	missingClasses();
 
-if (empty($_POST["date"])) {		//wenn nichts zurückgegeben wird, dann heute
+if (empty($_POST["date"]) && empty($_POST['startDay'])) {		//wenn nichts zurückgegeben wird, dann heute
 	$date = strftime("%Y-%m-%d");
 }
-else {								//sonst zurückgegebenes Datum
+else if($_POST['date']!=""){								//sonst zurückgegebenes Datum
 	$date = $_POST["date"];
 }
-
+else{
+	$date = $_POST['startDay'];
+}
 //Seitenheader
 pageHeader("Fehlende Klassen","main");
 
@@ -40,7 +42,7 @@ include_once(ROOT_LOCATION . "/modules/form/dropdownSelects.php");		//Stellt die
 $fields = array(
 	array( "ID", 		"",			 		"hidden", 	"",		"",		"",					""),
 	array( "clName", 	"Klasse: ", 		"dropdown", "8",	"",		$selectClasses,		""),
-	array( "startDay", 	"Starttag: ",		"text", 	"10",	"",		"",					""),
+	array( "startDay", 	"Starttag: ",		"text", 	"10",	"",		"",					"readonly=\"true\""),
 	array( "startHour", "Start-Stunde: ",	"text",		"5",	"",		"",					""),
 	array( "endDay", 	"Endtag: ", 		"text",		"10",	"",		"",					""),
 	array( "endHour", 	"End-Stunde: ", 	"text",		"5",	"",		"",					""),
@@ -53,7 +55,7 @@ $fields["2"]["5"] = $date;
 $fields["4"]["5"] = $date;
 
 
-$where="missingClasses.endDay >= '".$date."'";
+$where="missingClasses.endDay >= '".$date."' AND missingClasses.startDay >= '".$date."'";
 $sort = " startDay, hoursStart.hour, classes.name";
 
 $result = selectMissingClass($where,$sort);	//Rückgabewert des Selects
