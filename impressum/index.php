@@ -11,8 +11,6 @@
 	pageHeader("Impressum","main");
 	
 ?>
-<a name="top" id="top"></a>
-
 Springe zu:
 <ul>
 	<li>
