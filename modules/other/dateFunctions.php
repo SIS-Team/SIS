@@ -15,8 +15,8 @@
 function weekday($d) {
 	$days = array("So", "Mo", "Di", "Mi", "Do", "Fr", "Sa");
 	$x = strptime($d, "%Y-%m-%d");
-	// TODO why sprintf ?
-	return sprintf("%s", $days[$x["tm_wday"]]);
+
+	return $days[$x["tm_wday"]];
 }
 
 
@@ -53,20 +53,38 @@ function prevNextDay($d) {
 
 //Datum um eins erhöhen
 function date_increase($d) {
-	$x = strptime($d, "%Y-%m-%d");
-	$y = mktime($x["tm_hour"], $x["tm_min"], $x["tm_sec"], 
-			$x["tm_mon"]+1, $x["tm_mday"]+1, 1900+$x["tm_year"] );
-	return strftime("%Y-%m-%d", $y);
+	do{
+		$x = strptime($d, "%Y-%m-%d");
+		$y = mktime($x["tm_hour"], $x["tm_min"], $x["tm_sec"], 
+				$x["tm_mon"]+1, $x["tm_mday"]+1, 1900+$x["tm_year"] );
+		$d = strftime("%Y-%m-%d", $y);		
+	}while(date("N",strtotime($d))>=6);
+	
+	return $d;
 }
 
 //Datum um eins zurückstellen
 function date_decrease($d) {
-	$x = strptime($d, "%Y-%m-%d");
-	$y = mktime($x["tm_hour"], $x["tm_min"], $x["tm_sec"], 
-			$x["tm_mon"]+1, $x["tm_mday"]-1, 1900+$x["tm_year"] );
-	return strftime("%Y-%m-%d", $y);
+	do{
+		$x = strptime($d, "%Y-%m-%d");
+		$y = mktime($x["tm_hour"], $x["tm_min"], $x["tm_sec"], 
+				$x["tm_mon"]+1, $x["tm_mday"]-1, 1900+$x["tm_year"] );
+		$d = strftime("%Y-%m-%d", $y);		
+	}while(date("N",strtotime($d))>=6);
+	
+	return $d;
 }
 
+//Erh�t so lange, dass das Datum kein Wochenende ist
+function no_weekend($d) {
+	while(date("N",strtotime($d))>=6){
+		$x = strptime($d, "%Y-%m-%d");
+		$y = mktime($x["tm_hour"], $x["tm_min"], $x["tm_sec"], 
+				$x["tm_mon"]+1, $x["tm_mday"]+1, 1900+$x["tm_year"] );
+		$d = strftime("%Y-%m-%d", $y);		
+	}	
+	return $d;
+}
 
 
 

@@ -17,6 +17,7 @@ include_once(ROOT_LOCATION . "/modules/form/form.php");					//Stell die Formular
 include_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
 include_once(ROOT_LOCATION . "/modules/database/inserts.php");					//Stell die Formularmasken zur Verfügung
 include_once(ROOT_LOCATION . "/modules/other/dateChange.php");					//Stell die Formularmasken zur Verfügung
+include_once(ROOT_LOCATION . "/modules/other/dateFunctions.php");					//Stell die Formularmasken zur VerfÃ¼gung
 
 if (!($_SESSION['rights']['root'] || $_SESSION['rights']['N'] || $_SESSION['rights']['W'] || $_SESSION['rights']['E'] || $_SESSION['rights']['M']))
 	exit();
@@ -25,14 +26,15 @@ if(!empty($_POST['save']) && $_POST['save']!="")
 	missingClasses();
 
 if (empty($_POST["date"]) && empty($_POST['startDay'])) {		//wenn nichts zurückgegeben wird, dann heute
-	$date = strftime("%Y-%m-%d");
+	$date = no_weekend(strftime("%Y-%m-%d"));
 }
 else if($_POST['date']!=""){								//sonst zurückgegebenes Datum
-	$date = $_POST["date"];
+	$date = no_weekend($_POST["date"]);
 }
 else{
-	$date = $_POST['startDay'];
+	$date = no_weekend($_POST['startDay']);
 }
+
 //Seitenheader
 pageHeader("Fehlende Klassen","main");
 

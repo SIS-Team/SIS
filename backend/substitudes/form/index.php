@@ -17,6 +17,7 @@ include_once(ROOT_LOCATION . "/modules/form/form.php");					//Stell die Formular
 include_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
 include_once(ROOT_LOCATION . "/modules/database/inserts.php");			//Stellt die insert-Befehle zur Verfügung
 include_once(ROOT_LOCATION . "/modules/other/dateChange.php");			//Stell die Funktion für die Datumsauswahl zur VerfÃ¼gung
+include_once(ROOT_LOCATION . "/modules/other/dateFunctions.php");					//Stell die Formularmasken zur VerfÃ¼gung
 
 if(empty($_GET['section']) && empty($_POST['section']))
 	exit();
@@ -31,15 +32,14 @@ if(!empty($_POST['save']) && $_POST['save']!="")
 	substitudes();
 
 
-
-if (empty($_POST["date"]) && empty($_POST['time'])) {		//wenn nichts zurÃ¼ckgegeben wird, dann heute
-	$date = strftime("%Y-%m-%d");
+if (empty($_POST["date"]) && empty($_POST['time'])) {		//wenn nichts zurückgegeben wird, dann heute
+	$date = no_weekend(strftime("%Y-%m-%d"));
 }
-else if(empty($_POST['time'])){								//sonst zurÃ¼ckgegebenes Datum
-	$date = $_POST["date"];
+else if($_POST['date']!=""){								//sonst zurückgegebenes Datum
+	$date = no_weekend($_POST["date"]);
 }
-else if(empty($_POST['date'])){								//sonst zurÃ¼ckgegebenes Datum
-	$date = $_POST["time"];
+else{
+	$date = no_weekend($_POST['time']);
 }
 
 //Seitenheader
