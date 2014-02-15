@@ -99,8 +99,8 @@ printf("<table>\n");	//Tabellen Tag auf
 				}
 				else if($f[2] == "dropdown") {												//Dropdown MenÃƒÂ¯Ã‚Â¿Ã‚Â½ erstellen
 
-					printf("<td>%s <input value=\"%s\" autocomplete=\"off\" size=\"%s\" list=\"%s\" name=\"%s\"></td>\n",
-							$f[1], $f[5], $f[3], $f[0], $f[0]);
+					printf("<td>%s <input value=\"%s\" autocomplete=\"off\" size=\"%s\" list=\"%s\" name=\"%s\" %s></td>\n",
+							$f[1], $f[5], $f[3], $f[0], $f[0], $f[6]);
 							
 				}
 				
@@ -239,8 +239,8 @@ printf("<table>\n");	//Tabellen Tag auf
 				}
 				else if($f[2] == "dropdown") {												//Dropdown MenÃƒÂ¯Ã‚Â¿Ã‚Â½ erstellen
 
-					printf("<td>%s <input value=\"%s\" autocomplete=\"off\" size=\"%s\" list=\"%s\" name=\"%s\"></td>\n",
-							$f[1], $f[5], $f[3], $f[0], $f[0]);
+					printf("<td>%s <input value=\"%s\" autocomplete=\"off\" size=\"%s\" list=\"%s\" name=\"%s\" %s></td>\n",
+							$f[1], $f[5], $f[3], $f[0], $f[0], $f[6]);
 							
 				}
 				
@@ -327,8 +327,8 @@ printf("<table>\n");	//Tabellen Tag auf
 				}
 				else if($f[2] == "dropdown") {												//Dropdown MenÃƒÂ¯Ã‚Â¿Ã‚Â½ erstellen
 
-					printf("<td>%s <input value=\"%s\" autocomplete=\"off\" size=\"%s\" list=\"%s\" name=\"%s\"></td>\n",
-							$f[1], $f[5], $f[3], $f[0], $f[0]);							
+					printf("<td>%s <input value=\"%s\" autocomplete=\"off\" size=\"%s\" list=\"%s\" name=\"%s\" %s></td>\n",
+							$f[1], $f[5], $f[3], $f[0], $f[0], $f[6]);							
 				}
 				
 			}
