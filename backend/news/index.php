@@ -29,6 +29,10 @@ if(isset($_POST['save']) && $_POST['save'] !="") {
 	news($isAdmin);
 }
 
+
+
+
+
 pageHeader("Formular","main");
 
 //ID,title,text,startDay,endDay
@@ -57,10 +61,10 @@ if($isAdmin){
 	$result = mysql_query($sql);
 	echo mysql_error();
 	while ($row = mysql_fetch_array($result)){	//Fügt solange eine neue Formularzeile hinzu, solange ein Inhalt zur Verfügung steht
-	form_new($fields,$row);		//Formular wird erstellt
+	form_new($fields,$row,"Eingabe-News");		//Formular wird erstellt
 	}
 }
-form_new($fields,false);
+form_new($fields,false,"Eingabe-News");
 
 pageFooter();
 
