@@ -72,13 +72,13 @@ function news($Admin)
 	$data["ID"]=$post["ID"];
 	$data["title"]=mysql_real_escape_string(htmlspecialchars($post["title"]));
 	$data["text"]=mysql_real_escape_string(htmlspecialchars($post["text"]));
-	if(check_date($post["startDay"],"Ymd","-")){
+	if(check_date($post["startDay"])){
 		$data["startDay"]=mysql_real_escape_string($post["startDay"]);
 	}
 	else{
 		$data["startDay"]= "2000-01-01";
 	}
-	if(check_date($post["endDay"],"Ymd","-")){
+	if(check_date($post["endDay"])){
 		$data["endDay"]=mysql_real_escape_string($post["endDay"]);
 	}
 	else {
@@ -111,16 +111,10 @@ function news($Admin)
 
  }
 
-//von http://www.selfphp.de/kochbuch/kochbuch.php?code=17
-function check_date($date,$format,$sep)
-{     
-    $pos1    = strpos($format, 'd');
-    $pos2    = strpos($format, 'm');
-    $pos3    = strpos($format, 'Y'); 
-    
-    $check    = explode($sep,$date);
-    
-    return checkdate($check[$pos2],$check[$pos1],$check[$pos3]);
-
+function check_date($date)
+{
+	$date_parts = array();
+ 	$date_parts =  explode('-',$date,3);
+	return checkdate($date_parts[1],$date_parts[2],$date_parts[0]);
 }
 ?>
