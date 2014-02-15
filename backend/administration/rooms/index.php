@@ -33,7 +33,7 @@ include_once(ROOT_LOCATION . "/modules/form/dropdownSelects.php");		//Stellt die
 //Formularmaske
 $fields = array(
 	array( "ID", 		"",			 				"hidden", 	"",		"",		"",					""),
-	array( "roName", 	"Name: ", 					"text", 	"8",	"",		"",					""),
+	array( "roName", 	"Name: ", 					"text", 	"8",	"",		"",					"required"),
 	array( "teShort", 	"Zust&auml;ndige Lehrer: ", "dropdown", "5",	"",		$selectTeachers,	""),	
 	);
 

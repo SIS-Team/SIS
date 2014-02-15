@@ -55,9 +55,9 @@ include_once(ROOT_LOCATION . "/modules/form/dropdownSelects.php");		//Stellt die
 //Formularmaske
 $fields = array(
 	array( "ID", 		"",			 		"hidden", 	"",		"",		"",					""),
-	array( "roName",	"Raum: ", 			"dropdown", "8",	"",		$selectRooms,		""),
-	array( "teShort", 	"Lehrer: ",	 		"dropdown",	"5",	"",		$selectTeachers,	""),
-	array( "suShort", 	"Fach: ", 			"dropdown",	"10",	"",		$selectSubjects,	""),
+	array( "roName",	"Raum: ", 			"dropdown", "8",	"",		$selectRooms,		"required"),
+	array( "teShort", 	"Lehrer: ",	 		"dropdown",	"5",	"",		$selectTeachers,	"required"),
+	array( "suShort", 	"Fach: ", 			"dropdown",	"10",	"",		$selectSubjects,	"required"),
 	array( "comment", 	"Kommentar: ",		"text",		"20",	"",		"",					""),
 	);
 

@@ -28,8 +28,8 @@ if(!empty($_POST['save']) && $_POST['save']!="")
 //Formularmaske
 $fields = array(
 	array( "ID", 		"",			 		"hidden", 	"",		"",		"",		""),
-	array( "name", 		"Name: ", 			"text", 	"60",	"",		"",		""),
-	array( "short", 	"K&uuml;rzel: ", 	"text", 	"10",	"",		"",		""),
+	array( "name", 		"Name: ", 			"text", 	"60",	"",		"",		"required"),
+	array( "short", 	"K&uuml;rzel: ", 	"text", 	"10",	"",		"",		"required"),
 	array( "invisible", "Unsichtbar: ", 	"checkbox",	"",		"",		"",		""),		
 	);
 

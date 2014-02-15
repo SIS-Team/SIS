@@ -33,9 +33,9 @@ include_once(ROOT_LOCATION . "/modules/form/dropdownSelects.php");		//Stellt die
 //Formularmaske
 $fields = array(
 	array( "ID", 		"",			 			"hidden", 	"",		"",		"",					""),
-	array( "teName", 	"Name: ", 				"text", 	"30",	"",		"",					""),
-	array( "teShort", 	"K&uuml;rzel: ", 		"text", 	"5",	"",		"",					""),
-	array( "display", 	"Kurzname: ", 			"text",		"20",	"",		"",					""),
+	array( "teName", 	"Name: ", 				"text", 	"30",	"",		"",					"required"),
+	array( "teShort", 	"K&uuml;rzel: ", 		"text", 	"5",	"",		"",					"required"),
+	array( "display", 	"Kurzname: ", 			"text",		"20",	"",		"",					"required"),
 	array( "seShort",	"Stammabteilung: ", 	"dropdown",	"5",	"",		$selectSections,	""),
 	array( "invisible", "Unsichtbar: ", 		"checkbox",	"",		"",		"",			 		""),			
 	);

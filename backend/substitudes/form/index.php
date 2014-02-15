@@ -53,13 +53,13 @@ include_once(ROOT_LOCATION . "/modules/form/dropdownSelects.php");		//Stellt die
 $fieldsRow1 = array(
 	array( "ID", 		"",			 		"hidden", 		"",		"",		"",					""),
 	array( "move",	 	"Verschiebung: ", 	"checkboxJava", "8",	"",		"",					""),
-	array( "clName", 	"Klasse: ", 		"dropdown", 	"8",	"",		$selectClasses,		""),
-	array( "suShort", 	"Fach: ", 			"dropdown", 	"8",	"",		$selectSubjects,	""),
+	array( "clName", 	"Klasse: ", 		"dropdown", 	"8",	"",		$selectClasses,		"required"),
+	array( "suShort", 	"Fach: ", 			"dropdown", 	"8",	"",		$selectSubjects,	"required"),
 	array( "teShort", 	"Supplierlehrer: ",	"dropdown", 	"5",	"",		$selectTeachers,	""),
-	array( "time", 		"Datum: ",			"text",			"10",	"",		"",					""),
+	array( "time", 		"Datum: ",			"text",			"10",	"",		"",					"readonly=\"true\",required"),
 	array( "roName",	"Raum: ", 			"dropdown",		"8",	"",		$selectRooms,		""),
-	array( "startHour",	"Start-Std.: ", 	"text",			"5",	"",		"",					""),
-	array( "endHour",	"End-Std.: ",	 	"text",			"4",	"",		"",					""),
+	array( "startHour",	"Start-Std.: ", 	"text",			"5",	"",		"",					"required"),
+	array( "endHour",	"End-Std.: ",	 	"text",			"4",	"",		"",					"required"),
 	array( "hidden",	"Entf&auml;llt? ", 	"checkbox",		"",		"",		"",					""),
 	array( "comment", 	"Kommentar: ", 		"text",			"25",	"",		"",					""),
 	);

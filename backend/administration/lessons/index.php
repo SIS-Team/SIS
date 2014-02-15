@@ -37,8 +37,8 @@ $hashGenerator->generate();
 printf("<form method=\"post\" action=\"lessons.php\"> ");
 $hashGenerator->printForm();
 printf("%s",$fail);
-printf("Klasse w&auml;hlen: <input autocomplete=\"off\" list=\"clName\" name=\"class\" size=\"8\">");
-printf("Tag w&auml;hlen: <input autocomplete=\"off\" list=\"day\" name=\"day\" size=\"3\" value=\"Mo\">\n");
+printf("Klasse w&auml;hlen: <input autocomplete=\"off\" list=\"clName\" name=\"class\" size=\"8\" required>");
+printf("Tag w&auml;hlen: <input autocomplete=\"off\" list=\"day\" name=\"day\" size=\"3\" value=\"Mo\" required>\n");
 							
 
 printf("<input type=\"submit\" name=\"ok\" value=\"Speichern\">\n");	//Submit Button erstellen

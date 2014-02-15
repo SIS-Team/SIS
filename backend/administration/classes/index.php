@@ -33,8 +33,8 @@ include_once(ROOT_LOCATION . "/modules/form/dropdownSelects.php");		//Stellt die
 //Formularmaske
 $fields = array(
 	array( "ID", 		"",			 			"hidden", 	"",		"",		"",					""),
-	array( "clName", 	"Name: ", 				"text", 	"8",	"",		"",					""),
-	array( "seShort", 	"Abteilung: ", 			"dropdown", "5",	"",		$selectSections, 	""),
+	array( "clName", 	"Name: ", 				"text", 	"8",	"",		"",					"required"),
+	array( "seShort", 	"Abteilung: ", 			"dropdown", "5",	"",		$selectSections, 	"required"),
 	array( "teShort",	"Klassenvorstand: ", 	"dropdown",	"",		"",		$selectTeachers, 	""),
 	array( "roName", 	"Stammklasse: ", 		"dropdown",	"",		"",		$selectRooms, 		""),
 	array( "invisible", "Unsichtbar: ", 		"checkbox",	"",		"",		"",			 		""),		

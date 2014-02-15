@@ -38,9 +38,9 @@ $fields = array(
 	array( "ID", 			"",			 		"hidden", 	"",		"",		"",		""),
 	array( "weekday", 		"Wochentag: ", 		"hidden", 	"",		"",		"",		""),
 	array( "weekdayShort", 	"K&uuml;rzel: ", 	"hidden", 	"",		"",		"", 	""),
-	array( "hour",			"Stunde: ", 		"text",		"",		"",		"", 	""),
-	array( "startTime", 	"Start-Zeit: ", 	"text",		"",		"",		"",		""),
-	array( "endTime", 		"End-Zeit: ", 		"text",		"",		"",		"",		""),		
+	array( "hour",			"Stunde: ", 		"text",		"",		"",		"", 	"required"),
+	array( "startTime", 	"Start-Zeit: ", 	"text",		"",		"",		"",		"required"),
+	array( "endTime", 		"End-Zeit: ", 		"text",		"",		"",		"",		"required"),		
 	);
 
 $days=prevNextDay($_POST['day']);

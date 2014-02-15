@@ -43,11 +43,11 @@ include_once(ROOT_LOCATION . "/modules/form/dropdownSelects.php");		//Stellt die
 //Formularmaske
 $fields = array(
 	array( "ID", 		"",			 		"hidden", 	"",		"",		"",					""),
-	array( "clName", 	"Klasse: ", 		"dropdown", "8",	"",		$selectClasses,		""),
-	array( "startDay", 	"Starttag: ",		"text", 	"10",	"",		"",					"readonly=\"true\""),
-	array( "startHour", "Start-Stunde: ",	"text",		"5",	"",		"",					""),
-	array( "endDay", 	"Endtag: ", 		"text",		"10",	"",		"",					""),
-	array( "endHour", 	"End-Stunde: ", 	"text",		"5",	"",		"",					""),
+	array( "clName", 	"Klasse: ", 		"dropdown", "8",	"",		$selectClasses,		"required"),
+	array( "startDay", 	"Starttag: ",		"text", 	"10",	"",		"",					"readonly=\"true\",required"),
+	array( "startHour", "Start-Stunde: ",	"text",		"5",	"",		"",					"required"),
+	array( "endDay", 	"Endtag: ", 		"text",		"10",	"",		"",					"required"),
+	array( "endHour", 	"End-Stunde: ", 	"text",		"5",	"",		"",					"required"),
 	array( "reason", 	"Grund: ", 			"text",		"30",	"",		"",					""),
 	);
 
