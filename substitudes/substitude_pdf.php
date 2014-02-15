@@ -3,10 +3,10 @@ include_once("../config.php");
 require_once(ROOT_LOCATION . "/modules/external/fpdf/fpdf.php");
 include_once(ROOT_LOCATION . "/modules/general/Connect.php");			
 include_once(ROOT_LOCATION . "/modules/general/SessionManager.php");
-if(!($_SESSION['loggedIn']))  exit(); //Kontrolle ob angemeldet
+if(!($_SESSION['loggedIn']))  header("Location: ".RELATIVE_ROOT."/"); //Kontrolle ob angemeldet
 
 $isAdmin = $_SESSION['rights']['E'] || $_SESSION['rights']['N'] || $_SESSION['rights']['W'] || $_SESSION['rights']['M'] || $_SESSION['rights']['root'];
-if(!$isAdmin) exit();
+if(!$isAdmin) header("Location: ".RELATIVE_ROOT."/");
 if(isset($_GET['date']) && check_date($_GET['date']))$date = $_GET['date'];
 else $date = date("Y-m-d");
 $sql = "SELECT 

@@ -19,11 +19,9 @@ include_once(ROOT_LOCATION . "/modules/database/inserts.php");			//Stellt die in
 $isAdmin = $_SESSION['rights']['E'] || $_SESSION['rights']['N'] || $_SESSION['rights']['W'] || $_SESSION['rights']['M'] || $_SESSION['rights']['root'];
 $isNews = $_SESSION['rights']['news'];
 
-if(!($_SESSION['loggedIn'])) //Kontrolle ob angemeldet
-	die("Critical Error </br> Bist du sicher, dass du angemeldet bist?"); 
+if(!($_SESSION['loggedIn'])) header("Location: ".RELATIVE_ROOT."/"); //Kontrolle ob angemeldet
 
-if(!($isNews or $isAdmin)) //Kontrolle wegen Berechtigungen
-	die ("Critical Error </br> Du hast auf diese Funktionen keinen Zugriff. </br> Wende dich an einen Newsbeauftragten!"); 
+if(!($isNews or $isAdmin)) header("Location: ".RELATIVE_ROOT."/"); //Kontrolle wegen Berechtigungen 
 
 if(isset($_POST['save']) && $_POST['save'] !="") {
 	news($isAdmin);

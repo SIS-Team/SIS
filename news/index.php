@@ -12,6 +12,8 @@ include_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Desig
 include_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
 include_once(ROOT_LOCATION . "/modules/other/dateFunctions.php");		//Stellt Datumsfunktionen zur Verfügung
 
+if(!($_SESSION['loggedIn'])) header("Location: ".RELATIVE_ROOT."/"); //Kontrolle ob angemeldet
+
 //Seitenheader
 pageHeader("News","main");
 $sql ="SELECT `ID` FROM sections WHERE `short` = '".$_SESSION['section']."'";

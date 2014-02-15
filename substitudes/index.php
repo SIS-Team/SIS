@@ -12,7 +12,7 @@ include_once("../config.php");
 include_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
 include_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
 include_once(ROOT_LOCATION . "/modules/other/dateFunctions.php");		//Stellt Datumsfunktionen zur Verfügung
-if(!($_SESSION['loggedIn']))die("Critical Error </br> Bist du sicher, dass du angemeldet bist?"); //Kontrolle ob angemeldet
+if(!($_SESSION['loggedIn']))  header("Location: ".RELATIVE_ROOT."/");	//Kontrolle ob angemeldet
 
 $substitudes = array();
 
