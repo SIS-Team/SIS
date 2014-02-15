@@ -35,7 +35,8 @@ $fields = array(
 
 
 error_reporting(E_ALL);
-	 
+include_once("../../../config.php");
+include(ROOT_LOCATION . "/modules/form/HashGenerator.php");
 /*Funktion um die Formulare zu erstellen
  *
  *$field - Array das die Informationen ÃƒÂ¯Ã‚Â¿Ã‚Â½ber das Formular enthÃƒÂ¯Ã‚Â¿Ã‚Â½lt als string 
@@ -44,15 +45,18 @@ error_reporting(E_ALL);
  */
  
  
-function form_new($field,$content)
+function form_new($field,$content,$name)
 {	
 $allowedSites = array('substitudes','absentees','news');
 
+$hashGenerator = new HashGenerator($name, __FILE__);
+$hashGenerator->generate();
 
 printf("<table>\n");	//Tabellen Tag auf
 	printf("<tr>\n");	//Zeilen 	Tag auf
   		printf("<form method=\"post\">\n");	//Formular Anfang Tag
   			//FÃƒÂ¯Ã‚Â¿Ã‚Â½r jeden Eintrag im Array field einmal diese Schleife durchlaufen
+  			$hashGenerator->printForm();
 			foreach($field as $f) {	
 				
 				if($content!=false)	//Wenn Content mitgeliefert wird und der Typ des aktuellen Inputs kein DropDown, dann Content austauschen
@@ -123,8 +127,13 @@ printf("<table>\n");	//Tabellen Tag auf
 printf("</table>\n");
 }
 
-function form_lesson($field,$content)
+function form_lesson($field,$content,$name)
 {	
+
+$hashGenerator = new HashGenerator($name, __FILE__);
+$hashGenerator->generate();
+
+
 $zeile=0;
 printf("<table>\n");	//Tabellen Tag auf
 	do{
@@ -177,7 +186,8 @@ printf("<table>\n");	//Tabellen Tag auf
 	printf("<tr %s %s>\n",$rowID,$visibility);	//Zeilen 	Tag auf
   		printf("<form method=\"post\">\n");	//Formular Anfang Tag
   			//FÃƒÂ¯Ã‚Â¿Ã‚Â½r jeden Eintrag im Array field einmal diese Schleife durchlaufen
-  			
+  			 $hashGenerator->printForm();
+
   			
   			
 			foreach($field as $f) {	
@@ -253,11 +263,17 @@ printf("</table>\n");
 }
 
 
-function form_substitudes($fieldRow1,$fieldRow2,$content,$section)
+function form_substitudes($fieldRow1,$fieldRow2,$content,$section,$name)
 {	
+
+$hashGenerator = new HashGenerator($name, __FILE__);
+$hashGenerator->generate();
+
 
 printf("<table>\n");	//Tabellen Tag auf
 	printf("<form action=\"?section=%s\" method=\"post\">\n",$section);	//Formular Anfang Tag
+	  			$hashGenerator->printForm();
+
 		printf("<tr>\n");	//Zeilen 	Tag auf
   			//FÃƒÂ¯Ã‚Â¿Ã‚Â½r jeden Eintrag im Array field einmal diese Schleife durchlaufen
 			foreach($fieldRow1 as $f) {	
