@@ -91,16 +91,16 @@ for ($i = 0; $i < count($lessons); $i++) {
 
 $offset = 0;
 if($displaytyp == "modificated"){
-	 
 	//Setzen des ersten Tags der Woche
 	// TODO date wochentag verwenden ->done 
 	if(date("N", time())>5) { 
-	 	$offset = 8-date("N",time());
+	 	$offset = 8- date("N",time());
 	 }
 	else {
-	 	$offset = 1-date("N",time());
+	 	$offset = 1- date("N",time());
 	 }
 	
+	 echo "Stundenplan vom ". date("Y.m.d",time() + 24 * 60 * 60 * $offset)." - ".date("Y.m.d",time() + 24 * 60 * 60 *($offset+5));
 	for($j = 0; $j<=4; $j++)
 	{
 	//Supplierungen des Tages abrufen
