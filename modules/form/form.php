@@ -36,7 +36,7 @@ $fields = array(
 
 error_reporting(E_ALL);
 include_once("../../../config.php");
-include(ROOT_LOCATION . "/modules/form/HashGenerator.php");
+include_once(ROOT_LOCATION . "/modules/form/HashGenerator.php");
 /*Funktion um die Formulare zu erstellen
  *
  *$field - Array das die Informationen ÃƒÂ¯Ã‚Â¿Ã‚Â½ber das Formular enthÃƒÂ¯Ã‚Â¿Ã‚Â½lt als string 
