@@ -19,6 +19,7 @@ include_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Desig
 include_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die select-Befehle zur VerfÃ¼gung
 include_once(ROOT_LOCATION . "/modules/database/inserts.php");			//Stellt die insert-Befehle zur Verfügung
 include_once(ROOT_LOCATION . "/modules/other/dateFunctions.php");			//Stellt die insert-Befehle zur Verfügung
+include_once(ROOT_LOCATION . "/modules/form/HashGenerator.php");
 
 
 if (!($_SESSION['rights']['root'] || $_SESSION['rights']['N'] || $_SESSION['rights']['W'] || $_SESSION['rights']['E'] || $_SESSION['rights']['M']))
@@ -68,7 +69,11 @@ printf("<script language=\"javascript\" type=\"text/javascript\" src=\"%s/data/s
 printf("Klasse: <a href=\"index.php\" >%s</a> und der Tag: %s",$_POST['class'],$_POST['day']);
 $days=prevNextDay($_POST['day']);
 
+$hashGenerator = new HashGenerator("Tag-Auswahl", __FILE__);
+$hashGenerator->generate();
+
 printf("<form action=\"lessons.php\" method=\"post\">\n");
+$hashGenerator->printForm();
 printf("<table width=\"100%%\"><tr>");
 
 if($days['prev']!="")
@@ -99,7 +104,7 @@ while ($row = mysql_fetch_array($result)){	//FÃ¼gt solange eine neue Formularzei
 
 //print_r(end($content));
 //print_r($content);
-form_lesson($fields,$content);		//Formular wird erstellt
+form_lesson($fields,$content,"Stundenplan");		//Formular wird erstellt
 
 
 

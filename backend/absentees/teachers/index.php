@@ -65,10 +65,10 @@ $sort = " startDay, hoursStart.hour, teachers.short";
 $result = selectMissingTeacher($where,$sort);		//RÃ¼ckgabewert des Selects
 
 while ($row = mysql_fetch_array($result)){	//FÃ¼gt solange eine neue Formularzeile hinzu, solange ein Inhalt zur VerfÃ¼gung steht
-	form_new($fields,$row);		//Formular wird erstellt
+	form_new($fields,$row,"Fehlende-Lehrer");		//Formular wird erstellt
 }
 
-form_new($fields,false);			//Formular fÃ¼r einen neuen Eintrag
+form_new($fields,false,"Fehlende-Lehrer");			//Formular fÃ¼r einen neuen Eintrag
 
 //Seitenfooter
 pageFooter();

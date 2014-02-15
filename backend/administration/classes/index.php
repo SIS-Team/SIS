@@ -46,10 +46,10 @@ $result = selectClass("",$sort);	//Rückgabewert des Selects
 
 
 while ($row = mysql_fetch_array($result)){	//Fügt solange eine neue Formularzeile hinzu, solange ein Inhalt zur Verfügung steht
-	form_new($fields,$row);		//Formular wird erstellt
+	form_new($fields,$row,"Klassen");		//Formular wird erstellt
 }
 
-form_new($fields,false);			//Formular für einen neuen Eintrag
+form_new($fields,false,"Klassen");			//Formular für einen neuen Eintrag
 
 //Seitenfooter
 pageFooter();

@@ -45,10 +45,10 @@ $sort = "teachers.invisible,sections.short,teachers.short";
 $result = selectTeacher("",$sort);				//Rückgabewert des Selects
 
 while ($row = mysql_fetch_array($result)){	//Fügt solange eine neue Formularzeile hinzu, solange ein Inhalt zur Verfügung steht
-	form_new($fields,$row);		//Formular wird erstellt
+	form_new($fields,$row,"Lehrer");		//Formular wird erstellt
 }
 
-form_new($fields,false);			//Formular für einen neuen Eintrag
+form_new($fields,false,"Lehrer");			//Formular für einen neuen Eintrag
 
 //Seitenfooter
 pageFooter();

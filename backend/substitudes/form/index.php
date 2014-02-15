@@ -73,7 +73,7 @@ $fieldsRow2 = array(
 
 
 printf("<script language=\"javascript\" type=\"text/javascript\" src=\"%s/data/scripts/substitudes.js\"></script>",RELATIVE_ROOT);
-
+printf("<noscript>Kerin JS</noscript>");
 
 $date = dateChange($date);		//Datumsauswahl erzeugen
 $fieldsRow1[5][5] = $date;	//Standartdatum ins Formular schreiben
@@ -84,10 +84,10 @@ $sort = "classes.name, hoursStart.hour";		//Sortierung nach dem Klassenname und 
 $result = selectSubstitude($where,$sort);			//Rückgabewert des Selects
 
 while ($row = mysql_fetch_array($result)){	//Fügt solange eine neue Formularzeile hinzu, solange ein Inhalt zur Verfügung steht
-	form_substitudes($fieldsRow1,$fieldsRow2 ,$row,$section);		//Formular wird erstellt
+	form_substitudes($fieldsRow1,$fieldsRow2 ,$row,$section,"Supplierungen");		//Formular wird erstellt
 }
 
-form_substitudes($fieldsRow1,$fieldsRow2,false,$section);			//Formular für einen neuen Eintrag
+form_substitudes($fieldsRow1,$fieldsRow2,false,$section,"Supplierungen");			//Formular für einen neuen Eintrag
 
 //Seitenfooter
 pageFooter();

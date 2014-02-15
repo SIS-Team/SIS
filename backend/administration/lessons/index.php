@@ -15,6 +15,7 @@ include("../../../config.php");
 include_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
 include_once(ROOT_LOCATION . "/modules/form/form.php");					//Stell die Formularmasken zur Verfügung
 include_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
+include_once(ROOT_LOCATION . "/modules/form/HashGenerator.php");
 
 if (!($_SESSION['rights']['root'] || $_SESSION['rights']['N'] || $_SESSION['rights']['W'] || $_SESSION['rights']['E'] || $_SESSION['rights']['M']))
 	exit();
@@ -29,7 +30,12 @@ pageHeader("Stundenpl&auml;ne","main");
 $dropDown=array("Classes","Days");
 include_once(ROOT_LOCATION . "/modules/form/dropdownSelects.php");		//Stellt die Listen für die Dropdownmenüs zur Verfügung
 
+$hashGenerator = new HashGenerator("Auswahl-Stundenplan", __FILE__);
+$hashGenerator->generate();
+
+
 printf("<form method=\"post\" action=\"lessons.php\"> ");
+$hashGenerator->printForm();
 printf("%s",$fail);
 printf("Klasse w&auml;hlen: <input autocomplete=\"off\" list=\"clName\" name=\"class\" size=\"8\">");
 printf("Tag w&auml;hlen: <input autocomplete=\"off\" list=\"day\" name=\"day\" size=\"3\" value=\"Mo\">\n");
