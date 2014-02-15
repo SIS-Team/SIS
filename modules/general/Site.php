@@ -67,8 +67,10 @@
 		$site = str_replace($seperators["title"], $title, $siteContents["header"]);
 		$site = str_replace($seperators["sidebar"], $siteContents["sidebar"], $site);
 		
-		if (!isset($mobile))
-			$mobile = true;
+		if ($mobile)
+			$mobile = "true";
+		else
+			$mobile = "false";
 		$site = str_replace($seperators['mobile'], $mobile, $site);
 		
 		echo $site;
