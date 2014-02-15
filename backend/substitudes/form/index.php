@@ -29,7 +29,7 @@ if (!($_SESSION['rights']['root'] || $_SESSION['rights'][$section]))
 	exit();
 
 if(!empty($_POST['save']) && $_POST['save']!="")
-	substitudes();
+	$fail = substitudes();
 
 
 if (empty($_POST["date"]) && empty($_POST['time'])) {		//wenn nichts zurückgegeben wird, dann heute
@@ -68,12 +68,12 @@ $fieldsRow2 = array(
 	array( "newStartHour",  "Neue Start-St.: ", 	"text",		"5",	"",		"",		""),
 	array( "newEndHour",	"Neue End-St.: ",		"text",		"4",	"",		"",		""),
 	);
-
-
+if($fail===false)
+	printf("<div>Es ist ein Fehler bei der Eingabe aufgetreten. M&ouml;glicherweise ist f&uuml;r diese Stunde keine Supplierung<br>n&ouml;tig, weil der Lehrer nicht verhindert ist.<div><br><br>");
 
 
 printf("<script language=\"javascript\" type=\"text/javascript\" src=\"%s/data/scripts/substitudes.js\"></script>",RELATIVE_ROOT);
-printf("<noscript>Kerin JS</noscript>");
+printf("<noscript>Kein JS</noscript>");
 
 $date = dateChange($date);		//Datumsauswahl erzeugen
 $fieldsRow1[5][5] = $date;	//Standartdatum ins Formular schreiben

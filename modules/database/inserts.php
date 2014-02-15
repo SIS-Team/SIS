@@ -301,7 +301,7 @@ if(!isset($post["delete"]) && $post["delete"]==""){
 	while($missTeacher[] = mysql_fetch_array($temp)){
 	}
 	unset($missTeacher[count($missTeacher)-1]);
-	
+
 	foreach($missTeacher as $i => $m){
 		$sql = "SELECT lessons.ID FROM lessons INNER JOIN lessonsBase ON lessonsBase.ID = lessons.lessonBaseFK WHERE lessonsBase.startHourFK='".$startHour."' AND lessonsBase.endHourFK='".$endHour."' AND lessonsBase.classFK='".$class."' AND lessons.teachersFK = '".$m["teacherFK"]."'";
 		$temp = mysql_query($sql);
@@ -316,8 +316,13 @@ if(!isset($post["delete"]) && $post["delete"]==""){
 		if(empty($post["delete"]))
 			saveupdate($data,"substitudes");
 	}
-}
+		if(empty($missTeacher))
+			return false;
+		else
+			return true;
 
+}
+	return true;
 }
 
 function teachers(){
