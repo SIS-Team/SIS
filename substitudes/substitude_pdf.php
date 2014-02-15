@@ -70,13 +70,10 @@ $pdf->Output();
 
 function check_date($date)
 {
- $date_parts = array();
- $date_parts =  explode('-',$date,3);
- if(count($date_parts) != 3) return false;
- if(strlen($date_parts[0])!= 4 || strlen($date_parts[1])!= 2 || strlen($date_parts[2])!= 2)return false;
- if($date_parts[0]<2000 || $date_parts[1]<01 || $date_parts[2]<01) return false; 
- if($date_parts[1]>12 || $date_parts[2]>31) return false;
- return true;
+	$date_parts = array();
+ 	$date_parts =  explode('-',$date,3);
+	return checkdate($date_parts[1],$date_parts[2],$date_parts[0]);
 }
+
 
 ?>
