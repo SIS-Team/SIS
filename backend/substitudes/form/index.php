@@ -26,7 +26,7 @@ else if($_GET['section']!="")
 
 
 if (!($_SESSION['rights']['root'] || $_SESSION['rights'][$section]))
-	exit();
+	header("Location: ".RELATIVE_ROOT."/");
 
 if(!empty($_POST['save']) && $_POST['save']!="")
 	$fail = substitudes();

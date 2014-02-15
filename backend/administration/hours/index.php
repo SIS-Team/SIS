@@ -24,7 +24,7 @@ if(empty($_POST['day']))
 	$_POST['day']="Mo";
 
 if (!($_SESSION['rights']['root']))
-	exit();
+	header("Location: ".RELATIVE_ROOT."/");
 
 if(!empty($_POST['save']) && $_POST['save']!="")
 	hours();

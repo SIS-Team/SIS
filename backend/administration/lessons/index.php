@@ -17,8 +17,8 @@ include_once(ROOT_LOCATION . "/modules/form/form.php");					//Stell die Formular
 include_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
 include_once(ROOT_LOCATION . "/modules/form/HashGenerator.php");
 
-if (!($_SESSION['rights']['root'] || $_SESSION['rights']['N'] || $_SESSION['rights']['W'] || $_SESSION['rights']['E'] || $_SESSION['rights']['M']))
-	exit();
+if (!($_SESSION['rights']['root']))
+	header("Location: ".RELATIVE_ROOT."/");
 
 
 $fail = "";

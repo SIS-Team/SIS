@@ -18,7 +18,7 @@ include_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die se
 include_once(ROOT_LOCATION . "/modules/database/inserts.php");			//Stellt die insert-Befehle zur Verfügung
 
 if (!($_SESSION['rights']['root']))
-	exit();
+	header("Location: ".RELATIVE_ROOT."/");
 
 
 if(!empty($_POST['save']) && $_POST['save']!="")

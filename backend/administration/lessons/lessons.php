@@ -22,8 +22,8 @@ include_once(ROOT_LOCATION . "/modules/other/dateFunctions.php");			//Stellt die
 include_once(ROOT_LOCATION . "/modules/form/HashGenerator.php");
 
 
-if (!($_SESSION['rights']['root'] || $_SESSION['rights']['N'] || $_SESSION['rights']['W'] || $_SESSION['rights']['E'] || $_SESSION['rights']['M']))
-	exit();
+if (!($_SESSION['rights']['root']))
+	header("Location: ".RELATIVE_ROOT."/");
 
 
 if(empty($_POST['class'])){
