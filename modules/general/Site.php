@@ -61,6 +61,7 @@
 		global $siteContents, $seperators;
 
 		header('Content-Type: text/html; charset=UTF-8');
+		header('X-Frame-Options: SAMEORIGIN');
 
 		getDesignFile(ROOT_LOCATION . "/modules/design/" . $design . ".html");
 		$site = str_replace($seperators["title"], $title, $siteContents["header"]);
