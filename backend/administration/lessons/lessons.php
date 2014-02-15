@@ -63,6 +63,7 @@ $fields = array(
 
 
 printf("<script language=\"javascript\" type=\"text/javascript\" src=\"%s/data/scripts/lessons.js\"></script>",RELATIVE_ROOT);
+printf("<noscript><br>Bitte aktivieren Sie JavaScript. Ohne JavaScript kann keine korrekte Eingabe der Stundenpl&auml;ne erfolgen<br><br></noscript>");
 
 
 

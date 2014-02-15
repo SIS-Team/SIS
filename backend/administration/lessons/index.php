@@ -32,7 +32,7 @@ include_once(ROOT_LOCATION . "/modules/form/dropdownSelects.php");		//Stellt die
 
 $hashGenerator = new HashGenerator("Auswahl-Stundenplan", __FILE__);
 $hashGenerator->generate();
-
+printf("<noscript><br>Bitte aktivieren Sie JavaScript. Ohne JavaScript kann keine korrekte Eingabe der Stundenpl&auml;ne erfolgen<br><br></noscript>");
 
 printf("<form method=\"post\" action=\"lessons.php\"> ");
 $hashGenerator->printForm();
