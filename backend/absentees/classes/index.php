@@ -20,7 +20,7 @@ include_once(ROOT_LOCATION . "/modules/other/dateChange.php");					//Stell die F
 include_once(ROOT_LOCATION . "/modules/other/dateFunctions.php");					//Stell die Formularmasken zur Verfügung
 
 if (!($_SESSION['rights']['root'] || $_SESSION['rights']['N'] || $_SESSION['rights']['W'] || $_SESSION['rights']['E'] || $_SESSION['rights']['M']))
-	exit();
+	header("Location: ".RELATIVE_ROOT."/");
 
 if(!empty($_POST['save']) && $_POST['save']!="")
 	missingClasses();
