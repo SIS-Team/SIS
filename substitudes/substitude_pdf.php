@@ -27,7 +27,7 @@ INNER JOIN `hours` AS `sH` ON `lb`.`startHourFK` = `sH`.`ID`
 LEFT JOIN `hours` AS `nsH` ON `s`.`startHourFK` = `nsH`.`ID`
 LEFT JOIN `teachers` AS `t` ON `s`.`teacherFK` = `t`.`ID`
 INNER JOIN `sections` AS `se` ON `c`.`sectionFK` = `se`.`ID`
-WHERE `se`.`short` = '".$_SESSION['section']."' AND `time` = '".$date."'
+WHERE `se`.`short` = '".mysql_real_escape_string($_SESSION['section'])."' AND `time` = '".mysql_real_escape_string($date)."'
 ORDER BY `startHour`";
 $result = mysql_query($sql);
 echo mysql_error();
@@ -38,23 +38,33 @@ echo mysql_error();
 $pdf = new FPDF();
 $pdf->AddPage();
 $pdf->SetFont('Arial','UI',20);
-$pdf->Cell('150','25','HTL Anichstraße','');
+$pdf->Cell('75','25','HTL Anichstraße');
+$pdf->Cell('75','25',$date);
 $pdf->Cell('','25','Abteilung '.$_SESSION['section'],'','1');
 $pdf->SetFont('Arial','',12);
-$pdf->Cell(10,10,'','1');
+$pdf->Cell(15,10,'Stunde','1');
 $pdf->Cell(40,10,'Klasse','1');
 $pdf->Cell(40,10,'Suppl. durch','1');
 $pdf->Cell(40,10,'Fach','1');
 $pdf->Cell(40,10,'Bemerkung','1','1');
-for($i = 0;$i<count($substitudes);$i++){
-	$pdf->Cell(10,10,$substitudes[$i]->startHour,'1');
-	$pdf->Cell(40,10,$substitudes[$i]->className,'1');
-	$pdf->Cell(40,10,$substitudes[$i]->newTeacher,'1');
-	$pdf->Cell(40,10,$substitudes[$i]->suShort,'1');
-	$pdf->Cell(40,10,$substitudes[$i]->comment,'1','1');
+$count = 0;
+if(isset($substitudes)){
+	for($i = 0;$i<count($substitudes);$i++){
+		$pdf->Cell(15,10,$substitudes[$i]->startHour,'1');
+		$pdf->Cell(40,10,$substitudes[$i]->className,'1');
+		$pdf->Cell(40,10,$substitudes[$i]->newTeacher,'1');
+		$pdf->Cell(40,10,$substitudes[$i]->suShort,'1');
+		$pdf->Cell(40,10,$substitudes[$i]->comment,'1','1');
+		$count++;
+	}
 }
+while($count<12){
+ 		$pdf->Cell(15,10,'','1');
+		$pdf->Cell(40,10,'','1');
+		$pdf->Cell(40,10,'','1');
+		$pdf->Cell(40,10,'','1');
+		$pdf->Cell(40,10,'','1','1');
+		$count++;
+ }
 $pdf->Output();
-
-
-
 ?>
