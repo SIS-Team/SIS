@@ -16,6 +16,9 @@
 		if (trim($_POST['user']) != "" && trim($_POST['password']) != "") {
 			try {
 				login($_POST['user'], $_POST['password']);
+				if (isset($_POST['keep']))
+					$_SESSION['keep'] = true;
+					
 				if (!isset($_GET['return']))
 					$_GET['return'] = "./";
 				header("LOCATION: " . $_GET['return']);

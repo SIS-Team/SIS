@@ -10,14 +10,20 @@
 	 *	0.1.1:	15. 10. 2013, Buchberger Florian - login, logout
 	 */
 	
+	if (isset($_SESSION))
+		if ($_SESSION['keep'])
+				session_set_cookie_params(60 * 60 * 24 * 7); // behält das session cookie für 1 Woche.
+	
 	@session_start();
 
 	if (!isset($_SESSION['active']) || !$_SESSION['active']) {
 		$_SESSION['time'] = time();
 		$_SESSION['originalID'] = session_id();  
 		$_SESSION['active'] = true;
+		$_SESSION['keep'] = false;
 		$_SESSION['loggedIn'] = false;
 		$_SESSION['rights'] = array();
+		$_SESSION['id'] = "";
 		$_SESSION['name'] = "";
 		$_SESSION['isTeacher'] = false;
 		$_SESSION['class'] = "";
