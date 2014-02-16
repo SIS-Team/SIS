@@ -39,6 +39,16 @@ animation.open = function(timestamp) {
 	else {
 		animation.start = null;
 		animation.block = false;
+		animation.distance = animation.targetDistance;
+		
+		var innerWindow = document.getElementById("innerWindow");
+		var diff = parseInt(animation.distance - animation.windowDistance);
+		innerWindow.style.height = 2 * diff + "px";
+		innerWindow.style.bottom = (- diff) + "px";
+		innerWindow.style.display = "block";
+		
+		move(animation.distance);
+		
 		if (animation.after)
 			animation.after();
 		animation.after = false;
