@@ -13,7 +13,7 @@ include_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die se
 include_once(ROOT_LOCATION . "/modules/other/dateFunctions.php");		//Stellt Datumsfunktionen zur Verfügung
 require_once(ROOT_LOCATION . "/modules/other/miscellaneous.php");		//Stell Verschiedenes zur Verfügung
 
-if(!($_SESSION['loggedIn'])) ifNotLoggedInGotoLogin(); //Kontrolle ob angemeldet
+if(!($_SESSION['loggedIn'])) GotoRoot(); //Kontrolle ob angemeldet
 
 //Seitenheader
 pageHeader("News","main");
