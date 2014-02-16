@@ -13,14 +13,18 @@
 	@session_start();
 
 	if (!isset($_SESSION['active']) || !$_SESSION['active']) {
+		$_SESSION['time'] = time();
+		$_SESSION['originalID'] = session_id();  
 		$_SESSION['active'] = true;
 		$_SESSION['loggedIn'] = false;
-		$_SESSION['cn'] = "";
+		$_SESSION['rights'] = array();
 		$_SESSION['name'] = "";
 		$_SESSION['isTeacher'] = false;
 		$_SESSION['class'] = "";
 		$_SESSION['section'] = "";
 	}
+	
+	session_regenerate_id();
 	
 	/*
 	 * beendet die Session, setzt $loggedIn zurück
