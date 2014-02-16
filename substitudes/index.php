@@ -12,7 +12,9 @@ include_once("../config.php");
 include_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
 include_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
 include_once(ROOT_LOCATION . "/modules/other/dateFunctions.php");		//Stellt Datumsfunktionen zur Verfügung
-if(!($_SESSION['loggedIn']))  header("Location: ".RELATIVE_ROOT."/");	//Kontrolle ob angemeldet
+include_once(ROOT_LOCATION . "/modules/other/miscellaneous.php");		//Stellt Verschiedenes zur Verfügung
+
+if(!($_SESSION['loggedIn']))  ifNotLoggedInGotoLogin();	//Kontrolle ob angemeldet
 
 $substitudes = array();
 

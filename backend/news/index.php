@@ -15,13 +15,14 @@ include_once(ROOT_LOCATION . "/modules/form/form.php");					//Stell die Formular
 include_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
 include_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
 include_once(ROOT_LOCATION . "/modules/database/inserts.php");			//Stellt die insert-Befehle zur Verfügung
+include_once(ROOT_LOCATION . "/modules/other/miscellaneous.php");		//Stellt Verschiedenes zur Verfügung
+
+if(!($_SESSION['loggedIn'])) ifNotLoggedInGotoLogin(); //Kontrolle ob angemeldet
 
 $isAdmin = $_SESSION['rights']['E'] || $_SESSION['rights']['N'] || $_SESSION['rights']['W'] || $_SESSION['rights']['M'] || $_SESSION['rights']['root'];
 $isNews = $_SESSION['rights']['news'];
 
-if(!($_SESSION['loggedIn'])) header("Location: ".RELATIVE_ROOT."/"); //Kontrolle ob angemeldet
-
-if(!($isNews or $isAdmin)) header("Location: ".RELATIVE_ROOT."/"); //Kontrolle wegen Berechtigungen 
+if(!($isNews or $isAdmin)) ifNotLoggedInGotoLogin(); //Kontrolle wegen Berechtigungen 
 
 if(isset($_POST['save']) && $_POST['save'] !="") {
 	news($isAdmin);
