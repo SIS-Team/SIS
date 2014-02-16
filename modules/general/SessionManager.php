@@ -53,6 +53,8 @@
 		$dn = LDAP_getDN($ent);
 		if (!$ent)
 			throw new Exception("unknown user");
+		if (!empty($password))
+			throw new Exception("no password given");
 		if (!LDAP_login($dn, $password))
 			throw new Exception("wrong password");
 		$_SESSION['loggedIn'] = true;
