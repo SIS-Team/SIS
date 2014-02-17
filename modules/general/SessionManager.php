@@ -10,6 +10,8 @@
 	 *	0.1.1:	15. 10. 2013, Buchberger Florian - login, logout
 	 */
 	
+	include_once(ROOT_LOCATION . "/modules/general/ActionLogger.php");
+	
 	if (isset($_SESSION))
 		if ($_SESSION['keep'])
 				session_set_cookie_params(60 * 60 * 24 * 7); // behält das session cookie für 1 Woche.
@@ -67,6 +69,8 @@
 		$_SESSION['class'] = getClass($ent);
 		$_SESSION['section'] = getSection($ent);
 		$_SESSION['rights'] = getRights($ent);
+		
+		generateLog();
 	}
 
 	function logout() {
