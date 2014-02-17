@@ -5,10 +5,10 @@ include_once(ROOT_LOCATION . "/modules/general/Connect.php");
 include_once(ROOT_LOCATION . "/modules/general/SessionManager.php");
 include_once(ROOT_LOCATION . "/modules/other/miscellaneous.php");	
 
-if(!($_SESSION['loggedIn']))  ifNotLoggedInGotoLogin();	
+if(!($_SESSION['loggedIn']))  GotoRoot();	
 
 $isAdmin = $_SESSION['rights']['E'] || $_SESSION['rights']['N'] || $_SESSION['rights']['W'] || $_SESSION['rights']['M'] || $_SESSION['rights']['root'];
-if(!$isAdmin) ifNotLoggedInGotoLogin();
+if(!$isAdmin) ifNotLoggedInGotoRoot();
 if(isset($_GET['date']) && check_date($_GET['date']))$date = $_GET['date'];
 else $date = date("Y-m-d");
 $sql = "SELECT 
