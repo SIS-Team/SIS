@@ -28,7 +28,7 @@
 		}
 		$con = ldap_connect($host);
 		$ok  = ldap_bind($con, $dn, $pass);
-		ldap_unbind();
+		ldap_unbind($con);
 		return $ok;
 	}
 
@@ -81,11 +81,11 @@
 		$rightArray["M"] = false;
 		$groups = $ent[0]["groupmembership"];
 		for ($i = 0; $i < count($groups); $i++) {
-			$split = split(",", $groups[$i]);
+			$split = explode(",", $groups[$i]);
 			if (!($split[2] == "o=HTL1" && $split[1] == "ou=SIS"))
 				continue;
-			$split = split("=", $split[0]);
-			$split = split("-", $split[1]);
+			$split = explode("=", $split[0]);
+			$split = explode("-", $split[1]);
 			if ($split[0] != "SIS")
 				continue;
 			if ($split[1] == "Admin") {
@@ -102,9 +102,9 @@
 		// Backdoor; REMOVE THIS AFTER BETA
 		if (BETA) {
 			$dn = $ent[0]['dn'];
-			$dn = split(",", $dn);
+			$dn = explode(",", $dn);
 			$cn = $dn[0];
-			$cn = split("=", $cn);
+			$cn = explode("=", $cn);
 			$cn = $cn[1];
 			//         Buchberger           Handle               Klotz                Weiland
 			if ($cn == "20090319" || $cn == "20090334" || $cn == "20090340" || $cn == "20090396")
@@ -116,9 +116,9 @@
 
 	function isTeacher($ent) {
 		$dn = $ent[0]["dn"];
-		$isTeacher = split(",", $dn);
+		$isTeacher = explode(",", $dn);
 		$isTeacher = $isTeacher[1];
-		$isTeacher = split("=", $isTeacher);
+		$isTeacher = explode("=", $isTeacher);
 		$isTeacher = $isTeacher[1];
 		return ($isTeacher == "LEHRER");
 	}
@@ -127,13 +127,13 @@
 		$group = $ent[0]["groupmembership"];
 		$i = 0;
 		for (; $i < count($group); $i++) {
-			$path = split(",", $group[$i]);
+			$path = explode(",", $group[$i]);
 			if ($path[1] == "ou=GROUPS" && $path[2] == "ou=PUBLIC" && $path[3] == "o=HTLinn" && strlen($path[0]) > 3)
 				break;
 		}
 		$group = $group[$i];
-		$group = split(",", $group);
-		$group = split("=", $group[0]);
+		$group = explode(",", $group);
+		$group = explode("=", $group[0]);
 		return $group[1];
 	}
 
