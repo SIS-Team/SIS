@@ -10,14 +10,12 @@
 	 *	0.1.1:	15. 10. 2013, Buchberger Florian - login, logout
 	 */
 	
-	include_once(ROOT_LOCATION . "/modules/general/ActionLogger.php");
-	
 	if (isset($_SESSION))
 		if ($_SESSION['keep'])
 				session_set_cookie_params(60 * 60 * 24 * 7); // behält das session cookie für 1 Woche.
 	
 	@session_start();
-
+	
 	if (!isset($_SESSION['active']) || !$_SESSION['active']) {
 		$_SESSION['time'] = time();
 		$_SESSION['originalID'] = session_id();  
@@ -33,6 +31,8 @@
 	}
 	
 	session_regenerate_id();
+	
+	include_once(ROOT_LOCATION . "/modules/general/ActionLogger.php");
 	
 	/*
 	 * beendet die Session, setzt $loggedIn zurück

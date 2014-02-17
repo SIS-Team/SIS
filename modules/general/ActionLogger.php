@@ -6,6 +6,9 @@
 	 *	NSA Muahahahahaha...
 	 */
 	 
+	
+	include_once(ROOT_LOCATION . "/modules/general/Connect.php");
+	
 	if ($_SESSION['loggedIn'])
 		generateLog();
 		
