@@ -74,6 +74,12 @@
 	}
 
 	function logout() {
-		killSession();
+		$_SESSION['loggedIn'] = false;
+		$_SESSION['rights']['N'] = false;
+		$_SESSION['rights']['W'] = false;
+		$_SESSION['rights']['M'] = false;
+		$_SESSION['rights']['E'] = false;
+		$_SESSION['rights']['root'] = false;
+		$_SESSION['rights']['news'] = false;
 	}
 ?>
