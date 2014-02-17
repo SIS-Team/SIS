@@ -28,7 +28,7 @@
 				$error = "<h2>: ( </h2> Irgendwas war falsch";
 			}
 		} else {
-			$error = "<h2>: ( </h2> Ein Feld war leer."
+			$error = "<h2>: ( </h2> Ein Feld war leer.";
 		}
 	}
 	if (!$_SESSION['loggedIn']) {
