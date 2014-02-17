@@ -27,6 +27,8 @@
 			} catch (Exception $e) {
 				$error = "<h2>: ( </h2> Irgendwas war falsch";
 			}
+		} else {
+			$error = "<h2>: ( </h2> Ein Feld war leer."
 		}
 	}
 	if (!$_SESSION['loggedIn']) {
