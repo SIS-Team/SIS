@@ -15,6 +15,7 @@
 	if (isset($_POST['user']) && isset($_POST['password'])) {
 		if (trim($_POST['user']) != "" && trim($_POST['password']) != "") {
 			try {
+				sleep(0.2);
 				login($_POST['user'], $_POST['password']);
 				if (isset($_POST['keep']))
 					$_SESSION['keep'] = true;
