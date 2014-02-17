@@ -57,7 +57,7 @@
 			throw new Exception("no password given");
 		if (!LDAP_login($dn, $password))
 			throw new Exception("wrong password");
-		$_SESSION['loggedIn'] = true;
+		$_SESSION['loggedIn'] = time();
 		$_SESSION['name'] = getFullName($ent);
 		$_SESSION['isTeacher'] = isTeacher($ent);
 		if ($_SESSION['isTeacher'])
