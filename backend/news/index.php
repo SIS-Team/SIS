@@ -17,13 +17,13 @@ include_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die se
 include_once(ROOT_LOCATION . "/modules/database/inserts.php");			//Stellt die insert-Befehle zur Verfügung
 include_once(ROOT_LOCATION . "/modules/other/miscellaneous.php");		//Stellt Verschiedenes zur Verfügung
 
-if(!($_SESSION['loggedIn'])) GotoRoot(); //Kontrolle ob angemeldet
+ifNotLoggedInGotoLogin(); //Kontrolle ob angemeldet
+$permission = getPermission();
 
-$isAdmin = $_SESSION['rights']['E'] || $_SESSION['rights']['N'] || $_SESSION['rights']['W'] || $_SESSION['rights']['M'] || $_SESSION['rights']['root'];
-$isNews = $_SESSION['rights']['news'];
 
-if(!($isNews or $isAdmin)) GotoRoot(); //Kontrolle wegen Berechtigungen 
-
+if($permission == false) noPermission(); //Kontrolle wegen Berechtigungen 
+if($permission == "admin" || $permission == "root") $isAdmin = 1;
+else $isAdmin = 0;
 if(isset($_POST['save']) && $_POST['save'] !="") {
 	news($isAdmin);
 }

@@ -13,8 +13,7 @@ include_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die se
 include_once(ROOT_LOCATION . "/modules/other/dateFunctions.php");		//Stellt Datumsfunktionen zur Verfügung
 require_once(ROOT_LOCATION . "/modules/other/miscellaneous.php");		//Stell Verschiedenes zur Verfügung
 
-if(!($_SESSION['loggedIn'])) GotoRoot(); //Kontrolle ob angemeldet
-
+ifNotLoggedInGotoLogin(); //Kontrolle ob angemeldet
 //Seitenheader
 pageHeader("News","main");
 $sql ="SELECT `ID` FROM sections WHERE `short` = '".$_SESSION['section']."'";

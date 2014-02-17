@@ -14,7 +14,7 @@ include_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die se
 include_once(ROOT_LOCATION . "/modules/other/dateFunctions.php");		//Stellt Datumsfunktionen zur Verfügung
 include_once(ROOT_LOCATION . "/modules/other/miscellaneous.php");		//Stellt Verschiedenes zur Verfügung
 
-if(!($_SESSION['loggedIn']))  GotoRoot();	//Kontrolle ob angemeldet
+ifNotLoggedInGotoLogin();	//Kontrolle ob angemeldet
 
 $substitudes = array();
 

@@ -18,7 +18,7 @@ include_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Desig
 include_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
 include_once(ROOT_LOCATION . "/modules/other/miscellaneous.php");		//Stellt Verschiedenes zur Verfügung
 
-if(!($_SESSION['loggedIn']))  GotoRoot();	//Kontrolle ob angemeldet
+ifNotLoggedInGotoLogin();	//Kontrolle ob angemeldet
 $isTeacher =$_SESSION['isTeacher'];
 
 if($isTeacher) {
