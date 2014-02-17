@@ -85,6 +85,7 @@ for ($i = 0; $i < count($lessons); $i++) {
 	$hours[$index][$lessons[$i]->weekdayShort] = (array) $hours[$index][$lessons[$i]->weekdayShort];
 	$hours[$index][$lessons[$i]->weekdayShort]['moved'] = "";
 	$hours[$index][$lessons[$i]->weekdayShort]['deleted'] = "";
+	$hours[$index][$lessons[$i]->weekdayShort]['changed'] = "";	
 	$hours[$index][$lessons[$i]->weekdayShort] = (object) $hours[$index][$lessons[$i]->weekdayShort];
 }
 
@@ -98,7 +99,6 @@ if($displaytyp == "modificated"){
 	else {
 	 	$offset = 1- date("N",time());
 	 }
-	
 	 echo "Stundenplan vom ". date("Y.m.d",time() + 24 * 60 * 60 * $offset)." - ".date("Y.m.d",time() + 24 * 60 * 60 *($offset+5));
 	for($j = 0; $j<=4; $j++)
 	{
@@ -110,22 +110,29 @@ if($displaytyp == "modificated"){
 	//print_r($substitudes[0]['suShort']);
 	for($j = 0; $j < count($substitudes);$j++)
 	{
+	 
+		
 		$hour = $substitudes[$j]['startHour'];
 		$day =  $substitudes[$j]['weekdayShort'];
+		$hours[$hour][$day]->changed = true;
 		if($substitudes[$j]['hidden'] == 1 ){
 			$hours[$hour][$day]->deleted = true;
+			$hours[$hour][$day]->changed = false;
 			$hours[$substitudes[$j]['startHour']][$day]->suShort = str_replace($substitudes[$j]['suShort'],"<span style=\"color:#FF0000\">".$substitudes[$j]['suShort']."</span>",$hours[$substitudes[$j]['startHour']][$day]->suShort);
 
 		}
 		else $hours[$hour][$day]->deleted = false;
 		if($substitudes[$j]['startHour'] != $substitudes[$j]['newStartHour'] && !empty($substitudes[$j]['newStartHour'])){
 		 	$hours[$hour][$day]->deleted  = true;
+		 	$hours[$hour][$day]->changed  = false;
 		 	$hours[$substitudes[$j]['newStartHour']][$day]->moved = true;
 		 	$hours[$substitudes[$j]['newStartHour']][$day]->teShort = $hours[$hour][$day]->teShort;
 		 	$hours[$substitudes[$j]['newStartHour']][$day]->suShort = $hours[$hour][$day]->suShort;
 		 	$hours[$substitudes[$j]['newStartHour']][$day]->endHour = $hours[$hour][$day]->endHour;	 	
 		}
-		else $hours[$hour][$day]->moved = false;
+		else {
+			$hours[$hour][$day]->moved = false;
+		}
 	}
 	//print_r($hours['7']['Mi']);
 	
@@ -165,23 +172,32 @@ for ($i = $tableBegin; $i < $tableEnd; $i++) {
 				}
 			
 			
-			 if(isset($hours[$i][$days[$j]]->deleted) && $hours[$i][$days[$j]]->deleted== true){
-				 echo str_replace($substitudes[$j]['suShort'],"<span style=\"color:#FF0000\">".$substitudes[$j]['suShort']."</span>",$hours[$i][$days[$j]]->suShort);}
-			 else { echo $hours[$i][$days[$j]]->suShort;}
-			 echo "</td>";
-			 	if (isset($hours[$i][$days[$j]])) {
+			if(isset($hours[$i][$days[$j]]->deleted) && $hours[$i][$days[$j]]->deleted== true){
+				echo str_replace($substitudes[$j]['suShort'],"<span style=\"color:#FF0000\">".$substitudes[$j]['suShort']."</span>",$hours[$i][$days[$j]]->suShort);	
+			}
+			else {
+				if(isset($hours[$i][$days[$j]]->changed) && $hours[$i][$days[$j]]->changed== true){
+				echo str_replace($substitudes[$j]['suShort'],"<span style=\"color:#0000FF\">".$substitudes[$j]['suShort']."</span>",$hours[$i][$days[$j]]->suShort);	
+				}
+			
+				else { echo $hours[$i][$days[$j]]->suShort;}
+			}
+			echo "</td>";
+				if (isset($hours[$i][$days[$j]])) {
 					if(($hours[$i][$days[$j]]->endHour) > $i) {//kopiert aktuelle Stunde in nächste Stunde, wenn mehr als eine Stunde nacheinander stattfindet
 						$hours[$i+1][$days[$j]] = NULL;
 						$hours[$i+1][$days[$j]] = (array) $hours[$i+1][$days[$j]];
 						$hours[$i+1][$days[$j]]['moved'] = "";
 						$hours[$i+1][$days[$j]]['deleted'] = "";
+						$hours[$i+1][$days[$j]]['changed'] = "";
 						$hours[$i+1][$days[$j]] = (object) $hours[$i+1][$days[$j]];
 						
 						
 						$hours[$i+1][$days[$j]]->suShort = $hours[$i][$days[$j]]->suShort;
 						 $hours[$i+1][$days[$j]]->teShort = $hours[$i][$days[$j]]->teShort;
 						 $hours[$i+1][$days[$j]]->endHour = $hours[$i][$days[$j]]->endHour;	
-						 $hours[$i+1][$days[$j]]->deleted = $hours[$i][$days[$j]]->deleted;		 
+						 $hours[$i+1][$days[$j]]->deleted = $hours[$i][$days[$j]]->deleted;
+						 $hours[$i+1][$days[$j]]->changed = $hours[$i][$days[$j]]->changed;		 
 						 if($hours[$i][$days[$j]]->moved)  $hours[$i+1][$days[$j]]->moved = $hours[$i][$days[$j]]->moved;		
 					}
 				}
@@ -195,8 +211,10 @@ for ($i = $tableBegin; $i < $tableEnd; $i++) {
 	echo "</tr>";
 }		
 echo "</div>";
-		echo "</table>";
-
+echo "</table>";
+if ($displaytyp == "modificated"){
+	echo "normale Stunde <span style=\"color:#FF0000\">entfallene Stunde</span> <span style=\"color:#00FF00\"> hinzugef&uuml;gte Stunde</span><span style=\"color:#0000FF\"> ver&auml;nderte Stunde</span>";
+}
 
 function getLessons($name,$mode) {		//Abfrage von Stunden von vorgegebener Klasse/vorgegebenem Lehrer
 	if($mode == "schueler" ){
