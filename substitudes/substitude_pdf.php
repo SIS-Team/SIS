@@ -17,7 +17,9 @@ $sql = "SELECT
 `s`.`time`,
 `s`.`comment`,
 `sH`.`hour` AS `startHour`,
+`eH`.`hour` AS `endHour`,
 `nsH`.`hour` AS `newStartHour`,
+`neH`.`hour` AS `newEndHour`,
 `t`.`display` AS `newTeacher`,
 `se`.`short` AS `section`
 FROM `substitudes` AS `s`
@@ -25,12 +27,14 @@ INNER JOIN `subjects` AS `su` ON `s`.`subjectFK` = `su`.`ID`
 INNER JOIN `lessons` AS `l` ON `s`.`lessonFK` = `l`.`ID`
 INNER JOIN `lessonsBase` AS `lb` ON `l`.`lessonBaseFK` = `lb`.`ID`
 INNER JOIN `classes` AS `c` ON `lb`.`classFK` = `c`.`ID`
+INNER JOIN `hours` AS `eH` ON `lb`.`endHourFK` = `eH`.`ID`
 INNER JOIN `hours` AS `sH` ON `lb`.`startHourFK` = `sH`.`ID`
 LEFT JOIN `hours` AS `nsH` ON `s`.`startHourFK` = `nsH`.`ID`
+LEFT JOIN `hours` AS `neH` ON `s`.`endHourFK` = `neH`.`ID`
 LEFT JOIN `teachers` AS `t` ON `s`.`teacherFK` = `t`.`ID`
 INNER JOIN `sections` AS `se` ON `c`.`sectionFK` = `se`.`ID`
 WHERE `se`.`short` = '".mysql_real_escape_string($_SESSION['section'])."' AND `time` = '".mysql_real_escape_string($date)."'
-ORDER BY `startHour`";
+ORDER BY `className`, `startHour`";
 $result = mysql_query($sql);
 echo mysql_error();
 	while($substitude = mysql_fetch_object($result)) {    
@@ -52,12 +56,19 @@ $pdf->Cell(40,10,'Bemerkung','1','1');
 $count = 0;
 if(isset($substitudes)){
 	for($i = 0;$i<count($substitudes);$i++){
-		$pdf->Cell(15,10,$substitudes[$i]->startHour,'1');
-		$pdf->Cell(40,10,$substitudes[$i]->className,'1');
-		$pdf->Cell(40,10,$substitudes[$i]->newTeacher,'1');
-		$pdf->Cell(40,10,$substitudes[$i]->suShort,'1');
-		$pdf->Cell(40,10,$substitudes[$i]->comment,'1','1');
-		$count++;
+	 	if(empty($substitudes[$i]->newStartHour)) $lessons_count = $substitudes[$i]->startHour;
+		else $lessons_count = $substitudes[$i]->newStartHour;
+		if(empty($substitudes[$i]->newEndHour)) $lessons_end = $substitudes[$i]->endHour;
+		else $lessons_end = $substitudes[$i]->newEndHour;
+		while($lessons_count <= $lessons_end){
+			$pdf->Cell(15,10,$lessons_count,'1');
+			$pdf->Cell(40,10,$substitudes[$i]->className,'1');
+			$pdf->Cell(40,10,$substitudes[$i]->newTeacher,'1');
+			$pdf->Cell(40,10,$substitudes[$i]->suShort,'1');
+			$pdf->Cell(40,10,$substitudes[$i]->comment,'1','1');
+			$count++;
+			$lessons_count++;
+		}
 	}
 }
 while($count<12){
