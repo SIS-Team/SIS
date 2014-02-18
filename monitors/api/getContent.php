@@ -113,7 +113,7 @@
 			$results[] = $row;
 		}	
 		$day_counter = 0;
-		for($j = 0; $j<3;$j++){
+		for($j = 0; $j<2;$j++){
 		 	if(date("w", time() + 24 * 60 * 60 * $day_counter)==0) $day_counter++;
 			if(date("w", time() + 24 * 60 * 60 * $day_counter)==6) $day_counter+=2;
 			$response['content'] .= "<div id='t".$j."'>";
@@ -122,6 +122,7 @@
 			$response['content'] .= "<tr><th>Klasse</th><th>Std.</th><th>Suppl. durch</th><th>Fach</th><th>Bemerkung</th></tr>";
 			$empty = 0;
 			if(isset($results)){
+ 				$className =0;
 				for ($i = 0; $i<count($results);$i++){ 
 				 	if($results[$i]->time == date("Y-m-d",time() + 24 * 60 * 60 * $day_counter)) {
 	 					if(empty($results[$i]->newStartHour)){ $lesson_count = $results[$i]->startHour;}
@@ -129,10 +130,15 @@
 						if(empty($results[$i]->newEndHour)){ $lesson_end = $results[$i]->endHour;}
 						else $lesson_end = $results[$i]->newEndHour;
 						$difference = $lesson_end - $lesson_count +1 ;
-						$response['content'] .= "<tr>";
-						$response['content'] .= "<td rowspan=\"".$difference."\"> ". $results[$i]->className ."</td>";
-
+						
+						
 						while($lesson_count <= $lesson_end){
+ 							$response['content'] .= "<tr>";
+							if($className != $results[$i]->className) {
+ 								$className = $results[$i]->className;
+								$response['content'] .= "<td>".$className."</td>";
+							}
+							else $response['content'] .= "<td></td>";
 							$response['content'] .= "<td> ". $lesson_count."</td>"; 
 							if(!empty($results[$i]->newTeacher)){ $response['content'] .= "<td> ". $results[$i]->newTeacher ."</td>";}
 							else {$response['content'] .= "<td> &#160;</td>";}

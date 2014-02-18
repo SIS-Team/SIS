@@ -200,11 +200,21 @@ body {
   font-size: 30px;
  }
  
-#t0 {
+#t0 { 	width: 30%;
+	margin-left: 10px;
+	margin-top: 80px;
+	border-radius:30px;
+	padding:1%;
+	background-color:rgba(0,0,0,0.5);
 }
 
 #t1 {
+ 	width: 25%;
+	margin-right: 10px;
+	margin-top: 80px;
+	border-radius:30px;
+	padding:1%;
+	background-color:rgba(0,0,0,0.5);
 }
 
-#t2 {
-}
+
