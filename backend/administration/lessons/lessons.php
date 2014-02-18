@@ -12,42 +12,49 @@
 
 
 
-
 include_once("../../../config.php");
 include_once(ROOT_LOCATION . "/modules/form/form.php");					//Stell die Formularmasken zur Verfügung
 include_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
 include_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
 include_once(ROOT_LOCATION . "/modules/database/inserts.php");			//Stellt die insert-Befehle zur Verf�gung
-include_once(ROOT_LOCATION . "/modules/other/dateFunctions.php");			//Stellt die insert-Befehle zur Verf�gung
+include_once(ROOT_LOCATION . "/modules/other/dateFunctions.php");			
 include_once(ROOT_LOCATION . "/modules/form/HashGenerator.php");
+include_once(ROOT_LOCATION . "/modules/form/hashCheckFail.php");		
+
+$hashGenerator = new HashGenerator("Stundenplan", __FILE__);
 
 
-if (!($_SESSION['rights']['root']))
+if (!($_SESSION['rights']['root'])){
 	header("Location: ".RELATIVE_ROOT."/");
+	exit();
+}
 
-
-if(empty($_POST['class'])){
+if(empty($_GET['class']) && empty($_POST['class'])){
 	header('Location: ./');
 	exit();
 }
-else if(empty($_POST['day']))
+else if(empty($_POST['class']))
+{
+	$_POST['class']=$_GET['class'];
+}
+
+if(empty($_GET['day']) && empty($_POST['class']))
 	$_POST['day']="Mo";
+else if(empty($_POST['class']))
+	$_POST['day']=$_GET['day'];
 
 	
-if(!empty($_POST['save']) && $_POST['save']!="")
+if(!empty($_POST['save']) && $_POST['save']!=""){
+	HashCheck($hashGenerator);
 	lessons();
-
-$temp = mysql_fetch_array(mysql_query("SELECT ID FROM classes WHERE name = '".$_POST["class"]."'"));
-$ok1 = control($_POST['class'],$temp["ID"],"Klasse");
-$temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort = '".$_POST["day"]."'"));
-$ok2 = control($_POST['day'],$temp["ID"],"Tag");
-
-if(($ok1*$ok2!=1))
-	header("Location: ./?fail=fail");
+}
 
 
 //Seitenheader
 pageHeader("Stundenpl&auml;ne","main");
+
+$hashGenerator->generate();
+HashFail();
 
 $dropDown=array("Subjects","Teachers","Rooms");
 include_once(ROOT_LOCATION . "/modules/form/dropdownSelects.php");		//Stellt die Listen für die Dropdownmenüs zur Verfügung
@@ -66,15 +73,12 @@ printf("<script language=\"javascript\" type=\"text/javascript\" src=\"%s/data/s
 printf("<noscript><br>Bitte aktivieren Sie JavaScript. Ohne JavaScript kann keine korrekte Eingabe der Stundenpl&auml;ne erfolgen<br><br></noscript>");
 
 
-
 printf("Klasse: <a href=\"index.php\" >%s</a> und der Tag: %s",$_POST['class'],$_POST['day']);
 $days=prevNextDay($_POST['day']);
+//HashCheck();
 
-$hashGenerator = new HashGenerator("Tag-Auswahl", __FILE__);
-$hashGenerator->generate();
 
-printf("<form action=\"lessons.php\" method=\"post\">\n");
-$hashGenerator->printForm();
+printf("<form action=\"lessons.php\" method=\"POST\">\n");
 printf("<table width=\"100%%\"><tr>");
 
 if($days['prev']!="")
@@ -105,7 +109,7 @@ while ($row = mysql_fetch_array($result)){	//Fügt solange eine neue Formularzei
 
 //print_r(end($content));
 //print_r($content);
-form_lesson($fields,$content,"Stundenplan");		//Formular wird erstellt
+form_lesson($fields,$content,$hashGenerator);		//Formular wird erstellt
 
 
 

@@ -17,20 +17,28 @@ include_once(ROOT_LOCATION . "/modules/form/form.php");					//Stell die Formular
 include_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
 include_once(ROOT_LOCATION . "/modules/database/inserts.php");			//Stellt die insert-Befehle zur Verfügung
 include_once(ROOT_LOCATION . "/modules/other/dateChange.php");			//Stell die Funktion für die Datumsauswahl zur VerfÃ¼gung
-include_once(ROOT_LOCATION . "/modules/other/dateFunctions.php");					//Stell die Formularmasken zur VerfÃ¼gung
+include_once(ROOT_LOCATION . "/modules/other/dateFunctions.php");					
+include_once(ROOT_LOCATION . "/modules/form/hashCheckFail.php");		
 
-if(empty($_GET['section']) && empty($_POST['section']))
+$hashGenerator = new HashGenerator("MissingTeacher", __FILE__);
+
+if(empty($_GET['section']) && empty($_POST['section'])){
+	//header("Location: ".RELATIVE_ROOT."/");
 	exit();
+}
 else if($_GET['section']!="")
 	$section = $_GET['section'];
 
 
-if (!($_SESSION['rights']['root'] || $_SESSION['rights'][$section]))
+if (!($_SESSION['rights']['root'] || $_SESSION['rights'][$section])){
 	header("Location: ".RELATIVE_ROOT."/");
-
-if(!empty($_POST['save']) && $_POST['save']!="")
+	exit();
+}
+$fail="";
+if(!empty($_POST['save']) && $_POST['save']!=""){
+	HashCheck($hashGenerator);
 	$fail = substitudes();
-
+}
 
 if (empty($_POST["date"]) && empty($_POST['time'])) {		//wenn nichts zurückgegeben wird, dann heute
 	$date = no_weekend(strftime("%Y-%m-%d"));
@@ -44,6 +52,10 @@ else{
 
 //Seitenheader
 pageHeader("Supplierungen eintragen","main");
+
+$hashGenerator->generate();
+
+HashFail();
 
 $dropDown=array("ClassesSub","Subjects","Teachers","Rooms");
 include_once(ROOT_LOCATION . "/modules/form/dropdownSelects.php");		//Stellt die Listen für die Dropdownmenüs zur Verfügung
@@ -84,10 +96,10 @@ $sort = "classes.name, hoursStart.hour";		//Sortierung nach dem Klassenname und 
 $result = selectSubstitude($where,$sort);			//Rückgabewert des Selects
 
 while ($row = mysql_fetch_array($result)){	//Fügt solange eine neue Formularzeile hinzu, solange ein Inhalt zur Verfügung steht
-	form_substitudes($fieldsRow1,$fieldsRow2 ,$row,$section,"Supplierungen");		//Formular wird erstellt
+	form_substitudes($fieldsRow1,$fieldsRow2 ,$row,$section,$hashGenerator);		//Formular wird erstellt
 }
 
-form_substitudes($fieldsRow1,$fieldsRow2,false,$section,"Supplierungen");			//Formular für einen neuen Eintrag
+form_substitudes($fieldsRow1,$fieldsRow2,false,$section,$hashGenerator);			//Formular für einen neuen Eintrag
 
 //Seitenfooter
 pageFooter();

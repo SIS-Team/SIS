@@ -17,15 +17,27 @@ include_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Desig
 include_once(ROOT_LOCATION . "/modules/form/form.php");					//Stell die Formularmasken zur Verfügung
 include_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
 include_once(ROOT_LOCATION . "/modules/database/inserts.php");			//Stellt die insert-Befehle zur Verfügung
+include_once(ROOT_LOCATION . "/modules/form/hashCheckFail.php");		
 
-if (!($_SESSION['rights']['root']))
+$hashGenerator = new HashGenerator("Klassen", __FILE__);
+
+if (!($_SESSION['rights']['root'])){
 	header("Location: ".RELATIVE_ROOT."/");
+	exit();
+}
 
-if(!empty($_POST['save']) && $_POST['save']!="")
+if(!empty($_POST['save']) && $_POST['save']!=""){
+	HashCheck($hashGenerator);
 	classes();
+}
+
+
 
 //Seitenheader
 pageHeader("Klassen","main");
+$hashGenerator->generate();
+
+HashFail();
 
 $dropDown=array("Sections","Teachers","Rooms");
 include_once(ROOT_LOCATION . "/modules/form/dropdownSelects.php");		//Stellt die Listen für die Dropdownmenüs zur Verfügung
@@ -46,10 +58,10 @@ $result = selectClass("",$sort);	//Rückgabewert des Selects
 
 
 while ($row = mysql_fetch_array($result)){	//Fügt solange eine neue Formularzeile hinzu, solange ein Inhalt zur Verfügung steht
-	form_new($fields,$row,"Klassen");		//Formular wird erstellt
+	form_new($fields,$row,$hashGenerator);		//Formular wird erstellt
 }
 
-form_new($fields,false,"Klassen");			//Formular für einen neuen Eintrag
+form_new($fields,false,$hashGenerator);			//Formular für einen neuen Eintrag
 
 //Seitenfooter
 pageFooter();

@@ -43,14 +43,14 @@ include_once(ROOT_LOCATION . "/modules/form/HashGenerator.php");
  *$content- Inhalt des Formulars wenn leeres Formular false sonst array mit Inhalten
  *
  */
+
+
  
- 
-function form_new($field,$content,$name)
+function form_new($field,$content,$hashGenerator)
 {	
+
 $allowedSites = array('substitudes','absentees','news');
 
-$hashGenerator = new HashGenerator($name, __FILE__);
-$hashGenerator->generate();
 
 printf("<table>\n");	//Tabellen Tag auf
 	printf("<tr>\n");	//Zeilen 	Tag auf
@@ -127,11 +127,8 @@ printf("<table>\n");	//Tabellen Tag auf
 printf("</table>\n");
 }
 
-function form_lesson($field,$content,$name)
+function form_lesson($field,$content,$hashGenerator)
 {	
-
-$hashGenerator = new HashGenerator($name, __FILE__);
-$hashGenerator->generate();
 
 
 $zeile=0;
@@ -140,12 +137,12 @@ printf("<table>\n");	//Tabellen Tag auf
 		if(($zeile)%7==0){
 			$zeile1=1;
 			$hour=(($zeile)/7)+1;
-			$visibility="style=\"visibility:visible\"";
+			$visibility="style=\"display:tabel-row\"";
 		}
 		else{
 			$zeile1=0;
 			$hour=floor((($zeile)/7)+1);
-			$visibility="style=\"visibility:collapse\"";
+			$visibility="style=\"display:none\"";
 	
 		}
 		
@@ -178,7 +175,7 @@ printf("<table>\n");	//Tabellen Tag auf
 			if(!empty($length) && $length>1 && $startHour != $hour && $zeile1==1){
 									
 				$length--;
-				$visibility="style=\"visibility:collapse\"";
+				$visibility="style=\"visibility:none\"";
 			
 			}
 		}
@@ -263,11 +260,8 @@ printf("</table>\n");
 }
 
 
-function form_substitudes($fieldRow1,$fieldRow2,$content,$section,$name)
+function form_substitudes($fieldRow1,$fieldRow2,$content,$section,$hashGenerator)
 {	
-
-$hashGenerator = new HashGenerator($name, __FILE__);
-$hashGenerator->generate();
 
 
 printf("<table>\n");	//Tabellen Tag auf
@@ -297,14 +291,14 @@ printf("<table>\n");	//Tabellen Tag auf
 					
 				}
 				else if ($f[2] == "checkboxJava") {		//Checkbox
-					$collapse="collapse";
+					$collapse="none";
 					if($f[5]=="1"){			//Wenn gecheckt, dann Variable checked auf checked setzen
 						$checked="checked";
-						$collapse="visible";				
+						$collapse="table-row";				
 					}
 					else{						//sonst leer
 						$checked="";
-						$collapse="collapse";
+						$collapse="none";
 					}
 					if(empty($content["ID"]))
 						$ID=0;
@@ -343,7 +337,7 @@ printf("<table>\n");	//Tabellen Tag auf
 			}
 				
   	printf("</tr>\n");
-  	printf("<tr id=\"visibleRow%s\" style=\"visibility:%s\">\n",$ID,$collapse);	//Zeilen 	Tag auf
+  	printf("<tr id=\"visibleRow%s\" style=\"display:%s\">\n",$ID,$collapse);	//Zeilen 	Tag auf
   			//FÃƒÂ¯Ã‚Â¿Ã‚Â½r jeden Eintrag im Array field einmal diese Schleife durchlaufen
   			printf("<td colspan=\"7\"></td>\n");
 			foreach($fieldRow2 as $f) {	

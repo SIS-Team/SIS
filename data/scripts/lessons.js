@@ -36,17 +36,17 @@ switch(temp){
 
 var i=2;
 
-document.getElementById('visibleRow2'+hour).style.visibility="collapse";
-document.getElementById('visibleRow3'+hour).style.visibility="collapse";
-document.getElementById('visibleRow4'+hour).style.visibility="collapse";
-document.getElementById('visibleRow5'+hour).style.visibility="collapse";
-document.getElementById('visibleRow6'+hour).style.visibility="collapse";
-document.getElementById('visibleRow7'+hour).style.visibility="collapse";
+document.getElementById('visibleRow2'+hour).style.display="none";
+document.getElementById('visibleRow3'+hour).style.display="none";
+document.getElementById('visibleRow4'+hour).style.display="none";
+document.getElementById('visibleRow5'+hour).style.display="none";
+document.getElementById('visibleRow6'+hour).style.display="none";
+document.getElementById('visibleRow7'+hour).style.display="none";
 
 
 while(i<=zahl){
 
-document.getElementById('visibleRow'+i+hour).style.visibility="visible";
+document.getElementById('visibleRow'+i+hour).style.display="table-row";
 
 i++;
 }
@@ -90,7 +90,7 @@ var ii = hour+1;
 while(ii<=16){
 
 if(parseInt(document.getElementById('visibleHour'+ii).value)==1){
-	document.getElementById('visibleRow1'+ii).style.visibility="visible";
+	document.getElementById('visibleRow1'+ii).style.display="table-row";
 	ii+=1;
 }
 else
@@ -102,13 +102,13 @@ ii=hour+1;
 
 while(ii<=endHour){
 
-document.getElementById('visibleRow1'+ii).style.visibility="collapse";
-document.getElementById('visibleRow2'+ii).style.visibility="collapse";
-document.getElementById('visibleRow3'+ii).style.visibility="collapse";
-document.getElementById('visibleRow4'+ii).style.visibility="collapse";
-document.getElementById('visibleRow5'+ii).style.visibility="collapse";
-document.getElementById('visibleRow6'+ii).style.visibility="collapse";
-document.getElementById('visibleRow7'+ii).style.visibility="collapse";
+document.getElementById('visibleRow1'+ii).style.display="none";
+document.getElementById('visibleRow2'+ii).style.display="none";
+document.getElementById('visibleRow3'+ii).style.display="none";
+document.getElementById('visibleRow4'+ii).style.display="none";
+document.getElementById('visibleRow5'+ii).style.display="none";
+document.getElementById('visibleRow6'+ii).style.display="none";
+document.getElementById('visibleRow7'+ii).style.display="none";
 
 ii+=1;
 

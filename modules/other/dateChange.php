@@ -1,12 +1,8 @@
 <?php
 
 include_once(ROOT_LOCATION . "/modules/other/dateFunctions.php");
-include_once(ROOT_LOCATION . "/modules/form/HashGenerator.php");
 
 function dateChange($date){
-
-$hashGenerator = new HashGenerator("Datumswechsel", __FILE__);
-$hashGenerator->generate();
 
 
 if(isset($_REQUEST['rechts_x']) && $_REQUEST['rechts_x']!="0")	//Wenn nach links gedrückt wird dann Datum increase
@@ -21,7 +17,6 @@ if (isset($_REQUEST['links_x']) && $_REQUEST['links_x']!="0")	//Wenn nach links 
 
 //Formular ausgeben
 printf("<form method=\"post\">");
-	$hashGenerator->printForm();
 	printf("<table >");
 		printf("<tr style=\"vertical-align:bottom\">");
 			printf("<input type=\"image\" name=\"links\" src=\"%s\" align=\"absmiddle\">", RELATIVE_ROOT."/data/images/absentees/Pfeil_l.png");	//Pfeil zurück

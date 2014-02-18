@@ -19,19 +19,30 @@ include_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die se
 include_once(ROOT_LOCATION . "/modules/database/inserts.php");			//Stellt die insert-Befehle zur Verfügung
 include_once(ROOT_LOCATION . "/modules/other/dateFunctions.php");			//Stellt die insert-Befehle zur Verfügung
 include_once(ROOT_LOCATION . "/modules/form/HashGenerator.php");
+include_once(ROOT_LOCATION . "/modules/form/hashCheckFail.php");		
 
-if(empty($_POST['day']))
+$hashGenerator = new HashGenerator("Stunden", __FILE__);
+
+if(empty($_POST['day']) && empty($_POST['weekdayShort']))
 	$_POST['day']="Mo";
+else if(empty($_POST['day']))
+	$_POST['day'] = $_POST['weekdayShort'];
 
-if (!($_SESSION['rights']['root']))
+
+if (!($_SESSION['rights']['root'])){
 	header("Location: ".RELATIVE_ROOT."/");
-
-if(!empty($_POST['save']) && $_POST['save']!="")
+	exit();
+}
+if(!empty($_POST['save']) && $_POST['save']!=""){
+	HashCheck($hashGenerator);
 	hours();
-
+}
 //var_dump(pageHeader);
 //Seitenheader
 pageHeader("Zeiten","main");
+
+$hashGenerator->generate();
+HashFail();
 
 //Formularmaske
 $fields = array(
@@ -45,11 +56,7 @@ $fields = array(
 
 $days=prevNextDay($_POST['day']);
 
-$hashGenerator = new HashGenerator("Tag-Auswahl", __FILE__);
-$hashGenerator->generate();
-
 printf("<form action=\"index.php\" method=\"post\">\n");
-$hashGenerator->printForm();
 printf("<table width=\"100%%\"><tr>");
 
 if($days['prev']!="")
@@ -67,11 +74,11 @@ $result = selectAll("hours",$where,$sort);	//Rückgabewert des Selects
 
 
 while ($row = mysql_fetch_array($result)){	//Fügt solange eine neue Formularzeile hinzu, solange ein Inhalt zur Verfügung steht
-	form_new($fields,$row,"Stunden");		//Formular wird erstellt
+	form_new($fields,$row,$hashGenerator);		//Formular wird erstellt
 	$weekday = $row['weekday'];
 }
 
-form_new($fields,array("ID"=>"","weekday"=>$weekday,"weekdayShort"=>$_POST['day'],"hour"=>"","startTime"=>"","endTime"=>""),"Stunden");			//Formular für einen neuen Eintrag
+form_new($fields,array("ID"=>"","weekday"=>$weekday,"weekdayShort"=>$_POST['day'],"hour"=>"","startTime"=>"","endTime"=>""),$hashGenerator);			//Formular für einen neuen Eintrag
 
 //Seitenfooter
 pageFooter();

@@ -9,10 +9,10 @@
 //id = Zeilennummer
 function Visibility(id) {
 
-	if(document.getElementById('visibleRow'+id).style.visibility=="visible")	//Wenn die Zeile sichtbar
-		document.getElementById('visibleRow'+id).style.visibility="collapse";	//Zeile unsichtbar
+	if(document.getElementById('visibleRow'+id).style.display=="table-row")	//Wenn die Zeile sichtbar
+		document.getElementById('visibleRow'+id).style.display="none";	//Zeile unsichtbar
 	else																		//sonst
-		document.getElementById('visibleRow'+id).style.visibility="visible";	//sichtbar machen
+		document.getElementById('visibleRow'+id).style.display="table-row";	//sichtbar machen
 }
 
 function failAlert(){ 

@@ -8,21 +8,20 @@
 	 *
 	 */
 
-function check(){
+function HashCheck($hashGenerator){
+
 	try {
 		$hashGenerator->check();
 	} catch (Exception $e) {
 		header("LOCATION: ?error");
+		//echo($e->getMessage());
 		exit();
 	}
 }
 
-function fail(){
-	if(isset($_GET['fail']))
+function HashFail(){
+	if(isset($_GET['error']))
 		echo "<div><br>Es ist ein Fehler aufgetreten. Bitte das Formular neu laden.<br><br><div>";
 }
-
-
-
 
 ?>
