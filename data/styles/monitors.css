@@ -222,13 +222,16 @@ body {
 
 
 .substitude th {
- 	border : 1px solid;
+ 	color: #000;
+ 	border : 1px solid white;
+	border-left: black;
 	border-collapse: collapse;
-	background-color: rgba(0,0,0,0.5);
+	background-color: rgba(255,255,255,0.9);
 }
 
 .substitude td
 {
+ 	color: #FFF;
  	border : 1px solid;
 	border-collapse: collapse;
 	background-color: rgba(0,0,0,0.5);
@@ -236,5 +239,5 @@ body {
 
 .sub_empty
 {
-	border : 0; 
+ border: 0;
 }
