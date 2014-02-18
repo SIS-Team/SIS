@@ -16,6 +16,9 @@ include_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Desig
 include_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
 include_once(ROOT_LOCATION . "/modules/database/inserts.php");			//Stellt die insert-Befehle zur Verfügung
 include_once(ROOT_LOCATION . "/modules/other/miscellaneous.php");		//Stellt Verschiedenes zur Verfügung
+include_once(ROOT_LOCATION . "/modules/form/hashCheckFail.php");		
+
+$hashGenerator = new HashGenerator("MissingTeacher", __FILE__);
 
 ifNotLoggedInGotoLogin(); //Kontrolle ob angemeldet
 $permission = getPermission();
@@ -26,6 +29,8 @@ if($permission == "admin" || $permission == "root") $isAdmin = 1;
 else $isAdmin = 0;
 if(isset($_POST['save']) && $_POST['save'] !="") {
 	news($isAdmin);
+	HashCheck($hashGenerator);
+
 }
 
 
@@ -33,7 +38,8 @@ if(isset($_POST['save']) && $_POST['save'] !="") {
 
 
 pageHeader("Formular","main");
-
+$hashGenerator->generate();
+HashFail();
 //ID,title,text,startDay,endDay
 if($isAdmin) {
 	$fields = array(
@@ -60,10 +66,10 @@ if($isAdmin){
 	$result = mysql_query($sql);
 	echo mysql_error();
 	while ($row = mysql_fetch_array($result)){	//Fügt solange eine neue Formularzeile hinzu, solange ein Inhalt zur Verfügung steht
-	form_new($fields,$row,"Eingabe-News");		//Formular wird erstellt
+	form_new($fields,$row,$hashGenerator);		//Formular wird erstellt
 	}
 }
-form_new($fields,false,"Eingabe-News");
+form_new($fields,false,$hashGenerator);
 
 pageFooter();
 
