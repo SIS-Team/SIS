@@ -1,6 +1,12 @@
  <!DOCTYPE xhtml>
 <html>
 	<head>
+		<script>
+			// let's do some framebusting; we want this to be executed before the page loads
+			if (parent.frames.length > 0) {
+				top.location.replace(document.location);
+			}
+		</script>
 		<title>SIS.Web Access - &title;</title>
 		<link rel="stylesheet" type="text/css" href="&root;/data/styles/cookies.css">
 		<meta charset="UTF-8">
