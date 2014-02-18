@@ -88,7 +88,6 @@ for ($i = 0; $i < count($lessons); $i++) {
 	$hours[$index][$lessons[$i]->weekdayShort]['changed'] = "";	
 	$hours[$index][$lessons[$i]->weekdayShort] = (object) $hours[$index][$lessons[$i]->weekdayShort];
 }
-
 $offset = 0;
 if($displaytyp == "modificated"){
 	//Setzen des ersten Tags der Woche
@@ -110,15 +109,14 @@ if($displaytyp == "modificated"){
 	//print_r($substitudes[0]['suShort']);
 	for($j = 0; $j < count($substitudes);$j++)
 	{
-	 
-		
 		$hour = $substitudes[$j]['startHour'];
 		$day =  $substitudes[$j]['weekdayShort'];
 		$hours[$hour][$day]->changed = true;
+
 		if($substitudes[$j]['hidden'] == 1 ){
 			$hours[$hour][$day]->deleted = true;
 			$hours[$hour][$day]->changed = false;
-			$hours[$substitudes[$j]['startHour']][$day]->suShort = str_replace($substitudes[$j]['suShort'],"<span style=\"color:#FF0000\">".$substitudes[$j]['suShort']."</span>",$hours[$substitudes[$j]['startHour']][$day]->suShort);
+			$hours[$substitudes[$j]['startHour']][$day]->suShort = str_replace($substitudes[$j]['suShort'],"<span style=\"color:#FF0000\">entf&auml;llt</span>",$hours[$substitudes[$j]['startHour']][$day]->suShort);
 
 		}
 		else $hours[$hour][$day]->deleted = false;
@@ -172,12 +170,7 @@ for ($i = $tableBegin; $i < $tableEnd; $i++) {
 				}
 			
 			
-			if(isset($hours[$i][$days[$j]]->deleted) && $hours[$i][$days[$j]]->deleted== true){
-				if(isset($substitudes[$j])){
-					echo str_replace($substitudes[$j]['suShort'],"<span style=\"color:#FF0000\">".$substitudes[$j]['suShort']."</span>",$hours[$i][$days[$j]]->suShort);
-				}	
-			}
-			else {
+
 				if(isset($hours[$i][$days[$j]]->changed) && $hours[$i][$days[$j]]->changed== true){
 				echo str_replace($substitudes[$j]['suShort'],"<span style=\"color:#0000FF\">".$substitudes[$j]['suShort']."</span>",$hours[$i][$days[$j]]->suShort);	
 				}
@@ -185,7 +178,7 @@ for ($i = $tableBegin; $i < $tableEnd; $i++) {
 				else { 
 					echo $hours[$i][$days[$j]]->suShort;
 				}
-			}
+			
 			echo "</td>";
 				if (isset($hours[$i][$days[$j]])) {
 					if(($hours[$i][$days[$j]]->endHour) > $i) {//kopiert aktuelle Stunde in nächste Stunde, wenn mehr als eine Stunde nacheinander stattfindet
@@ -217,7 +210,7 @@ for ($i = $tableBegin; $i < $tableEnd; $i++) {
 echo "</div>";
 echo "</table>";
 if ($displaytyp == "modificated"){
-	echo "normale Stunde <span style=\"color:#FF0000\">entfallene Stunde</span> <span style=\"color:#00FF00\"> hinzugef&uuml;gte Stunde</span><span style=\"color:#0000FF\"> ver&auml;nderte Stunde</span>";
+	echo "normale Stunde <span style=\"color:#00FF00\"> hinzugef&uuml;gte Stunde</span><span style=\"color:#0000FF\"> ver&auml;nderte Stunde</span>";
 }
 
 function getLessons($name,$mode) {		//Abfrage von Stunden von vorgegebener Klasse/vorgegebenem Lehrer
