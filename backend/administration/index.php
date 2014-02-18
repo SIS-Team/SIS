@@ -43,10 +43,10 @@
 	
 	$buttons[4]['displayed'] = true;
 	$buttons[4]['enabled'] = $_SESSION['rights']['root'];
-	$buttons[4]['svg'] = ROOT_LOCATION . "/data/images/administration/whatever.svg";
-	$buttons[4]['text'] = "What Ever";
-	$buttons[4]['url'] = RELATIVE_ROOT . "/backend/administration/whatever/";
-	$buttons[4]['jsurl'] = RELATIVE_ROOT . "/backend/administration/whatever/?js";
+	$buttons[4]['svg'] = ROOT_LOCATION . "/data/images/administration/logs.svg";
+	$buttons[4]['text'] = "Statistiken";
+	$buttons[4]['url'] = RELATIVE_ROOT . "/backend/administration/logs/";
+	$buttons[4]['jsurl'] = RELATIVE_ROOT . "/backend/administration/logs/?js";
 	
 	$buttons[5]['displayed'] = true;
 	$buttons[5]['enabled'] = $_SESSION['rights']['root'];
