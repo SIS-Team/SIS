@@ -1,9 +1,12 @@
-<?php
+﻿<?php
 	/* /impressum/index.php
 	 * Autor: Buchberger Florian
-	 * Version: 0.1.0
+	 * Version: 1.0.0
 	 * Beschreibung:
 	 *	Impressum
+	 *
+	 * Changelog:
+	 * 	1.0.0:  18.02.2014, Machac Philipp - Fehler behoben und Datenschutz added
 	 */	 
 	include("../config.php");
 	include_once(ROOT_LOCATION . "/modules/general/Main.php");
@@ -11,8 +14,14 @@
 	pageHeader("Impressum","main");
 	
 ?>
-Springe zu:
+
+<a name="navigation" id="navigation"></a>
+
+<h1>Navigation</h1>
 <ul>
+	<li>
+		<a href="#responsible" onclick="smoothScroll('responsible'); return false;">Für den Inahlt dieser Website verantwortlich</a>
+	</li>
 	<li>
 		<a href="#team" onclick="smoothScroll('team'); return false;">Projektteam</a>
 	</li>
@@ -23,16 +32,19 @@ Springe zu:
 		<a href="#source" onclick="smoothScroll('source'); return false;">Sourcecode</a>
 	</li>
 	<li>
-		<a href="#privacy" onclick="smoothScroll('privacy'); return false;">Datenschutz</a>
+		<a href="#privacy" onclick="smoothScroll('privacy'); return false;">Datenschutzbestimmungen</a>
 	</li>
 	<li>
 		<a href="#terms" onclick="smoothScroll('terms'); return false;">Nutzungsbedingungen</a>
 	</li>
 </ul>
+<br />
 
-<br />
-<br />
-<br />
+<hr />
+<a name="responsible" id="responsible"></a>
+<a href="#top" onclick="smoothScroll('top'); return false;">Zum Seitenanfang</a>
+
+<h1>Für den Inhalt dieser Website verantwortlich</h1>
 
 Höhere Technische Bundes Lehr- und Versuchsanstalt Anichstraße<br />
 Anichstraße 26 - 28<br />
@@ -41,7 +53,7 @@ A-6020 Innsbruck<br />
 <table>
 	<tr>
 		<td>
-			Telefon
+			Telefon:
 		</td>
 		<td>
 			+43 - (0) 512 - 59717 - 0
@@ -49,7 +61,7 @@ A-6020 Innsbruck<br />
 	</tr>
 	<tr>
 		<td>
-			Fax
+			Fax:
 		</td>
 		<td>
 			+43 - (0) 512 - 59717 - 72
@@ -57,17 +69,17 @@ A-6020 Innsbruck<br />
 	</tr>
 	<tr>
 		<td>
-			E-Mail
+			E-Mail:
 		</td>
 		<td>
-			<a href="mailto:direction@htlinn.ac.at">
-				direction@htlinn.ac.at
+			<a href="mailto:direktion@htlinn.ac.at">
+				direktion@htlinn.ac.at
 			</a>
 		</td>
 	</tr>
 	<tr>
 		<td>
-			Sekretariat
+			Sekretariat:
 		</td>
 		<td>
 			Anichstraße 26, 1.Stock, Raum 102
@@ -78,12 +90,21 @@ A-6020 Innsbruck<br />
 <h2>Direktor</h2>
 
 Mag. Günther LANER<br />
-Telefon: +43 (0) 512 - 59717 - 10<br />
+<table>
+	<tr>
+		<td>
+			Telefon:
+		</td>
+		<td>
+			+43 - (0) 512 - 59717 - 10
+		</td>
+	</tr>
+</table><br />
 
 <hr />
 <a name="team" id="team"></a>
 <a href="#top" onclick="smoothScroll('top'); return false;">Zum Seitenanfang</a>
-<h2>Projektteam</h2>
+<h1>Projektteam</h1>
 
 Florian BUCHBERGER<br />
 Zuständig für:<br />
@@ -118,7 +139,7 @@ Zuständig für:<br />
 		Raspberry Hardware Setup
 </ul><br />
 
-Matthias Klotz<br />
+Matthias KLOTZ<br />
 Zuständig für:<br />
 <ul>
 	<li>
@@ -141,38 +162,41 @@ Zuständig für:<br />
 	<li>
 		Ausgabe Stundenplan
 	</li>
-</ul><br />
+</ul>
 
-<h3>Sonstige Mitarbeiter</h3>
+<h2>Sonstige Mitarbeiter</h2>
 
 Philipp MACHAC<br />
 Zuständig für:<br />
 <ul>
 	<li>
-		Design
+		Grafiken und Design
+	</li>
+	<li>
+		Datenschutzbestimmungen und Nutzungsbedingungen
 	</li>
 </ul><br />
 
 <hr />
 <a name="advisors" id="advisors"></a>
 <a href="#top" onclick="smoothScroll('top'); return false;">Zum Seitenanfang</a>
-<h2>Projektbetreuer<h2>
+<h1>Projektbetreuer<h1>
 
-<h3>Projektmanagement</h3>
+<h2>Projektmanagement</h2>
 
 WL. FOL. Dipl. Päd. DI (FH) Helmut STECHER<br />
 
-<h3>Technischer Betreuer</h3>
+<h2>Technischer Betreuer</h2>
 
 Prof. Mag. Dr. Michael WEISS<br />
 
-<h3>Serveradministration</h3>
+<h2>Serveradministration</h2>
 
 Dipl. Päd. Ing. Wolfram LASSNIG<br />
 
-<h3>Code-Review, etc.</h3>
+<h2>Code-Review, etc.</h2>
 
-VL Engelbert GRUBER<br />
+VL Engelbert GRUBER<br /><br />
 
 <hr />
 <a name="source" id="source"></a>
@@ -198,12 +222,79 @@ Für dieses Projekt wurden verschiedener Fremdcode verwendet.<br />
 	</li>
 </ul>
 
-<sup>1</sup>) Dieser Fremdcode wurde an die Gegebenheiten angepasst.
+<sup>1</sup>) Dieser Fremdcode wurde an die Gegebenheiten angepasst.<br /><br />
 
 <hr />
 <a name="privacy" id="privacy"></a>
 <a href="#top" onclick="smoothScroll('top'); return false;">Zum Seitenanfang</a>
-<h1>Datenschutz</h1>
+<h1>Datenschutzbestimmungen</h1>
+
+Persönlichkeitsrechte und der Schutz deiner Daten sind uns wichtig. Deshalb möchten wir dir im nachfolgenden Text 
+erläutern welche Daten wir von dir als Benutzer von SIS erheben und wie wir diese weiterverwenden, um die Dienste, 
+welche wir mit diesem Service zur Verfügung stellen weiter verbessern können.<br /><br />
+Obwohl wir uns um eine möglichst einfache Darstellung bemüht haben, kann es vorkommen, dass dir Begriffe wie Cookies, 
+Sessions, IP-Adresse, Browser oder OS nicht vertraut sind. In diesem Fall bitten wir dich darum, dich zunächst über 
+diese Begriffe zu informieren.<br /><br />
+Solltest du noch weitere Fragen bezüglich des Datenschutzes bei SIS haben, kontaktiere uns bitte unter 
+	<a href="mailto:PLACEHOLDER@htlinn.ac.at">
+			PLACEHOLDER@htlinn.ac.at
+	</a>
+<br /><br />
+<h2>Erheben und Nutzen von personenbezogenen Daten</h2>
+
+Personenbezogene Daten sind Daten, welche dazu verwendet werden können, eine Person eindeutig zu identifizieren.<br /><br />
+Bevor wir dir in der nachfolgenden Aufzählung die von uns erhobenen personenbezogenen Daten aufschlüsseln ist es allerdings 
+wichtig zu erwähnen, dass wir Daten nur dann Speichern, wenn du angemeldet bist. Von uns gespeicherte Daten werden 
+ausschließlich für Statistiken verwendet. <br />
+Rohdaten werden weder an Projektmitarbeiter, noch an Schulinterne- bzw. externe Parteien weitergegeben.<br /><br />
+Bereits bevor du dich allerdings anmelden kannst, nämlich dann, wo du der Erstellung eines Session Cookies zugestimmt hast wird 
+diese zwar angelegt, jedoch werden zu diesem Zeitpunkt keine mit dir verbundenen Daten gespeichert.<br /><br />
+
+<h3>Welche personenbezogenen Daten wir erheben</h3>
+
+<ul>
+	<li>
+		Einige wichtige Informationen über dich liefert uns der HTTP User Agent. In dessen Header sind im Wesentlichen 
+		Daten über dein verwendetes Device enthalten. Wir erfahren dadurch z.B. ob es sich bei deinem Gerät um einen 
+		Desktop PC oder um ein Mobilgerät handelt, welches OS auf diesem Gerät verwendet wird (z.B. Windows 7, iOS 7, 
+		Android 3.2 usw.) und welchen Browser in welcher Version du nützt, um 
+		<a href="https://sis.htlinn.ac.at">https://sis.htlinn.ac.at </a>aufzurufen.
+	</li>
+	<li>
+		Neben der Session-ID, welche uns als Identifikationsmerkmal dient, um mehrere zusammengehörige Anfragen von dir 
+		als Benutzer zu erkennen und deiner Session (=Sitzung) zuordnen zu können, erheben wir auch deine IP-Adresse, 
+		alle deine Logins (Datum, Uhrzeit) sowie deine Bewegung innerhalb der SIS Website.
+	</li>
+	<li>
+		Die Daten des HTTP User Agents, deine Login Daten und deine Seitenaufrufe sind zwar alle eindeutig deiner Session 
+		zuzuordnen, jedoch ist es damit nicht möglich sie dir persönlich zuzuordnen, da die Session keine deiner 
+		persönlichen Daten enthält. Selbst die IP-Adresse ermöglicht es uns nicht, dich eindeutig zu identifizieren, da du 
+		diese von deinem Internet Serviceprovider nur für eine oftmals kurze Zeit zugeordnet bekommst, bevor diese wechselt.
+		<br /> Und von deinem Provider zu erfahren wann du welche IP hattest, ist ohne Gerichtsbeschluss nicht möglich. <br /> 
+		Deshalb erfassen wir noch deine LDAP-ID, also deine schulinterne, eindeutige Identifikationsnummer. 
+		Neben der ID werden auch noch deine Abteilung sowie deine Klasse gespeichert.
+	</li>
+</ul>
+
+<h3>Wie wir personenbezogene Daten nutzen</h3>
+
+<ul>
+	<li>
+		Vom HTTP User Agent gelieferte Daten werden Beispielsweise dazu verwendet, dir beim Zugriff mittels mobile 
+		Device (Smartphone oder Tablet) eine angepasste Startseite anzuzeigen, welche dir sofort die Möglichkeit eröffnet,
+		unsere mobile SIS App aus den jeweiligen AppStore’s herunterzuladen. <br />
+		Auch an der Erkennung ob dein Browser JavaScript unterstützt und wir die Seite dadurch im vollen Funktionsumfang 
+		liefern können (Animationen usw.) oder nicht ist der User Agent beteiligt.<br />
+		Neben dieser Nutzung der Daten, welche den Inhalt für dich zu deinem Vorteil anpasst, verwenden wir die User Agent
+		Daten auch für unsere Statistiken.
+	</li>
+	<li>
+		Alle anderen Daten (Login, Seitenaufrufe, ID, Klassen, Abteilungen usw.) werden ausschließlich für Statistiken 
+		verwendet. Beispiele für Statistiken können sein: <br />
+		Nutzungsstatistiken von Betriebssystemen und Browsern, Abteilungen, Klassen sowie Nutzungsstatistiken der 
+		verschiedenen Altersstufen.
+	</li>
+</ul>
 
 Mach dir keine Hoffnungen, wir sind die NSA...<br />
 
@@ -213,6 +304,8 @@ Mach dir keine Hoffnungen, wir sind die NSA...<br />
 <a name="terms" id="terms"></a>
 <a href="#top" onclick="smoothScroll('top'); return false;">Zum Seitenanfang</a>
 <h1>Nutzungsbedingungen</h1>
+
+
 
 Wir verwenden deine Daten... MUAHAHAHAHA... *hust*<br />
 
