@@ -31,7 +31,7 @@
 ?>
 	<h1>Herzlich Willkommen bei SIS</h1>
 	<p>
-		Das School Information Service (SIS) ist die Diplomarbeit einer Gruppe von Sch&uuml;lern der HTLinn, Abteilung Elektronik. <br />
+		Das School Information Service (SIS) ist die Diplomarbeit einer Gruppe von Sch&uuml;lern der HTLinn, Abteilung Elektronik und Technische Informatik. <br />
 		Ziel des Projektes ist es ein System zu entwerfen, welches Stundenpl&auml;ne, Supplierpl&auml;ne sowie News f&uuml;r Sch&uuml;ler und Lehrer elektronisch bereitstellt. Der Zugriff soll sowohl in Form dieses Portales, als auch mittels einer eigenen App f&uuml;r die bekanntesten Smartphoneplattformen m&ouml;glich sein. Au&szlig;erdem werden die Monitore, welche an diversen Stellen in der Schule montiert sind, mit diesem System angesteuert.
 	</p>
 	<br />
