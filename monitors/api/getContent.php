@@ -82,7 +82,7 @@
 		
 	case "Stundenplan":
 	//Supplierplan wegen Entwicklung hier	
-	/*	$response['modus'] = "Supplierplan";
+		$response['modus'] = "Supplierplan";
 		$response['content'] = "Wegen eines Tests des Supplierplans wird hier nicht der Stundenplan angezeigt";
 		$sql = "SELECT 
 		`su`.`short` AS `suShort`,
@@ -90,7 +90,9 @@
 		`s`.`time`,
 		`s`.`comment`,
  		`sH`.`hour` AS `startHour`,
+ 		`eH`.`hour` AS `endHour`,
  		`nsH`.`hour` AS `newStartHour`,
+		`neH`.`hour` AS `newEndHour`,
  		`t`.`display` AS `newTeacher`,
  		`se`.`name` AS `section`
 		FROM `substitudes` AS `s`
@@ -99,10 +101,13 @@
 		INNER JOIN `lessonsBase` AS `lb` ON `l`.`lessonBaseFK` = `lb`.`ID`
 		INNER JOIN `classes` AS `c` ON `lb`.`classFK` = `c`.`ID`
 		INNER JOIN `hours` AS `sH` ON `lb`.`startHourFK` = `sH`.`ID`
+		INNER JOIN `hours` AS `eH` ON `lb`.`endHourFK` = `eH`.`ID`
 		LEFT JOIN `hours` AS `nsH` ON `s`.`startHourFK` = `nsH`.`ID`
+		LEFT JOIN `hours` AS `neH` ON `s`.`endHourFK` = `neH`.`ID`
 		LEFT JOIN `teachers` AS `t` ON `s`.`teacherFK` = `t`.`ID`
 		INNER JOIN `sections` AS `se` ON `c`.`sectionFK` = `se`.`ID`
-		WHERE `s`.`time` >= '" . date("Y.m.d")."' AND `se`.`name` = '".$monitor->section."'";
+		WHERE `s`.`time` >= '" . date("Y.m.d")."' AND `se`.`name` = '".$monitor->section."'
+		ORDER BY `className`, `startHour`";
 		$result = mysql_query($sql);
 		while ($row = mysql_fetch_object($result)) {
 			$results[] = $row;
@@ -126,7 +131,8 @@
 						if(!empty($results[$i]->newTeacher)){ $response['content'] .= "<td> ". $results[$i]->newTeacher ."</td>";}
 						else {$response['content'] .= "<td> &#160;</td>";}
 						$response['content'] .= "<td> ". $results[$i]->suShort ."</td>";
-						$response['content'] .= "<td> ". $results[$i]->comment ."</td>";
+						if(!empty($results[$i]->comment)){ $response['content'] .= "<td> ". $results[$i]->comment ."</td>";}
+						else {$response['content'] .= "<td> &#160;</td>";}
 						$response['content'] .= "</tr>"; 
 						}
 					else $empty++;
@@ -141,8 +147,8 @@
 		}	
 		
 		$hash .= md5($response['content']);
-		break; */
-		
+		break; 
+		/*
 		$response['modus'] = "Stundenplan";
 		$sql = "SELECT 
 		`su`.`short` AS `suShort`,
@@ -200,7 +206,7 @@
 		
 		
 		$hash .= md5($response['content']);
-		break; 
+		break; */
 		
 	case "Supplierplan":
 		$sql = "SELECT 
