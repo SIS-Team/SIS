@@ -99,6 +99,7 @@ if($displaytyp == "modificated"){
 	 	$offset = 1- date("N",time());
 	 }
 	 echo "Stundenplan vom ". date("Y.m.d",time() + 24 * 60 * 60 * $offset)." - ".date("Y.m.d",time() + 24 * 60 * 60 *($offset+5));
+	 echo "</br> TESTBETRIEB!";
 	for($j = 0; $j<=4; $j++)
 	{
 	//Supplierungen des Tages abrufen
