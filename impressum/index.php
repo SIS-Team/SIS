@@ -1,12 +1,13 @@
 ﻿<?php
 	/* /impressum/index.php
 	 * Autor: Buchberger Florian
-	 * Version: 1.0.0
+	 * Version: 1.1.0
 	 * Beschreibung:
 	 *	Impressum
 	 *
 	 * Changelog:
 	 * 	1.0.0:  18.02.2014, Machac Philipp - Fehler behoben und Datenschutz added
+	 *	1.1.0:	18.02.2014, Machac Philipp - Datenschutz improved
 	 */	 
 	include("../config.php");
 	include_once(ROOT_LOCATION . "/modules/general/Main.php");
@@ -231,13 +232,13 @@ Für dieses Projekt wurden verschiedener Fremdcode verwendet.<br />
 
 Persönlichkeitsrechte und der Schutz deiner Daten sind uns wichtig. Deshalb möchten wir dir im nachfolgenden Text 
 erläutern welche Daten wir von dir als Benutzer von SIS erheben und wie wir diese weiterverwenden, um die Dienste, 
-welche wir mit diesem Service zur Verfügung stellen weiter verbessern können.<br /><br />
+welche wir mit diesem Service zur Verfügung stellen, weiter verbessern zu können.<br /><br />
 Obwohl wir uns um eine möglichst einfache Darstellung bemüht haben, kann es vorkommen, dass dir Begriffe wie Cookies, 
 Sessions, IP-Adresse, Browser oder OS nicht vertraut sind. In diesem Fall bitten wir dich darum, dich zunächst über 
 diese Begriffe zu informieren.<br /><br />
 Solltest du noch weitere Fragen bezüglich des Datenschutzes bei SIS haben, kontaktiere uns bitte unter 
-	<a href="mailto:PLACEHOLDER@htlinn.ac.at">
-			PLACEHOLDER@htlinn.ac.at
+	<a href="mailto:SIS-Development@htlinn.ac.at">
+			SIS-Development@htlinn.ac.at
 	</a>
 <br /><br />
 <h2>Erheben und Nutzen von personenbezogenen Daten</h2>
@@ -245,16 +246,15 @@ Solltest du noch weitere Fragen bezüglich des Datenschutzes bei SIS haben, kont
 Personenbezogene Daten sind Daten, welche dazu verwendet werden können, eine Person eindeutig zu identifizieren.<br /><br />
 Bevor wir dir in der nachfolgenden Aufzählung die von uns erhobenen personenbezogenen Daten aufschlüsseln ist es allerdings 
 wichtig zu erwähnen, dass wir Daten nur dann Speichern, wenn du angemeldet bist. Von uns gespeicherte Daten werden 
-ausschließlich für Statistiken verwendet. <br />
-Rohdaten werden weder an Projektmitarbeiter, noch an Schulinterne- bzw. externe Parteien weitergegeben.<br /><br />
-Bereits bevor du dich allerdings anmelden kannst, nämlich dann, wo du der Erstellung eines Session Cookies zugestimmt hast wird 
+ausschließlich für Statistiken verwendet. <br /><br />
+Bereits bevor du dich allerdings anmelden kannst, nämlich dort, wo du der Erstellung eines Session Cookies zugestimmt hast wird 
 diese zwar angelegt, jedoch werden zu diesem Zeitpunkt keine mit dir verbundenen Daten gespeichert.<br /><br />
 
 <h3>Welche personenbezogenen Daten wir erheben</h3>
 
 <ul>
 	<li>
-		Einige wichtige Informationen über dich liefert uns der HTTP User Agent. In dessen Header sind im Wesentlichen 
+		Einige wichtige Informationen über dich liefert uns der HTTP User Agent. Darin sind im Wesentlichen 
 		Daten über dein verwendetes Device enthalten. Wir erfahren dadurch z.B. ob es sich bei deinem Gerät um einen 
 		Desktop PC oder um ein Mobilgerät handelt, welches OS auf diesem Gerät verwendet wird (z.B. Windows 7, iOS 7, 
 		Android 3.2 usw.) und welchen Browser in welcher Version du nützt, um 
@@ -267,9 +267,9 @@ diese zwar angelegt, jedoch werden zu diesem Zeitpunkt keine mit dir verbundenen
 	</li>
 	<li>
 		Die Daten des HTTP User Agents, deine Login Daten und deine Seitenaufrufe sind zwar alle eindeutig deiner Session 
-		zuzuordnen, jedoch ist es damit nicht möglich sie dir persönlich zuzuordnen, da die Session keine deiner 
-		persönlichen Daten enthält. Selbst die IP-Adresse ermöglicht es uns nicht, dich eindeutig zu identifizieren, da du 
-		diese von deinem Internet Serviceprovider nur für eine oftmals kurze Zeit zugeordnet bekommst, bevor diese wechselt.
+		zuzuordnen, jedoch ist es damit nicht möglich, sie dir persönlich zuzuordnen. Selbst die IP-Adresse ermöglicht es uns nicht, 
+		dich eindeutig zu identifizieren, da du diese von deinem Internet Serviceprovider nur für eine oftmals kurze Zeit 
+		zugeordnet bekommst, bevor diese wechselt.
 		<br /> Und von deinem Provider zu erfahren wann du welche IP hattest, ist ohne Gerichtsbeschluss nicht möglich. <br /> 
 		Deshalb erfassen wir noch deine LDAP-ID, also deine schulinterne, eindeutige Identifikationsnummer. 
 		Neben der ID werden auch noch deine Abteilung sowie deine Klasse gespeichert.
@@ -282,23 +282,53 @@ diese zwar angelegt, jedoch werden zu diesem Zeitpunkt keine mit dir verbundenen
 	<li>
 		Vom HTTP User Agent gelieferte Daten werden Beispielsweise dazu verwendet, dir beim Zugriff mittels mobile 
 		Device (Smartphone oder Tablet) eine angepasste Startseite anzuzeigen, welche dir sofort die Möglichkeit eröffnet,
-		unsere mobile SIS App aus den jeweiligen AppStore’s herunterzuladen. <br />
-		Auch an der Erkennung ob dein Browser JavaScript unterstützt und wir die Seite dadurch im vollen Funktionsumfang 
-		liefern können (Animationen usw.) oder nicht ist der User Agent beteiligt.<br />
+		unsere mobile SIS-App aus den jeweiligen AppStores herunterzuladen. <br />
 		Neben dieser Nutzung der Daten, welche den Inhalt für dich zu deinem Vorteil anpasst, verwenden wir die User Agent
 		Daten auch für unsere Statistiken.
 	</li>
 	<li>
 		Alle anderen Daten (Login, Seitenaufrufe, ID, Klassen, Abteilungen usw.) werden ausschließlich für Statistiken 
 		verwendet. Beispiele für Statistiken können sein: <br />
-		Nutzungsstatistiken von Betriebssystemen und Browsern, Abteilungen, Klassen sowie Nutzungsstatistiken der 
+		Nutzungsstatistiken von Betriebssystemen und Browsern, Abteilungen sowie Nutzungsstatistiken der 
 		verschiedenen Altersstufen.
 	</li>
 </ul>
 
-Mach dir keine Hoffnungen, wir sind die NSA...<br />
+<h2>Weitergabe an Dritte</h2>
 
-// TODO <br />
+Von uns gespeicherte Daten werden ausschließlich für Statistiken verwendet. Rohdaten stehen nur Administratoren zur Verfügung.<br /> 
+Es werden keinerlei benutzerspezifische Daten an Dritte weitergegeben. <br /><br />
+
+<h2>Datensicherheit</h2>
+
+Wir  bemühen uns intensiv darum, SIS und Daten unserer Nutzer vor unbefugtem Zugriff zu schützen.<br />
+Insbesondere:<br />
+
+<ul>
+	<li>
+		verschlüsseln wir unseren Dienst unter Nutzung von SSL. 
+	</li>
+	<li>
+		überprüfen wir unsere Praktiken zur Erhebung, Speicherung und Verarbeitung von Daten 
+		zum Schutz vor unbefugtem Zugriff auf Systeme. 
+	</li>
+	<li>
+		beschränken wir den Zugriff von Stundenplänen und Supplierplänen  auf die jeweils betroffenen Klassen und Lehrer (Administratoren ausgenommen).
+	</li>
+	<li>
+		beschränken wir den Zugriff auf personenbezogene Daten auf unsere Administratoren.
+	</li>	
+</ul>
+
+<h2>Änderungen</h2>
+
+Unsere Datenschutzbestimmungen können sich von Zeit zu Zeit ändern. Wir werden die Bestimmungen allerdings nicht ändern, 
+ohne dich darüber zu informieren und deine Einwilligung einzuholen. <br />
+Alle Änderungen der Datenschutzbestimmungen werden auf dieser Seite veröffentlicht und du wirst darüber informiert. 
+Außerdem werden ältere Versionen dieser Datenschutzbestimmungen zu deiner Einsicht in einem Archiv aufbewahrt.<br /><br />
+
+Stand: 18.02.2014 <br /><br />
+
 
 <hr />
 <a name="terms" id="terms"></a>
