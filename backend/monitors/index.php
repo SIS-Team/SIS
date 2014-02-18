@@ -296,15 +296,15 @@
 			<td><input type="file" name="file" maxlength="800000000" accept="image/jpeg image/gif image/png video/mpeg" style="width: 100%"></td>
 		</tr>
 		<tr>
-			<td>Display-Modus: (leer f&uuml; unver&auml;ndert) </td>
+			<td>Display-Modus: (leer f&uuml;r unver&auml;ndert) </td>
 			<td><input type="text" autocomplete="off" list="displayModes" name="displayMode" style="width: 100%"></td>
 		</tr>
 		<tr>
-			<td>Einschalt-Zeit (leer f&uuml; unver&auml;ndert) </td>
+			<td>Einschalt-Zeit (leer f&uuml;r unver&auml;ndert) </td>
 			<td><input type="text" name="displayOn" style="width: 100%"></td>
 		</tr>
 		<tr>
-			<td>Ausschalt-Zeit (leer f&uuml; unver&auml;ndert) </td>
+			<td>Ausschalt-Zeit (leer f&uuml;r unver&auml;ndert) </td>
 			<td><input type="text" name="displayOff" style="width: 100%"></td>
 		</tr>
 		<tr>
