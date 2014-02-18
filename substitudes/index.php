@@ -36,7 +36,7 @@ for($counter = 0; $counter <=2; $counter++)
 	echo "Supplierungen vom ".$day;
 		 
 	//Tabellenkopfausgabe
-	echo "<table>";
+	echo "<table style =\"border-collapse:collapse\">";
 	echo "<tr>";
 	echo "<th>Klasse</th>";
 	echo "<th>St.</th>";
