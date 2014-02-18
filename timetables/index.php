@@ -173,14 +173,18 @@ for ($i = $tableBegin; $i < $tableEnd; $i++) {
 			
 			
 			if(isset($hours[$i][$days[$j]]->deleted) && $hours[$i][$days[$j]]->deleted== true){
-				echo str_replace($substitudes[$j]['suShort'],"<span style=\"color:#FF0000\">".$substitudes[$j]['suShort']."</span>",$hours[$i][$days[$j]]->suShort);	
+				if(isset($substitudes[$j])){
+					echo str_replace($substitudes[$j]['suShort'],"<span style=\"color:#FF0000\">".$substitudes[$j]['suShort']."</span>",$hours[$i][$days[$j]]->suShort);
+				}	
 			}
 			else {
 				if(isset($hours[$i][$days[$j]]->changed) && $hours[$i][$days[$j]]->changed== true){
 				echo str_replace($substitudes[$j]['suShort'],"<span style=\"color:#0000FF\">".$substitudes[$j]['suShort']."</span>",$hours[$i][$days[$j]]->suShort);	
 				}
 			
-				else { echo $hours[$i][$days[$j]]->suShort;}
+				else { 
+					echo $hours[$i][$days[$j]]->suShort;
+				}
 			}
 			echo "</td>";
 				if (isset($hours[$i][$days[$j]])) {
