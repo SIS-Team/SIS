@@ -53,12 +53,21 @@
 		include_once(ROOT_LOCATION . "/modules/general/LDAP.php");
 		$ent = LDAP_getUser($username);
 		$dn = LDAP_getDN($ent);
-		if (!$ent)
-			throw new Exception("unknown user");
-		if (empty($password))
-			throw new Exception("no password given");
-		if (!LDAP_login($dn, $password))
-			throw new Exception("wrong password");
+		try {
+			if (!$ent)
+				throw new Exception("unknown user");
+			if (empty($password))
+				throw new Exception("no password given");
+				
+			if (!LDAP_login($dn, $password))
+				throw new Exception("wrong password");
+			
+			logLoginAttempt($username, true);
+		} catch (Exception $e) {
+			logLoginAttempt($username, false);
+			throw $e;
+		}
+		
 		$_SESSION['loggedIn'] = time();
 		$_SESSION['name'] = getFullName($ent);
 		$_SESSION['isTeacher'] = isTeacher($ent);
