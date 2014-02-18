@@ -69,13 +69,13 @@
 		}
 		
 		$_SESSION['class'] = getClass($ent);
+		$_SESSION['isTeacher'] = isTeacher($ent);
 		
-		if (!($_SESSION['class'] == "5YHELT" || $_SESSION['class'] == "4AHEL"))
+		if (!($_SESSION['isTeacher'] || $_SESSION['class'] == "5YHELT" || $_SESSION['class'] == "4AHEL"))
 			throw new Exception("not in beta");
 		
 		$_SESSION['loggedIn'] = time();
 		$_SESSION['name'] = getFullName($ent);
-		$_SESSION['isTeacher'] = isTeacher($ent);
 		if ($_SESSION['isTeacher'])
 			$_SESSION['id'] = getInitials($ent);
 		else
