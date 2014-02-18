@@ -55,6 +55,7 @@
 		if (!isset($_GET['submodeChange'])) {
 			$response['submodeChange'] = time();
 		} else {
+			$response['submodeChange'] = intval($_GET['submodeChange']);
 			if (intval($_GET['submodeChange']) > time() - 5) {
 				$response['submodeChange'] = time();
 				$response['submode'] = !$response['submode'];
