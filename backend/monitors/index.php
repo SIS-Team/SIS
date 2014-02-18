@@ -19,11 +19,14 @@
 	
 	$hashGenerator = new HashGenerator("monitor-form", __FILE__);
 
-	if (!$_SESSION['loggedIn'])
+	if (!$_SESSION['loggedIn']){
+		header("Location: ".RELATIVE_ROOT."/");
 		exit();
-	if (!($_SESSION['rights']['root'] || $_SESSION['rights']['N'] || $_SESSION['rights']['W'] || $_SESSION['rights']['E'] || $_SESSION['rights']['M']))
+	}
+	if (!($_SESSION['rights']['root'] || $_SESSION['rights']['N'] || $_SESSION['rights']['W'] || $_SESSION['rights']['E'] || $_SESSION['rights']['M'])){
+		header("Location: ".RELATIVE_ROOT."/");
 		exit();
-
+	}
 	// Wenn das Fomular abgeschickt wird
 	if (isset($_POST['sent'])) {
 		try {
