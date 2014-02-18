@@ -63,10 +63,16 @@ for($counter = 0; $counter <=2; $counter++)
 				echo "<td>".$substitudes[$count]['teShort']."</td>";	//supplierender Lehrer
 			}
 			else {
-				echo "<td>&#160;</td>";}
+				echo "<td>&#160;</td>";
+			}
 			echo "<td>".$substitudes[$count]['suShort']."</td>";	//Fach
 			echo "<td>".$substitudes[$count]['oldTeShort']."</td>";	//ursprünglicher Lehrer
-			echo "<td class='comment background'>".$substitudes[$count]['comment']."</td>";	//Bemerkung
+			if(!empty($substitudes[$count]['comment'])){
+ 				echo "<td class='comment background'>".$substitudes[$count]['comment']."</td>";	//Bemerkung
+			}
+			else {
+ 				echo "<td>&#160;</td>";
+			}
 			echo "</tr>";
 		}
 	if(count($substitudes) == 0) echo "<tr><td colspan = 6 align = center> F&uuml;r diesen Tag sind keine Supplierungen vorgesehen</td></tr>";
