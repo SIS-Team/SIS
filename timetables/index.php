@@ -36,9 +36,9 @@ else {
 
 pageHeader("Stundenplan","main");
 
-echo "<form  method = \"post\">";
-if(!isset($_POST['displaytyp'])) $displaytyp = "modificated";
-else $displaytyp = $_POST['displaytyp'];
+echo "<form  method = \"get\">";
+if(!isset($_GET['displaytyp'])) $displaytyp = "modificated";
+else $displaytyp = $_GET['displaytyp'];
 if($displaytyp == "normal"){
 	echo "<input type =\"radio\" name = \"displaytyp\" onclick= \"this.form.submit()\" value = \"normal\" checked>normal";
 	echo "<input type =\"radio\" name = \"displaytyp\" onclick= \"this.form.submit()\" value = \"modificated\">modifiziert";
