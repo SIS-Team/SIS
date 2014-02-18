@@ -124,17 +124,25 @@
 			if(isset($results)){
 				for ($i = 0; $i<count($results);$i++){ 
 				 	if($results[$i]->time == date("Y-m-d",time() + 24 * 60 * 60 * $day_counter)) {
-					 	$response['content'] .= "<tr>";
-						$response['content'] .= "<td> ". $results[$i]->className ."</td>";
-						if(empty($results[$i]->newStartHour)){ $response['content'] .= "<td> ". $results[$i]->startHour ."</td>";}
-						else {$response['content'] .= "<td> ". $results[$i]->newStartHour ."</td>";} 
-						if(!empty($results[$i]->newTeacher)){ $response['content'] .= "<td> ". $results[$i]->newTeacher ."</td>";}
-						else {$response['content'] .= "<td> &#160;</td>";}
-						$response['content'] .= "<td> ". $results[$i]->suShort ."</td>";
-						if(!empty($results[$i]->comment)){ $response['content'] .= "<td> ". $results[$i]->comment ."</td>";}
-						else {$response['content'] .= "<td> &#160;</td>";}
-						$response['content'] .= "</tr>"; 
+	 					if(empty($results[$i]->newStartHour)){ $lesson_count = $results[$i]->startHour;}
+						else $lesson_count = $results[$i]->newStartHour;
+						if(empty($results[$i]->newEndHour)){ $lesson_end = $results[$i]->endHour;}
+						else $lesson_end = $results[$i]->newEndHour;
+						$difference = $lesson_end - $lesson_count +1 ;
+						$response['content'] .= "<tr>";
+						$response['content'] .= "<td rowspan=\"".$difference."\"> ". $results[$i]->className ."</td>";
+
+						while($lesson_count <= $lesson_end){
+							$response['content'] .= "<td> ". $lesson_count."</td>"; 
+							if(!empty($results[$i]->newTeacher)){ $response['content'] .= "<td> ". $results[$i]->newTeacher ."</td>";}
+							else {$response['content'] .= "<td> &#160;</td>";}
+							$response['content'] .= "<td> ". $results[$i]->suShort ."</td>";
+							if(!empty($results[$i]->comment)){ $response['content'] .= "<td> ". $results[$i]->comment ."</td>";}
+							else {$response['content'] .= "<td> &#160;</td>";}
+							$response['content'] .= "</tr>"; 
+							$lesson_count++;
 						}
+					}
 					else $empty++;
 					
 				}
