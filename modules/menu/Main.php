@@ -12,7 +12,7 @@
 		$buttons[$i] = array();
 		$buttons[$i]['displayed'] 	= false;
 		$buttons[$i]['enabled'] 	= false;
-		$buttons[$i]['svg'] 		= ROOT_LOCATION . "/";
+		$buttons[$i]['svg'] 		= ROOT_LOCATION . "/data/images/base.svg";
 		$buttons[$i]['text']		= "Button";
 		$buttons[$i]['url'] 		= RELATIVE_ROOT . "/";
 		$buttons[$i]['jsurl'] 		= RELATIVE_ROOT . "/";
@@ -186,7 +186,7 @@
 
 			<div id="footerCenter" class="point hCenter">
 				<div id="footer" class="sameWidth link">
-					<a href="<?php echo RELATIVE_ROOT; ?>/impressum/">Impressum</a> | <a href="<?php echo RELATIVE_ROOT; ?>/impressum/#privacy">Datenschutz</a> | <a href="<?php echo RELATIVE_ROOT; ?>/impressum/#terms">Nutzungsbedingungen</a> | <a href="<?php echo RELATIVE_ROOT; ?>/help/">Hilfe</a>
+					<a href="<?php echo RELATIVE_ROOT; ?>/impressum/#responsible">Impressum</a> | <a href="<?php echo RELATIVE_ROOT; ?>/impressum/#privacy">Datenschutz</a> | <a href="<?php echo RELATIVE_ROOT; ?>/impressum/#terms">Nutzungsbedingungen</a> | <a href="<?php echo RELATIVE_ROOT; ?>/help/">Hilfe</a>
 				</div>
 			</div>
 			<div id="windowContainer">
