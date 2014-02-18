@@ -241,7 +241,9 @@
 		echo "          <option value=\"" . $mode->name . "\"></option>";
 	}
 ?>
-        </datalist>
+	</datalist>
+	<script src="<?php echo RELATIVE_ROOT; ?>/data/scripts/monitorsInput.js"></script>
+	<button onclick="invertSelection(); return false;">Auswahl invertieren</button><br />
 	<table>
 		<tr>
 			<th></th>
@@ -259,7 +261,7 @@
 	// Monitor-Tabelle ausgeben
 	while ($monitor = mysql_fetch_object($monitors)) {
 		echo "	<tr>";
-		echo "		<td><input name=\"monitors[]\" value=\"" . $monitor->id . "\" type=\"checkbox\" /></td>";
+		echo "		<td><input class=\"checkbox\" name=\"monitors[]\" value=\"" . $monitor->id . "\" type=\"checkbox\" /></td>";
 		echo "		<td>" . htmlspecialchars($monitor->name) . "</td>";
 		echo "		<td>" . htmlspecialchars($monitor->text) . "</td>";
 		echo "		<td>" . htmlspecialchars($monitor->room) . "</td>";
