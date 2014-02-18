@@ -7,8 +7,6 @@ Files
 -----
 
 
-* /app/   
-  -> relevante Dateien für die App   
 * /backend/   
   -> Eingabebereich   
   * ./absentees/
@@ -69,6 +67,8 @@ Files
   -> Sonstige Logs   
 * /mobile/   
   -> mobile Seite   
+  * ./api/   
+    -> API für Apps   
 * /modules/   
   * ./api/   
     -> Weitere Dateien für die App-API   
@@ -87,18 +87,18 @@ Files
   * ./other/   
     -> Sonstiges   
 * /monitors/   
-  -> Frontend für die Monitore
+  -> Frontend für die Monitore   
   * ./api/   
     -> Dateien für die Monitore   
-  * ./media/
+  * ./media/   
     -> Medien-Dateien für die Monitore   
 * /news/   
   -> Frontend für die News   
 * /substitudes/   
-  -> Supllierungen   
+  -> Supplierungen   
 * /timetables/   
   -> Stundenpläne   
-* /tmp/
+* /tmp/   
   -> temporärer Ordner   
 
 
