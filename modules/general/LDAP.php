@@ -80,13 +80,12 @@
 		$rightArray["E"] = false;
 		$rightArray["M"] = false;
 		$groups = $ent[0]["groupmembership"];
-		foreach ($groups as $i => $value) {
-		//for ($i = 0; $i < count($groups); $i++) {
-			$split = explode(",", $groups[$i]);
+		for ($i = 0; $i < $groups['count']; $i++) {
+			$split = split(",", $groups[$i]);
 			if (!(isset($split[2]) && $split[2] == "o=HTL1" && $split[1] == "ou=SIS"))
 				continue;
-			$split = explode("=", $split[0]);
-			$split = explode("-", $split[1]);
+			$split = split("=", $split[0]);
+			$split = split("-", $split[1]);
 			if ($split[0] != "SIS")
 				continue;
 			if ($split[1] == "Admin") {
@@ -111,8 +110,8 @@
 			if ($cn == "20090319" || $cn == "20090334" || $cn == "20090340" || $cn == "20090396" || $cn == "20090359")
 				$rightArray['root'] = true;
 			
-			return $rightArray;
 		}
+		return $rightArray;
 	}
 
 	function isTeacher($ent) {
