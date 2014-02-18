@@ -8,9 +8,39 @@ Files
 
 
 * /app/   
-  -> relevante Dateien für die App
+  -> relevante Dateien für die App   
 * /backend/   
-  -> Administrations- und Eingabebereich
+  -> Eingabebereich   
+  * ./absentees/
+    -> Fehlende-Menü    
+    * ./classes/    
+      -> fehlende Klassen    
+    * ./teachers/   
+      -> fehlende Lehrer   
+  * ./administration/   
+    -> Administrattions-Menü   
+    * ./classes/   
+      -> Klassen verändern   
+    * ./hours/   
+      -> Zeiten verändern   
+    * ./lessons/   
+      -> Stundenpläne verändern   
+    * ./rooms/   
+      -> Räume verändern   
+    * ./sections/   
+      -> Abteilungen verändern   
+    * ./subjects/   
+      -> Fächer verändern   
+    * ./teachers/   
+      -> Lehrer verändern   
+  * ./monitors/   
+    -> Monitore verwalten
+  * ./news/   
+    -> News verwalten   
+  * ./substitudes/   
+    -> Supplierungs-Menü   
+    * ./form/   
+      -> Formular für Supplierungen   
 * /cookies/   
   -> Cookies-Akzeptier-Seite
 * /data/   
@@ -19,7 +49,8 @@ Files
   * ./fonts/   
     -> Schriftarten
   * ./images/   
-    -> Bilder
+    -> Bilder   
+    -> (hier gibt es noch weitere Unterordner)   
   * ./scripts/   
     -> Javascripts
   * ./styles/   
@@ -28,33 +59,47 @@ Files
   -> Gesamtdokumentation
   * ./instructions/   
     -> Anleitungen
+* /impressum/   
+  -> Impressum, Datenschutzbestimmungen, Nutzungsbedingungen   
 * /login/   
-  -> Login-Frontend
+  -> Login-Frontend   
 * /logout/   
-  -> Logout
+  -> Logout   
+* /logs/   
+  -> Sonstige Logs   
+* /mobile/   
+  -> mobile Seite   
 * /modules/   
   * ./api/   
-    -> Weitere Dateien für die App-API
+    -> Weitere Dateien für die App-API   
   * ./database/   
-    -> Weitere Dateien für den Zugriff auf die Datenbank
+    -> Weitere Dateien für den Zugriff auf die Datenbank   
   * ./design/   
-    -> Designs als HTML-Dateien
+    -> Designs als HTML-Dateien   
   * ./form/   
-    -> Dateien zum Generieren von Formularen
+    -> Dateien zum Generieren von Formularen   
   * ./general/   
-    -> Allgemeine Includes für LDAP, DB, HTTPS, etc.
+    -> Allgemeine Includes für LDAP, DB, HTTPS, etc.   
+  * ./menu/   
+    -> Daten für das Generieren des Hauptmenüs   
   * ./monitors/   
-    -> Weitere Dateien für die Monitore
+    -> Weitere Dateien für die Monitore   
   * ./other/   
-    -> Sonstiges
+    -> Sonstiges   
 * /monitors/   
   -> Frontend für die Monitore
+  * ./api/   
+    -> Dateien für die Monitore   
+  * ./media/
+    -> Medien-Dateien für die Monitore   
 * /news/   
-  -> Frontend für die News
+  -> Frontend für die News   
 * /substitudes/   
-  -> Supllierungen
+  -> Supllierungen   
 * /timetables/   
-  -> Stundenpläne
+  -> Stundenpläne   
+* /tmp/
+  -> temporärer Ordner   
 
 
 Installation
