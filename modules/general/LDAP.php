@@ -80,9 +80,10 @@
 		$rightArray["E"] = false;
 		$rightArray["M"] = false;
 		$groups = $ent[0]["groupmembership"];
-		for ($i = 0; $i < count($groups); $i++) {
+		foreach ($groups as $i => $value) {
+		//for ($i = 0; $i < count($groups); $i++) {
 			$split = explode(",", $groups[$i]);
-			if (!($split[2] == "o=HTL1" && $split[1] == "ou=SIS"))
+			if (!(isset($split[2]) && $split[2] == "o=HTL1" && $split[1] == "ou=SIS"))
 				continue;
 			$split = explode("=", $split[0]);
 			$split = explode("-", $split[1]);
