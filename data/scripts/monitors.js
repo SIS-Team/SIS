@@ -97,7 +97,7 @@ var drawHand = function(context, angle, length) {
 // läd Seiteninhalt
 var loadContent = function () {
 	// sendet aktuellen Monitor-Hash zum Server
-	reqGet("api/getContent.php", "name=" + monitorName + "&hash=" + monitorHash + (submode ? ("&submode=" + submode) : "") + (submodeChange ? ("&submodeChange=" + submodeChange) : ""), true, updateContent);
+	reqGet("api/getContent.php", "name=" + monitorName + "&hash=" + monitorHash + (submode != undefined ? ("&submode=" + submode) : "") + (submodeChange != undefined ? ("&submodeChange=" + submodeChange) : ""), true, updateContent);
 }
 
 // aktualisiert den Seiteninhalt
@@ -125,8 +125,8 @@ var updateContent = function(response) {
 	if (response.modus)
 		document.getElementById("info").innerHTML = "SIS." + response.modus;
 
-	monitorSubmode = response.submode;
-	monitorSubmodeChange = response.submodeChange;
+	submode = response.submode;
+	submodeChange = response.submodeChange;
 
 	// Wenn nicht -> Hash updaten
 	monitorHash = response.hash;
