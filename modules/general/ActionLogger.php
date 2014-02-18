@@ -129,4 +129,8 @@
 			mysql_real_escape_string(htmlspecialchars($params)) . "')";
 		$result = mysql_query($sql);
 	}
+	
+	function logLoginAttempt($success) {
+	
+	}
 ?>
