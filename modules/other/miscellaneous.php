@@ -2,7 +2,7 @@
 
 function ifNotLoggedInGotoLogin(){
 	if(!($_SESSION['loggedIn'])){
-		header("Location: ".RELATIVE_ROOT."/");
+		header("LOCATION: " . RELATIVE_ROOT . "/login/?return=" . urlencode($_SERVER['REQUEST_URI']));
 		exit();
 	}
 }
