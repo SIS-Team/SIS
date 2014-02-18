@@ -200,21 +200,41 @@ body {
   font-size: 30px;
  }
  
-#t0 { 	width: 30%;
-	margin-left: 10px;
-	margin-top: 80px;
-	border-radius:30px;
-	padding:1%;
-	background-color:rgba(0,0,0,0.5);
+#t0 { 
+	float: left;
+	margin-left: 100px;
+	margin-top: 100px;
 }
 
 #t1 {
- 	width: 25%;
-	margin-right: 10px;
-	margin-top: 80px;
-	border-radius:30px;
-	padding:1%;
-	background-color:rgba(0,0,0,0.5);
+	float: right;
+	margin-right: 100px;
+	margin-top: 100px;
+}
+
+.substitude 
+{
+ 	font-size: 25px;
+ 	border : 1px solid;
+	border-collapse: collapse;
+	background-color: rgba(0,0,0,0.5);
 }
 
 
+.substitude th {
+ 	border : 1px solid;
+	border-collapse: collapse;
+	background-color: rgba(0,0,0,0.5);
+}
+
+.substitude td
+{
+ 	border : 1px solid;
+	border-collapse: collapse;
+	background-color: rgba(0,0,0,0.5);
+}
+
+.sub_empty
+{
+	border : 0; 
+}

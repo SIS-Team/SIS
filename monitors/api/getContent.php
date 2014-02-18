@@ -178,7 +178,7 @@
 			if(date("w", time() + 24 * 60 * 60 * $day_counter)==6) $day_counter+=2;
 			$response['content'] .= "<div id='t".$j."'>";
 			$response['content'] .= "Supplierungen vom ". date("d.M",time() + 24*60*60*$day_counter);
-			$response['content'] .= "<table>"; 
+			$response['content'] .= "<table class = 'substitude'>"; 
 			$response['content'] .= "<tr><th>Klasse</th><th>Std.</th><th>Suppl. durch</th><th>Fach</th><th>Bemerkung</th></tr>";
 			$empty = 0;
 			if(isset($results)){
@@ -198,7 +198,7 @@
  								$className = $results[$i]->className;
 								$response['content'] .= "<td>".$className."</td>";
 							}
-							else $response['content'] .= "<td></td>";
+							else $response['content'] .= "<td class ='sub_empty'></td>";
 							$response['content'] .= "<td> ". $lesson_count."</td>"; 
 							if(!empty($results[$i]->newTeacher)){ $response['content'] .= "<td> ". $results[$i]->newTeacher ."</td>";}
 							else {$response['content'] .= "<td> &#160;</td>";}
