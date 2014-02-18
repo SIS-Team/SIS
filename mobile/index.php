@@ -11,7 +11,7 @@
 	 *	1.0.1:	01.02.2014, Machac Philipp - Pfade angepasst
 	 */
 	include("../config.php");
-?>
+?> 
 <html>
 	<head>
    		 <title>SIS.Mobile</title>
