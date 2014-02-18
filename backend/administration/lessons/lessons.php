@@ -40,7 +40,7 @@ else if(empty($_POST['class']))
 
 if(empty($_GET['day']) && empty($_POST['class']))
 	$_POST['day']="Mo";
-else if(empty($_POST['class']))
+else if(empty($_POST['day']))
 	$_POST['day']=$_GET['day'];
 
 	
