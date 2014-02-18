@@ -336,8 +336,7 @@ Stand: 18.02.2014 <br /><br />
 <h1>Nutzungsbedingungen</h1>
 
 
-
-Wir verwenden deine Daten... MUAHAHAHAHA... *hust*<br />
+In Arbeit...<br />
 
 <?php
 	pageFooter();
