@@ -224,6 +224,12 @@
 		$response['content'] = "<video autoplay=\"autoplay\" loop=\"true\"><source src=\"&media:vid;\" type=\"video/mp4\" /></video>";
 		$response['media']['vid'] = $monitor->file;
 		break;
+
+	case "fallback":
+				$response['script'] = 'window.setTimeout(function() {window.location.href="http://web.htlinn.ac.at/~suppla/ftklschnitzel/www/supplierplan.php"; }, 100)';
+		
+		$hash .= rand();
+		break;
 	}
 	
 	if ($hash == $_GET['hash']) {
