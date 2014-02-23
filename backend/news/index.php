@@ -47,8 +47,8 @@ if($isAdmin) {
 		array( "title", 		"Titel: ", 								"text", 	"8",	"",		"",					""),
 		array( "text", 			"Text: ",								"textarea", "20",	"5",	"",					""),
 		array( "secShort", 		"Abteilung: ",							"dropdown", "",		"",		"",					""),	
-		array( "startDay",		"Anzeigebeginn-Datum: (YYYY-MM-DD) ",	"text",		"10",	"",		"",					""),
-		array( "endDay",		"Anzeigeend-Datum: (YYYY-MM-DD)",		"text",		"10",	"",		"",					""),
+		array( "startDay",		"Anzeigebeginn-Datum: (YYYY-MM-DD) ",	"date",		"10",	"",		"",					""),
+		array( "endDay",		"Anzeigeend-Datum: (YYYY-MM-DD)",		"date",		"10",	"",		"",					""),
 		array( "display",		"Anzeigen",								"checkbox",	"",		"",		"",					""),
 	);
 }
@@ -57,8 +57,8 @@ else {
 		array( "ID", 			"",			 							"hidden", 	"",		"",		"",					""),
 		array( "title", 		"Titel: ", 								"text", 	"8",	"",		"",					""),
 		array( "text", 			"Text: ",								"textarea", "20",	"5",	"",					""),	
-		array( "startDay",		"Anzeigebeginn-Datum: (YYYY-MM-DD) ",	"text",		"10",	"",		"",					""),
-		array( "endDay",		"Anzeigeend-Datum: (YYYY-MM-DD)",		"text",		"10",	"",		"",					""),
+		array( "startDay",		"Anzeigebeginn-Datum: (YYYY-MM-DD) ",	"date",		"10",	"",		"",					""),
+		array( "endDay",		"Anzeigeend-Datum: (YYYY-MM-DD)",		"date",		"10",	"",		"",					""),
 	);
 }
 if($isAdmin){
