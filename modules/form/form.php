@@ -82,6 +82,11 @@ printf("<table>\n");	//Tabellen Tag auf
 							$f[1], $f[0], $f[3], $f[5], $f[6]);
 
 				}
+				else if($f[2] == "date") {
+					printf("<td>%s <input type=\"date\" name=\"%s\" size=\"%spx\" value=\"%s\" %s >\n",	//Textbox erstellen
+							$f[1], $f[0], $f[3], $f[5], $f[6]);
+
+				}
 				else if($f[2] == "textarea") {
 					printf("<td>%s <textarea name=\"%s\" cols=\"%s\" rows=\"%s\" %s>%s</textarea>\n",	//Textarea erstellen
 							$f[1], $f[0], $f[3], $f[4], $f[6], $f[5]);
