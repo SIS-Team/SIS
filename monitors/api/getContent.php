@@ -170,6 +170,8 @@
 		LEFT JOIN `subjects` AS `nSu` ON `s`.`subjectFK` = `nSu`.`ID`
 		LEFT JOIN `rooms`AS `nR` ON `s`.`roomFK` = `nR`.`ID`
 		LEFT JOIN `classes` AS `nC` ON `s`.`classFK` = `nC`.`ID`
+		WHERE time >= '". date("Y-m-d") . "'
+		ORDER BY `className`, `newClassName`		
 		";
 		$result = mysql_query($sql);
 		$response['content'] .= mysql_error();
