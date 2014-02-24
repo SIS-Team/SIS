@@ -134,8 +134,53 @@
 		$hash .= md5($response['content']);
 		break; 
 		
-	case "Supplierplan":	
+	case "Supplierplan":
+
+		//Version 2 
 		$response['modus'] = "Supplierplan";
+		$sql = "SELECT `time`,
+		`add`,
+		`remove`,
+		`s`.`display`,
+		`s`.`comment`,
+		`c`.`name` AS `className`,
+		`nC`.`name` AS `newClassName`,
+		`t`.`display` AS `oldTeacher`,
+		`nT`.`display` AS `newTeacher`,
+		`su`.`short` AS `oldSuShort`,
+		`nSu`.`short` AS `newSuShort`,
+		`r`.`name` AS `oldRoom`, 
+		`nR`.`name` AS `newRoom`,
+		`sH`.`hour` AS `oldStartHour`,
+		`eH`.`hour` AS `oldEndHour`,
+		`nsH`.`hour` AS `newStartHour`,
+		`neH`.`hour` AS `newEndHour`
+		FROM `substitudes` AS `s`		
+		LEFT JOIN `lessons` AS `l` ON `s`.`lessonFK` = `l`.`ID` 
+		LEFT JOIN `lessonsBase` AS `lb`ON `l`.`lessonBaseFK` = `lb`.`ID`
+		LEFT JOIN `classes`AS `c` ON `lb`.`classFK` = `c`.`ID`
+		LEFT JOIN `hours` AS `sH` ON `lb`.`startHourFK` = `sH`.`ID` 
+		LEFT JOIN `hours` AS `eH` ON `lb`.`endHourFK` = `eH`.`ID` 
+		LEFT JOIN `teachers` AS `t`ON `l`.`teachersFK` = `t`.`ID`
+		LEFT JOIN `subjects` AS `su` ON `l`.`subjectFK`=`su`.`ID`
+		LEFT JOIN `rooms` AS `r` ON `l`.`roomFK` = `r`.`ID`
+		LEFT JOIN `hours` AS  `nsH` ON `s`.`startHourFK` = `nsH`.`ID`
+		LEFT JOIN `hours` AS  `neH` ON `s`.`endHourFK` = `neH`.`ID`
+		LEFT JOIN `teachers` AS `nT` ON `s`.`teacherFK` = `nT`.`ID`
+		LEFT JOIN `subjects` AS `nSu` ON `s`.`subjectFK` = `nSu`.`ID`
+		LEFT JOIN `rooms`AS `nR` ON `s`.`roomFK` = `nR`.`ID`
+		LEFT JOIN `classes` AS `nC` ON `s`.`classFK` = `nC`.`ID`
+		";
+		$result = mysql_query($sql);
+		$response['content'] .= mysql_error();
+		while ($row = mysql_fetch_array($result)) {
+			$results[] = $row;
+		}
+		
+		$hash .= md5($response['content']);
+		break;
+		//Version 1	
+	/*	$response['modus'] = "Supplierplan";
 		$sql = "SELECT 
 		`su`.`short` AS `suShort`,
 		`c`.`name` AS `className`,
@@ -213,7 +258,7 @@
 		}	
 		
 		$hash .= md5($response['content']);
-		break; 
+		break;  */
 	case "Bild":
 		$hash .= md5($monitor->file);
 		$response['content'] = "<img src=\"&media:img;\" />";
