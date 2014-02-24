@@ -176,7 +176,42 @@
 		while ($row = mysql_fetch_array($result)) {
 			$results[] = $row;
 		}
-		
+		$day = array(1=>'Mo', 2=>'Di' , 3=> 'Mi', 4=>'Do', 5 =>'Fr');
+		$day_counter = 0;
+		for($j = 0; $j<2;$j++){
+		 	if(date("w", time() + 24 * 60 * 60 * $day_counter)==0) $day_counter++;
+			if(date("w", time() + 24 * 60 * 60 * $day_counter)==6) $day_counter+=2;
+			$response['content'] .= "<div id='t".$j."'>";
+			$response['content'] .= "Supplierungen vom ". $day[ date("N",time() + 24*60*60*$day_counter)] ." ". date("d.M",time() + 24*60*60*$day_counter);
+			$response['content'] .= "<table class = 'substitude'>"; 
+			$response['content'] .= "<tr><th>Klasse</th><th>Std.</th><th>Suppl. durch</th><th>Fach</th><th>Bemerkung</th></tr>								";
+			if(isset($results)){
+				for($i = 0; $i <count($results);$i++){
+	 				$response['content'] .= "<tr>";
+	 				if(isset($results[$i]['newClassName']))$response['content'].= "<td>".$results[$i]['newClassName']."</td>";
+					else $response['content'] .= "<td>".$results[$i]['className']."</td>";
+
+					if(isset($results[$i]['newClassName']))$response['content'].= "<td>".$results[$i]['newClassName']."</td>";
+					else $response['content'] .= "<td>".$results[$i]['className']."</td>";
+
+					if(isset($results[$i]['newTeacher']))$response['content'] .= "<td>".$results[$i]['newTeacher']."</td>";
+					else $response['content'] .= "<td>".$results[$i]['oldTeacher']."</td>";
+
+					if(isset($results[$i]['newSuShort'])) $response['content'] .= "<td>".$results[$i]['newSuShort']."</td>";
+					else $response['content'] .= "<td>".$results[$i]['oldSuShort']."</td>";
+
+					$response['content'] .= "<td>".$results[$i]['comment']."</td>";
+					
+					$response['content'] .= "</tr>";
+				}
+			}
+			else {
+ 			$response['content'] .= "<tr><th colspan = 5>F&uuml;r diesen Tag sind keine Supplierungen vorgesehen.</th></tr>";
+			}
+
+			$response['content'] .= "</table></div>";
+			$day_counter++;
+		}
 		$hash .= md5($response['content']);
 		break;
 		//Version 1	
