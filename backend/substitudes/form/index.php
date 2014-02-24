@@ -20,7 +20,7 @@ include_once(ROOT_LOCATION . "/modules/other/dateChange.php");			//Stell die Fun
 include_once(ROOT_LOCATION . "/modules/other/dateFunctions.php");					
 include_once(ROOT_LOCATION . "/modules/form/hashCheckFail.php");		
 
-$hashGenerator = new HashGenerator("MissingTeacher", __FILE__);
+$hashGenerator = new HashGenerator("Substitudes", __FILE__);
 
 if(empty($_GET['section']) && empty($_POST['section'])){
 	//header("Location: ".RELATIVE_ROOT."/");
@@ -66,13 +66,12 @@ $fieldsRow1 = array(
 	array( "ID", 		"",	 		"hidden", 		"",	"",	"",			""),
 	array( "time",		"Datum:",		"hidden",		"10",	"",	"",			"readonly=\"true\",required"),	
 	array( "free",	 	"Freie Eingabe: ", 	"checkboxJava", 	"8",	"",	"",			""),
-	array( "clName", 	"Klasse: ", 		"dropdown", 		"8",	"",	$selectClasses,		"required"),
-	array( "suShort", 	"Fach: ", 		"dropdown", 		"8",	"",	$selectSubjects,	"required"),
+	array( "clName", 	"Klasse: ", 		"dropdown", 		"8",	"",	$selectClasses,		""),
+	array( "suShort", 	"Fach: ", 		"dropdown", 		"8",	"",	$selectSubjects,	""),
 	array( "teShort", 	"Supplierlehrer: ",	"dropdown", 		"5",	"",	$selectTeachers,	""),
 	array( "roName",	"Raum: ", 		"dropdown",		"8",	"",	$selectRooms,		""),
-	array( "startHour",	"Start-Std.: ", 	"text",			"5",	"",	"",			"required"),
-	array( "endHour",	"End-Std.: ",	 	"text",			"4",	"",	"",			"required"),
-	array( "hidden",	"Entf&auml;llt? ", 	"checkbox",		"",	"",	"",			""),
+	array( "startHour",	"Start-Std.: ", 	"text",			"5",	"",	"",			""),
+	array( "endHour",	"End-Std.: ",	 	"text",			"4",	"",	"",			""),
 	array( "comment", 	"Kommentar: ", 		"text",			"25",	"",	"",			""),
 	);
 	
@@ -82,7 +81,7 @@ $fieldsRow2 = array(
 	array( "remove",	"L&ouml;schen: ", 	"radio", 		"8",	"",	"",			""),
 	array( "oldStartHour",  "Urs. Start-St.: ", 	"text",		"5",	"",		"",		""),
 	array( "oldEndHour",	"Urs. End-St.: ",	"text",		"4",	"",		"",		""),
-	array( "oldTeacher",  	"Urs. Lehrer: ", 	"dropdown",	"5",	"",		$selectTeachers,""),
+	array( "oldTeShort",  	"Urs. Lehrer: ", 	"dropdown",	"5",	"",		$selectTeachers,""),
 	);
 if($fail===false)
 	printf("<div>Es ist ein Fehler bei der Eingabe aufgetreten. M&ouml;glicherweise ist f&uuml;r diese Stunde keine Supplierung<br>n&ouml;tig, weil der Lehrer nicht verhindert ist.<div><br><br>");

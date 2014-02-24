@@ -357,7 +357,7 @@ printf("<table>\n");	//Tabellen Tag auf
 
 				}		
 				else if($f[2] == "dropdown") {			//Dropdown MenÃƒÂ¯Ã‚Â¿Ã‚Â½ erstellen
-					printf("<td id=\"visibleCell%s%s\" style=\"display:none\">%s <input value=\"%s\" autocomplete=\"off\" size=\"%s\" list=\"%s\" name=\"%s\" %s></td>\n",	$ID,$f[0],$f[1],$f[5], $f[3], $f[0], $f[0], $f[6]);
+					printf("<td id=\"visibleCell%s%s\" style=\"display:none\">%s <input value=\"%s\" autocomplete=\"off\" size=\"%s\" list=\"teShort\" name=\"%s\" %s></td>\n",	$ID,$f[0],$f[1],$f[5], $f[3], $f[0], $f[6]);
 							
 				}
 				else if ($f[2] == "radio") {		//Checkbox
