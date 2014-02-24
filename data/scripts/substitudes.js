@@ -7,12 +7,65 @@
 
 //Funktion zum ein und ausblenden der neuen Stunden
 //id = Zeilennummer
-function Visibility(id) {
+function Visibility(id,typ) {
 
-	if(document.getElementById('visibleRow'+id).style.display=="table-row")	//Wenn die Zeile sichtbar
-		document.getElementById('visibleRow'+id).style.display="none";	//Zeile unsichtbar
-	else																		//sonst
-		document.getElementById('visibleRow'+id).style.display="table-row";	//sichtbar machen
+	if(typ == "free" ){
+		if(document.getElementById('visibleCell'+id+"move").style.display=="table-cell"){	//Wenn die Zeile sichtbar
+			document.getElementById('visibleCell'+id+"move").style.display="none";		//Zeile unsichtbar
+			document.getElementById('visibleCell'+id+"add").style.display="none";		//Zeile unsichtbar
+			document.getElementById('visibleCell'+id+"remove").style.display="none";	//Zeile unsichtbar
+			document.getElementById('visibleRow'+id).style.display="none";			//Zeile unsichtbar
+			document.getElementById('visibleCell'+id+"suShort").style.display="table-cell";		//Zeile unsichtbar
+			document.getElementById('visibleCell'+id+"teShort").style.display="table-cell";		//Zeile unsichtbar
+			document.getElementById('visibleCell'+id+"roName").style.display="table-cell";	//Zeile unsichtbar
+			document.getElementById('visibleCell'+id+"startHour").style.display="table-cell";		//Zeile unsichtbar
+			document.getElementById('visibleCell'+id+"endHour").style.display="table-cell";	//Zeile unsichtbar
+			document.getElementById('visibleCell'+id+"hidden").style.display="table-cell";	//Zeile unsichtbar
+		 }
+		else{		//sonst
+			document.getElementById('visibleRadio'+id+"move").checked = true;
+			document.getElementById('visibleCell'+id+"move").style.display="table-cell";	//sichtbar machen
+			document.getElementById('visibleCell'+id+"add").style.display="table-cell";	//sichtbar machen
+			document.getElementById('visibleCell'+id+"remove").style.display="table-cell";	//sichtbar machen
+			document.getElementById('visibleRow'+id).style.display="table-row";
+			document.getElementById('visibleCell'+id+"oldStartHour").style.display="table-cell";	//sichtbar machen
+			document.getElementById('visibleCell'+id+"oldEndHour").style.display="table-cell";	//sichtbar machen
+			document.getElementById('visibleCell'+id+"oldTeacher").style.display="table-cell";	//sichtbar machen
+		}
+	}
+	else if(typ == "remove" ){
+		document.getElementById('visibleCell'+id+"suShort").style.display="none";		//Zeile unsichtbar
+		document.getElementById('visibleCell'+id+"teShort").style.display="none";		//Zeile unsichtbar
+		document.getElementById('visibleCell'+id+"roName").style.display="none";	//Zeile unsichtbar
+		document.getElementById('visibleCell'+id+"startHour").style.display="none";		//Zeile unsichtbar
+		document.getElementById('visibleCell'+id+"endHour").style.display="none";	//Zeile unsichtbar
+		document.getElementById('visibleCell'+id+"hidden").style.display="none";	//Zeile unsichtbar
+		document.getElementById('visibleCell'+id+"oldStartHour").style.display="table-cell";	//sichtbar machen
+		document.getElementById('visibleCell'+id+"oldEndHour").style.display="table-cell";	//sichtbar machen
+		document.getElementById('visibleCell'+id+"oldTeacher").style.display="table-cell";	//sichtbar machen
+	}
+	else if(typ == "add" ){
+		document.getElementById('visibleCell'+id+"suShort").style.display="table-cell";		//Zeile unsichtbar
+		document.getElementById('visibleCell'+id+"teShort").style.display="table-cell";		//Zeile unsichtbar
+		document.getElementById('visibleCell'+id+"roName").style.display="table-cell";	//Zeile unsichtbar
+		document.getElementById('visibleCell'+id+"startHour").style.display="table-cell";		//Zeile unsichtbar
+		document.getElementById('visibleCell'+id+"endHour").style.display="table-cell";	//Zeile unsichtbar
+		document.getElementById('visibleCell'+id+"hidden").style.display="table-cell";	//Zeile unsichtbar
+		document.getElementById('visibleCell'+id+"oldStartHour").style.display="none";	//sichtbar machen
+		document.getElementById('visibleCell'+id+"oldEndHour").style.display="none";	//sichtbar machen
+		document.getElementById('visibleCell'+id+"oldTeacher").style.display="none";	//sichtbar machen
+	}
+	else if(typ == "move" ){
+		document.getElementById('visibleCell'+id+"suShort").style.display="table-cell";		//Zeile unsichtbar
+		document.getElementById('visibleCell'+id+"teShort").style.display="table-cell";		//Zeile unsichtbar
+		document.getElementById('visibleCell'+id+"roName").style.display="table-cell";	//Zeile unsichtbar
+		document.getElementById('visibleCell'+id+"startHour").style.display="table-cell";		//Zeile unsichtbar
+		document.getElementById('visibleCell'+id+"endHour").style.display="table-cell";	//Zeile unsichtbar
+		document.getElementById('visibleCell'+id+"hidden").style.display="table-cell";	//Zeile unsichtbar
+		document.getElementById('visibleCell'+id+"oldStartHour").style.display="table-cell";	//sichtbar machen
+		document.getElementById('visibleCell'+id+"oldEndHour").style.display="table-cell";	//sichtbar machen
+		document.getElementById('visibleCell'+id+"oldTeacher").style.display="table-cell";	//sichtbar machen
+	}
 }
 
 function failAlert(){ 

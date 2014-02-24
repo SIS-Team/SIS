@@ -291,15 +291,15 @@ printf("<table>\n");	//Tabellen Tag auf
 						$checked="";					
 					}
 					
-					printf("<td>%s <input type=\"checkbox\" name=\"%s\" %s value=\"%s\" %s>\n",		//Checkbox erstellen
-							$f[1], $f[0], $checked, $f[0],$f[6]);
+					printf("<td id=\"visibleCell%s%s\" style=\"display:table-cell\">%s <input type=\"checkbox\" name=\"%s\" %s value=\"%s\" %s>\n",		//Checkbox erstellen
+							$ID,$f[0],$f[1], $f[0], $checked, $f[0],$f[6]);
 					
 				}
 				else if ($f[2] == "checkboxJava") {		//Checkbox
 					$collapse="none";
 					if($f[5]=="1"){			//Wenn gecheckt, dann Variable checked auf checked setzen
 						$checked="checked";
-						$collapse="table-row";				
+						$collapse="table-cell";				
 					}
 					else{						//sonst leer
 						$checked="";
@@ -310,13 +310,13 @@ printf("<table>\n");	//Tabellen Tag auf
 					else
 						$ID=$content["ID"];
 						
-					printf("<td>%s <input type=\"checkbox\" name=\"%s\" %s value=\"%s\" onclick=\"javascript:Visibility(%s)\">\n",		//Checkbox erstellen
-							$f[1], $f[0], $checked, $f[0],$ID);
+					printf("<td>%s <input type=\"checkbox\" name=\"%s\" %s value=\"%s\" onclick=\"javascript:Visibility(%s,'%s')\">\n",		//Checkbox erstellen
+							$f[1], $f[0], $checked, $f[0],$ID,$f[0]);
 					
 				}
 				else if($f[2] == "text") {
-					printf("<td>%s <input type=\"text\" name=\"%s\" size=\"%spx\" value=\"%s\" %s >\n",	//Textbox erstellen
-							$f[1], $f[0], $f[3], $f[5], $f[6]);
+					printf("<td id=\"visibleCell%s%s\" style=\"display:table-cell\">%s <input  type=\"text\" name=\"%s\" size=\"%spx\" value=\"%s\" %s >\n",	//Textbox erstellen
+							$ID,$f[0],$f[1], $f[0], $f[3], $f[5], $f[6]);
 
 				}
 				else if($f[2] == "hidden") {
@@ -324,10 +324,9 @@ printf("<table>\n");	//Tabellen Tag auf
 							$f[0], $f[5]);
 
 				}
-				else if($f[2] == "dropdown") {												//Dropdown MenÃƒÂ¯Ã‚Â¿Ã‚Â½ erstellen
-
-					printf("<td>%s <input value=\"%s\" autocomplete=\"off\" size=\"%s\" list=\"%s\" name=\"%s\" %s></td>\n",
-							$f[1], $f[5], $f[3], $f[0], $f[0], $f[6]);							
+				else if($f[2] == "dropdown") {			//Dropdown MenÃƒÂ¯Ã‚Â¿Ã‚Â½ erstellen
+					printf("<td id=\"visibleCell%s%s\" style=\"display:table-cell\">%s <input value=\"%s\" autocomplete=\"off\" size=\"%s\" list=\"%s\" name=\"%s\" %s></td>\n",	$ID,$f[0],$f[1], $f[5], $f[3], $f[0], $f[0], $f[6]);
+							
 				}
 				
 			}
@@ -344,16 +343,36 @@ printf("<table>\n");	//Tabellen Tag auf
   	printf("</tr>\n");
   	printf("<tr id=\"visibleRow%s\" style=\"display:%s\">\n",$ID,$collapse);	//Zeilen 	Tag auf
   			//FÃƒÂ¯Ã‚Â¿Ã‚Â½r jeden Eintrag im Array field einmal diese Schleife durchlaufen
-  			printf("<td colspan=\"7\"></td>\n");
+  			printf("<td colspan=\"2\"></td>\n");
 			foreach($fieldRow2 as $f) {	
 					
 				if($content!=false)	//Wenn Content mitgeliefert, dann Content austauschen
 				{
 					$f[5]=$content[$f[0]];					//Content des aktuellen Inputs austauschen, Name des Array-Indizes ist der name des Inputs
 				}
+				
+				if($f[2] == "text") {
+					printf("<td id=\"visibleCell%s%s\" style=\"display:none\">%s <input  type=\"text\" name=\"%s\" size=\"%spx\" value=\"%s\" %s >\n",	//Textbox erstellen
+							$ID,$f[0],$f[1], $f[0], $f[3], $f[5], $f[6]);
 
-				printf("<td>%s <input type=\"text\" name=\"%s\" size=\"%spx\" value=\"%s\" %s >\n",	//Textbox erstellen
-						$f[1], $f[0], $f[3], $f[5], $f[6]);	
+				}		
+				else if($f[2] == "dropdown") {			//Dropdown MenÃƒÂ¯Ã‚Â¿Ã‚Â½ erstellen
+					printf("<td id=\"visibleCell%s%s\" style=\"display:none\">%s <input value=\"%s\" autocomplete=\"off\" size=\"%s\" list=\"%s\" name=\"%s\" %s></td>\n",	$ID,$f[0],$f[1],$f[5], $f[3], $f[0], $f[0], $f[6]);
+							
+				}
+				else if ($f[2] == "radio") {		//Checkbox
+				
+					if($f[5]==true || ($ID==0 && $f[0]=="move")){			//Wenn gecheckt, dann Variable checked auf checked setzen
+						$checked="checked";
+					}
+					else{						//sonst leer
+						$checked="";					
+					}
+					
+					printf("<td id=\"visibleCell%s%s\" style=\"display:none\">%s <input type=\"radio\" id=\"visibleRadio%s%s\" name=\"freeRadio\" %s value=\"%s\"  %s onclick=\"javascript:Visibility(%s,'%s')\">\n",		//Checkbox erstellen
+							$ID,$f[0],$f[1], $ID,$f[0],$checked, $f[0],$f[6],$ID,$f[0]);
+					
+				}
 								
 			}
 			
