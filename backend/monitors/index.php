@@ -243,7 +243,7 @@
 ?>
 	</datalist>
 	<script src="<?php echo RELATIVE_ROOT; ?>/data/scripts/monitorsInput.js"></script>
-	<button onclick="invertSelection(); return false;">Auswahl invertieren</button><br />
+	<input type="button" onclick="invertSelection(); return false;" value="Auswahl invertieren"></input><br />
 	<table>
 		<tr>
 			<th></th>
