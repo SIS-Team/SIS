@@ -11,30 +11,37 @@ $permission = getPermission();
 if($permission != "root" && $permission != "admin") noPermission();
 if(isset($_GET['date']) && check_date($_GET['date']))$date = $_GET['date'];
 else $date = date("Y-m-d");
-$sql = "SELECT 
-`su`.`short` AS suShort,
-`c`.`name` AS className,
-`s`.`time`,
-`s`.`comment`,
-`sH`.`hour` AS `startHour`,
-`eH`.`hour` AS `endHour`,
-`nsH`.`hour` AS `newStartHour`,
-`neH`.`hour` AS `newEndHour`,
-`t`.`display` AS `newTeacher`,
-`se`.`short` AS `section`
-FROM `substitudes` AS `s`
-INNER JOIN `subjects` AS `su` ON `s`.`subjectFK` = `su`.`ID`
-INNER JOIN `lessons` AS `l` ON `s`.`lessonFK` = `l`.`ID`
-INNER JOIN `lessonsBase` AS `lb` ON `l`.`lessonBaseFK` = `lb`.`ID`
-INNER JOIN `classes` AS `c` ON `lb`.`classFK` = `c`.`ID`
-INNER JOIN `hours` AS `eH` ON `lb`.`endHourFK` = `eH`.`ID`
-INNER JOIN `hours` AS `sH` ON `lb`.`startHourFK` = `sH`.`ID`
-LEFT JOIN `hours` AS `nsH` ON `s`.`startHourFK` = `nsH`.`ID`
-LEFT JOIN `hours` AS `neH` ON `s`.`endHourFK` = `neH`.`ID`
-LEFT JOIN `teachers` AS `t` ON `s`.`teacherFK` = `t`.`ID`
-INNER JOIN `sections` AS `se` ON `c`.`sectionFK` = `se`.`ID`
-WHERE `se`.`short` = '".mysql_real_escape_string($_SESSION['section'])."' AND `time` = '".mysql_real_escape_string($date)."'
-ORDER BY `className`, `startHour`";
+
+		$sql = "SELECT `time`,
+						`newSub`,
+						`remove`,
+						`move`,
+						`s`.`display`,
+						`s`.`comment`,
+						IFNULL(`nC`.`name`,`c`.`name`) AS `className`,
+						IFNULL(`nT`.`display`,`t`.`display`) AS `teacher`,
+						IFNULL(`nSu`.`short`,`su`.`short`) AS `suShort`,
+						IFNULL(`nR`.`name`,`r`.`name`) AS `room`,
+						IFNULL(`nsH`.`hour`,`sH`.`hour`) AS `startHour`,
+						IFNULL(`neH`.`hour`,`eH`.`hour`) AS `endHour`
+			FROM `substitudes` AS `s`		
+				LEFT JOIN `lessons` AS `l` ON `s`.`lessonFK` = `l`.`ID` 
+				LEFT JOIN `lessonsBase` AS `lb`ON `l`.`lessonBaseFK` = `lb`.`ID`
+				LEFT JOIN `classes`AS `c` ON `lb`.`classFK` = `c`.`ID`
+				LEFT JOIN `hours` AS `sH` ON `lb`.`startHourFK` = `sH`.`ID` 
+				LEFT JOIN `hours` AS `eH` ON `lb`.`endHourFK` = `eH`.`ID` 
+				LEFT JOIN `teachers` AS `t`ON `l`.`teachersFK` = `t`.`ID`
+				LEFT JOIN `subjects` AS `su` ON `l`.`subjectFK`=`su`.`ID`
+				LEFT JOIN `rooms` AS `r` ON `l`.`roomFK` = `r`.`ID`
+				LEFT JOIN `hours` AS  `nsH` ON `s`.`startHourFK` = `nsH`.`ID`
+				LEFT JOIN `hours` AS  `neH` ON `s`.`endHourFK` = `neH`.`ID`
+				LEFT JOIN `teachers` AS `nT` ON `s`.`teacherFK` = `nT`.`ID`
+				LEFT JOIN `subjects` AS `nSu` ON `s`.`subjectFK` = `nSu`.`ID`
+				LEFT JOIN `rooms`AS `nR` ON `s`.`roomFK` = `nR`.`ID`
+				LEFT JOIN `classes` AS `nC` ON `s`.`classFK` = `nC`.`ID`
+			WHERE time = '". $date . "'
+			ORDER BY `className`, `startHour`		
+		";
 $result = mysql_query($sql);
 echo mysql_error();
 	while($substitude = mysql_fetch_object($result)) {    
@@ -49,23 +56,21 @@ $pdf->Cell('75','25',$date);
 $pdf->Cell('','25','Abteilung '.$_SESSION['section'],'','1');
 $pdf->SetFont('Arial','',12);
 $pdf->Cell(15,10,'Stunde','1');
-$pdf->Cell(40,10,'Klasse','1');
+$pdf->Cell(30,10,'Klasse','1');
 $pdf->Cell(40,10,'Suppl. durch','1');
-$pdf->Cell(40,10,'Fach','1');
-$pdf->Cell(40,10,'Bemerkung','1','1');
+$pdf->Cell(20,10,'Fach','1');
+$pdf->Cell(70,10,'Bemerkung','1','1');
 $count = 0;
 if(isset($substitudes)){
 	for($i = 0;$i<count($substitudes);$i++){
-	 	if(empty($substitudes[$i]->newStartHour)) $lessons_count = $substitudes[$i]->startHour;
-		else $lessons_count = $substitudes[$i]->newStartHour;
-		if(empty($substitudes[$i]->newEndHour)) $lessons_end = $substitudes[$i]->endHour;
-		else $lessons_end = $substitudes[$i]->newEndHour;
+	 	$lessons_count = $substitudes[$i]->startHour;
+	    $lessons_end = $substitudes[$i]->endHour; 
 		while($lessons_count <= $lessons_end){
 			$pdf->Cell(15,10,$lessons_count,'1');
-			$pdf->Cell(40,10,$substitudes[$i]->className,'1');
-			$pdf->Cell(40,10,$substitudes[$i]->newTeacher,'1');
-			$pdf->Cell(40,10,$substitudes[$i]->suShort,'1');
-			$pdf->Cell(40,10,$substitudes[$i]->comment,'1','1');
+			$pdf->Cell(30,10,$substitudes[$i]->className,'1');
+			$pdf->Cell(40,10,$substitudes[$i]->teacher,'1');
+			$pdf->Cell(20,10,$substitudes[$i]->suShort,'1');
+			$pdf->Cell(70,10,$substitudes[$i]->comment,'1','1');
 			$count++;
 			$lessons_count++;
 		}
@@ -73,10 +78,10 @@ if(isset($substitudes)){
 }
 while($count<12){
  		$pdf->Cell(15,10,'','1');
+		$pdf->Cell(30,10,'','1');
 		$pdf->Cell(40,10,'','1');
-		$pdf->Cell(40,10,'','1');
-		$pdf->Cell(40,10,'','1');
-		$pdf->Cell(40,10,'','1','1');
+		$pdf->Cell(20,10,'','1');
+		$pdf->Cell(70,10,'','1','1');
 		$count++;
  }
 $pdf->Output();

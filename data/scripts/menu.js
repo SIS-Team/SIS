@@ -116,12 +116,15 @@ var closeLink = function() {
 var openLink = function(link) {	
 	if (animation.block)
 		return;
+	
 	if (animation.distance > 0) {
 		eval("var tmp = function() { openLink('" + link + "'); }");
 		animation.after = tmp;
 		animation.close();
 		return;
 	}
+	
+	animation.targetDistance = (parseInt(window.innerHeight) > 600) ? (parseInt(window.innerHeight) / 2 - 30) : (270);
 	
 	var menu = link.split("?");
 	if (menu[1]) {

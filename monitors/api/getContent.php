@@ -139,46 +139,44 @@
 		//Version 2 
 		$response['modus'] = "Supplierplan";
 		$sql = "SELECT `time`,
-		`add`,
-		`remove`,
-		`s`.`display`,
-		`s`.`comment`,
-		`c`.`name` AS `className`,
-		`nC`.`name` AS `newClassName`,
-		`t`.`display` AS `oldTeacher`,
-		`nT`.`display` AS `newTeacher`,
-		`su`.`short` AS `oldSuShort`,
-		`nSu`.`short` AS `newSuShort`,
-		`r`.`name` AS `oldRoom`, 
-		`nR`.`name` AS `newRoom`,
-		`sH`.`hour` AS `oldStartHour`,
-		`eH`.`hour` AS `oldEndHour`,
-		`nsH`.`hour` AS `newStartHour`,
-		`neH`.`hour` AS `newEndHour`
-		FROM `substitudes` AS `s`		
-		LEFT JOIN `lessons` AS `l` ON `s`.`lessonFK` = `l`.`ID` 
-		LEFT JOIN `lessonsBase` AS `lb`ON `l`.`lessonBaseFK` = `lb`.`ID`
-		LEFT JOIN `classes`AS `c` ON `lb`.`classFK` = `c`.`ID`
-		LEFT JOIN `hours` AS `sH` ON `lb`.`startHourFK` = `sH`.`ID` 
-		LEFT JOIN `hours` AS `eH` ON `lb`.`endHourFK` = `eH`.`ID` 
-		LEFT JOIN `teachers` AS `t`ON `l`.`teachersFK` = `t`.`ID`
-		LEFT JOIN `subjects` AS `su` ON `l`.`subjectFK`=`su`.`ID`
-		LEFT JOIN `rooms` AS `r` ON `l`.`roomFK` = `r`.`ID`
-		LEFT JOIN `hours` AS  `nsH` ON `s`.`startHourFK` = `nsH`.`ID`
-		LEFT JOIN `hours` AS  `neH` ON `s`.`endHourFK` = `neH`.`ID`
-		LEFT JOIN `teachers` AS `nT` ON `s`.`teacherFK` = `nT`.`ID`
-		LEFT JOIN `subjects` AS `nSu` ON `s`.`subjectFK` = `nSu`.`ID`
-		LEFT JOIN `rooms`AS `nR` ON `s`.`roomFK` = `nR`.`ID`
-		LEFT JOIN `classes` AS `nC` ON `s`.`classFK` = `nC`.`ID`
-		WHERE time >= '". date("Y-m-d") . "'
-		ORDER BY `className`, `newClassName`		
+						`newSub`,
+						`remove`,
+						`move`,
+						`s`.`display`,
+						`s`.`comment`,
+						IFNULL(`nC`.`name`,`c`.`name`) AS `className`,
+						IFNULL(`nT`.`display`,`t`.`display`) AS `teacher`,
+						IFNULL(`nSu`.`short`,`su`.`short`) AS `suShort`,
+						IFNULL(`nR`.`name`,`r`.`name`) AS `room`,
+						IFNULL(`nsH`.`hour`,`sH`.`hour`) AS `startHour`,
+						IFNULL(`neH`.`hour`,`eH`.`hour`) AS `endHour`
+			FROM `substitudes` AS `s`		
+				LEFT JOIN `lessons` AS `l` ON `s`.`lessonFK` = `l`.`ID` 
+				LEFT JOIN `lessonsBase` AS `lb`ON `l`.`lessonBaseFK` = `lb`.`ID`
+				LEFT JOIN `classes`AS `c` ON `lb`.`classFK` = `c`.`ID`
+				LEFT JOIN `hours` AS `sH` ON `lb`.`startHourFK` = `sH`.`ID` 
+				LEFT JOIN `hours` AS `eH` ON `lb`.`endHourFK` = `eH`.`ID` 
+				LEFT JOIN `teachers` AS `t`ON `l`.`teachersFK` = `t`.`ID`
+				LEFT JOIN `subjects` AS `su` ON `l`.`subjectFK`=`su`.`ID`
+				LEFT JOIN `rooms` AS `r` ON `l`.`roomFK` = `r`.`ID`
+				LEFT JOIN `hours` AS  `nsH` ON `s`.`startHourFK` = `nsH`.`ID`
+				LEFT JOIN `hours` AS  `neH` ON `s`.`endHourFK` = `neH`.`ID`
+				LEFT JOIN `teachers` AS `nT` ON `s`.`teacherFK` = `nT`.`ID`
+				LEFT JOIN `subjects` AS `nSu` ON `s`.`subjectFK` = `nSu`.`ID`
+				LEFT JOIN `rooms`AS `nR` ON `s`.`roomFK` = `nR`.`ID`
+				LEFT JOIN `classes` AS `nC` ON `s`.`classFK` = `nC`.`ID`
+				LEFT JOIN `sections` AS `sec` ON `c`.`sectionFK` = `sec`.`ID`
+				LEFT JOIN `sections` AS `nSec` ON `nC`.`sectionFK`=`nSec`.`ID`
+			WHERE time >= '". date("Y-m-d") . "' and (`sec`.`name` = '".$monitor->section."' or `nSec`.`name` = '".$monitor->section."')
+			ORDER BY `className`, `startHour`		
 		";
+		//$response['content'] .= $sql;
 		$result = mysql_query($sql);
 		$response['content'] .= mysql_error();
 		while ($row = mysql_fetch_array($result)) {
 			$results[] = $row;
 		}
-		$day = array(1=>'Mo', 2=>'Di' , 3=> 'Mi', 4=>'Do', 5 =>'Fr');
+	$day = array(1=>'Mo', 2=>'Di' , 3=> 'Mi', 4=>'Do', 5 =>'Fr');
 		$day_counter = 0;
 		for($j = 0; $j<2;$j++){
 		 	if(date("w", time() + 24 * 60 * 60 * $day_counter)==0) $day_counter++;
@@ -189,22 +187,20 @@
 			$response['content'] .= "<tr><th>Klasse</th><th>Std.</th><th>Suppl. durch</th><th>Fach</th><th>Bemerkung</th></tr>								";
 			if(isset($results)){
 				for($i = 0; $i <count($results);$i++){
-	 				$response['content'] .= "<tr>";
-	 				if(isset($results[$i]['newClassName']))$response['content'].= "<td>".$results[$i]['newClassName']."</td>";
-					else $response['content'] .= "<td>".$results[$i]['className']."</td>";
-
-					if(isset($results[$i]['newClassName']))$response['content'].= "<td>".$results[$i]['newClassName']."</td>";
-					else $response['content'] .= "<td>".$results[$i]['className']."</td>";
-
-					if(isset($results[$i]['newTeacher']))$response['content'] .= "<td>".$results[$i]['newTeacher']."</td>";
-					else $response['content'] .= "<td>".$results[$i]['oldTeacher']."</td>";
-
-					if(isset($results[$i]['newSuShort'])) $response['content'] .= "<td>".$results[$i]['newSuShort']."</td>";
-					else $response['content'] .= "<td>".$results[$i]['oldSuShort']."</td>";
-
-					$response['content'] .= "<td>".$results[$i]['comment']."</td>";
-					
-					$response['content'] .= "</tr>";
+ 					if($results[$i]['time'] >= date("Y-m-d", time()+ 24 *60 *60 * $day_counter)  and $results[$i]['time'] < date("Y-m-d", time()+ 24 *60 *60 * ($day_counter+1)) and $results[$i]['display'] == 1){
+ 						$lesson_count = $results[$i]['startHour'];
+							while ($lesson_count<=$results[$i]['endHour']){
+			 				$response['content'] .= "<tr>";
+			 				$response['content'] .= "<td>".$results[$i]['className']."</td>";	
+							$response['content'] .= "<td>".$lesson_count."</td>";	
+							$response['content'] .= "<td>".$results[$i]['teacher']."</td>";	
+							$response['content'] .= "<td>".$results[$i]['suShort']."</td>";	
+							$response['content'] .= "<td>".$results[$i]['comment']."</td>";						
+							$response['content'] .= "</tr>";
+							$lesson_count ++;
+						}
+				}
+			
 				}
 			}
 			else {
