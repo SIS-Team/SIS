@@ -96,7 +96,7 @@ $fieldsRow1[1][5] = $date;	//Standartdatum ins Formular schreiben
 $where = "substitudes.time = '".$date."' AND sections.short = '".$section."' AND substitudes.display = 1";		//Filter
 $sort = "classes.name, hoursStart.hour";		//Sortierung nach dem Klassenname und der Startstunde
 
-echo "<br \><a href=\"".RELATIVE_ROOT."/substitudes/substitude_pdf.php?date=$date\" target=\"tab\">Hallo</a><br \><br \>";
+echo "<br \><a href=\"".RELATIVE_ROOT."/substitudes/substitude_pdf.php?date=$date\" target=\"tab\">Drucken</a><br \><br \>";
 
 $result = selectSubstitude($where,$sort);			//Rückgabewert des Selects
 
