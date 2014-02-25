@@ -117,16 +117,16 @@ var updateContent = function(response) {
 
 	// Wenn kein Fehler -> Popup entfernen
 	removeError("server");
-
+	
+	submode = response.submode;
+	submodeChange = response.submodeChange;
+	
 	// Wenn sich der Inhalt nicht geändert hat (Server-Hash == Client-Hash) -> abbrechen
 	if (!response.changes) // keine änderungen
 		return;
 	
 	if (response.modus)
 		document.getElementById("info").innerHTML = "SIS." + response.modus;
-
-	submode = response.submode;
-	submodeChange = response.submodeChange;
 
 	// Wenn nicht -> Hash updaten
 	monitorHash = response.hash;

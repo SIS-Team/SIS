@@ -44,14 +44,32 @@
 	
 	$response['changes'] = true;
 
+	$response['req'] = $_GET;
+	
 	if ($monitor->type == "Supplierplan & News") {
 		if (!isset($_GET['submode']) || ($_GET['submode'] == "0")) {
 			$monitor->type = "Supplierplan";
+			$_GET['submode'] = 0;
+			$response['submode'] = 0;
 		} else {
 			$monitor->type = "News";
+			$response['submode'] = 1;
 		}
 
-		$response['submode'] = (intval($_GET['submode']) + 1) % 2;
+		if (!isset($_GET['submodeChange'])) {
+			$_GET['submodeChange'] = time() + 20;
+		}
+		
+		if (intval($_GET['submodeChange']) <= time()) {
+			$response['submode'] = (intval($_GET['submode']) + 1) % 2;
+			
+			if ($response['submode'] == 0)
+				$response['submodeChange'] = time() + 20;
+			else
+				$response['submodeChange'] = time() + 10;
+		} else {
+			$response['submodeChange'] = $_GET['submodeChange'];
+		}
 	}
 
 	// Seitentyp-Switch
