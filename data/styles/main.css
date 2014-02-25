@@ -62,6 +62,7 @@ body {
 	padding: 20px;
 	position: absolute;
 	top: 60px;
+	text-align: justify;
 }
 
 input, button {
