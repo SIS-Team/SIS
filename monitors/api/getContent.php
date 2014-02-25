@@ -165,15 +165,18 @@
 				LEFT JOIN `subjects` AS `nSu` ON `s`.`subjectFK` = `nSu`.`ID`
 				LEFT JOIN `rooms`AS `nR` ON `s`.`roomFK` = `nR`.`ID`
 				LEFT JOIN `classes` AS `nC` ON `s`.`classFK` = `nC`.`ID`
-			WHERE time >= '". date("Y-m-d") . "'
+				LEFT JOIN `sections` AS `sec` ON `c`.`sectionFK` = `sec`.`ID`
+				LEFT JOIN `sections` AS `nSec` ON `nC`.`sectionFK`=`nSec`.`ID`
+			WHERE time >= '". date("Y-m-d") . "' and (`sec`.`name` = '".$monitor->section."' or `nSec`.`name` = '".$monitor->section."')
 			ORDER BY `className`, `startHour`		
 		";
+		//$response['content'] .= $sql;
 		$result = mysql_query($sql);
 		$response['content'] .= mysql_error();
 		while ($row = mysql_fetch_array($result)) {
 			$results[] = $row;
 		}
-		$day = array(1=>'Mo', 2=>'Di' , 3=> 'Mi', 4=>'Do', 5 =>'Fr');
+	$day = array(1=>'Mo', 2=>'Di' , 3=> 'Mi', 4=>'Do', 5 =>'Fr');
 		$day_counter = 0;
 		for($j = 0; $j<2;$j++){
 		 	if(date("w", time() + 24 * 60 * 60 * $day_counter)==0) $day_counter++;
