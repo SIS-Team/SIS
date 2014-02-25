@@ -438,6 +438,7 @@ printf("<table>\n");	//Tabellen Tag auf
   	printf("</tr>\n");
 	printf("</form>\n");
 printf("</table>\n");
+printf("<hr \>");
 }
 
 
