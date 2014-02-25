@@ -145,7 +145,7 @@
 						`s`.`display`,
 						`s`.`comment`,
 						IFNULL(`nC`.`name`,`c`.`name`) AS `className`,
-						IFNULL(`nT`.`display`,`t`.`display`) AS `teacher`,
+						`nT`.`display` AS `teacher`,
 						IFNULL(`nSu`.`short`,`su`.`short`) AS `suShort`,
 						IFNULL(`nR`.`name`,`r`.`name`) AS `room`,
 						IFNULL(`nsH`.`hour`,`sH`.`hour`) AS `startHour`,
@@ -189,21 +189,22 @@
 			if(isset($results)){
 				for($i = 0; $i <count($results);$i++){
  					if($results[$i]['time'] >= date("Y-m-d", time()+ 24 *60 *60 * $day_counter)  and $results[$i]['time'] < date("Y-m-d", time()+ 24 *60 *60 * ($day_counter+1)) and $results[$i]['display'] == 1){
- 						$lesson_count = $results[$i]['startHour'];
-							while ($lesson_count<=$results[$i]['endHour']){
+							
 			 				$response['content'] .= "<tr>";
 							if($results[$i]['className'] != $upperClass) {
  								$response['content'] .= "<td>".$results[$i]['className']."</td>";						 	 
 								$upperClass = $results[$i]['className'];
 							}
 							else $response['content'] .= "<td style=\"border : 0px\"></td>";
-							$response['content'] .= "<td style=\" border-right: 1px\">".$lesson_count."</td>";	
+							if($results[$i]['startHour'] == $results[$i]['endHour'] ){
+ 								$response['content'] .= "<td>".$results[$i]['startHour']."</td>";	
+							}
+							else $response['content'] .= "<td>".$results[$i]['startHour'] ." - ".$results[$i]['endHour']."</td>";
 							$response['content'] .= "<td>".$results[$i]['teacher']."</td>";	
 							$response['content'] .= "<td>".$results[$i]['suShort']."</td>";	
 							$response['content'] .= "<td>".$results[$i]['comment']."</td>";						
 							$response['content'] .= "</tr>";
-							$lesson_count ++;
-						}
+						
 				}
 			
 				}
