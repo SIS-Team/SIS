@@ -238,8 +238,37 @@ function substitudes(){
 
 $post=$_POST;
 unset($post["save"]);
-print_r($post);
-$data=array("ID" => "","time" => "","newSub" => "","remove" => "","lessonFK" => "","startHourFK" => "","endHourFK" => "","teacherFK" => "","subjectFK" => "","roomFK" => "","classFK" => "","display" => "","comment" => "");
+//print_r($post);
+$data=array("ID" => "","time" => "","newSub" => "","remove" => "","move" => "","lessonFK" => "","startHourFK" => "","endHourFK" => "","teacherFK" => "","subjectFK" => "","roomFK" => "","classFK" => "","display" => "","comment" => "");
+
+if($post["ID"]!=""){
+
+	$sql="SELECT move,newSub,remove,classFK,subjectFK,teacherFK,time,roomFK,startHourFK,endHourFK FROM substitudes WHERE ID = '".intval($post['ID'])."'";
+	$result = mysql_query($sql);
+	$result = mysql_fetch_array($result);
+	
+	$sql = "SELECT ID FROM substitudes WHERE remove = '".$result["remove"]."' AND newSub = '".$result["newSub"]."' AND move = '".$result["move"]."' AND classFK = '".$result["classFK"]."' AND subjectFK = '".$result["subjectFK"]."' AND teacherFK = '".$result["teacherFK"]."' AND time = '".$result["time"]."' AND roomFK = '".$result["roomFK"]."' AND startHourFK = '".$result["startHourFK"]."' AND endHourFK = '".$result["endHourFK"]."' AND display = 0";
+	$temp = mysql_query($sql);
+	
+	while($tempIDs[] = mysql_fetch_array($temp)){
+	}
+	unset($tempIDs[count($tempIDs)-1]);
+	
+	$IDs[] = $post["ID"];
+	foreach($tempIDs as $i){
+		$IDs[] = $i["ID"];	
+	}
+	
+	foreach($IDs as $i){
+		$sql="DELETE FROM substitudes WHERE ID=".$i;
+		mysql_query($sql);
+	}
+	$post["ID"]="";
+
+}
+
+if(!isset($post["delete"]) && $post["delete"]==""){
+
 
 if($post["free"]=="free"){
 
@@ -260,6 +289,7 @@ if($post["free"]=="free"){
 		$data["time"]=$post["time"];
 		$data["comment"]=htmlspecialchars($post["comment"]);
 		$data["newSub"]=true;
+		$data["display"]=true;
 		$temp = mysql_fetch_array(mysql_query("SELECT ID FROM classes WHERE name='".mysql_real_escape_string(htmlspecialchars($post['clName']))."'"));
 		$data["classFK"] = $temp['ID'];
 		saveupdate($data,"substitudes");
@@ -298,7 +328,7 @@ if($post["free"]=="free"){
 			//print_r($row);
 		}
 		else{
-			$sql = "SELECT lessons.ID FROM lessons INNER JOIN lessonsBase ON lessonsBase.ID=lessons.lessonBaseFK WHERE lessonsBase.startHourFK='".$startHour."' AND lessonsBase.endHourFK='".$endHour."' AND lessonsBase.classFK='".$class."' AND lessons.teacherFK='".$teacher."'";
+			$sql = "SELECT lessons.ID FROM lessons INNER JOIN lessonsBase ON lessonsBase.ID=lessons.lessonBaseFK WHERE lessonsBase.startHourFK='".$startHour."' AND lessonsBase.endHourFK='".$endHour."' AND lessonsBase.classFK='".$class."' AND lessons.teachersFK='".$teacher."'";
 			$temp = mysql_fetch_array(mysql_query($sql));
 			$data["display"]=true;
 			$data["lessonFK"]=$temp["ID"];
@@ -306,16 +336,106 @@ if($post["free"]=="free"){
 		}	
 	}
 	else{
+		$day = weekday($post["time"]);
+		$temp = mysql_fetch_array(mysql_query("SELECT ID FROM subjects WHERE short='".mysql_real_escape_string(htmlspecialchars($post["suShort"]))."'"));
+		$data["subjectFK"]= $temp["ID"];
+		$temp = mysql_fetch_array(mysql_query("SELECT ID FROM teachers WHERE short='".mysql_real_escape_string(htmlspecialchars($post["teShort"]))."'"));
+		$data["teacherFK"]=$temp["ID"];
+		$temp = mysql_fetch_array(mysql_query("SELECT ID FROM rooms WHERE name='".mysql_real_escape_string(htmlspecialchars($post["roName"]))."'"));
+		$data["roomFK"]=$temp["ID"];
+		$temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".intval($post["startHour"])."'"));
+		$data["startHourFK"]=$temp["ID"];
+		$temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".intval($post["endHour"])."'"));
+		$data["endHourFK"]=$temp["ID"];
+		$data["comment"]=htmlspecialchars($post["comment"]);
+		$data["move"]=true;
+		$temp = mysql_fetch_array(mysql_query("SELECT ID FROM classes WHERE name='".mysql_real_escape_string(htmlspecialchars($post['clName']))."'"));
+		$data["time"]=$post["time"];
+		$temp = mysql_fetch_array(mysql_query("SELECT ID FROM teachers WHERE short='".mysql_real_escape_string(htmlspecialchars($post["oldTeShort"]))."'"));
+		$teacher=$temp["ID"];
+		$temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".intval($post["oldStartHour"])."'"));
+		$startHour=$temp["ID"];
+		$temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".intval($post["oldEndHour"])."'"));
+		$endHour=$temp["ID"];
+		$temp = mysql_fetch_array(mysql_query("SELECT ID FROM classes WHERE name='".mysql_real_escape_string(htmlspecialchars($post['clName']))."'"));
+		$class = $temp['ID'];
+		$data["classFK"] = $temp['ID'];
+		if($teacher==""){
+			$sql = "SELECT lessons.ID FROM lessons INNER JOIN lessonsBase ON lessonsBase.ID=lessons.lessonBaseFK WHERE lessonsBase.startHourFK='".$startHour."' AND lessonsBase.endHourFK='".$endHour."' AND lessonsBase.classFK='".$class."'";
+			$result = mysql_query($sql);			
+			while($row[]=mysql_fetch_array($result)){
+			}
+			unset($row[count($row)-1]);
 
+			foreach($row as $i => $r){
+				$data["lessonFK"]=$r["ID"];
+				if($i < 1)
+					$data["display"]=true;
+				else
+					$data["display"]=false;
+
+				saveupdate($data,"substitudes");
+			}
+			//print_r($row);
+		}
+		else{
+			echo $sql = "SELECT lessons.ID FROM lessons INNER JOIN lessonsBase ON lessonsBase.ID=lessons.lessonBaseFK WHERE lessonsBase.startHourFK='".$startHour."' AND lessonsBase.endHourFK='".$endHour."' AND lessonsBase.classFK='".$class."' AND lessons.teachersFK='".$teacher."'";
+			$temp = mysql_fetch_array(mysql_query($sql));
+			$data["display"]=true;
+			$data["lessonFK"]=$temp["ID"];
+			saveupdate($data,"substitudes");
+		}	
+		
+		
 	}
 }
 else
 {
+	$day = weekday($post["time"]);
+		$temp = mysql_fetch_array(mysql_query("SELECT ID FROM subjects WHERE short='".mysql_real_escape_string(htmlspecialchars($post["suShort"]))."'"));
+		$data["subjectFK"]= $temp["ID"];
+		$temp = mysql_fetch_array(mysql_query("SELECT ID FROM teachers WHERE short='".mysql_real_escape_string(htmlspecialchars($post["teShort"]))."'"));
+		$data["teacherFK"]=$temp["ID"];
+		$temp = mysql_fetch_array(mysql_query("SELECT ID FROM rooms WHERE name='".mysql_real_escape_string(htmlspecialchars($post["roName"]))."'"));
+		$data["roomFK"]=$temp["ID"];
+		$temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".intval($post["startHour"])."'"));
+		$data["startHourFK"]=$temp["ID"];
+		$temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE weekdayShort='".$day."' AND hour='".intval($post["endHour"])."'"));
+		$data["endHourFK"]=$temp["ID"];
+		$data["comment"]=htmlspecialchars($post["comment"]);
+		$temp = mysql_fetch_array(mysql_query("SELECT ID FROM classes WHERE name='".mysql_real_escape_string(htmlspecialchars($post['clName']))."'"));
+		$data["time"]=$post["time"];
+		$temp = mysql_fetch_array(mysql_query("SELECT ID FROM classes WHERE name='".mysql_real_escape_string(htmlspecialchars($post['clName']))."'"));
+		$class = $temp['ID'];
+		$data["classFK"] = $temp['ID'];
+		
+		$sql = "SELECT missingTeachers.teacherFK FROM missingTeachers INNER JOIN hours as hourST ON hourST.ID = missingTeachers.startHourFK INNER JOIN hours as hourEN ON hourEN.ID = missingTeachers.endHourFK INNER JOIN lessons ON missingTeachers.teacherFK = lessons.teachersFK INNER JOIN lessonsBase ON lessonsBase.ID = lessons.lessonBaseFK WHERE missingTeachers.startDay <='".mysql_real_escape_string(htmlspecialchars($post['time']))."' AND missingTeachers.endDay >='".mysql_real_escape_string(htmlspecialchars($post['time']))."' AND hourST.hour <='".intval($post['startHour'])."' AND hourEN.hour >='".intval($post['endHour'])."' AND lessonsBase.startHourFK='".$data["startHourFK"]."' AND lessonsBase.endHourFK='".$data["endHourFK"]."' AND lessonsBase.classFK='".$class."'";
+		$temp = mysql_query($sql);
+		while($missTeacher[] = mysql_fetch_array($temp)){
+		}
+		unset($missTeacher[count($missTeacher)-1]);
+		
+		foreach($missTeacher as $i => $m){
+			$sql = "SELECT lessons.ID FROM lessons INNER JOIN lessonsBase ON lessonsBase.ID = lessons.lessonBaseFK WHERE lessonsBase.startHourFK='".$data["startHourFK"]."' AND lessonsBase.endHourFK='".$data["endHourFK"]."' AND lessonsBase.classFK='".$class."' AND lessons.teachersFK = '".$m["teacherFK"]."'";
+			$temp = mysql_query($sql);
+			$temp = mysql_fetch_row($temp);
+			$data["lessonFK"] = $temp[0];
 
+			if($i < 1)
+				$data["display"]=true;
+			else
+				$data["display"]=false;
+				
+			if(empty($post["delete"]))
+				saveupdate($data,"substitudes");
+		}
+			if(empty($missTeacher))
+				return false;
+			else
+				return true;
+		
 }
-
-print_r($data);
-
+}
 return true;
 /*if($post["ID"]!=""){
 

@@ -69,6 +69,28 @@ input, button {
 	color: #000;
 }
 
+.nonButton {
+	background: none;
+	border: none;
+}
+
+.nonButton {
+	pointer-events: all;
+}
+
+.nonButton svg {
+	width: 30px;
+	height: 20px;
+}
+
+.nonButton svg g {
+	fill: #fff;
+}
+
+.nonButton svg:hover g {
+	fill: #000;
+}
+
 textarea {
 	color: #000;
 }
