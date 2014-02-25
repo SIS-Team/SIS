@@ -186,7 +186,7 @@
 
 			<div id="footerCenter" class="point hCenter">
 				<div id="footer" class="sameWidth link">
-					<a href="<?php echo RELATIVE_ROOT; ?>/impressum/#responsible">Impressum</a> | <a href="<?php echo RELATIVE_ROOT; ?>/impressum/#privacy">Datenschutz</a> | <a href="<?php echo RELATIVE_ROOT; ?>/impressum/#terms">Nutzungsbedingungen</a> | <a href="mailto:SIS-Development@htlinn.ac.at">Hilfe</a>
+					<a href="<?php echo RELATIVE_ROOT; ?>/impressum/#responsible">Impressum</a> | <a href="<?php echo RELATIVE_ROOT; ?>/impressum/#privacy">Datenschutz</a> | <a href="<?php echo RELATIVE_ROOT; ?>/impressum/#terms">Nutzungsbedingungen</a> | <a href="<?php echo RELATIVE_ROOT; ?>/help/">Hilfe & Fehler</a>
 				</div>
 			</div>
 			<div id="windowContainer">
