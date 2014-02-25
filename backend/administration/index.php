@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 	include("../../config.php");
 	include(ROOT_LOCATION . "/modules/general/Main.php");
 
@@ -64,7 +64,7 @@
 	
 	$buttons[7]['displayed'] = true;
 	$buttons[7]['enabled'] = $_SESSION['rights']['root'];
-	$buttons[7]['svg'] = ROOT_LOCATION . "/data/images/rl.svg";
+	$buttons[7]['svg'] = ROOT_LOCATION . "/data/images/administration/sections.svg";
 	$buttons[7]['text'] = "Abteilungen";
 	$buttons[7]['url'] = RELATIVE_ROOT . "/backend/administration/sections/";
 	$buttons[7]['jsurl'] = RELATIVE_ROOT . "/backend/administration/sections/?js";
