@@ -267,12 +267,71 @@ printf("</table>\n");
 
 function form_substitudes($fieldRow1,$fieldRow2,$content,$section,$hashGenerator)
 {	
-
+//print_r($content);
 
 printf("<table>\n");	//Tabellen Tag auf
 	printf("<form action=\"?section=%s\" method=\"post\">\n",$section);	//Formular Anfang Tag
 	  			$hashGenerator->printForm();
+			$display["row"]= "none";
+			$display["oldTeShort"] = "none";
+			$display["oldStartHour"] = "none";
+			$display["oldEndHour"] = "none";
+			$display["move"] = "none";
+			$display["add"] = "none";
+			$display["remove"] = "none";
+			$display["suShort"] = "table-cell";
+			$display["teShort"] = "table-cell";
+			$display["roName"] = "table-cell";
+			$display["startHour"] = "table-cell";
+			$display["endHour"] = "table-cell";
+			$display["comment"] = "table-cell";
+			$display["clName"] = "table-cell";
+			$checked["free"]="";
+			$checked["move"]="";
+			$checked["add"]="";
+			$checked["remove"]="";
 
+
+
+		
+		if($content["move"]){
+			//echo "move";
+			$checked["free"]="checked";
+			$checked["move"]="checked";
+			$display["move"] = "table-cell";
+			$display["add"] = "table-cell";
+			$display["remove"] = "table-cell";
+			$display["row"]= "table-row";
+			$display["oldTeShort"] = "table-cell";
+			$display["oldStartHour"] = "table-cell";
+			$display["oldEndHour"] = "table-cell";
+		}
+		else if ($content["remove"]){
+			//echo "remove";
+			$display["row"]= "table-row";
+			$display["oldTeShort"] = "table-cell";
+			$display["oldStartHour"] = "table-cell";
+			$display["oldEndHour"] = "table-cell";
+			$display["move"] = "table-cell";
+			$display["add"] = "table-cell";
+			$display["remove"] = "table-cell";
+			$display["suShort"] = "none";
+			$display["teShort"] = "none";
+			$display["roName"] = "none";
+			$display["startHour"] = "none";
+			$display["endHour"] = "none";
+			$checked["free"]="checked";
+			$checked["remove"]="checked";
+		}
+		else if($content["newSub"]){
+			//echo "newSub";
+			$display["row"]= "table-row";
+			$display["move"] = "table-cell";
+			$display["add"] = "table-cell";
+			$display["remove"] = "table-cell";
+			$checked["free"]="checked";
+			$checked["add"]="checked";
+		}
 		printf("<tr>\n");	//Zeilen 	Tag auf
   			//FÃƒÂ¯Ã‚Â¿Ã‚Â½r jeden Eintrag im Array field einmal diese Schleife durchlaufen
 			foreach($fieldRow1 as $f) {	
@@ -291,12 +350,12 @@ printf("<table>\n");	//Tabellen Tag auf
 						$checked="";					
 					}
 					
-					printf("<td id=\"visibleCell%s%s\" style=\"display:table-cell\">%s <input type=\"checkbox\" name=\"%s\" %s value=\"%s\" %s>\n",		//Checkbox erstellen
-							$ID,$f[0],$f[1], $f[0], $checked, $f[0],$f[6]);
+					printf("<td id=\"visibleCell%s%s\" style=\"display:%s\">%s <input type=\"checkbox\" name=\"%s\" %s value=\"%s\" %s>\n",		//Checkbox erstellen
+							$ID,$f[0],$display[$f[0]],$f[1], $f[0], $checked, $f[0],$f[6]);
 					
 				}
 				else if ($f[2] == "checkboxJava") {		//Checkbox
-					$collapse="none";
+					/*$collapse="none";
 					if($f[5]=="1"){			//Wenn gecheckt, dann Variable checked auf checked setzen
 						$checked="checked";
 						$collapse="table-cell";				
@@ -304,19 +363,19 @@ printf("<table>\n");	//Tabellen Tag auf
 					else{						//sonst leer
 						$checked="";
 						$collapse="none";
-					}
+					}*/
 					if(empty($content["ID"]))
 						$ID=0;
 					else
 						$ID=$content["ID"];
 						
 					printf("<td>%s <input type=\"checkbox\" name=\"%s\" %s value=\"%s\" onclick=\"javascript:Visibility(%s,'%s')\">\n",		//Checkbox erstellen
-							$f[1], $f[0], $checked, $f[0],$ID,$f[0]);
+							$f[1], $f[0], $checked[$f[0]], $f[0],$ID,$f[0]);
 					
 				}
 				else if($f[2] == "text") {
-					printf("<td id=\"visibleCell%s%s\" style=\"display:table-cell\">%s <input  type=\"text\" name=\"%s\" size=\"%spx\" value=\"%s\" %s >\n",	//Textbox erstellen
-							$ID,$f[0],$f[1], $f[0], $f[3], $f[5], $f[6]);
+					printf("<td id=\"visibleCell%s%s\" style=\"display:%s\">%s <input  type=\"text\" name=\"%s\" size=\"%spx\" value=\"%s\" %s >\n",	//Textbox erstellen
+							$ID,$f[0],$display[$f[0]],$f[1], $f[0], $f[3], $f[5], $f[6]);
 
 				}
 				else if($f[2] == "hidden") {
@@ -325,7 +384,7 @@ printf("<table>\n");	//Tabellen Tag auf
 
 				}
 				else if($f[2] == "dropdown") {			//Dropdown MenÃƒÂ¯Ã‚Â¿Ã‚Â½ erstellen
-					printf("<td id=\"visibleCell%s%s\" style=\"display:table-cell\">%s <input value=\"%s\" autocomplete=\"off\" size=\"%s\" list=\"%s\" name=\"%s\" %s></td>\n",	$ID,$f[0],$f[1], $f[5], $f[3], $f[0], $f[0], $f[6]);
+					printf("<td id=\"visibleCell%s%s\" style=\"display:%s\">%s <input value=\"%s\" autocomplete=\"off\" size=\"%s\" list=\"%s\" name=\"%s\" %s></td>\n",	$ID,$f[0],$display[$f[0]],$f[1], $f[5], $f[3], $f[0], $f[0], $f[6]);
 							
 				}
 				
@@ -341,7 +400,7 @@ printf("<table>\n");	//Tabellen Tag auf
 			}
 				
   	printf("</tr>\n");
-  	printf("<tr id=\"visibleRow%s\" style=\"display:%s\">\n",$ID,$collapse);	//Zeilen 	Tag auf
+  	printf("<tr id=\"visibleRow%s\" style=\"display:%s\">\n",$ID,$display["row"]);	//Zeilen 	Tag auf
   			//FÃƒÂ¯Ã‚Â¿Ã‚Â½r jeden Eintrag im Array field einmal diese Schleife durchlaufen
   			printf("<td colspan=\"2\"></td>\n");
 			foreach($fieldRow2 as $f) {	
@@ -352,25 +411,25 @@ printf("<table>\n");	//Tabellen Tag auf
 				}
 				
 				if($f[2] == "text") {
-					printf("<td id=\"visibleCell%s%s\" style=\"display:none\">%s <input  type=\"text\" name=\"%s\" size=\"%spx\" value=\"%s\" %s >\n",	//Textbox erstellen
-							$ID,$f[0],$f[1], $f[0], $f[3], $f[5], $f[6]);
+					printf("<td id=\"visibleCell%s%s\" style=\"display:%s\">%s <input  type=\"text\" name=\"%s\" size=\"%spx\" value=\"%s\" %s >\n",	//Textbox erstellen
+							$ID,$f[0],$display[$f[0]],$f[1], $f[0], $f[3], $f[5], $f[6]);
 
 				}		
 				else if($f[2] == "dropdown") {			//Dropdown MenÃƒÂ¯Ã‚Â¿Ã‚Â½ erstellen
-					printf("<td id=\"visibleCell%s%s\" style=\"display:none\">%s <input value=\"%s\" autocomplete=\"off\" size=\"%s\" list=\"teShort\" name=\"%s\" %s></td>\n",	$ID,$f[0],$f[1],$f[5], $f[3], $f[0], $f[6]);
+					printf("<td id=\"visibleCell%s%s\" style=\"display:%s\">%s <input value=\"%s\" autocomplete=\"off\" size=\"%s\" list=\"teShort\" name=\"%s\" %s></td>\n",	$ID,$f[0],$display[$f[0]],$f[1],$f[5], $f[3], $f[0], $f[6]);
 							
 				}
 				else if ($f[2] == "radio") {		//Checkbox
 				
-					if($f[5]==true || ($ID==0 && $f[0]=="move")){			//Wenn gecheckt, dann Variable checked auf checked setzen
+					/*if($f[5]==true || ($ID==0 && $f[0]=="move")){			//Wenn gecheckt, dann Variable checked auf checked setzen
 						$checked="checked";
 					}
 					else{						//sonst leer
 						$checked="";					
-					}
+					}*/
 					
-					printf("<td id=\"visibleCell%s%s\" style=\"display:none\">%s <input type=\"radio\" id=\"visibleRadio%s%s\" name=\"freeRadio\" %s value=\"%s\"  %s onclick=\"javascript:Visibility(%s,'%s')\">\n",		//Checkbox erstellen
-							$ID,$f[0],$f[1], $ID,$f[0],$checked, $f[0],$f[6],$ID,$f[0]);
+					printf("<td id=\"visibleCell%s%s\" style=\"display:%s\">%s <input type=\"radio\" id=\"visibleRadio%s%s\" name=\"freeRadio\" %s value=\"%s\"  %s onclick=\"javascript:Visibility(%s,'%s')\">\n",		//Checkbox erstellen
+							$ID,$f[0],$display[$f[0]],$f[1], $ID,$f[0],$checked[$f[0]], $f[0],$f[6],$ID,$f[0]);
 					
 				}
 								
