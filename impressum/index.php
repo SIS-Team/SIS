@@ -334,9 +334,104 @@ Stand: 18.02.2014 <br /><br />
 <a name="terms" id="terms"></a>
 <a href="#top" onclick="smoothScroll('top'); return false;">Zum Seitenanfang</a>
 <h1>Nutzungsbedingungen</h1>
+<h2>Willkommen bei SIS, dem School Information Service der HTLinn!</h2>
 
+Vielen Dank, dass du unseren Service nutzt. SIS wird dir zur Verfügung gestellt von:<br /><br />
+Höhere Technische Bundes Lehr- und Versuchsanstalt Anichstraße<br />
+Anichstraße 26 - 28<br />
+A-6020 Innsbruck<br />
+<br />
 
-In Arbeit...<br />
+Du kannst über <a href="https://sis.htlinn.ac.at/help/">dieses Formular </a> oder per E-Mail unter <a href="mailto:SIS-Development@htlinn.ac.at">
+SIS-Development@htlinn.ac.at </a>Kontakt mit uns aufnehmen.<br />
+Durch die Verwendung von SIS stimmst du diesen Nutzungsbedingungen zu. Bitte lies sie also sorgfältig durch.<br />
+
+<h2>Nutzung unserer Dienste</h2>
+
+Du bist dazu verpflichtet die Richtlinien, welche für SIS gelten, einzuhalten.<br /><br />
+Verwende unseren Service nicht in missbräuchlicher Art und Weise. Du bist beispielsweise nicht berechtigt, in den Service 
+einzugreifen oder diesen über eine andere Art und Weise als die von uns bereitgestellte Benutzeroberfläche und gemäß 
+unseren Vorgaben zu verwenden. Sollte es vorkommen, dass du gegen unsere Nutzungsbedingungen verstößt, oder wir einen solchen 
+Verstoß untersuchen, sind wir berechtigt, dir zum Schutz unseres Services den Zugriff auf SIS zu sperren oder verweigern.<br /><br />
+
+Durch die Nutzung von SIS erwirbst du keinerlei gewerbliche Schutzrechte an SIS oder an den in SIS angezeigten Inhalten, auf welche du 
+Zugriff hast. Du darfst keine Inhalte aus SIS nutzen, es sei denn, du verfügst über die Einwilligung des Rechteinhabers oder du bist 
+anderweitig zu der Nutzung berechtigt. Diese Nutzungsbedingungen gewähren dir kein Recht zur Nutzung von irgendwelchen Grafiken für eigene 
+Projekte, außer der Grafiker erteilt dir dafür eine persönliche Erlaubnis.<br />
+Rechtliche Hinweise, die in oder im Zusammenhang mit unserem Service angezeigt werden, dürfen nicht entfernt, unkenntlich gemacht oder verändert werden.<br /><br />
+
+Unser Service ist auch auf Mobilgeräten verfügbar, teile davon sogar über eine App, bzw. der Rest auch über den Webbrowser. Verwende den Service in keiner Weise,
+welche dich an der Einhaltung von Verkehrsregeln oder Sicherheitsvorschriften hindern könnte.<br />
+
+<h2>Kein Weiterverkauf des Services</h2>
+
+Du stimmst zu, dass du den Service an sich (nicht den Sourcecode des freien Projektes) weder vervielfältigst, kopierst, duplizierst noch verkaufst oder vermietest, 
+egal für welchen Zweck.<br />
+
+<h2>Deine SIS-Zugangsdaten</h2>
+
+Für die Nutzung unseres Services benötigst du Zugangsdaten. Im Gegensatz zu vielen anderen Diensten, bei welchen du dir ein Konto zuerst selbst erstellen musst, 
+wird durch deinen Einstieg in der HTL und der damit verbundenen Registrierung eines Novell Accounts durch den Administrator bereits ein Konto für dich erstellt, 
+mit welchem du dich auch auf SIS anmelden kannst.<br /><br />
+
+Dadurch wird es noch wichtiger, dein Novell Passwort vertraulich zu behandeln, um neben Moodle, Webmail, WLAN und dem EDV-Login allgemein auch deinen SIS Zugang 
+zu schützen. Du bist verantwortlich für alle Aktivitäten, die mit deinen Novell Zugangsdaten stattfinden.<br /><br />
+
+Solltest du eine unerlaubte Nutzung deines Passwortes bzw. deines Kontos bemerken, wende dich bitte an einen der dafür zuständigen HTL Systemadministratoren.
+<br />
+
+<h2>Keine Übertragbarkeit</h2>
+
+Du stimmst zu, dass dein Konto nicht übertragbar ist und dass alle Daten nach deinem Abgang von der HTL für dein Konto nicht mehr erreichbar sind, weder für dich, 
+noch für jemand anderen.<br />
+
+<h2>Datenschutz</h2>
+
+In unseren Datenschutzbestimmungen wird erläutert, wie wir mit deinen personenbezogenen Daten umgehen, welche wir erheben und wie wir diese nutzen. Durch die 
+Nutzung von SIS stimmst du dem zu und bist mit der Verwendung von Daten gemäß den Datenschutzbestimmungen einverstanden.<br />
+
+<h2>Gewährleistung und Haftungsausschluss</h2>
+
+Der dir von uns zur Verfügung gestellte Service wird dir hoffentlich viel Freude bei dessen Nutzung bereiten. Jedoch können wir dir keine spezifische Zusicherung 
+in Bezug auf SIS  geben. Beispielsweise erhältst du keine Zusagen bezüglich der Inhalte unseres Services, hinsichtlich spezifischer Funktionalitäten oder der 
+Zuverlässigkeit von SIS.<br /><br />
+
+In einigen Rechtsordnungen gelten bestimmte Gewährleistungen wie die implizite Gewährleistung der Gebrauchstauglichkeit oder der Eignung für einen bestimmten Zweck
+sowie der Rechtsmängelfreiheit. Soweit dies gesetzlich zulässig ist, schließen wir sämtliche Gewährleistungen aus.<br />
+
+<h2>Haftung für SIS</h2>
+
+Sofern du dich dafür entscheidest, auf SIS zuzugreifen und diesen Service zu nutzen, erfolgt dies auf eigene Gefahr und du bist zur Einhaltung der anwendbaren Gesetze 
+verpflichtet.<br />
+
+Im gesetzlich zulässigen Rahmen übernehmen wir keine Verantwortung für den Verlust von Daten, oder indirekte, besondere und exemplarische Schäden, sowie Folgeschäden 
+und Schäden mit Strafschadenersatz.<br /><br />
+
+Wir sind zudem in keinster Weise haftbar für Verluste oder Schäden, welche nicht typischerweise vorhersehbar sind.<br /><br />
+
+<h2>Änderungen des Services</h2>
+
+Das für SIS verantwortliche Team behält sich vor den Service (oder einen Teil davon) zu ändern oder zu beenden, sowohl vorübergehend als auch dauerhaft. Über einen 
+solchen Vorgang wird auf entweder auf der Website oder über E-Mail informiert. Du bist damit einverstanden, dass wir weder dir noch dritten gegenüber für Änderungen 
+oder Beendigungen des Services haften.<br />
+
+<h2>Über diese Nutzungsbedingungen</h2>
+
+Wir können diese Nutzungsbedingungen jederzeit anpassen, um beispielsweise Änderungen der rechtlichen Rahmenbedingungen oder Änderungen unseres Services zu 
+berücksichtigen. Daher solltest du diese Nutzungsbedingungen regelmäßig überprüfen.<br />
+Wir werden Hinweise auf Änderungen dieser Nutzungsbedingungen auf dieser Seite veröffentlichen. Über solche Änderungen wirst du selbstverständlich verständigt. 
+Änderungen gelten nicht rückwirkend und werden frühestens 14 Tage nach ihrer Veröffentlichung wirksam. Änderungen hinsichtlich einer neuen Funktion unseres Services
+sowie rechtlich bedingten Gründen werden jedoch sofort wirksam. Wenn du den geänderten Nutzungsbedingungen unseres Services nicht zustimmst, musst du dessen Nutzung 
+einstellen.<br /><br />
+
+Im Falle eines Widerspruches zwischen diesen Nutzungsbedingungen und zusätzlichen Bedingungen oder Richtlinien haben die zusätzlichen Bedingungen im Einzelfall 
+Vorrang.<br />
+Diese Nutzungsbedingungen zwischen dir und SIS regeln deine Nutzung des SIS Dienstes. Es werden keinerlei Ansprüche oder Rechte für Dritte geregelt.<br />
+Solltest du dich nicht an diese Nutzungsbedingungen halten und wir nicht sofort Maßnahmen dagegen ergreifen, bedeutet das allerdings nicht, dass wir auf unsere 
+Rechte, etwa das Recht künftig tätig zu werden, verzichten.<br />
+Sollte eine der Bestimmung unwirksam sein, bleiben die übrigen Bestimmungen davon unberührt.<br /><br />
+
+Stand: 25.02.2014<br /><br />
 
 <?php
 	pageFooter();
