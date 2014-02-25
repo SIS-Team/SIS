@@ -36,6 +36,9 @@ var main = function() {
 	window.onresize = function() {
 		document.getElementById("main").style.height = (window.innerHeight - 70) + "px";
 	}
+	
+	scope = document.getElementById("main");
+	
 }
 
 var ret = function (v) {
@@ -138,6 +141,8 @@ var updateContent = function(response) {
 	
 	var infotext = response.info;
 	document.getElementById("infotext").innerHTML = infotext;
+	
+	smoothScroll("bottom");
 }
 
 // führt GET request durch
@@ -216,4 +221,68 @@ var getMedia = function (response) {
 		text = text.replace("&media:" + i + ";", "/monitors/media/" + response.media[i]);
 	}
 	return text;
+}
+
+
+
+
+var scope = window;
+
+function currentYPosition() {
+	if (scope.pageYOffset) 
+		return scope.pageYOffset;
+	if (scope.scrollTop) 
+		return scope.scrollTop;
+	return 0;
+} 
+
+function elmYPosition(anchorName) {
+	var elm = document.getElementById(anchorName);
+	var y = elm.offsetTop;
+	var node = elm;
+	while (node.offsetParent && node.offsetParent != scope) {
+		node = node.offsetParent;
+		y += node.offsetTop;
+	}
+	return y;
+}
+
+function smoothScroll(anchorName) {
+	if (!scope.scrollTo)
+		return;
+	
+	var startY = currentYPosition();
+	var stopY = elmYPosition(anchorName);
+	var distance = (stopY > startY) ? (stopY - startY) : (startY - stopY);
+	if (distance < 100) {
+		scrollTo(0, stopY);
+		return;
+	}
+	var speed = Math.round(distance / 100);
+	if (speed >= 20) 
+		speed = 20;
+	var step = 1;
+	var leapY = (stopY > startY) ? (startY + step) : (startY - step);
+	var timer = 0;
+	if (stopY > startY) {
+		for (var i = startY; i < stopY; i += step) {
+			setTimeout("srollTo(" + leapY + ");", timer * speed);
+			leapY += step; 
+			if (leapY > stopY) 
+				leapY = stopY; 
+			timer++;
+		} 
+		return;
+	}	
+	for (var i = startY; i > stopY; i -= step) {
+		setTimeout("scrollTo(" + leapY + ");", timer * speed);
+		leapY -= step; 
+		if (leapY < stopY) 
+			leapY = stopY; 
+		timer++;
+	}
+}
+
+function scrollTo(y) {
+	scope.scrollTop = y;
 }
