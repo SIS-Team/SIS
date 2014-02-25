@@ -176,13 +176,14 @@
 		while ($row = mysql_fetch_array($result)) {
 			$results[] = $row;
 		}
-	$day = array(1=>'Mo', 2=>'Di' , 3=> 'Mi', 4=>'Do', 5 =>'Fr');
+	$day = array(1=>'MO', 2=>'DI' , 3=> 'MI', 4=>'D0', 5 =>'FR');
 		$day_counter = 0;
 		for($j = 0; $j<2;$j++){
+ 			$upperClass = 0;
 		 	if(date("w", time() + 24 * 60 * 60 * $day_counter)==0) $day_counter++;
 			if(date("w", time() + 24 * 60 * 60 * $day_counter)==6) $day_counter+=2;
 			$response['content'] .= "<div id='t".$j."'>";
-			$response['content'] .= $day[ date("N",time() + 24*60*60*$day_counter)] ." ". date("d.M",time() + 24*60*60*$day_counter);
+			$response['content'] .= $day[ date("N",time() + 24*60*60*$day_counter)] ." ". date("d.m.y",time() + 24*60*60*$day_counter);
 			$response['content'] .= "<table class = 'substitude'>"; 
 			$response['content'] .= "<tr><th>Klasse</th><th>Std.</th><th>Suppl. durch</th><th>Fach</th><th>Bemerkung</th></tr>								";
 			if(isset($results)){
@@ -191,8 +192,12 @@
  						$lesson_count = $results[$i]['startHour'];
 							while ($lesson_count<=$results[$i]['endHour']){
 			 				$response['content'] .= "<tr>";
-			 				$response['content'] .= "<td>".$results[$i]['className']."</td>";	
-							$response['content'] .= "<td>".$lesson_count."</td>";	
+							if($results[$i]['className'] != $upperClass) {
+ 								$response['content'] .= "<td>".$results[$i]['className']."</td>";						 	 
+								$upperClass = $results[$i]['className'];
+							}
+							else $response['content'] .= "<td style=\"border : 0px\"></td>";
+							$response['content'] .= "<td style=\" border-right: 1px\">".$lesson_count."</td>";	
 							$response['content'] .= "<td>".$results[$i]['teacher']."</td>";	
 							$response['content'] .= "<td>".$results[$i]['suShort']."</td>";	
 							$response['content'] .= "<td>".$results[$i]['comment']."</td>";						

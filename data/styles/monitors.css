@@ -201,26 +201,29 @@ body {
  }
  
 #t0 {
+ 	font-weight: bold;
  	text-align: left;  
- 	font-size:25px;
+ 	font-size: 40px;
 	float: left;
 	margin-left: 2%;
 	width:47%;
 	margin-top: 100px;
 }
 
-#t1 {
+	#t1 {
+	 	font-weight: bold;
  	text-align: left;
- 	font-size:25px;
+ 	font-size:40px;
 	float: right;
 	margin-right: 2%;
 	width:47%;
 	margin-top: 100px;
 }
 
-.substitude 
-{	width :100%;
- 	font-size: 25px;
+.substitude {
+ 	font-weight: normal;
+ 	width :100%;
+ 	font-size: 30px;
  	border : 1px solid;
 	border-collapse: collapse;
 	background-color: rgba(0,0,0,0.5);
@@ -229,18 +232,19 @@ body {
 
 .substitude th {
  	color: #000;
- 	border : 1px solid white;
+ 	border : 0px solid white;
 	border-left: black;
 	border-collapse: collapse;
-	background-color: rgba(255,255,255,0.9);
+	background-color: rgba(255,255,255,0.8);
 }
 
 .substitude td
 {
  	color: #FFF;
- 	border : 1px solid;
+ 	border : 0px solid;
 	border-collapse: collapse;
-	background-color: rgba(0,0,0,0.5);
+	border-top : 1px solid;
+	background-color: rgba(0,0,0,0.1);
 }
 
 .sub_empty

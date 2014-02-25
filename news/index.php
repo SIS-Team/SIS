@@ -15,8 +15,8 @@ require_once(ROOT_LOCATION . "/modules/other/miscellaneous.php");		//Stell Versc
 
 ifNotLoggedInGotoLogin(); //Kontrolle ob angemeldet
 //Seitenheader
-$month = array(1=>'J&auml;nner',2=>'Februar',3=>'M',=>'',=>'',=>'',=>'',=>'',=>'',=>'',=>'',=>'')
-pageHeader("News vom ".date("d"). $month[date("n")],"main");
+$month = array(1=>'J&auml;nner',2=>'Februar',3=>'M&auml;rz',4=>'April',5=>'Mai',6=>'Juni',7=>'Juli',8=>'August',9=>'September',10=>'Oktober',11=>'November',12=>'Dezember');
+pageHeader("News vom ".date("d."). $month[date("n")] . date(" Y"),"main");
 $sql ="SELECT `ID` FROM sections WHERE `short` = '".$_SESSION['section']."'";
 $section_result  = mysql_query($sql);
 while ($row = mysql_fetch_object($section_result)) {
@@ -28,7 +28,6 @@ while ($row = mysql_fetch_object($result)) {
 		$news[] = $row;
 }
 $date = date("Y-m-d");  //aktuelles Datum abfragen
-echo "<h1><u> ".str_replace("-",".",$date)."</u></h1> </br>"; 
 if(isset($news)){
 	for($i = 0;$i < count($news);$i++)
 	{ 
@@ -37,7 +36,7 @@ if(isset($news)){
 	 	if(($startDate <= $date) && ($endDate >= $date) && ($news[$i]->display ==1)){ //nur wenn aktuelles Datum zwischen Start- und Enddatum 
 			echo "<h2>" . $news[$i]->title . "</h2>";
 	  		echo $news[$i]->text;
-	  		echo "</br></br></br>";
+	  		echo "</br></br>";
 		}
 	}
 }
