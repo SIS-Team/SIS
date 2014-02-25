@@ -339,3 +339,7 @@ g, div {
 a.noLink {
 	pointer-events: none;
 }
+
+metadata {
+	display: none;
+}

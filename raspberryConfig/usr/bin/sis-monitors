@@ -1,0 +1,37 @@
+#!/bin/bash
+
+name=( $(cat /etc/sis.conf ) )
+
+while true
+do
+	wget -O /run/sis.www.tmp http://sis.client.htlinn.ac.at/monitors/api/display.php?$name >> /dev/null 2>&1
+	monitor=( $(cat /run/sis.www.tmp ) )
+	if test "$monitor" = "none"
+	then
+		echo "SIS Monitors - no settings"
+	elif test "$monitor" = "true"
+	then
+		echo "SIS Monitors - monitor on"
+		monitorOn
+	else
+		echo "SIS Monitors - monitor off"
+		monitorOff
+	fi
+	
+	wget -O /run/sis.www.tmp http://sis.client.htlinn.ac.at/monitors/api/restart.php >> /dev/null 2>&1
+	reboot=( $(cat /run/sis.www.tmp ) )
+	if test "$reboot" = "kill"
+	then
+		echo "SIS: restart x"
+		killall xinit
+		sis-x &
+		sleep 20s
+	elif test "$reboot" = "false"
+	then
+		echo "SIS: do not restart x"
+	else
+		echo "SIS: and now for something completely different"
+	fi
+
+	sleep 10s
+done

@@ -130,7 +130,13 @@
 		$result = mysql_query($sql);
 	}
 	
-	function logLoginAttempt($success) {
-	
+	function logLoginAttempt($name, $success) {
+		$ip 		= mysql_real_escape_string(htmlspecialchars($_SERVER['REMOTE_ADDR']));
+		$userAgent 	= mysql_real_escape_string(htmlspecialchars($_SERVER['HTTP_USER_AGENT']));
+		$name		= mysql_real_escape_string(htmlspecialchars($name));
+		$success	= $success ? 1 : 0;
+		$sql = "INSERT INTO logsLogins (`time`, `user`, `userAgent`, `ip`, `success`) VALUES (" .
+			time() . ", '" . $name . "', '" . $userAgent . "', '" . $ip . "', " . $success . ")";
+		$result = mysql_query($sql);
 	}
 ?>

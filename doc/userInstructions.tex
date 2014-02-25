@@ -1,0 +1,70 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[utf8x]{inputenc}
+\usepackage[german]{babel}
+\usepackage{enumitem}
+\usepackage{anyfontsize}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[babel,german=quotes]{csquotes}
+
+% Anpassungen für Programm-Codes
+\renewcommand{\lstlistingname}{Programm-Code} 
+\lstset{
+	extendedchars=\true,
+	inputencoding=utf8x,
+	belowcaptionskip=1\baselineskip,
+	breaklines=true,
+	frame=L,
+	xleftmargin=\parindent,
+	showstringspaces=false,
+	basicstyle=\footnotesize\ttfamily
+}
+\lstdefinestyle{customPHP}{
+	language=PHP,
+	keywordstyle=\bfseries\color{green},
+	commentstyle=\itshape\color{red},
+	identifierstyle=\color{blue},
+	stringstyle=\color{cyan},
+}
+\lstdefinestyle{customHTML}{
+	language=PHP,
+	keywordstyle=\bfseries\color{green},
+	commentstyle=\itshape\color{red},
+	identifierstyle=\color{blue},
+	stringstyle=\color{cyan},
+}
+
+\title{Anleitung für Benutzer\\
+SIS - School Information Service}
+
+\author{Florian \textsc{Buchberger}\\Marco \textsc{Handle}\\Matthias \textsc{Klotz}\\Mathias \textsc{Weiland}}
+\date{\today}
+
+\usepackage{color}
+
+\usepackage[T1]{fontenc}
+\usepackage{titlesec, blindtext, color}
+
+\definecolor{gray75}{gray}{0.75}
+\newcommand{\hsp}{\hspace{20pt}}
+\titleformat{\section}[hang]{\Huge\bfseries}{\thesection\hsp\textcolor{gray75}{||}\hsp}{0pt}{\Huge\bfseries}
+
+%\setcounter{secnumdepth}{4}
+%\setcounter{tocdepth}{3}
+
+\begin{document}
+
+\maketitle
+
+\newpage
+
+\tableofcontents
+
+\newpage
+
+\input{instructions/user}
+
+\end{document}

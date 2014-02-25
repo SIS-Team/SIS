@@ -20,7 +20,7 @@ include_once(ROOT_LOCATION . "/modules/other/dateChange.php");			//Stell die Fun
 include_once(ROOT_LOCATION . "/modules/other/dateFunctions.php");					
 include_once(ROOT_LOCATION . "/modules/form/hashCheckFail.php");		
 
-$hashGenerator = new HashGenerator("MissingTeacher", __FILE__);
+$hashGenerator = new HashGenerator("Substitudes", __FILE__);
 
 if(empty($_GET['section']) && empty($_POST['section'])){
 	//header("Location: ".RELATIVE_ROOT."/");
@@ -63,22 +63,25 @@ include_once(ROOT_LOCATION . "/modules/form/dropdownSelects.php");		//Stellt die
 
 //Formularmaske
 $fieldsRow1 = array(
-	array( "ID", 		"",			 		"hidden", 		"",		"",		"",					""),
-	array( "move",	 	"Verschiebung: ", 	"checkboxJava", "8",	"",		"",					""),
-	array( "clName", 	"Klasse: ", 		"dropdown", 	"8",	"",		$selectClasses,		"required"),
-	array( "suShort", 	"Fach: ", 			"dropdown", 	"8",	"",		$selectSubjects,	"required"),
-	array( "teShort", 	"Supplierlehrer: ",	"dropdown", 	"5",	"",		$selectTeachers,	""),
-	array( "time", 		"Datum: ",			"text",			"10",	"",		"",					"readonly=\"true\",required"),
-	array( "roName",	"Raum: ", 			"dropdown",		"8",	"",		$selectRooms,		""),
-	array( "startHour",	"Start-Std.: ", 	"text",			"5",	"",		"",					"required"),
-	array( "endHour",	"End-Std.: ",	 	"text",			"4",	"",		"",					"required"),
-	array( "hidden",	"Entf&auml;llt? ", 	"checkbox",		"",		"",		"",					""),
-	array( "comment", 	"Kommentar: ", 		"text",			"25",	"",		"",					""),
+	array( "ID", 		"",	 		"hidden", 		"",	"",	"",			""),
+	array( "time",		"Datum:",		"hidden",		"10",	"",	"",			"readonly=\"true\",required"),	
+	array( "free",	 	"Freie Eingabe: ", 	"checkboxJava", 	"8",	"",	"",			""),
+	array( "clName", 	"Klasse: ", 		"dropdown", 		"8",	"",	$selectClasses,		""),
+	array( "suShort", 	"Fach: ", 		"dropdown", 		"8",	"",	$selectSubjects,	""),
+	array( "teShort", 	"Supplierlehrer: ",	"dropdown", 		"5",	"",	$selectTeachers,	""),
+	array( "roName",	"Raum: ", 		"dropdown",		"8",	"",	$selectRooms,		""),
+	array( "startHour",	"Start-Std.: ", 	"text",			"5",	"",	"",			""),
+	array( "endHour",	"End-Std.: ",	 	"text",			"4",	"",	"",			""),
+	array( "comment", 	"Kommentar: ", 		"text",			"25",	"",	"",			""),
 	);
 	
 $fieldsRow2 = array(
-	array( "newStartHour",  "Neue Start-St.: ", 	"text",		"5",	"",		"",		""),
-	array( "newEndHour",	"Neue End-St.: ",		"text",		"4",	"",		"",		""),
+	array( "move",	 	"Verschiebung: ", 	"radio", 		"8",	"",	"",			""),
+	array( "add",	 	"Hinzuf&uuml;gen: ", 	"radio", 		"8",	"",	"",			""),
+	array( "remove",	"L&ouml;schen: ", 	"radio", 		"8",	"",	"",			""),
+	array( "oldStartHour",  "Urs. Start-St.: ", 	"text",		"5",	"",		"",		""),
+	array( "oldEndHour",	"Urs. End-St.: ",	"text",		"4",	"",		"",		""),
+	array( "oldTeShort",  	"Urs. Lehrer: ", 	"dropdown",	"5",	"",		$selectTeachers,""),
 	);
 if($fail===false)
 	printf("<div>Es ist ein Fehler bei der Eingabe aufgetreten. M&ouml;glicherweise ist f&uuml;r diese Stunde keine Supplierung<br>n&ouml;tig, weil der Lehrer nicht verhindert ist.<div><br><br>");
@@ -88,7 +91,7 @@ printf("<script language=\"javascript\" type=\"text/javascript\" src=\"%s/data/s
 printf("<noscript><br>Bitte aktivieren Sie JavaScript. Ohne JavaScript kann keine korrekte Eingabe der Supplierungen erfolgen.<br><br></noscript>");
 
 $date = dateChange($date);		//Datumsauswahl erzeugen
-$fieldsRow1[5][5] = $date;	//Standartdatum ins Formular schreiben
+$fieldsRow1[1][5] = $date;	//Standartdatum ins Formular schreiben
 
 $where = "substitudes.time = '".$date."' AND sections.short = '".$section."' AND substitudes.display = 1";		//Filter
 $sort = "classes.name, hoursStart.hour";		//Sortierung nach dem Klassenname und der Startstunde
