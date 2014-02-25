@@ -38,7 +38,7 @@
 	$response = array();
 	$response['error'] = "";
 	$response['success'] = true;
-	$response['content'] = "";
+	$response['content'] = "<a name=\"top\"></a>";
 	$response['media'] = array();
 	$response['modus'] = "";
 	
@@ -342,8 +342,9 @@
 	}
 	
 	$response['hash'] = $hash;
-
-
+	
+	$response['content'] .= "<a name=\"bottom\"></a>";
+	
 	// Ergebnis JSON codieren und zurückgeben
 	echo json_encode($response);
 
