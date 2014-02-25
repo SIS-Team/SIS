@@ -51,7 +51,7 @@ pageFooter();
 
 function sendMail(){
 
-$empfaenger = "handle.marco@tele2.at";
+$empfaenger = "SIS-Development@htlinn.ac.at";
 $betreff = "Help/Fehler - SIS";
 $from = "From: SIS <help@sis.htlinn.ac.at>\n";
 $from.= "Content-Type: text/html\n";
