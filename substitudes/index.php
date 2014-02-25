@@ -56,10 +56,10 @@ for($counter = 0; $counter <=2; $counter++)
 			echo "<tr>";
 			echo "<td>".$substitudes[$count]['clName']."</td>";	//Klassenname
 			if(!empty($substitudes[$count]['newStartHour'])){
-				echo "<td>".$substitudes[$count]['newStartHour']."</td>";	//supplierte Stunde
+				echo "<td>".$substitudes[$count]['newStartHour']." - ".$substitudes[$count]['newEndHour']."</td>";	//supplierte Stunde
 			}
 			else {
-				echo "<td>".$substitudes[$count]['startHour']."</td>";
+				echo "<td>".$substitudes[$count]['startHour']." - ".$substitudes[$count]['endHour']."</td>";
 			}
 			if(!empty($substitudes[$count]['teShort'])){
 				echo "<td>".$substitudes[$count]['teShort']."</td>";	//supplierender Lehrer
