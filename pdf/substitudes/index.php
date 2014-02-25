@@ -1,5 +1,5 @@
 <?php
-include_once("../config.php");	 
+include_once("../../config.php");	 
 require_once(ROOT_LOCATION . "/modules/external/fpdf/fpdf.php");
 include_once(ROOT_LOCATION . "/modules/general/Connect.php");			
 include_once(ROOT_LOCATION . "/modules/general/SessionManager.php");
