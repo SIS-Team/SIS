@@ -15,7 +15,8 @@ require_once(ROOT_LOCATION . "/modules/other/miscellaneous.php");		//Stell Versc
 
 ifNotLoggedInGotoLogin(); //Kontrolle ob angemeldet
 //Seitenheader
-pageHeader("News","main");
+$month = array(1=>'J&auml;nner',2=>'Februar',3=>'M',=>'',=>'',=>'',=>'',=>'',=>'',=>'',=>'',=>'')
+pageHeader("News vom ".date("d"). $month[date("n")],"main");
 $sql ="SELECT `ID` FROM sections WHERE `short` = '".$_SESSION['section']."'";
 $section_result  = mysql_query($sql);
 while ($row = mysql_fetch_object($section_result)) {

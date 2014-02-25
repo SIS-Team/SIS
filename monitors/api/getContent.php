@@ -182,7 +182,7 @@
 		 	if(date("w", time() + 24 * 60 * 60 * $day_counter)==0) $day_counter++;
 			if(date("w", time() + 24 * 60 * 60 * $day_counter)==6) $day_counter+=2;
 			$response['content'] .= "<div id='t".$j."'>";
-			$response['content'] .= "Supplierungen vom ". $day[ date("N",time() + 24*60*60*$day_counter)] ." ". date("d.M",time() + 24*60*60*$day_counter);
+			$response['content'] .= $day[ date("N",time() + 24*60*60*$day_counter)] ." ". date("d.M",time() + 24*60*60*$day_counter);
 			$response['content'] .= "<table class = 'substitude'>"; 
 			$response['content'] .= "<tr><th>Klasse</th><th>Std.</th><th>Suppl. durch</th><th>Fach</th><th>Bemerkung</th></tr>								";
 			if(isset($results)){

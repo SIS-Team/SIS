@@ -200,20 +200,26 @@ body {
   font-size: 30px;
  }
  
-#t0 { 
+#t0 {
+ 	text-align: left;  
+ 	font-size:25px;
 	float: left;
-	margin-left: 100px;
+	margin-left: 2%;
+	width:47%;
 	margin-top: 100px;
 }
 
 #t1 {
+ 	text-align: left;
+ 	font-size:25px;
 	float: right;
-	margin-right: 100px;
+	margin-right: 2%;
+	width:47%;
 	margin-top: 100px;
 }
 
 .substitude 
-{
+{	width :100%;
  	font-size: 25px;
  	border : 1px solid;
 	border-collapse: collapse;
