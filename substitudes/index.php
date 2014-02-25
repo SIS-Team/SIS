@@ -27,13 +27,15 @@ echo "Sup. ...Supplierlehrer; ";
 echo "urs. ... urspr&uumlnglicher Lehrer; ";
 echo "</div>";
 $day_counter = 0;
+$dayName = array(1=>'Mo', 2=>'Di', 3=>'Mi', 4=>'Do',5=>'Fr');
+
 for($counter = 0; $counter <=2; $counter++)
-{ 
+{   
 	if(date("w", time() + 24 * 60 * 60 * $day_counter)==0) $day_counter++;
 	if(date("w", time() + 24 * 60 * 60 * $day_counter)==6) $day_counter+=2;
 	echo "<div id='d" . $counter . "' class='column background'>";
 	$day = captureDate($day_counter);		//aktuelles Datum abfragen
-	echo "Supplierungen vom ".$day;
+	echo "Supplierungen vom ". $dayName[date("N",time() + 24*60*60*$day_counter)] ." ". date("d.M",time() + 24*60*60*$day_counter);
 		 
 	//Tabellenkopfausgabe
 	echo "<table style =\"border-collapse:collapse\">";
