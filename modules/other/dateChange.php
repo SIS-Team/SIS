@@ -19,7 +19,7 @@ function dateChange($date){
 			<button class="nonButton" name="left" align="absmiddle">
 				<?php include(ROOT_LOCATION . "/data/images/larrow.svg"); ?>
 			</button>
-			<?php echo weekday($date); ?> <input name="date" value="<?php echo $date; ?>" size="10">
+			<?php echo weekday($date); ?> <input type="date" name="date" value="<?php echo $date; ?>" size="10">
 			<button class="nonButton" name="right" align="absmiddle">
 				<?php include(ROOT_LOCATION . "/data/images/rarrow.svg"); ?>
 			</button>
