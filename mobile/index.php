@@ -26,7 +26,7 @@
         <div id="content">
           <h1>Mobile Apps</h1>
                 <center>
-                    <a href="Placeholder TODO" title="App f&uuml;r Windows Phone ansehen">
+                    <a href="" title="App f&uuml;r Windows Phone ansehen">
                         <img src="<?php echo RELATIVE_ROOT; ?>/data/images/mobile/windowsphone.svg" alt="Windows Phone Store">
                     </a>
                     <a href="" title="App f&uuml;r iOS ansehen">
