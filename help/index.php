@@ -26,7 +26,7 @@ if (!($_SESSION['loggedIn'])){
 
 
 if(!empty($_GET['send']) && $_GET['send']!=""){
-	//HashCheck($hashGenerator);
+	HashCheck($hashGenerator);
 	sendMail();
 }
 
@@ -41,6 +41,7 @@ HashFail();
 <div style="">
 <form>
 <table>
+<?php $hashGenerator->printForm()?>
 <tr><td>E-Mail-Adresse<br /><input type="text" required name="email"></td></tr>
 <tr><td>Betreff<br /><input type="text" required name="betreff"></td></tr>
 <tr><td>Text<br /><textarea required name="text" rows="7" cols="40"></textarea></td></tr>

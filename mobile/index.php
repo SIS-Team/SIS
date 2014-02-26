@@ -29,10 +29,10 @@
                     <a href="Placeholder TODO" title="App f&uuml;r Windows Phone ansehen">
                         <img src="<?php echo RELATIVE_ROOT; ?>/data/images/mobile/windowsphone.svg" alt="Windows Phone Store">
                     </a>
-                    <a href="https://itunes.apple.com/at/app/htlinn/id423243235?mt=8" title="App f&uuml;r iOS ansehen">
+                    <a href="" title="App f&uuml;r iOS ansehen">
                         <img src="<?php echo RELATIVE_ROOT; ?>/data/images/mobile/ios.svg" alt="App Store">
                     </a>
-                    <a href="Placeholder TODO" title="App f&uuml;r Android ansehen">
+                    <a href="<?php echo RELATIVE_ROOT; ?>/mobile/download/SIS.apk" title="App f&uuml;r Android ansehen">
                         <img src="<?php echo RELATIVE_ROOT; ?>/data/images/mobile/android.svg" alt="GooglePlay Store">
                     </a>
                 </center>

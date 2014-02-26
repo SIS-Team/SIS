@@ -115,7 +115,7 @@ function news($Admin)
 		echo "done";
 	}
 	else {
-		delete($data["ID"],"news");
+		deleteID($data["ID"],"news");
  	}
 
  }
