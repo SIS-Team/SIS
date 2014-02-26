@@ -21,12 +21,20 @@ if (!($_SESSION['loggedIn'])){
 	exit();
 }
 
-
-if(!empty($_POST['send']) && $_POST['send']!=""){
+$email= "";
+$betreff= "";
+$text= "";
+$cFail=false;
+if(!empty($_POST['send']) && $_POST['send']!="" && $_POST['captcha']==$_SESSION['captcha']['code']){
 	HashCheck($hashGenerator);
 	sendMail();
 }
-
+else if(!empty($_POST['send']) && $_POST['send']!=""){
+	$email= $_POST['email'];
+	$betreff= $_POST['betreff'];
+	$text= $_POST['text'];
+	$cFail=true;
+}
 
 //Seitenheader
 pageHeader("Hilfe/Fehlermeldung","main");
@@ -36,12 +44,21 @@ HashFail();
 
 ?>
 <div style="">
+
+<?php
+if($cFail){
+	echo "Falscher Code wurde eingegeben<br /><br />";
+}
+?>
+
 <form method="post" >
 <table>
 <?php $hashGenerator->printForm(); echo "\n";?>
-<tr><td>Deine E-Mail-Adresse<br /><input type="text" required name="email"></td></tr>
-<tr><td>Betreff<br /><input type="text" required name="betreff"></td></tr>
-<tr><td>Text<br /><textarea required name="text" rows="7" cols="40"></textarea></td></tr>
+<tr><td>Deine E-Mail-Adresse<br /><input type="text" required name="email" value="<?php echo $email; ?>"></td></tr>
+<tr><td>Betreff<br /><input type="text" required name="betreff" value="<?php echo $betreff; ?>"></td></tr>
+<tr><td>Text<br /><textarea required name="text" rows="7" cols="40"><?php echo $text; ?></textarea></td></tr>
+<tr><td><img src="<?php echo RELATIVE_ROOT."/modules/other/captcha.php"; ?>" /></td></tr>
+<tr><td>Zeichen eingeben:<br /><input type="text" required name="captcha"></td></tr>
 <tr><td><input type="submit" name="send" value="Senden"></td></tr>
 </table>
 <form>
@@ -73,7 +90,7 @@ E-Mail : ".htmlspecialchars($_POST['email'])."<br /><br />
 </html>
 
 ";
-
+//echo 11;
 mail($empfaenger,$betreff,$text,$from);
 
 
