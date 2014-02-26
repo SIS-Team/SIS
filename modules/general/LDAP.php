@@ -109,7 +109,7 @@
 			//         Buchberger           Handle               Klotz                Weiland              Machac
 			if ($cn == "20090319" || $cn == "20090334" || $cn == "20090340" || $cn == "20090396" || $cn == "20090359")
 				$rightArray['root'] = true;
-			else if($cn == "marth")
+			else if($cn == "marth" || $cn == "huberj")
 				$rightArray['N']=true;
 			
 		}
