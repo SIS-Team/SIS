@@ -102,7 +102,7 @@ echo "Dieser Stundenplan ist g&uuml;ltig: ". date("Y.m.d",time()+24*60*60*$offse
 			{
  				$dayName =  $dayShort[date("N",strtotime($substitudes[$i]['time']))];
 				if($substitudes[$i]['newSub']){
- 				 	$hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "<span style=\" color:#00FF00\">".$substitudes[$i]['suShort']."</span>";
+ 				 	$hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "<span style=\" color:yellow \">".$substitudes[$i]['suShort']."</span>";
 					$hours[$substitudes[$i]['startHour']][$dayName]->startHour = $substitudes[$i]['startHour'];
 					$hours[$substitudes[$i]['startHour']][$dayName]->endHour = $substitudes[$i]['endHour'];
 				}
@@ -119,8 +119,11 @@ echo "Dieser Stundenplan ist g&uuml;ltig: ". date("Y.m.d",time()+24*60*60*$offse
 						$temp = str_replace("|","",$temp);
 						$hours[$substitudes[$i]['oldStartHour']][$dayName]->suShort = $temp;
 					}
-
+					if(isset($substitudes[$i]['suShort'])){
  				 	$hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "<span style=\" color: yellow\">".$substitudes[$i]['suShort']."</span>";
+					}
+					else $hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "<span style=\" color: yellow\">".$substitudes[$i]['oldSuShort']."</span>";
+					
 					$hours[$substitudes[$i]['startHour']][$dayName]->startHour = $substitudes[$i]['startHour'];
 					$hours[$substitudes[$i]['startHour']][$dayName]->endHour = $substitudes[$i]['endHour'];
 					$hours[$substitudes[$i]['startHour']][$dayName]->teShort = $substitudes[$i]['teShort'];
@@ -185,7 +188,7 @@ for ($i = $tableBegin; $i < $tableEnd; $i++) {
 echo "</div>";
 echo "</table>";
 if ($displaytype == "modificated"){
-	echo "normale Stunde <span style=\"color:#00FF00\"> hinzugef&uuml;gte Stunde</span><span style=\"color:yellow\"> ver&auml;nderte Stunde</span>";
+	echo "<span style=\"color:yellow\"> ver&auml;nderte Stunde</span>";
 }
 
 function getLessons($name,$mode) {		//Abfrage von Stunden von vorgegebener Klasse/vorgegebenem Lehrer
