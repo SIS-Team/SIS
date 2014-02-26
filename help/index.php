@@ -1,14 +1,11 @@
 <?php
 
-	/* /backend/missing/classes/index.php
+	/* /help/index.php
 	 * Autor: Handle Marco
 	 * Version: 0.2.0
 	 * Beschreibung:
-	 *	Erstellt die Formulare fuer die Eingabe der Fehlenden Klassen
+	 *	Erstellt das Formular für die Hilfe
 	 *
-	 * Changelog:
-	 * 	0.1.0:  22. 07. 2013, Handle Marco - erste Version
-	 *  0.2.0:  27. 08. 2013, Handle Marco - Update,Save,delete implementiert
 	 */
 	 
 include("../config.php");
@@ -17,7 +14,7 @@ include_once(ROOT_LOCATION . "/modules/form/form.php");					//Stell die Formular
 include_once(ROOT_LOCATION . "/modules/form/hashCheckFail.php");		
 include_once(ROOT_LOCATION . "/modules/form/hashGenerator.php");
 
-$hashGenerator = new HashGenerator("MissingClasses", __FILE__);
+$hashGenerator = new HashGenerator("Help", __FILE__);
 
 if (!($_SESSION['loggedIn'])){
 	header("Location: ".RELATIVE_ROOT."/");
@@ -25,7 +22,7 @@ if (!($_SESSION['loggedIn'])){
 }
 
 
-if(!empty($_GET['send']) && $_GET['send']!=""){
+if(!empty($_POST['send']) && $_POST['send']!=""){
 	HashCheck($hashGenerator);
 	sendMail();
 }
@@ -39,10 +36,10 @@ HashFail();
 
 ?>
 <div style="">
-<form>
+<form method="post" >
 <table>
-<?php $hashGenerator->printForm()?>
-<tr><td>E-Mail-Adresse<br /><input type="text" required name="email"></td></tr>
+<?php $hashGenerator->printForm(); echo "\n";?>
+<tr><td>Deine E-Mail-Adresse<br /><input type="text" required name="email"></td></tr>
 <tr><td>Betreff<br /><input type="text" required name="betreff"></td></tr>
 <tr><td>Text<br /><textarea required name="text" rows="7" cols="40"></textarea></td></tr>
 <tr><td><input type="submit" name="send" value="Senden"></td></tr>
@@ -58,8 +55,8 @@ pageFooter();
 
 function sendMail(){
 
-$empfaenger = "SIS-Development@htlinn.ac.at";
-$betreff = htmlspecialchars($_GET['betreff']);
+$empfaenger = "SIS-Team@htlinn.ac.at";
+$betreff = htmlspecialchars($_POST['betreff']);
 $from = "From: SIS <help@sis.htlinn.ac.at>\n";
 $from.= "Content-Type: text/html\n";
 $text = "
@@ -68,9 +65,9 @@ $text = "
 Hallo, <br /><br />
 
 Der User: ".$_SESSION['name']." , ID: ".$_SESSION['id']." , Klasse: ".$_SESSION['class']." hat einen Frage bzw. einen Fehler zu melden. <br>
-E-Mail : ".htmlspecialchars($_GET['email'])."<br /><br />
+E-Mail : ".htmlspecialchars($_POST['email'])."<br /><br />
 
-".htmlspecialchars($_GET['text'])."
+".htmlspecialchars($_POST['text'])."
 
 </body>
 </html>
