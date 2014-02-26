@@ -57,7 +57,7 @@
 	 * Parameter: $title - Titel der Seite als String
 	 * 	      $design - Designname als String
 	 */
-	function pageHeader($title, $design, $mobile = false) {
+	function pageHeader($title, $design, $mobile = true) {
 		global $siteContents, $seperators;
 
 		header('Content-Type: text/html; charset=UTF-8');
