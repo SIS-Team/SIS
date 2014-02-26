@@ -19,6 +19,11 @@ include_once(ROOT_LOCATION . "/modules/form/hashGenerator.php");
 
 $hashGenerator = new HashGenerator("MissingClasses", __FILE__);
 
+if (!($_SESSION['loggedIn'])){
+	header("Location: ".RELATIVE_ROOT."/");
+	exit();
+}
+
 
 if(!empty($_GET['send']) && $_GET['send']!=""){
 	//HashCheck($hashGenerator);
@@ -37,6 +42,7 @@ HashFail();
 <form>
 <table>
 <tr><td>E-Mail-Adresse<br /><input type="text" required name="email"></td></tr>
+<tr><td>Betreff<br /><input type="text" required name="betreff"></td></tr>
 <tr><td>Text<br /><textarea required name="text" rows="7" cols="40"></textarea></td></tr>
 <tr><td><input type="submit" name="send" value="Senden"></td></tr>
 </table>
@@ -52,7 +58,7 @@ pageFooter();
 function sendMail(){
 
 $empfaenger = "SIS-Development@htlinn.ac.at";
-$betreff = "Help/Fehler - SIS";
+$betreff = htmlspecialchars($_GET['betreff']);
 $from = "From: SIS <help@sis.htlinn.ac.at>\n";
 $from.= "Content-Type: text/html\n";
 $text = "
@@ -61,9 +67,9 @@ $text = "
 Hallo, <br /><br />
 
 Der User: ".$_SESSION['name']." , ID: ".$_SESSION['id']." , Klasse: ".$_SESSION['class']." hat einen Frage bzw. einen Fehler zu melden. <br>
-E-Mail : ".$_GET['email']."<br /><br />
+E-Mail : ".htmlspecialchars($_GET['email'])."<br /><br />
 
-".$_GET['text']."
+".htmlspecialchars($_GET['text'])."
 
 </body>
 </html>
