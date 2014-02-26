@@ -209,7 +209,7 @@ Der Sourcecode dieses Projekt ist vollständig offen und der
 <a target="_blank" href="<?php echo RELATIVE_ROOT; ?>/LICENSE">[alternativer Link]</a><br />
 <br />
 
-<a target="_blank" href="https://github.com/overflowerror/SIS">SIS auf github</a><br />
+<a target="_blank" href="https://github.com/SIS-Team/SIS">SIS auf github</a><br />
 
 <h2>3rd Party Code</h2>
 
