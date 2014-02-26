@@ -12,11 +12,11 @@
 	 */
 
 include("../../../config.php");
-include_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Design zur Verf�gung
-include_once(ROOT_LOCATION . "/modules/form/form.php");					//Stell die Formularmasken zur Verf�gung
-include_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verf�gung
-include_once(ROOT_LOCATION . "/modules/database/inserts.php");			//Stellt die insert-Befehle zur Verf�gung
-include_once(ROOT_LOCATION . "/modules/other/dateChange.php");			//Stell die Funktion f�r die Datumsauswahl zur Verfügung
+include_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
+include_once(ROOT_LOCATION . "/modules/form/form.php");					//Stell die Formularmasken zur Verfügung
+include_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
+include_once(ROOT_LOCATION . "/modules/database/inserts.php");			//Stellt die insert-Befehle zur Verfügung
+include_once(ROOT_LOCATION . "/modules/other/dateChange.php");			//Stell die Funktion für die Datumsauswahl zur Verfügung
 include_once(ROOT_LOCATION . "/modules/other/dateFunctions.php");					
 include_once(ROOT_LOCATION . "/modules/form/hashCheckFail.php");		
 
@@ -40,10 +40,10 @@ if(!empty($_POST['save']) && $_POST['save']!=""){
 	$fail = substitudes();
 }
 
-if (empty($_POST["date"]) && empty($_POST['time'])) {		//wenn nichts zur�ckgegeben wird, dann heute
+if (empty($_POST["date"]) && empty($_POST['time'])) {		//wenn nichts zurückgegeben wird, dann heute
 	$date = no_weekend(strftime("%Y-%m-%d"));
 }
-else if($_POST['date']!=""){								//sonst zur�ckgegebenes Datum
+else if($_POST['date']!=""){								//sonst zurückgegebenes Datum
 	$date = no_weekend($_POST["date"]);
 }
 else{
@@ -58,7 +58,7 @@ $hashGenerator->generate();
 HashFail();
 
 $dropDown=array("ClassesSub","Subjects","Teachers","Rooms");
-include_once(ROOT_LOCATION . "/modules/form/dropdownSelects.php");		//Stellt die Listen f�r die Dropdownmen�s zur Verf�gung
+include_once(ROOT_LOCATION . "/modules/form/dropdownSelects.php");		//Stellt die Listen für die Dropdownmenüs zur Verfügung
 
 
 //Formularmaske
@@ -106,14 +106,14 @@ $sort = "classes.name, hoursStart.hour";		//Sortierung nach dem Klassenname und 
 </div>
 <?php
 
-$result = selectSubstitude($where,$sort);			//R�ckgabewert des Selects
+$result = selectSubstitude($where,$sort);			//Rückgabewert des Selects
 
-while ($row = mysql_fetch_array($result)){	//F�gt solange eine neue Formularzeile hinzu, solange ein Inhalt zur Verf�gung steht
+while ($row = mysql_fetch_array($result)){	//Fügt solange eine neue Formularzeile hinzu, solange ein Inhalt zur Verfügung steht
 	//print_r($row);
 	form_substitudes($fieldsRow1,$fieldsRow2 ,$row,$section,$hashGenerator);		//Formular wird erstellt
 }
 
-form_substitudes($fieldsRow1,$fieldsRow2,false,$section,$hashGenerator);			//Formular f�r einen neuen Eintrag
+form_substitudes($fieldsRow1,$fieldsRow2,false,$section,$hashGenerator);			//Formular für einen neuen Eintrag
 
 //Seitenfooter
 pageFooter();
