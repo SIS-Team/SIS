@@ -89,7 +89,7 @@ if(date("N")<6) $offset = 1-date("N");
 else $offset = 8-date("N");
 if($displaytype == "modificated" ){
  //---------------------------------------------------------------------------------------------------------------------------
-echo "Dieser Stundenpla ist g&uuml;ltig: ". date("Y.m.d",time()+24*60*60*$offset) ."-".date("Y.m.d",time()+24*60*60*($offset+5));
+echo "Dieser Stundenplan ist g&uuml;ltig: ". date("Y.m.d",time()+24*60*60*$offset) ."-".date("Y.m.d",time()+24*60*60*($offset+5));
 
 	for($j=0;$j<5;$j++)
 	{
