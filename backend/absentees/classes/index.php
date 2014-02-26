@@ -57,7 +57,7 @@ $fields = array(
 	array( "clName", 	"Klasse: ", 		"dropdown", "8",	"",		$selectClasses,		"required"),
 	array( "startDay", 	"Starttag: ",		"text", 	"10",	"",		"",					"readonly=\"true\",required"),
 	array( "startHour", "Start-Stunde: ",	"text",		"5",	"",		"",					"required"),
-	array( "endDay", 	"Endtag: ", 		"text",		"10",	"",		"",					"required"),
+	array( "endDay", 	"Endtag: ", 		"date",		"10",	"",		"",					"required"),
 	array( "endHour", 	"End-Stunde: ", 	"text",		"5",	"",		"",					"required"),
 	array( "reason", 	"Grund: ", 			"text",		"30",	"",		"",					""),
 	);

@@ -1,5 +1,5 @@
 <?php
-include_once("../config.php");	 
+include_once("../../config.php");	 
 require_once(ROOT_LOCATION . "/modules/external/fpdf/fpdf.php");
 include_once(ROOT_LOCATION . "/modules/general/Connect.php");			
 include_once(ROOT_LOCATION . "/modules/general/SessionManager.php");
@@ -11,7 +11,7 @@ $permission = getPermission();
 if($permission != "root" && $permission != "admin") noPermission();
 if(isset($_GET['date']) && check_date($_GET['date']))$date = $_GET['date'];
 else $date = date("Y-m-d");
-
+$section = getAdminSection();
 		$sql = "SELECT `time`,
 						`newSub`,
 						`remove`,
@@ -19,7 +19,8 @@ else $date = date("Y-m-d");
 						`s`.`display`,
 						`s`.`comment`,
 						IFNULL(`nC`.`name`,`c`.`name`) AS `className`,
-						IFNULL(`nT`.`display`,`t`.`display`) AS `teacher`,
+						`nT`.`short` AS `newTeacher`,
+						`t`.`short` AS `oldTeacher`,
 						IFNULL(`nSu`.`short`,`su`.`short`) AS `suShort`,
 						IFNULL(`nR`.`name`,`r`.`name`) AS `room`,
 						IFNULL(`nsH`.`hour`,`sH`.`hour`) AS `startHour`,
@@ -37,9 +38,11 @@ else $date = date("Y-m-d");
 				LEFT JOIN `hours` AS  `neH` ON `s`.`endHourFK` = `neH`.`ID`
 				LEFT JOIN `teachers` AS `nT` ON `s`.`teacherFK` = `nT`.`ID`
 				LEFT JOIN `subjects` AS `nSu` ON `s`.`subjectFK` = `nSu`.`ID`
-				LEFT JOIN `rooms`AS `nR` ON `s`.`roomFK` = `nR`.`ID`
+				LEFT JOIN `rooms` AS `nR` ON `s`.`roomFK` = `nR`.`ID`
 				LEFT JOIN `classes` AS `nC` ON `s`.`classFK` = `nC`.`ID`
-			WHERE time = '". $date . "'
+				LEFT JOIN `sections` AS `sec` ON `c`.`sectionFK` = `sec`.`ID`
+				LEFT JOIN `sections` AS `nSec` ON `nC`.`sectionFK`=`nSec`.`ID`
+			WHERE time = '". $date . "' and (`sec`.`short` = '".$section."' or `nSec`.`short` = '".$section."')
 			ORDER BY `className`, `startHour`		
 		";
 $result = mysql_query($sql);
@@ -53,37 +56,41 @@ $pdf->AddPage();
 $pdf->SetFont('Arial','UI',20);
 $pdf->Cell('75','25','HTL Anichstraße');
 $pdf->Cell('75','25',$date);
-$pdf->Cell('','25','Abteilung '.$_SESSION['section'],'','1');
+$pdf->Cell('','25','Abteilung '.$section,'','1');
 $pdf->SetFont('Arial','',12);
-$pdf->Cell(15,10,'Stunde','1');
 $pdf->Cell(30,10,'Klasse','1');
-$pdf->Cell(40,10,'Suppl. durch','1');
+$pdf->Cell(15,10,'Stunde','1');
+$pdf->Cell(15,10,'s.L.','1');
+$pdf->Cell(15,10,'u.L.','1');
 $pdf->Cell(20,10,'Fach','1');
-$pdf->Cell(70,10,'Bemerkung','1','1');
+$pdf->Cell(95,10,'Bemerkung','1','1');
 $count = 0;
 if(isset($substitudes)){
 	for($i = 0;$i<count($substitudes);$i++){
-	 	$lessons_count = $substitudes[$i]->startHour;
-	    $lessons_end = $substitudes[$i]->endHour; 
-		while($lessons_count <= $lessons_end){
-			$pdf->Cell(15,10,$lessons_count,'1');
+	 	$start = $substitudes[$i]->startHour;
+	    $end = $substitudes[$i]->endHour; 
+		
 			$pdf->Cell(30,10,$substitudes[$i]->className,'1');
-			$pdf->Cell(40,10,$substitudes[$i]->teacher,'1');
+			if($end != $start) $pdf->Cell(15,10,$start."-".$end,'1');
+			else $pdf->Cell(15,10,$start,'1');
+			$pdf->Cell(15,10,$substitudes[$i]->newTeacher,'1');
+			$pdf->Cell(15,10,$substitudes[$i]->oldTeacher,'1');
 			$pdf->Cell(20,10,$substitudes[$i]->suShort,'1');
-			$pdf->Cell(70,10,$substitudes[$i]->comment,'1','1');
+			$pdf->Cell(95,10,utf8_decode($substitudes[$i]->comment),'1','1');
 			$count++;
-			$lessons_count++;
-		}
+		
 	}
 }
 while($count<12){
- 		$pdf->Cell(15,10,'','1');
-		$pdf->Cell(30,10,'','1');
-		$pdf->Cell(40,10,'','1');
+ 		$pdf->Cell(30,10,'','1');
+		$pdf->Cell(15,10,'','1');
+		$pdf->Cell(15,10,'','1');
+		$pdf->Cell(15,10,'','1');
 		$pdf->Cell(20,10,'','1');
-		$pdf->Cell(70,10,'','1','1');
+		$pdf->Cell(95,10,'','1','1');
 		$count++;
  }
+$pdf->Cell('',10,'s.L. ... supplierender Lehrer, u.L. ... ursprünglicher Lehrer');
 $pdf->Output();
 
 function check_date($date)

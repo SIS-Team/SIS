@@ -153,8 +153,7 @@
 		break; 
 		
 	case "Supplierplan":
-
-		//Version 2 
+		
 		$response['modus'] = "Supplierplan";
 		$sql = "SELECT `time`,
 						`newSub`,
@@ -163,7 +162,7 @@
 						`s`.`display`,
 						`s`.`comment`,
 						IFNULL(`nC`.`name`,`c`.`name`) AS `className`,
-						IFNULL(`nT`.`display`,`t`.`display`) AS `teacher`,
+						`nT`.`display` AS `teacher`,
 						IFNULL(`nSu`.`short`,`su`.`short`) AS `suShort`,
 						IFNULL(`nR`.`name`,`r`.`name`) AS `room`,
 						IFNULL(`nsH`.`hour`,`sH`.`hour`) AS `startHour`,
@@ -188,7 +187,7 @@
 			WHERE time >= '". date("Y-m-d") . "' and (`sec`.`name` = '".$monitor->section."' or `nSec`.`name` = '".$monitor->section."')
 			ORDER BY `className`, `startHour`		
 		";
-		//$response['content'] .= $sql;
+
 		$result = mysql_query($sql);
 		$response['content'] .= mysql_error();
 		while ($row = mysql_fetch_array($result)) {
@@ -207,21 +206,22 @@
 			if(isset($results)){
 				for($i = 0; $i <count($results);$i++){
  					if($results[$i]['time'] >= date("Y-m-d", time()+ 24 *60 *60 * $day_counter)  and $results[$i]['time'] < date("Y-m-d", time()+ 24 *60 *60 * ($day_counter+1)) and $results[$i]['display'] == 1){
- 						$lesson_count = $results[$i]['startHour'];
-							while ($lesson_count<=$results[$i]['endHour']){
+							
 			 				$response['content'] .= "<tr>";
 							if($results[$i]['className'] != $upperClass) {
  								$response['content'] .= "<td>".$results[$i]['className']."</td>";						 	 
 								$upperClass = $results[$i]['className'];
 							}
 							else $response['content'] .= "<td style=\"border : 0px\"></td>";
-							$response['content'] .= "<td style=\" border-right: 1px\">".$lesson_count."</td>";	
+							if($results[$i]['startHour'] == $results[$i]['endHour'] ){
+ 								$response['content'] .= "<td>".$results[$i]['startHour']."</td>";	
+							}
+							else $response['content'] .= "<td>".$results[$i]['startHour'] ." - ".$results[$i]['endHour']."</td>";
 							$response['content'] .= "<td>".$results[$i]['teacher']."</td>";	
 							$response['content'] .= "<td>".$results[$i]['suShort']."</td>";	
 							$response['content'] .= "<td>".$results[$i]['comment']."</td>";						
 							$response['content'] .= "</tr>";
-							$lesson_count ++;
-						}
+						
 				}
 			
 				}
@@ -235,86 +235,7 @@
 		}
 		$hash .= md5($response['content']);
 		break;
-		//Version 1	
-	/*	$response['modus'] = "Supplierplan";
-		$sql = "SELECT 
-		`su`.`short` AS `suShort`,
-		`c`.`name` AS `className`,
-		`s`.`time`,
-		`s`.`comment`,
- 		`sH`.`hour` AS `startHour`,
- 		`eH`.`hour` AS `endHour`,
- 		`nsH`.`hour` AS `newStartHour`,
-		`neH`.`hour` AS `newEndHour`,
- 		`t`.`display` AS `newTeacher`,
- 		`se`.`name` AS `section`
-		FROM `substitudes` AS `s`
-		INNER JOIN `subjects` AS `su` ON `s`.`subjectFK` = `su`.`ID`
-		INNER JOIN `lessons` AS `l` ON `s`.`lessonFK` = `l`.`ID`
-		INNER JOIN `lessonsBase` AS `lb` ON `l`.`lessonBaseFK` = `lb`.`ID`
-		INNER JOIN `classes` AS `c` ON `lb`.`classFK` = `c`.`ID`
-		INNER JOIN `hours` AS `sH` ON `lb`.`startHourFK` = `sH`.`ID`
-		INNER JOIN `hours` AS `eH` ON `lb`.`endHourFK` = `eH`.`ID`
-		LEFT JOIN `hours` AS `nsH` ON `s`.`startHourFK` = `nsH`.`ID`
-		LEFT JOIN `hours` AS `neH` ON `s`.`endHourFK` = `neH`.`ID`
-		LEFT JOIN `teachers` AS `t` ON `s`.`teacherFK` = `t`.`ID`
-		INNER JOIN `sections` AS `se` ON `c`.`sectionFK` = `se`.`ID`
-		WHERE `s`.`time` >= '" . date("Y.m.d")."' AND `se`.`name` = '".$monitor->section."'
-		ORDER BY `className`, `startHour`";
-		$result = mysql_query($sql);
-		while ($row = mysql_fetch_object($result)) {
-			$results[] = $row;
-		}	
-		$day_counter = 0;
-		for($j = 0; $j<2;$j++){
-		 	if(date("w", time() + 24 * 60 * 60 * $day_counter)==0) $day_counter++;
-			if(date("w", time() + 24 * 60 * 60 * $day_counter)==6) $day_counter+=2;
-			$response['content'] .= "<div id='t".$j."'>";
-			$response['content'] .= "Supplierungen vom ". date("d.M",time() + 24*60*60*$day_counter);
-			$response['content'] .= "<table class = 'substitude'>"; 
-			$response['content'] .= "<tr><th>Klasse</th><th>Std.</th><th>Suppl. durch</th><th>Fach</th><th>Bemerkung</th></tr>";
-			$empty = 0;
-			if(isset($results)){
- 				$className =0;
-				for ($i = 0; $i<count($results);$i++){ 
-				 	if($results[$i]->time == date("Y-m-d",time() + 24 * 60 * 60 * $day_counter)) {
-	 					if(empty($results[$i]->newStartHour)){ $lesson_count = $results[$i]->startHour;}
-						else $lesson_count = $results[$i]->newStartHour;
-						if(empty($results[$i]->newEndHour)){ $lesson_end = $results[$i]->endHour;}
-						else $lesson_end = $results[$i]->newEndHour;
-						$difference = $lesson_end - $lesson_count +1 ;
-						
-						
-						while($lesson_count <= $lesson_end){
- 							$response['content'] .= "<tr>";
-							if($className != $results[$i]->className) {
- 								$className = $results[$i]->className;
-								$response['content'] .= "<td>".$className."</td>";
-							}
-							else $response['content'] .= "<td class ='sub_empty'></td>";
-							$response['content'] .= "<td> ". $lesson_count."</td>"; 
-							if(!empty($results[$i]->newTeacher)){ $response['content'] .= "<td> ". $results[$i]->newTeacher ."</td>";}
-							else {$response['content'] .= "<td> &#160;</td>";}
-							$response['content'] .= "<td> ". $results[$i]->suShort ."</td>";
-							if(!empty($results[$i]->comment)){ $response['content'] .= "<td> ". $results[$i]->comment ."</td>";}
-							else {$response['content'] .= "<td> &#160;</td>";}
-							$response['content'] .= "</tr>"; 
-							$lesson_count++;
-						}
-					}
-					else $empty++;
-					
-				}
-				if($empty == count($results)) $response['content'] .= "<tr><th colspan = 5>F&uuml;r diesen Tag sind keine Supplierungen vorgesehen.</th></tr>" ;
-			
-			} 
-			else $response['content'] .= "<tr><th colspan = 5>F&uuml;r diesen Tag sind keine Supplierungen vorgesehen.</th></tr>";
-			$response['content'] .= "</table></div>";
-		$day_counter++;
-		}	
 		
-		$hash .= md5($response['content']);
-		break;  */
 	case "Bild":
 		$hash .= md5($monitor->file);
 		$response['content'] = "<img src=\"&media:img;\" />";

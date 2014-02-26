@@ -25,4 +25,12 @@ function noPermission(){
  		header("Location: ".RELATIVE_ROOT."/");
 		exit();
  }
+
+function getAdminSection(){
+	if($_SESSION['rights']['E']) return 'E';
+	if($_SESSION['rights']['N']) return 'N';
+	if($_SESSION['rights']['W']) return 'W';
+	if($_SESSION['rights']['M']) return 'M';
+	else return false;
+}
 ?>

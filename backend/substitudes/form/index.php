@@ -98,7 +98,7 @@ $sort = "classes.name, hoursStart.hour";		//Sortierung nach dem Klassenname und 
 
 ?>
 <div id="print">
-	<a href="<?php echo RELATIVE_ROOT; ?>/substitudes/substitude_pdf.php?date=<?php echo $date; ?>" target="tab">
+	<a href="<?php echo RELATIVE_ROOT; ?>/pdf/substitudes/?date=<?php echo $date; ?>" target="tab">
 		<button class="nonButton">
 			<?php include(ROOT_LOCATION . "/data/images/print.svg"); ?>
 		</button>

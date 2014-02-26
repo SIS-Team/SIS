@@ -55,7 +55,7 @@ printf("Klasse w&auml;hlen: <input autocomplete=\"off\" list=\"clName\" name=\"c
 printf("Tag w&auml;hlen: <input autocomplete=\"off\" list=\"day\" name=\"day\" size=\"3\" value=\"Mo\" required>\n");
 							
 
-printf("<input type=\"submit\" name=\"ok\" value=\"Speichern\">\n");	//Submit Button erstellen
+printf("<input type=\"submit\" name=\"ok\" value=\"OK\">\n");	//Submit Button erstellen
 printf("</form>");
 
 pageFooter();
