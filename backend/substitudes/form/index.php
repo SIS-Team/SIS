@@ -12,11 +12,11 @@
 	 */
 
 include("../../../config.php");
-include_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
-include_once(ROOT_LOCATION . "/modules/form/form.php");					//Stell die Formularmasken zur Verfügung
-include_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
-include_once(ROOT_LOCATION . "/modules/database/inserts.php");			//Stellt die insert-Befehle zur Verfügung
-include_once(ROOT_LOCATION . "/modules/other/dateChange.php");			//Stell die Funktion für die Datumsauswahl zur VerfÃ¼gung
+include_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Design zur Verfï¿½gung
+include_once(ROOT_LOCATION . "/modules/form/form.php");					//Stell die Formularmasken zur Verfï¿½gung
+include_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfï¿½gung
+include_once(ROOT_LOCATION . "/modules/database/inserts.php");			//Stellt die insert-Befehle zur Verfï¿½gung
+include_once(ROOT_LOCATION . "/modules/other/dateChange.php");			//Stell die Funktion fï¿½r die Datumsauswahl zur VerfÃ¼gung
 include_once(ROOT_LOCATION . "/modules/other/dateFunctions.php");					
 include_once(ROOT_LOCATION . "/modules/form/hashCheckFail.php");		
 
@@ -40,10 +40,10 @@ if(!empty($_POST['save']) && $_POST['save']!=""){
 	$fail = substitudes();
 }
 
-if (empty($_POST["date"]) && empty($_POST['time'])) {		//wenn nichts zurückgegeben wird, dann heute
+if (empty($_POST["date"]) && empty($_POST['time'])) {		//wenn nichts zurï¿½ckgegeben wird, dann heute
 	$date = no_weekend(strftime("%Y-%m-%d"));
 }
-else if($_POST['date']!=""){								//sonst zurückgegebenes Datum
+else if($_POST['date']!=""){								//sonst zurï¿½ckgegebenes Datum
 	$date = no_weekend($_POST["date"]);
 }
 else{
@@ -58,7 +58,7 @@ $hashGenerator->generate();
 HashFail();
 
 $dropDown=array("ClassesSub","Subjects","Teachers","Rooms");
-include_once(ROOT_LOCATION . "/modules/form/dropdownSelects.php");		//Stellt die Listen für die Dropdownmenüs zur Verfügung
+include_once(ROOT_LOCATION . "/modules/form/dropdownSelects.php");		//Stellt die Listen fï¿½r die Dropdownmenï¿½s zur Verfï¿½gung
 
 
 //Formularmaske
@@ -98,7 +98,7 @@ $sort = "classes.name, hoursStart.hour";		//Sortierung nach dem Klassenname und 
 
 ?>
 <div id="print">
-	<a href="<?php echo RELATIVE_ROOT; ?>/pdf/substitudes/?date=<?php echo $date; ?>" target="tab">
+	<a href="<?php echo RELATIVE_ROOT; ?>/pdf/substitudes/?date=<?php echo $date; ?>" target="_blank">
 		<button class="nonButton">
 			<?php include(ROOT_LOCATION . "/data/images/print.svg"); ?>
 		</button>
@@ -106,14 +106,14 @@ $sort = "classes.name, hoursStart.hour";		//Sortierung nach dem Klassenname und 
 </div>
 <?php
 
-$result = selectSubstitude($where,$sort);			//Rückgabewert des Selects
+$result = selectSubstitude($where,$sort);			//Rï¿½ckgabewert des Selects
 
-while ($row = mysql_fetch_array($result)){	//Fügt solange eine neue Formularzeile hinzu, solange ein Inhalt zur Verfügung steht
+while ($row = mysql_fetch_array($result)){	//Fï¿½gt solange eine neue Formularzeile hinzu, solange ein Inhalt zur Verfï¿½gung steht
 	//print_r($row);
 	form_substitudes($fieldsRow1,$fieldsRow2 ,$row,$section,$hashGenerator);		//Formular wird erstellt
 }
 
-form_substitudes($fieldsRow1,$fieldsRow2,false,$section,$hashGenerator);			//Formular für einen neuen Eintrag
+form_substitudes($fieldsRow1,$fieldsRow2,false,$section,$hashGenerator);			//Formular fï¿½r einen neuen Eintrag
 
 //Seitenfooter
 pageFooter();
