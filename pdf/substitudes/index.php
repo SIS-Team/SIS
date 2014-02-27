@@ -55,11 +55,13 @@ echo mysql_error();
 
 $pdf = new FPDF();
 $pdf->AddPage();
-$pdf->SetFont('Arial','UI',20);
+$pdf->AddFont('gothic');
+$pdf->AddFont('gothic','B');
+$pdf->SetFont('gothic','B',20);
 $pdf->Cell('75','25','HTL Anichstraße');
 $pdf->Cell('75','25',weekday($date).". ". $date);
 $pdf->Cell('','25','Abteilung '.$section,'','1');
-$pdf->SetFont('Arial','',12);
+$pdf->SetFont('gothic','',12);
 $pdf->Cell(30,10,'Klasse','1');
 $pdf->Cell(15,10,'Stunde','1');
 $pdf->Cell(15,10,'s.L.','1');
@@ -67,12 +69,16 @@ $pdf->Cell(15,10,'u.L.','1');
 $pdf->Cell(30,10,'Fach','1');
 $pdf->Cell(85,10,'Bemerkung','1','1');
 $count = 0;
+$oldClass = 0;
 if(isset($substitudes)){
 	for($i = 0;$i<count($substitudes);$i++){
 	 	$start = $substitudes[$i]->startHour;
 	    $end = $substitudes[$i]->endHour; 
-		
-			$pdf->Cell(30,10,$substitudes[$i]->className,'1');
+			if($oldClass != $substitudes[$i]->className) {
+ 				$pdf->Cell(30,10,$substitudes[$i]->className,'RTL');
+				$oldClass = $substitudes[$i]->className;
+			}
+			else $pdf->Cell(30,10,"",'RL');
 			if($end != $start) $pdf->Cell(15,10,$start."-".$end,'1');
 			else $pdf->Cell(15,10,$start,'1');
 			$pdf->Cell(15,10,$substitudes[$i]->newTeacher,'1');
@@ -83,7 +89,8 @@ if(isset($substitudes)){
 		
 	}
 }
-while($count<12){
+$count2 = 0;
+while($count<12 or $count2 <1){
  		$pdf->Cell(30,10,'','1');
 		$pdf->Cell(15,10,'','1');
 		$pdf->Cell(15,10,'','1');
@@ -91,6 +98,7 @@ while($count<12){
 		$pdf->Cell(30,10,'','1');
 		$pdf->Cell(85,10,'','1','1');
 		$count++;
+		$count2++;
  }
 $pdf->Cell('',10,'s.L. ... supplierender Lehrer, u.L. ... ursprünglicher Lehrer');
 $pdf->Output();
