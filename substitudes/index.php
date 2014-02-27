@@ -15,7 +15,15 @@ include_once(ROOT_LOCATION . "/modules/other/dateFunctions.php");		//Stellt Datu
 include_once(ROOT_LOCATION . "/modules/other/miscellaneous.php");		//Stellt Verschiedenes zur Verfügung
 
 ifNotLoggedInGotoLogin();	//Kontrolle ob angemeldet
-
+$permission = getPermission();
+if($permission == "root") $mode = "root";
+else{
+	if($permission == "admin") $mode = "admin";
+	else {
+		if(!empty($_SESSION['isTeacher'])) $mode = "teacher";
+		else $mode = "student";
+	}
+}
 $substitudes = array();
 
 //Seitenheader
@@ -27,7 +35,6 @@ echo "Sup. ...Supplierlehrer; ";
 echo "urs. ... urspr&uumlnglicher Lehrer; ";
 echo "</div>";
 $day_counter = 0;
-$dayName = array(1=>'Mo', 2=>'Di', 3=>'Mi', 4=>'Do',5=>'Fr');
 
 for($counter = 0; $counter <=2; $counter++)
 {   
@@ -35,7 +42,7 @@ for($counter = 0; $counter <=2; $counter++)
 	if(date("w", time() + 24 * 60 * 60 * $day_counter)==6) $day_counter+=2;
 	echo "<div id='d" . $counter . "' class='column background'>";
 	$day = captureDate($day_counter);		//aktuelles Datum abfragen
-	echo "Supplierungen vom ". $dayName[date("N",time() + 24*60*60*$day_counter)] ." ". date("d.M",time() + 24*60*60*$day_counter);
+	echo "Supplierungen vom ". weekday(date("Y-m-d",time() + 24*60*60*$day_counter)) ." ". date("d.",time() + 24*60*60*$day_counter). month(date("n",time() + 24*60*60*$day_counter)) ;
 		 
 	//Tabellenkopfausgabe
 	echo "<table style =\"border-collapse:collapse\">";
@@ -49,7 +56,7 @@ for($counter = 0; $counter <=2; $counter++)
 	echo "</tr>";
 		
 		
-	getSubstitude($day);		//Supplierungen des gewählten Datums abrufen
+	$substitudes = getSubstitude($day,$mode);		//Supplierungen des gewählten Datums abrufen
 		
 	for($count = 0;$count<count($substitudes); $count++)	//Supplierungen ausgeben
 		{
@@ -84,14 +91,27 @@ for($counter = 0; $counter <=2; $counter++)
 	$day_counter++;
 }
 
-function getSubstitude($date){	//Supplierungen des gewählten Datums abrufen
-	global $substitudes;
-	$where = "time = '".mysql_real_escape_string($date)."' and classes.name = '" . mysql_real_escape_string($_SESSION['class']) . "'";	
+function getSubstitude($date,$mode){	//Supplierungen des gewählten Datums abrufen
+	
+	$section = getAdminSection();
+	if($mode == "student"){
+		$where = "time = '".mysql_real_escape_string($date)."' and classes.name = '" . mysql_real_escape_string($_SESSION['class']) . "'";	
+	}
+	if($mode == "admin"){
+  		$where = "time = '".mysql_real_escape_string($date)."' and sections.short = '". mysql_real_escape_string($section)."'";
+	}
+	if($mode == "teacher"){
+ 		$where = "time = '".mysql_real_escape_string($date)."' and (teachers.short = '".mysql_real_escape_string($_SESSION['id'])."' or oldTeacher.short ='".mysql_real_escape_string($_SESSION['id'])."')";
+ 	}
+	if($mode == "root"){
+ 		$where = "time = '".mysql_real_escape_string($date)."'";
+	}
 	$substitude_sql = selectSubstitude($where,"startHour")	
 	or die("MySQL-Error: ".mysql_error());
 	while($substitude = mysql_fetch_array($substitude_sql)) {    
  	$substitudes[]=$substitude;
-	}	
+	}
+	if(isset($substitudes))	return $substitudes;	
 }
 
 pageFooter();
