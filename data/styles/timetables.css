@@ -1,5 +1,7 @@
 .timetable_column table{
 	background-color: rgba(0,0,0,0.5);
+	border-collapse: collapse;
+	border: white 1px;
 }
 
 .changed {
