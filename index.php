@@ -6,7 +6,7 @@
 	include(ROOT_LOCATION . "/modules/menu/Main.php");
 
 	if (!$_SESSION['loggedIn']) {
-		header("LOCATION: " . RELATIVE_ROOT . "/login/?return=" . urlencode($_SERVER['REQUEST_URI']) . ((isset($_GET['noMobile'])) ? "&noMobile" : ""));
+		header("LOCATION: " . RELATIVE_ROOT . "/login/?return=" . urlencode($_SERVER['REQUEST_URI']) . ((isset($_GET['noMobile'])) ? "&noMobile&noJS" : ""));
 		exit();
 	}
 		
