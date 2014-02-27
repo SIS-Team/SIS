@@ -109,3 +109,8 @@ Installation
 /modules/general/{MySQLpassword.def.php -> MySQLpassword.php}   
 /modules/general/{LDAPpassword.def.php -> LDAPpassword.php}   
 /modules/external/fpdf -> fpdf.zip unzip ( from fpdf.org)
+
+Notes
+-----
+
+/data/images/loading.gif is provided by http://www.ajaxload.info/
