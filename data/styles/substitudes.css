@@ -38,7 +38,12 @@
 }
 
 .background {
-		/*background-color: #EEEEEE;*/
+		
 	opacity: 1;
 	
+}
+.background table{
+/*	background-color: rgba(0,0,0,0.5);*/
+	
+
 }

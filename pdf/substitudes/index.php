@@ -11,7 +11,7 @@ $permission = getPermission();
 if($permission != "root" && $permission != "admin") noPermission();
 if(isset($_GET['date']) && check_date($_GET['date']))$date = $_GET['date'];
 else $date = date("Y-m-d");
-$section = getAdminSection();
+$section =$_GET['section'];
 		$sql = "SELECT `time`,
 						`newSub`,
 						`remove`,
@@ -62,8 +62,8 @@ $pdf->Cell(30,10,'Klasse','1');
 $pdf->Cell(15,10,'Stunde','1');
 $pdf->Cell(15,10,'s.L.','1');
 $pdf->Cell(15,10,'u.L.','1');
-$pdf->Cell(20,10,'Fach','1');
-$pdf->Cell(95,10,'Bemerkung','1','1');
+$pdf->Cell(30,10,'Fach','1');
+$pdf->Cell(85,10,'Bemerkung','1','1');
 $count = 0;
 if(isset($substitudes)){
 	for($i = 0;$i<count($substitudes);$i++){
@@ -75,8 +75,8 @@ if(isset($substitudes)){
 			else $pdf->Cell(15,10,$start,'1');
 			$pdf->Cell(15,10,$substitudes[$i]->newTeacher,'1');
 			$pdf->Cell(15,10,$substitudes[$i]->oldTeacher,'1');
-			$pdf->Cell(20,10,$substitudes[$i]->suShort,'1');
-			$pdf->Cell(95,10,utf8_decode($substitudes[$i]->comment),'1','1');
+			$pdf->Cell(30,10,$substitudes[$i]->suShort,'1');
+			$pdf->Cell(85,10,utf8_decode($substitudes[$i]->comment),'1','1');
 			$count++;
 		
 	}
@@ -86,8 +86,8 @@ while($count<12){
 		$pdf->Cell(15,10,'','1');
 		$pdf->Cell(15,10,'','1');
 		$pdf->Cell(15,10,'','1');
-		$pdf->Cell(20,10,'','1');
-		$pdf->Cell(95,10,'','1','1');
+		$pdf->Cell(30,10,'','1');
+		$pdf->Cell(85,10,'','1','1');
 		$count++;
  }
 $pdf->Cell('',10,'s.L. ... supplierender Lehrer, u.L. ... ursprünglicher Lehrer');

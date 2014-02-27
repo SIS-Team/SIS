@@ -102,7 +102,7 @@ echo "Dieser Stundenplan ist g&uuml;ltig: ". date("Y.m.d",time()+24*60*60*$offse
 			{
  				$dayName =  $dayShort[date("N",strtotime($substitudes[$i]['time']))];
 				if($substitudes[$i]['newSub']){
- 				 	$hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "<span style=\" color:yellow \">".$substitudes[$i]['suShort']."</span>";
+ 				 	$hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "</td><td class ='changed'><span style=\" color:black \">".$substitudes[$i]['suShort']."</span>";
 					$hours[$substitudes[$i]['startHour']][$dayName]->startHour = $substitudes[$i]['startHour'];
 					$hours[$substitudes[$i]['startHour']][$dayName]->endHour = $substitudes[$i]['endHour'];
 				}
@@ -120,9 +120,9 @@ echo "Dieser Stundenplan ist g&uuml;ltig: ". date("Y.m.d",time()+24*60*60*$offse
 						$hours[$substitudes[$i]['oldStartHour']][$dayName]->suShort = $temp;
 					}
 					if(isset($substitudes[$i]['suShort'])){
- 				 	$hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "<span style=\" color: yellow\">".$substitudes[$i]['suShort']."</span>";
+ 				 	$hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "</td><td class ='changed'><span style=\" color: black\">".$substitudes[$i]['suShort']."</span>";
 					}
-					else $hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "<span style=\" color: yellow\">".$substitudes[$i]['oldSuShort']."</span>";
+					else $hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "</td><td class ='changed'> <span style=\" color: black\">".$substitudes[$i]['oldSuShort']."</span>";
 					
 					$hours[$substitudes[$i]['startHour']][$dayName]->startHour = $substitudes[$i]['startHour'];
 					$hours[$substitudes[$i]['startHour']][$dayName]->endHour = $substitudes[$i]['endHour'];
@@ -133,7 +133,7 @@ echo "Dieser Stundenplan ist g&uuml;ltig: ". date("Y.m.d",time()+24*60*60*$offse
 	}
 //----------------------------------------------------------------------------------------------------------------------------
 }
-
+else echo "</br>";
 $classType = isEvening($hours);	//kontrolliert ob Abendschule
 if($classType == "evening")	//nur Abendschule
 	{$tableBegin = 12;
@@ -160,9 +160,9 @@ for ($i = $tableBegin; $i < $tableEnd; $i++) {
 	else {// echo "checkv2";
 		for ($j = 0; $j < 5; $j++) {
 			if(isset($hours[$i][$days[$j]])){
-				
+					 if(!strpos($hours[$i][$days[$j]]->suShort,"<td")){
 					 echo "<td>";					 
-				
+					}
 					echo $hours[$i][$days[$j]]->suShort;
 				
 			
@@ -187,9 +187,7 @@ for ($i = $tableBegin; $i < $tableEnd; $i++) {
 }		
 echo "</div>";
 echo "</table>";
-if ($displaytype == "modificated"){
-	echo "<span style=\"color:yellow\"> ver&auml;nderte Stunde</span>";
-}
+
 
 function getLessons($name,$mode) {		//Abfrage von Stunden von vorgegebener Klasse/vorgegebenem Lehrer
 	if($mode == "schueler" ){
