@@ -13,7 +13,7 @@ require_once(ROOT_LOCATION . "/modules/other/miscellaneous.php");		//Stell Versc
 
 ifNotLoggedInGotoLogin(); //Kontrolle ob angemeldet
 //Seitenheader
-pageHeader("News vom ".date("d."). month() . date(" Y"),"main");
+pageHeader("News vom ".date("d."). month(date("n")) . date(" Y"),"main");
 $sql ="SELECT `ID` FROM sections WHERE `short` = '".$_SESSION['section']."'";
 $section_result  = mysql_query($sql);
 while ($row = mysql_fetch_object($section_result)) {
