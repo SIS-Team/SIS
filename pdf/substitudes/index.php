@@ -3,7 +3,8 @@ include_once("../../config.php");
 require_once(ROOT_LOCATION . "/modules/external/fpdf/fpdf.php");
 include_once(ROOT_LOCATION . "/modules/general/Connect.php");			
 include_once(ROOT_LOCATION . "/modules/general/SessionManager.php");
-include_once(ROOT_LOCATION . "/modules/other/miscellaneous.php");	
+include_once(ROOT_LOCATION . "/modules/other/miscellaneous.php");
+include_once(ROOT_LOCATION . "/modules/other/dateFunctions.php");	
 
 ifNotLoggedInGotoLogin();	
 
@@ -11,7 +12,8 @@ $permission = getPermission();
 if($permission != "root" && $permission != "admin") noPermission();
 if(isset($_GET['date']) && check_date($_GET['date']))$date = $_GET['date'];
 else $date = date("Y-m-d");
-$section =$_GET['section'];
+if(isset($_GET['section'])) $section =$_GET['section'];
+else $section = 'N';
 		$sql = "SELECT `time`,
 						`newSub`,
 						`remove`,
@@ -55,7 +57,7 @@ $pdf = new FPDF();
 $pdf->AddPage();
 $pdf->SetFont('Arial','UI',20);
 $pdf->Cell('75','25','HTL Anichstraße');
-$pdf->Cell('75','25',$date);
+$pdf->Cell('75','25',weekday($date).". ". $date);
 $pdf->Cell('','25','Abteilung '.$section,'','1');
 $pdf->SetFont('Arial','',12);
 $pdf->Cell(30,10,'Klasse','1');
