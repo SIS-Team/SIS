@@ -23,7 +23,7 @@ include_once(ROOT_LOCATION . "/modules/form/hashCheckFail.php");
 $hashGenerator = new HashGenerator("Substitudes", __FILE__);
 
 if(empty($_GET['section']) && empty($_POST['section'])){
-	//header("Location: ".RELATIVE_ROOT."/");
+	header("Location: ".RELATIVE_ROOT."/");
 	exit();
 }
 else if($_GET['section']!="")

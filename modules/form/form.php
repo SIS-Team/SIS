@@ -269,7 +269,7 @@ function form_substitudes($fieldRow1,$fieldRow2,$content,$section,$hashGenerator
 {	
 //print_r($content);
 
-printf("<table>\n");	//Tabellen Tag auf
+printf("<table style=\"width:100%%;text-align:right\">\n");	//Tabellen Tag auf
 	printf("<form action=\"?section=%s\" method=\"post\">\n",$section);	//Formular Anfang Tag
 	  			$hashGenerator->printForm();
 			$display["row"]= "none";
@@ -350,7 +350,7 @@ printf("<table>\n");	//Tabellen Tag auf
 						$checked="";					
 					}
 					
-					printf("<td id=\"visibleCell%s%s\" style=\"display:%s\">%s <input type=\"checkbox\" name=\"%s\" %s value=\"%s\" %s>\n",		//Checkbox erstellen
+					printf("<td id=\"visibleCell%s%s\" style=\"display:%s;width:140px\">%s <input type=\"checkbox\" name=\"%s\" %s value=\"%s\" %s>\n",		//Checkbox erstellen
 							$ID,$f[0],$display[$f[0]],$f[1], $f[0], $checked, $f[0],$f[6]);
 					
 				}
@@ -369,11 +369,13 @@ printf("<table>\n");	//Tabellen Tag auf
 					else
 						$ID=$content["ID"];
 						
-					printf("<td>%s <input type=\"checkbox\" name=\"%s\" %s value=\"%s\" onclick=\"javascript:Visibility(%s,'%s')\">\n",		//Checkbox erstellen
+					printf("<td style=\"width:140px\">%s <input type=\"checkbox\" name=\"%s\" %s value=\"%s\" onclick=\"javascript:Visibility(%s,'%s')\">\n",		//Checkbox erstellen
 							$f[1], $f[0], $checked[$f[0]], $f[0],$ID,$f[0]);
 					
 				}
 				else if($f[2] == "text") {
+					if($checked["free"]&&$checked["remove"] && $f[0]=="comment")
+						printf("<td colspan=\"5\"></td>\n");
 					printf("<td id=\"visibleCell%s%s\" style=\"display:%s\">%s <input  type=\"text\" name=\"%s\" size=\"%spx\" value=\"%s\" %s >\n",	//Textbox erstellen
 							$ID,$f[0],$display[$f[0]],$f[1], $f[0], $f[3], $f[5], $f[6]);
 
@@ -392,10 +394,12 @@ printf("<table>\n");	//Tabellen Tag auf
 			
 			if($content==false)
 			{
+				
+					
 				form_savedelete(true);
 			}
 			else
-			{
+			{	
 				form_savedelete(false);
 			}
 				
@@ -452,9 +456,9 @@ function form_savedelete($new)
 {
 
 if($new!=true)
-	printf("<td>L&ouml;schen<input type=\"checkbox\" name=\"delete\" value=\"delete\"></td>\n");		//Checkbox erstellen
+	printf("<td style=\"text-align:right; width:111px\"> L&ouml;schen<input type=\"checkbox\" name=\"delete\" value=\"delete\"></td>\n");		//Checkbox erstellen
 
-printf("<td><input type=\"submit\" name=\"save\" value=\"&Uuml;bernehmen\"></td>\n");	//Submit Button erstellen
+printf("<td style=\"text-align:right;width:86px\"><input type=\"submit\" name=\"save\" value=\"&Uuml;bernehmen\"></td>\n");	//Submit Button erstellen
 
 }
 ?>
