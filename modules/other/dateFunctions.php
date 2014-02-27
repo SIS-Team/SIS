@@ -86,6 +86,12 @@ function no_weekend($d) {
 	return $d;
 }
 
+function month() {
+$month = array(1=>'J&auml;nner',2=>'Februar',3=>'M&auml;rz',4=>'April',5=>'Mai',6=>'Juni',7=>'Juli',8=>'August',9=>'September',10=>'Oktober',11=>'November',12=>'Dezember');
+
+return $month[date("n")];
+}
+
 
 
 ?>

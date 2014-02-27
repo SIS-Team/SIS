@@ -4,8 +4,6 @@
 	 * Version: 0.1.0
 	 * Beschreibung:
 	 *	Gibt News aus
-	 * Changelog:
-	 * 	0.1.0:  12. 10. 2013, Weiland Mathias  - erste Version
 	 */	 
 include("../config.php");
 include_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
@@ -15,8 +13,7 @@ require_once(ROOT_LOCATION . "/modules/other/miscellaneous.php");		//Stell Versc
 
 ifNotLoggedInGotoLogin(); //Kontrolle ob angemeldet
 //Seitenheader
-$month = array(1=>'J&auml;nner',2=>'Februar',3=>'M&auml;rz',4=>'April',5=>'Mai',6=>'Juni',7=>'Juli',8=>'August',9=>'September',10=>'Oktober',11=>'November',12=>'Dezember');
-pageHeader("News vom ".date("d."). $month[date("n")] . date(" Y"),"main");
+pageHeader("News vom ".date("d."). month() . date(" Y"),"main");
 $sql ="SELECT `ID` FROM sections WHERE `short` = '".$_SESSION['section']."'";
 $section_result  = mysql_query($sql);
 while ($row = mysql_fetch_object($section_result)) {
