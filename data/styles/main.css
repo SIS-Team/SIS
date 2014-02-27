@@ -91,7 +91,7 @@ input, button {
 	fill: #000;
 }
 
-#print button.nonButton {
+#print button.nonButton svg {
 	position: absolute;
 	top: 0px;
 	right: 10px;
@@ -101,4 +101,18 @@ input, button {
 
 textarea {
 	color: #000;
+}
+
+#captcha {
+	width: 150px;
+	height: 50px;
+	display: inline-block;
+}
+
+#captcha img {
+	height: 50px;
+}
+
+#newCaptcha {
+	display: inline;
 }

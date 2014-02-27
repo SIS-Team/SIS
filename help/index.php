@@ -33,6 +33,8 @@ else if(!empty($_POST['send']) && $_POST['send']!=""){
 	$email= $_POST['email'];
 	$betreff= $_POST['betreff'];
 	$text= $_POST['text'];
+	$text = str_replace("<", "&lt;", $text);
+	$text = str_replace(">", "&gt;", $text);
 	$cFail=true;
 }
 
@@ -52,18 +54,56 @@ if($cFail){
 ?>
 
 <form method="post" >
-<table>
-<?php $hashGenerator->printForm(); echo "\n";?>
-<tr><td>Deine E-Mail-Adresse<br /><input type="text" required name="email" value="<?php echo $email; ?>"></td></tr>
-<tr><td>Betreff<br /><input type="text" required name="betreff" value="<?php echo $betreff; ?>"></td></tr>
-<tr><td>Text<br /><textarea required name="text" rows="7" cols="40"><?php echo $text; ?></textarea></td></tr>
-<tr><td><img src="<?php echo RELATIVE_ROOT."/modules/other/captcha.php"; ?>" /></td></tr>
-<tr><td>Zeichen eingeben:<br /><input type="text" required name="captcha"></td></tr>
-<tr><td><input type="submit" name="send" value="Senden"></td></tr>
-</table>
+	<?php $hashGenerator->printForm(); echo "\n";?>
+	<table>
+		<tr>
+			<td>
+				Deine E-Mail-Adresse<br />
+				<input type="text" required name="email" value="<?php echo $email; ?>">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Betreff<br />
+				<input type="text" required name="betreff" value="<?php echo $betreff; ?>">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Text<br /><textarea required name="text" rows="7" cols="40"><?php echo $text; ?></textarea>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div id="captcha">
+					<img src="<?php echo RELATIVE_ROOT; ?>/data/images/captcha.png" />
+				</div>
+				<div id="newCaptcha"></div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Zeichen eingeben:<br />
+				<input type="text" required name="captcha">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<input type="submit" name="send" value="Senden">
+			</td>
+		</tr>
+	</table>
 <form>
 </div>
-
+<script>
+	document.getElementById("newCaptcha").innerHTML = '<input type="button" onclick="newCaptcha();" value="Anderer Captcha" />';
+	function newCaptcha() {
+		document.getElementById("captcha").getElementsByTagName("img")[0].src = "<?php echo RELATIVE_ROOT; ?>/data/images/loading.gif";
+		window.setTimeout(function() {
+			document.getElementById("captcha").getElementsByTagName("img")[0].src = "<?php echo RELATIVE_ROOT; ?>/data/images/captcha.png";
+		}, 700)
+	}
+</script>
 <?php
 
 
