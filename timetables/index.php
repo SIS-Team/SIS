@@ -102,7 +102,7 @@ echo "Dieser Stundenplan ist g&uuml;ltig: ". date("Y.m.d",time()+24*60*60*$offse
 			{
  				$dayName =  $dayShort[date("N",strtotime($substitudes[$i]['time']))];
 				if($substitudes[$i]['newSub']){
- 				 	$hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "</td><td class ='changed'><span style=\" color:black \">".$substitudes[$i]['suShort']."</span>";
+ 				 	$hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "</td><td class ='changed'>".$substitudes[$i]['suShort'];
 					$hours[$substitudes[$i]['startHour']][$dayName]->startHour = $substitudes[$i]['startHour'];
 					$hours[$substitudes[$i]['startHour']][$dayName]->endHour = $substitudes[$i]['endHour'];
 				}
@@ -110,7 +110,7 @@ echo "Dieser Stundenplan ist g&uuml;ltig: ". date("Y.m.d",time()+24*60*60*$offse
 					$temp = $hours[$substitudes[$i]['oldStartHour']][$dayName]->suShort;
 					$temp = str_replace($substitudes[$i]['oldSuShort'],"",$temp);
 					$temp = str_replace("|","",$temp);
-					$hours[$substitudes[$i]['oldStartHour']][$dayName]->suShort = $temp;
+					$hours[$substitudes[$i]['oldStartHour']][$dayName]->suShort = "</td><td class ='changed'>".$temp;
 				}
 				if(!$substitudes[$i]['newSub'] and !$substitudes[$i]['remove']){
 					if(isset($hours[$substitudes[$i]['oldStartHour']][$dayName])){
@@ -120,9 +120,9 @@ echo "Dieser Stundenplan ist g&uuml;ltig: ". date("Y.m.d",time()+24*60*60*$offse
 						$hours[$substitudes[$i]['oldStartHour']][$dayName]->suShort = $temp;
 					}
 					if(isset($substitudes[$i]['suShort'])){
- 				 	$hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "</td><td class ='changed'><span style=\" color: black\">".$substitudes[$i]['suShort']."</span>";
+ 				 	$hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "</td><td class ='changed'>".$substitudes[$i]['suShort'];
 					}
-					else $hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "</td><td class ='changed'> <span style=\" color: black\">".$substitudes[$i]['oldSuShort']."</span>";
+					else $hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "</td><td class ='changed'>".$substitudes[$i]['oldSuShort'];
 					
 					$hours[$substitudes[$i]['startHour']][$dayName]->startHour = $substitudes[$i]['startHour'];
 					$hours[$substitudes[$i]['startHour']][$dayName]->endHour = $substitudes[$i]['endHour'];
