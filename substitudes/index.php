@@ -57,16 +57,17 @@ for($counter = 0; $counter <=2; $counter++)
 		
 		
 	$substitudes = getSubstitude($day,$mode);		//Supplierungen des gewählten Datums abrufen
-		
+		if($_SESSION['id']= '20090396') {
+		}
 	for($count = 0;$count<count($substitudes); $count++)	//Supplierungen ausgeben
 		{
 			echo "<tr>";
 			echo "<td>".$substitudes[$count]['clName']."</td>";	//Klassenname
-			if(!empty($substitudes[$count]['newStartHour'])){
-				echo "<td>".$substitudes[$count]['newStartHour']." - ".$substitudes[$count]['newEndHour']."</td>";	//supplierte Stunde
+			if(!empty($substitudes[$count]['startHour'])){
+				echo "<td>".$substitudes[$count]['startHour']." - ".$substitudes[$count]['endHour']."</td>";	//supplierte Stunde
 			}
 			else {
-				echo "<td>".$substitudes[$count]['startHour']." - ".$substitudes[$count]['endHour']."</td>";
+				echo "<td>".$substitudes[$count]['oldStartHour']." - ".$substitudes[$count]['oldEndHour']."</td>";
 			}
 			if(!empty($substitudes[$count]['teShort'])){
 				echo "<td>".$substitudes[$count]['teShort']."</td>";	//supplierender Lehrer
