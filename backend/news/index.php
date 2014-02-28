@@ -16,7 +16,7 @@ include_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Desig
 include_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
 include_once(ROOT_LOCATION . "/modules/database/inserts.php");			//Stellt die insert-Befehle zur Verfügung
 include_once(ROOT_LOCATION . "/modules/other/miscellaneous.php");		//Stellt Verschiedenes zur Verfügung
-include_once(ROOT_LOCATION . "/modules/form/hashCheckFail.php");		
+include_once(ROOT_LOCATION . "/modules/form/hashCheckFail.php");	
 
 $hashGenerator = new HashGenerator("MissingTeacher", __FILE__);
 
@@ -41,12 +41,14 @@ pageHeader("Formular","main");
 $hashGenerator->generate();
 HashFail();
 //ID,title,text,startDay,endDay
+$dropDown=array("Sections");
+include_once(ROOT_LOCATION . "/modules/form/dropdownSelects.php");		//Stellt die Listen fÃ¼r die DropdownmenÃ¼s zur VerfÃ¼gung	
 if($isAdmin) {
 	$fields = array(
 		array( "ID", 			"",			 							"hidden", 	"",		"",		"",					""),
 		array( "title", 		"Titel: ", 								"text", 	"8",	"",		"",					""),
 		array( "text", 			"Text: ",								"textarea", "20",	"5",	"",					""),
-		array( "secShort", 		"Abteilung: ",							"dropdown", "",		"",		"",					""),	
+		array( "seShort", 		"Abt.: ",								"dropdown", "5",	"",		$selectSections,	""),	
 		array( "startDay",		"Anzeigebeginn-Datum: (YYYY-MM-DD) ",	"date",		"10",	"",		"",					""),
 		array( "endDay",		"Anzeigeend-Datum: (YYYY-MM-DD)",		"date",		"10",	"",		"",					""),
 		array( "display",		"Anzeigen",								"checkbox",	"",		"",		"",					""),
@@ -62,7 +64,7 @@ else {
 	);
 }
 if($isAdmin){
- $sql ="SELECT `news`.`ID`, `title`, `text`, `startDay` , `endDay`, `display`, `sections`.`short` AS secShort FROM `news` LEFT JOIN `sections` ON `news`.`sectionFK`= `sections`.`ID`";
+ $sql ="SELECT `news`.`ID`, `title`, `text`, `startDay` , `endDay`, `display`, `sections`.`short` AS seShort FROM `news` LEFT JOIN `sections` ON `news`.`sectionFK`= `sections`.`ID`";
 	$result = mysql_query($sql);
 	echo mysql_error();
 	while ($row = mysql_fetch_array($result)){	//Fügt solange eine neue Formularzeile hinzu, solange ein Inhalt zur Verfügung steht
@@ -81,13 +83,13 @@ function news($Admin)
 	$data["ID"]=$post["ID"];
 	$data["title"]=mysql_real_escape_string(htmlspecialchars($post["title"]));
 	$data["text"]=mysql_real_escape_string(htmlspecialchars($post["text"]));
-	if(check_date($post["startDay"])){
+	if(!empty($post['startDay']) &&check_date($post["startDay"])){
 		$data["startDay"]=mysql_real_escape_string($post["startDay"]);
 	}
 	else{
 		$data["startDay"]= "2000-01-01";
 	}
-	if(check_date($post["endDay"])){
+	if(!empty($post["endDay"]) && check_date($post["endDay"])){
 		$data["endDay"]=mysql_real_escape_string($post["endDay"]);
 	}
 	else {
@@ -99,8 +101,8 @@ function news($Admin)
 	else {
 		$data["display"]=0;
 	}
-	if(!empty($post["secShort"])){
-	$sql = "SELECT ID FROM sections WHERE short = '" .$post["secShort"]."'";
+	if(!empty($post["seShort"])){
+	$sql = "SELECT ID FROM sections WHERE short = '" .$post["seShort"]."'";
 	$section_result  = mysql_query($sql);
 		while ($row = mysql_fetch_object($section_result)) {
 			$section = $row;
