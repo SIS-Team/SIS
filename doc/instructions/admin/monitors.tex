@@ -31,4 +31,44 @@ Der Text, der am linken unterem Eck des Monitors kann über das Eingabefeld \enq
 
 \subsection{Raum verändern}
 
-Für die Darstellung des Stundenplanes des jeweiligen Raumes wird jedem Monitor ein Raum zugeordnet. Diese Einstellung kann über das Eingabefeld \enquote{Raum} angepasst werden. Durch Doppelklick auf das Eingabefeld öffnet sich - sofern der verwendete Browser diese Funktion unterstützt - ein Menü, indem 
+Für die Darstellung des Stundenplanes des jeweiligen Raumes wird jedem Monitor ein Raum zugeordnet. Diese Einstellung kann über das Eingabefeld \enquote{Raum} angepasst werden. Durch Doppelklick auf das Eingabefeld öffnet sich - sofern der verwendete Browser diese Funktion unterstützt - ein Menü, in dem durch Eingeben gesucht werden kann. Wird das Feld leer gelassen, so wird der alte Wert beibehalten.
+
+\subsection{Abteilung verändern}
+
+Die News können Abteilungen zugeordnet werden. Ebenso ist der Supplierplan für jede Abteilung anders. Als Folge daraus gibt es eine Einstellungsmöglichkeit für die Abteilung. Durch Doppelklick auf das Eingabefeld öffnet sich - sofern der verwendete Browser diese Funktion unterstützt - ein Menü, in dem durch Eingeben gesucht werden kann. Wird das Feld leer gelasen, so wird der alte Wert beibehalten.
+
+\subsection{Modus verändern}
+
+Um die ausgewählten Monitore auf Supplierplan, Stundenplan, News etc. umzuschalten, wird das Eingabefeld \enquote{Modus} verwendet. In diesem Feld sind folgende Werte zulässig:
+\begin{itemize}
+	\item News
+	\item Stundenplan
+	\item Supplierplan
+	\item Supplierplan \& News
+	\item Bild
+	\item (Video)
+	\item (fallback)
+\end{itemize}
+Durch Doppelklick auf das Eingabefeld öffnet sich - sofern der verwendete Browser diese Funktion unterstützt - ein Menü mit den möglichen Werten. Wird das Feld leer gelassen, so wird der alte Wert beibehalten.\\
+\\
+Der Modus \enquote{Video} ist zwar implementiert, allerdings ist der Raspberry Pi nicht in der Lage, die Videos wiederzugeben.\\
+Der Modus \enquote{fallback} fährt den Monitor auf das FTKL-Schnitzel-Suppla-Projekt. 
+\textit{Beachte:} Es ist nicht über das Interface möglich, den Monitor wieder auf das SIS-Projekt zurückzuholen.
+
+\subsection{Datei verändern}
+
+Für die Modi \enquote{Bild} und \enquote{Video} muss eine Datei hochgeladen werden, welche dann angezeigt wird.\\ 
+Unterstützte Dateitypen sind:
+\begin{itemize}
+	\item JPG, JPEG
+	\item PNG
+	\item GIF
+	\item MP4, MPEG
+\end{itemize}
+Die maximale Dateigröße ist limitiert durch:
+\begin{itemize}
+	\item das Upload-Script auf 800 MB
+	\item das Upload-HTML-Tag auf 800 MB
+	\item die PHP-Konfiguration am Server (Stand: 2014-02-28) auf 128 MB
+\end{itemize}
+ 
