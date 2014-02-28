@@ -1,13 +1,10 @@
 <?php
 
 	/* /backend/news/index.php
-	 * Autor: Handle Marco
+	 * Autor: Weiland Mathias
 	 * Version: 0.1.0
 	 * Beschreibung:
 	 *	Erstellt die Formulare fuer die Eingabe der News
-	 *
-	 * Changelog:
-	 * 	0.1.0:  15. 10. 2013, Mathias Weiland - erste Version
 	 */
 
 include_once("../../config.php");
@@ -21,10 +18,10 @@ include_once(ROOT_LOCATION . "/modules/form/hashCheckFail.php");
 $hashGenerator = new HashGenerator("MissingTeacher", __FILE__);
 
 ifNotLoggedInGotoLogin(); //Kontrolle ob angemeldet
-$permission = getPermission();
+$permission = getPermission(); //Erhalten der Berechtigungen
 
 
-if($permission == false) noPermission(); //Kontrolle wegen Berechtigungen 
+if($permission == false) noPermission();  
 if($permission == "admin" || $permission == "root") $isAdmin = 1;
 else $isAdmin = 0;
 if(isset($_POST['save']) && $_POST['save'] !="") {
@@ -33,16 +30,11 @@ if(isset($_POST['save']) && $_POST['save'] !="") {
 
 }
 
-
-
-
-
 pageHeader("Formular","main");
 $hashGenerator->generate();
 HashFail();
-//ID,title,text,startDay,endDay
 $dropDown=array("Sections");
-include_once(ROOT_LOCATION . "/modules/form/dropdownSelects.php");		//Stellt die Listen fÃ¼r die DropdownmenÃ¼s zur VerfÃ¼gung	
+include_once(ROOT_LOCATION . "/modules/form/dropdownSelects.php");		//Stellt die Listen für die Dropdownmenüs zur Verfügung	
 if($isAdmin) {
 	$fields = array(
 		array( "ID", 			"",			 							"hidden", 	"",		"",		"",					""),
@@ -64,11 +56,10 @@ else {
 	);
 }
 if($isAdmin){
- $sql ="SELECT `news`.`ID`, `title`, `text`, `startDay` , `endDay`, `display`, `sections`.`short` AS seShort FROM `news` LEFT JOIN `sections` ON `news`.`sectionFK`= `sections`.`ID`";
+	$sql ="SELECT `news`.`ID`, `title`, `text`, `startDay` , `endDay`, `display`, `sections`.`short` AS seShort FROM `news` LEFT JOIN `sections` ON `news`.`sectionFK`= `sections`.`ID`";
 	$result = mysql_query($sql);
-	echo mysql_error();
 	while ($row = mysql_fetch_array($result)){	//Fügt solange eine neue Formularzeile hinzu, solange ein Inhalt zur Verfügung steht
-	form_new($fields,$row,$hashGenerator);		//Formular wird erstellt
+		form_new($fields,$row,$hashGenerator);		//Formular wird erstellt
 	}
 }
 form_new($fields,false,$hashGenerator);
@@ -104,17 +95,16 @@ function news($Admin)
 	if(!empty($post["seShort"])){
 	$sql = "SELECT ID FROM sections WHERE short = '" .$post["seShort"]."'";
 	$section_result  = mysql_query($sql);
-		while ($row = mysql_fetch_object($section_result)) {
+	while ($row = mysql_fetch_object($section_result)) {
 			$section = $row;
-		}
+	}
 	$data["sectionFK"] = $section->ID;
 	}
 	else {
-	$data["sectionFK"]=0;
+		$data["sectionFK"]=0;
 	}
 	if(empty($post["delete"])){
 		saveupdate($data,"news");
-		echo "done";
 	}
 	else {
 		deleteID($data["ID"],"news");

@@ -4,9 +4,6 @@
 	 * Version: 0.1.0
 	 * Beschreibung:
 	 *	Gibt Supplierplan aus
-	 *
-	 * Changelog:
-	 * 	0.1.0:  09. 09. 2013, Weiland Mathias  - erste Version
 	 */
 include_once("../config.php");	 
 include_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
@@ -56,8 +53,6 @@ for($counter = 0; $counter <=2; $counter++)
 		
 	$oldClass = "";
 	$substitudes = getSubstitude($day,$mode);		//Supplierungen des gewählten Datums abrufen
-		if($_SESSION['id']= '20090396') {
-		}
 	for($count = 0;$count<count($substitudes); $count++)	//Supplierungen ausgeben
 		{
 			echo "<tr>";
@@ -96,7 +91,6 @@ for($counter = 0; $counter <=2; $counter++)
 			echo "</tr>";
 		}
 	if(count($substitudes) == 0) echo "<tr><td colspan = 6 align = center> F&uuml;r diesen Tag sind keine Supplierungen vorgesehen</td></tr>";
-	$substitudes = array();
 	echo "</table>";
 	echo "</div>";
 	$day_counter++;
@@ -121,10 +115,9 @@ function getSubstitude($date,$mode){	//Supplierungen des gewählten Datums abrufe
  		$where = "time = '".mysql_real_escape_string($date)."'";
 		$order = "classes.name,startHour";
 	}
-	$substitude_sql = selectSubstitude($where,$order)	
-	or die("MySQL-Error: ".mysql_error());
+	$substitude_sql = selectSubstitude($where,$order);
 	while($substitude = mysql_fetch_array($substitude_sql)) {    
- 	$substitudes[]=$substitude;
+ 		$substitudes[]=$substitude;
 	}
 	if(isset($substitudes))	return $substitudes;	
 }

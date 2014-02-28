@@ -44,14 +44,13 @@ else $section = 'N';
 				LEFT JOIN `classes` AS `nC` ON `s`.`classFK` = `nC`.`ID`
 				LEFT JOIN `sections` AS `sec` ON `c`.`sectionFK` = `sec`.`ID`
 				LEFT JOIN `sections` AS `nSec` ON `nC`.`sectionFK`=`nSec`.`ID`
-			WHERE time = '". $date . "' and (`sec`.`short` = '".$section."' or `nSec`.`short` = '".$section."')
+			WHERE time = '". mysql_real_escape_string($date) . "' and (`sec`.`short` = '".mysql_real_escape_string($section)."' or `nSec`.`short` = '".mysql_real_escape_string($section)."')
 			ORDER BY `className`, `startHour`		
 		";
 $result = mysql_query($sql);
-echo mysql_error();
-	while($substitude = mysql_fetch_object($result)) {    
+while($substitude = mysql_fetch_object($result)) {    
  	$substitudes[]=$substitude;
-	}
+}
 
 $pdf = new FPDF();
 $pdf->AddPage();
@@ -63,7 +62,7 @@ $pdf->Cell('75','25',weekday($date).". ". $date);
 $pdf->Cell('','25','Abteilung '.$section,'','1');
 $pdf->SetFont('gothic','',12);
 $pdf->Cell(30,10,'Klasse','1');
-$pdf->Cell(15,10,'Stunde','1');
+$pdf->Cell(16,10,'Stunde','1');
 $pdf->Cell(15,10,'s.L.','1');
 $pdf->Cell(15,10,'u.L.','1');
 $pdf->Cell(30,10,'Fach','1');
@@ -79,8 +78,8 @@ if(isset($substitudes)){
 				$oldClass = $substitudes[$i]->className;
 			}
 			else $pdf->Cell(30,10,"",'RL');
-			if($end != $start) $pdf->Cell(15,10,$start."-".$end,'1');
-			else $pdf->Cell(15,10,$start,'1');
+			if($end != $start) $pdf->Cell(16,10,$start."-".$end,'1');
+			else $pdf->Cell(16,10,$start,'1');
 			$pdf->Cell(15,10,$substitudes[$i]->newTeacher,'1');
 			$pdf->Cell(15,10,$substitudes[$i]->oldTeacher,'1');
 			$pdf->Cell(30,10,$substitudes[$i]->suShort,'1');
@@ -91,14 +90,14 @@ if(isset($substitudes)){
 }
 $count2 = 0;
 while($count<12 or $count2 <1){
- 		$pdf->Cell(30,10,'','1');
-		$pdf->Cell(15,10,'','1');
-		$pdf->Cell(15,10,'','1');
-		$pdf->Cell(15,10,'','1');
-		$pdf->Cell(30,10,'','1');
-		$pdf->Cell(85,10,'','1','1');
-		$count++;
-		$count2++;
+ 	$pdf->Cell(30,10,'','1');
+	$pdf->Cell(16,10,'','1');
+	$pdf->Cell(15,10,'','1');
+	$pdf->Cell(15,10,'','1');
+	$pdf->Cell(30,10,'','1');
+	$pdf->Cell(85,10,'','1','1');
+	$count++;
+	$count2++;
  }
 $pdf->Cell('',10,'s.L. ... supplierender Lehrer, u.L. ... ursprünglicher Lehrer');
 $pdf->Output();
