@@ -16,7 +16,7 @@ include_once(ROOT_LOCATION . "/modules/other/miscellaneous.php");		//Stellt Vers
 
 ifNotLoggedInGotoLogin();	//Kontrolle ob angemeldet
 $permission = getPermission();
-if($permission == "root") $mode = "student";
+if($permission == "root") $mode = "root";
 else{
 	if($permission == "admin") $mode = "admin";
 	else {
