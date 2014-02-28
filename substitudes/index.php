@@ -43,7 +43,7 @@ for($counter = 0; $counter <=2; $counter++)
 	//Tabellenkopfausgabe
 	echo "<table style =\"border-collapse:collapse\">";
 	echo "<tr>";
-	if($mode == "admin" or $mode == "root")	echo "<th>Klasse</th>";
+	if($mode != "student")	echo "<th>Klasse</th>";
 	echo "<th>Stunden</th>";
 	echo "<th>Sup</th>";
 	echo "<th>Fach</th>";
@@ -56,7 +56,7 @@ for($counter = 0; $counter <=2; $counter++)
 	for($count = 0;$count<count($substitudes); $count++)	//Supplierungen ausgeben
 		{
 			echo "<tr>";
-			if($mode =="root" or $mode =="admin"){ 
+			if($mode !="student"){ 
 				if($oldClass != $substitudes[$count]['clName']){
 	 				if($count != count($substitudes)-1) echo "<td style=\"border-bottom:0\">";
 					else echo "<td>";
