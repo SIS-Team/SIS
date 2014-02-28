@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="js/UrlListener.js" type="text/javascript"></script>
+	
+	
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, minimum-scale=0.5" />
+<meta http-equiv="cache-control" content="no-cache" />
+<script>
+	/**********************************************************************************************
+	Überprüfung ob bereits eine Session geöffnet ist 	(wird sofort nach Start der App ausgeführt)
+	**********************************************************************************************/
+	function checkCookie() {
+		var script = document.createElement("script");
+		script.src = "http://sis.htlinn.ac.at/mobile/api/checkCookie.php";	
+		document.body.appendChild(script);	//falls der Nutzer bereits eingeloggt ist wird er hier weitergeleitet
+
+		window.setTimeout(function () {
+			document.body.style.display = "block";	//die Seite wird kurzzeitig ausgeblendet damit während der Überprüfung und Weiterleitung(falls angemeldet) nichts angezeigt wird
+		}, 1000)
+	}
+
+	function loginFailed(){
+		document.body.innerHTML += '<h1 style=\"color: red;\">Benutzername oder Passwort falsch!</h1>';
+
+	}
+
+	/*************************************************************************************
+	Funktion zum Übertragen von Benutzernamen und Passwort an die LoginRoutine(login.php)
+	**************************************************************************************/
+
+
+</script>
+</head>
+<body  style="display: none;">
+<img src='http://sis.htlinn.ac.at/mobile/images/ConnectionCheckPicture.png' onerror='alert("Connection dead");' />
+	<div class="header">
+		<img alt="http://sis.htlinn.ac.at/mobile/api/login.php" src="./images/Header_Interface.png" width="100%">
+	</div>
+	<form name="form" action="http://sis.htlinn.ac.at/mobile/api/login.php" method="POST" target="iframe0">
+		Benutzername:<br>
+		<input type="text" name="username"><br>
+		Passwort:<br>   
+		<input type="password" name="password"><br>
+		<input type="submit" value="Login">
+	</form>
+	<a href="https://sis.htlinn.ac.at/impressum/?js#responsible">Impressum</a>
+	<iframe name="iframe0" src="" onload="checkCookie()" style="display: none; height: 1px; width: 1px; overflow: hidden"></iframe>
+	
+</body>
+</html>

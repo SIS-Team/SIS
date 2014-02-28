@@ -30,7 +30,7 @@
 
 $( document ).ready(function() {
 	
-	var i;
+	var i = 0;
 
 	for(aNews in newsObject){
 				

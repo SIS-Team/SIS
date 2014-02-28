@@ -1,0 +1,41 @@
+﻿.PopupCon {
+    position: absolute;
+    top: 40%;
+    left: 35%;
+    height: 0px;
+    width: 0px;
+}
+
+.Popup{     
+    display: none;
+    background: #fff;
+    position: absolute;
+    top: 10px;
+    z-index: 3;
+    min-width: 100px;
+    /*width: 500px;*/
+    /*left: -250px;*/
+    box-shadow: 0 0 10px #222;
+    padding: 10px;
+    opacity: 1;
+} 
+#overlay{
+    display: none; 
+    /*background: -moz-radial-gradient(center, ellipse cover,  rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.5) 100%); 
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(0,0,0,0.65)), color-stop(100%,rgba(0,0,0,0.5)));     
+    background: -webkit-radial-gradient(center, ellipse cover,  rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.5) 100%);     
+    background: -o-radial-gradient(center, ellipse cover,  rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.5) 100%);     
+    background: -ms-radial-gradient(center, ellipse cover,  rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.5) 100%);     
+    : radial-gradient(ellipse at center,  rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.5) 100%);     
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6000000', endColorstr='#80000000',GradientType=1 );   
+    */
+
+    background-color: #333;
+    opacity: 0.5;
+    width: 210%;   
+    height: 210%;   
+    position: fixed;   
+    z-index: 2;   
+    top: 0px;
+    margin-left: -10px; 
+}

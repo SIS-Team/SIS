@@ -4,4 +4,5 @@
 	if ($_SESSION['loggedIn']) {
 		echo "window.location.href=\"menu.html\";";	//Wenn ein Cookie gesetzt ist wirder Nutzer direkt auf den Stundenplan weitergeleitet
 	}
+	
 ?>

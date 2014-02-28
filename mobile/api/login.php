@@ -7,15 +7,16 @@
 
 
 	header('Content-Type: application/javascript; charset=UTF-8');	
+	echo "string";
 	
-
-	if (isset($_GET['username'])) {
+	if (isset($_POST['username']) && isset($_POST['password'])) {
 		try {
-				login($_GET['username'],$_GET['password']);
+				login($_POST['username'],$_POST['password']);
 				echo "window.location.href = 'menu.html';";	//Nach dem Login wird der Nutzer direkt weitergeleitet(stundenplan.html)
 			} catch (Exception $e) {
 				echo "document.body.innerHTML += '<h1 style=\"color: red;\">Benutzername oder Passwort falsch!</h1>';";
 			}
 			die();
 	}
+	
 ?>

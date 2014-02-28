@@ -81,7 +81,8 @@ $( document ).ready(function() {
 		var start = lesson.startHour;
 		var cell = day + start;	//Festlegen in welcher Zelle die Stunde eingetragen werden soll	
 		//sdocument.write(lesson.seName);
-								
+		timetObject[aLesson].cellid = "";
+
 		for(;parseInt(start) <= lesson.endHour; start=parseInt(start) + 1)
 		{
 			

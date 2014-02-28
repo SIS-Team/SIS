@@ -56,44 +56,81 @@
 
 $( document ).ready(function() {
 
-	var j;	
-	var i;
+	var j = 0;	
+	var i = 0;
 	var iOld;
+	var timeOld=0;
 
 	for(aSubstitude in subsObject){					
 		var substitude = subsObject[aSubstitude];
 
 		console.log(substitude.subject);	//Darstellung der Daten in der Browserkonsole zur Überprüfung
 		
-		i = substitude.startHour;
-		if(j == 1)	//Falls mehrere Stunden mit der selben Startstunde(z.B. Doppelstunden) auftreten
-			iOld = i;
+
 		
 		var start = substitude.startHour;
 
 		for(;parseInt(start) <= substitude.endHour; start=parseInt(start) + 1)
-		{
+		{	
+
+			j = start;
+			j = 1;
+			i++;
+
 			var newTR = document.createElement("tr");
-			newTRid = "Supplierung";
+			newTR.id = "Supplierung";
 			document.getElementById("Tabelle").appendChild(newTR);
+
+			if(substitude.time != timeOld && timeOld != 0){
 			
-			//Eine Zeile aus der Supplierplantabelle wird erzeugt und dargestellt						
-			var newTD = document.createElement("td");
-			newTD.id = i + j + "1";
-			newTR.appendChild(newTD);
-			var newTD = document.createElement("td");
-			newTD.id = i + j + "2";
-			newTR.appendChild(newTD);
-			var newTD = document.createElement("td");
-			newTD.id = i + j + "3";
-			newTR.appendChild(newTD);
-			var newTD = document.createElement("td");
-			newTD.id = i + j + "4";
-			newTR.appendChild(newTD);
-			var newTD = document.createElement("td");
-			newTD.id = i + j + "5";
-			newTR.appendChild(newTD);
-			
+				//Eine Zeile aus der Supplierplantabelle wird erzeugt und dargestellt						
+				var newTD = document.createElement("td");
+				newTD.id = i + j + "1";
+				newTD.style.borderTop = "7px solid white";
+				newTR.appendChild(newTD);
+
+				var newTD = document.createElement("td");
+				newTD.id = i + j + "2";
+				newTD.style.borderTop = "7px solid white";
+				newTR.appendChild(newTD);
+
+				var newTD = document.createElement("td");
+				newTD.id = i + j + "3";
+				newTD.style.borderTop = "7px solid white";
+				newTR.appendChild(newTD);
+
+				var newTD = document.createElement("td");
+				newTD.id = i + j + "4";
+				newTD.style.borderTop = "7px solid white";
+				newTR.appendChild(newTD);
+
+				var newTD = document.createElement("td");
+				newTD.id = i + j + "5";
+				newTD.style.borderTop = "7px solid white";
+				newTR.appendChild(newTD);
+			}
+			else{
+				//Eine Zeile aus der Supplierplantabelle wird erzeugt und dargestellt						
+				var newTD = document.createElement("td");
+				newTD.id = i + j + "1";
+				newTR.appendChild(newTD);
+
+				var newTD = document.createElement("td");
+				newTD.id = i + j + "2";
+				newTR.appendChild(newTD);
+
+				var newTD = document.createElement("td");
+				newTD.id = i + j + "3";
+				newTR.appendChild(newTD);
+
+				var newTD = document.createElement("td");
+				newTD.id = i + j + "4";
+				newTR.appendChild(newTD);
+
+				var newTD = document.createElement("td");
+				newTD.id = i + j + "5";
+				newTR.appendChild(newTD);
+			}
 			
 			//Der Inhalt wird in die Zeile eingetragen
 			document.getElementById(i + j + "1").innerHTML=substitude.time;
@@ -102,8 +139,8 @@ $( document ).ready(function() {
 			document.getElementById(i + j + "4").innerHTML=substitude.teShort;
 			document.getElementById(i + j + "5").innerHTML=substitude.comment;
 			j++;
-			if(i != iOld)
-				j = 1;
+
+			timeOld=substitude.time;
 		}
 	}
 

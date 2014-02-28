@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<!-------------------------->
+	<!--Alle Skripte einbinden-->
+	<!-------------------------->
+	<script src="js/jquery.js" type="text/javascript"></script>
+	<script src="js/UrlListener.js" type="text/javascript"></script>
+	<script src="js/stundenplan.js" type="text/javascript"></script>
+	<script src="js/popup.js" type="text/javascript"></script>
+	<script src="js/scrollpos.js" type="text/javascript"></script>
+	<!--Die Datei timetables.php wird als Script eingebunden dadurch kann in dieser Datei php-Code und JavaScript verwendet werden-->
+	<script src="http://sis.htlinn.ac.at/mobile/api/timetables.php" type="text/javascript"></script>
+	<script src="http://sis.htlinn.ac.at/mobile/api/alttimetables.php" type="text/javascript"></script>
+	
+	<!------------------------------>
+	<!--Alle Stylesheets einbinden-->
+	<!------------------------------>
+	<link rel="stylesheet" type="text/css" href="css/popup.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<!--<link rel="stylesheet" type="text/css" href="css/jqueryMobile.css">-->	
+	
+	
+
+	
+
+
+</head>
+<body>
+
+	<!--DesignHeader HTLinnBild-->
+	<!--<div class="header">
+		<img alt="" src="./images/Header_Interface.png" width="100%">
+	</div>-->
+
+<div id="mainDiv">
+	
+	<!--Überschrift-->
+	<h1 class="headline">Stundenplan</h1><a href="menu.html" class="back">Zur&uuml;ck</a>
+
+
+		<!---------------------------->
+		<!--Leere Stundenplantabelle-->
+		<!---------------------------->
+	<table border="1" align="center" style="width:100%;">
+		<tr>
+			<th></th>
+			<th>Mo</th>
+			<th>Di</th>
+			<th>Mi</th>
+			<th>Do</th>
+			<th>Fr</th>
+		</tr>
+		<tr class="normal">
+			<td>08:00-08:50</td>
+			<td><a href=""><div id="11" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="21" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="31" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="41" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="51" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+		</tr>
+		<tr class="normal">
+			<td>08:50-09:40</td>
+			<td><a href=""><div id="12" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="22" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="32" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="42" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="52" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+		</tr>
+		<tr class="normal">
+			<td>09:55-10:45</td>
+			<td><a href=""><div id="13" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="23" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="33" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="43" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="53" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+		</tr>
+		<tr class="normal">
+			<td>10:45-11:35</td>
+			<td><a href=""><div id="14" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="24" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="34" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="44" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="54" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+		</tr>
+		<tr class="normal">
+			<td >11:40-12:30</td>
+			<td><a href=""><div id="15" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="25" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="35" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="45" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="55" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+		</tr>
+		<tr class="normal">
+			<td>12:30-13:20</td>
+			<td><a href=""><div id="16" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="26" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="36" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="46" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="56" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+		</tr>
+		<tr class="normal">
+			<td>13:20-14:10</td>
+			<td><a href=""><div id="17" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="27" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="37" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="47" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="57" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+		</tr>
+		<tr class="normal">
+			<td>14:10-15:00</td>
+			<td><a href=""><div id="18" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="28" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="38" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="48" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="58" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+		</tr>
+		<tr class="normal">
+			<td>15:15-16:05</td>
+			<td><a href=""><div id="19" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="29" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="39" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="49" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="59" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+		</tr>
+		<tr class="normal">
+			<td>16:05-16:55</td>
+			<td><a href=""><div id="110" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="210" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="310" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="410" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="510" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+		</tr>
+		<tr class="normal">
+			<td>16:55-17:45</td>
+			<td><a href=""><div id="111" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="211" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="311" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="411" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="511" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+		</tr>
+		<tr class="evening">
+			<td>18:00-18:45</td>
+			<td><a href=""><div id="112" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="212" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="312" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="412" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="512" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+		</tr>
+		<tr class="evening">
+			<td>18:45-19:30</td>
+			<td><a href=""><div id="113" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="213" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="313" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="413" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="513" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+		</tr>
+		<tr class="evening">
+			<td>19:45-20:30</td>
+			<td><a href=""><div id="114" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="214" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="314" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="414" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="514" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+		</tr>
+		<tr class="evening">
+			<td>20:30-21:15</td>
+			<td><a href=""><div id="115" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="215" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="315" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="415" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="515" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+		</tr>
+		<tr class="evening">
+			<td>21:15-22:00</td>
+			<td><a href=""><div id="116" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="216" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="316" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="416" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+			<td><a href=""><div id="516" class="openPopup" style="width:100%;height:100%;"></div></a></td>
+		</tr>
+	</table>
+
+</div>
+
+
+	<!--Inhalt von Popup-->
+	<div class="PopupCon">
+		<div class="Popup">
+			<p id="popupID">
+			
+			</p>
+		</div>
+	</div>
+
+	<div id="overlay" class="closePopup"></div>
+
+
+</body>
+</html>

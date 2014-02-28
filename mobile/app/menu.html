@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<!-------------------------->
+	<!--Alle Skripte einbinden-->
+	<!-------------------------->
+	<script src="js/screenFormat.js" type="text/javascript"></script>
+	<!--Die Datei timetables.php wird als Script eingebunden dadurch kann in dieser Datei php-Code und JavaScript verwendet werden-->
+	<script src="http://sis.htlinn.ac.at/mobile/api/timetables.php" type="text/javascript"></script>
+	
+	<!------------------------------>
+	<!--Alle Stylesheets einbinden-->
+	<!------------------------------>
+	<link rel="stylesheet" type="text/css" href="css/popup.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">	
+	<link rel="stylesheet" type="text/css" href="css/jqueryMobile.css">	
+	
+	
+
+	
+
+
+</head>
+<body onload="checkScreen()" onresize="checkScreen()">
+<div id="menuVertical">
+	<h1>SIS App</h1><a href="logout.html" class="back">Logout</a>
+
+	<a href="./stundenplan.html"><img src="./images/timetable.png" width="100%" style="position:relative; left:0%; opacity: 0.8" alt="Stundenplan"></a>
+	<a href="./supplierplan.html"><img src="./images/substitudes.png" width="100%" style="position:relative; left:0%; opacity: 0.8" alt="Supplierplan"></a>
+	<a href="./news.html"><img src="./images/news.png" width="100%" style="position:relative; left:0%; opacity: 0.8" alt="News"></a>
+</div>
+<div id="menuHorizontal">
+	<h1>SIS App</h1><a href="logout.html" class="back">Logout</a>
+	<div align="center">
+		<a href="./stundenplan.html"><img src="./images/timetableHor.png" width="32%" style="position:relative; left:0%; opacity: 0.8" alt="Stundenplan"></a>
+		<a href="./supplierplan.html"><img src="./images/substitudesHor.png" width="32%" style="position:relative; left:0%; opacity: 0.8" alt="Supplierplan"></a>
+		<a href="./news.html"><img src="./images/newsHor.png" width="32%" style="position:relative; left:0%; opacity: 0.8" alt="News"></a>
+	</div>
+	
+</div>
+
+</body>
+</html>
