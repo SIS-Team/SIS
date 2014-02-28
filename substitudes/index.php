@@ -16,7 +16,7 @@ include_once(ROOT_LOCATION . "/modules/other/miscellaneous.php");		//Stellt Vers
 
 ifNotLoggedInGotoLogin();	//Kontrolle ob angemeldet
 $permission = getPermission();
-if($permission == "root") $mode = "root";
+if($permission == "root") $mode = "student";
 else{
 	if($permission == "admin") $mode = "admin";
 	else {
@@ -30,7 +30,6 @@ $substitudes = array();
 pageHeader("Supplierplan","main");
 
 echo "<div class ='keys'>";
-echo "St. ... supplierte Stunde; ";
 echo "Sup. ...Supplierlehrer; ";
 echo "urs. ... urspr&uumlnglicher Lehrer; ";
 echo "</div>";
@@ -47,22 +46,33 @@ for($counter = 0; $counter <=2; $counter++)
 	//Tabellenkopfausgabe
 	echo "<table style =\"border-collapse:collapse\">";
 	echo "<tr>";
-	echo "<th>Klasse</th>";
-	echo "<th>St.</th>";
+	if($mode == "admin" or $mode == "root")	echo "<th>Klasse</th>";
+	echo "<th>Stunden</th>";
 	echo "<th>Sup</th>";
 	echo "<th>Fach</th>";
 	echo "<th>urs.</th>";
 	echo "<th>Bemerkung</th>";
 	echo "</tr>";
 		
-		
+	$oldClass = "";
 	$substitudes = getSubstitude($day,$mode);		//Supplierungen des gewählten Datums abrufen
 		if($_SESSION['id']= '20090396') {
 		}
 	for($count = 0;$count<count($substitudes); $count++)	//Supplierungen ausgeben
 		{
 			echo "<tr>";
-			echo "<td>".$substitudes[$count]['clName']."</td>";	//Klassenname
+			if($mode =="root" or $mode =="admin"){ 
+				if($oldClass != $substitudes[$count]['clName']){
+	 				if($count != count($substitudes)-1) echo "<td style=\"border-bottom:0\">";
+					else echo "<td>";
+					echo $substitudes[$count]['clName']."</td>";	//Klassenname
+					$oldClass = $substitudes[$count]['clName'];
+				}
+				else {
+	 				if($count != count($substitudes)-1) echo "<td style=\"border-top:0; border-bottom:0\"></td>";
+					else echo "<td style=\"border-top:0\"></td>";		
+				}
+			}
 			if(!empty($substitudes[$count]['startHour'])){
 				echo "<td>".$substitudes[$count]['startHour']." - ".$substitudes[$count]['endHour']."</td>";	//supplierte Stunde
 			}
@@ -96,18 +106,22 @@ function getSubstitude($date,$mode){	//Supplierungen des gewählten Datums abrufe
 	
 	$section = getAdminSection();
 	if($mode == "student"){
-		$where = "time = '".mysql_real_escape_string($date)."' and classes.name = '" . mysql_real_escape_string($_SESSION['class']) . "'";	
+		$where = "time = '".mysql_real_escape_string($date)."' and classes.name = '" . mysql_real_escape_string($_SESSION['class']) . "'";
+		$order = "startHour";	
 	}
 	if($mode == "admin"){
   		$where = "time = '".mysql_real_escape_string($date)."' and sections.short = '". mysql_real_escape_string($section)."'";
+		$order = "classes.name,startHour";
 	}
 	if($mode == "teacher"){
  		$where = "time = '".mysql_real_escape_string($date)."' and (teachers.short = '".mysql_real_escape_string($_SESSION['id'])."' or oldTeacher.short ='".mysql_real_escape_string($_SESSION['id'])."')";
+		$order = "startHour";
  	}
 	if($mode == "root"){
  		$where = "time = '".mysql_real_escape_string($date)."'";
+		$order = "classes.name,startHour";
 	}
-	$substitude_sql = selectSubstitude($where,"startHour")	
+	$substitude_sql = selectSubstitude($where,$order)	
 	or die("MySQL-Error: ".mysql_error());
 	while($substitude = mysql_fetch_array($substitude_sql)) {    
  	$substitudes[]=$substitude;
