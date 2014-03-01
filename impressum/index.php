@@ -219,6 +219,9 @@ Für dieses Projekt wurden verschiedener Fremdcode verwendet.<br />
 		<a target="_blank" href="http://www.fpdf.org/">FPDF</a> 
 	</li>
 	<li>
+		<a target="_blank" href="http://www.jqplot.com">jqPlot</a> 
+	</li>
+	<li>
 		<a target="_blank" href="http://www.itnewb.com/tutorial/Creating-the-Smooth-Scroll-Effect-with-JavaScript">Smooth-Scroll</a> <sup>1</sup>
 	</li>
 </ul>

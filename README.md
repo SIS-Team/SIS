@@ -109,6 +109,7 @@ Installation
 /modules/general/{MySQLpassword.def.php -> MySQLpassword.php}   
 /modules/general/{LDAPpassword.def.php -> LDAPpassword.php}   
 /modules/external/fpdf -> fpdf.zip unzip ( from fpdf.org)
+/modules/external/jqplot -> jqplot.zip unzip ( from jqplot.com)
 
 Notes
 -----
