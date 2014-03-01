@@ -279,6 +279,7 @@ printf("<table style=\"width:100%%;text-align:right\">\n");	//Tabellen Tag auf
 			$display["move"] = "none";
 			$display["add"] = "none";
 			$display["remove"] = "none";
+			$display["span"] = "none";
 			$display["suShort"] = "table-cell";
 			$display["teShort"] = "table-cell";
 			$display["roName"] = "table-cell";
@@ -320,6 +321,7 @@ printf("<table style=\"width:100%%;text-align:right\">\n");	//Tabellen Tag auf
 			$display["roName"] = "none";
 			$display["startHour"] = "none";
 			$display["endHour"] = "none";
+			$display["span"] = "table-cell";
 			$checked["free"]="checked";
 			$checked["remove"]="checked";
 		}
@@ -374,10 +376,10 @@ printf("<table style=\"width:100%%;text-align:right\">\n");	//Tabellen Tag auf
 					
 				}
 				else if($f[2] == "text") {
-					if($checked["free"]&&$checked["remove"] && $f[0]=="comment")
-						printf("<td colspan=\"5\"></td>\n");
-					printf("<td id=\"visibleCell%s%s\" style=\"display:%s\">%s <input  type=\"text\" name=\"%s\" size=\"%spx\" value=\"%s\" %s >\n",	//Textbox erstellen
-							$ID,$f[0],$display[$f[0]],$f[1], $f[0], $f[3], $f[5], $f[6]);
+					if($f[0]=="comment")
+						printf("<td id=\"visibleSpan%s\" colspan=\"5\" style = \"display:%s\"></td>",$ID,$display["span"]);
+					printf("<td id=\"visibleCell%s%s\" style=\"display:%s\">%s <input id=\"%s%s\" type=\"text\" name=\"%s\" size=\"%spx\" value=\"%s\" %s >\n",	//Textbox erstellen
+							$ID,$f[0],$display[$f[0]],$f[1],$ID,$f[0], $f[0], $f[3], $f[5], $f[6]);
 
 				}
 				else if($f[2] == "hidden") {
@@ -394,8 +396,7 @@ printf("<table style=\"width:100%%;text-align:right\">\n");	//Tabellen Tag auf
 			
 			if($content==false)
 			{
-				
-					
+				printf("<td colspan=\"5\"></td>");
 				form_savedelete(true);
 			}
 			else

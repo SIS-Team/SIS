@@ -20,6 +20,8 @@ function Visibility(id,typ) {
 			document.getElementById('visibleCell'+id+"roName").style.display="table-cell";	//Zeile unsichtbar
 			document.getElementById('visibleCell'+id+"startHour").style.display="table-cell";		//Zeile unsichtbar
 			document.getElementById('visibleCell'+id+"endHour").style.display="table-cell";	//Zeile unsichtbar
+			document.getElementById('visibleSpan'+id).style.display="none";	//sichtbar machen
+			document.getElementById(id+"comment").value="";	//sichtbar machen
 		 }
 		else{		//sonst
 			document.getElementById('visibleRadio'+id+"move").checked = true;
@@ -30,6 +32,8 @@ function Visibility(id,typ) {
 			document.getElementById('visibleCell'+id+"oldStartHour").style.display="table-cell";	//sichtbar machen
 			document.getElementById('visibleCell'+id+"oldEndHour").style.display="table-cell";	//sichtbar machen
 			document.getElementById('visibleCell'+id+"oldTeShort").style.display="table-cell";	//sichtbar machen
+			document.getElementById('visibleSpan'+id).style.display="none";	//sichtbar machen
+			document.getElementById(id+"comment").value="Verschiebung von";	//sichtbar machen
 		}
 	}
 	else if(typ == "remove" ){
@@ -41,9 +45,12 @@ function Visibility(id,typ) {
 		document.getElementById('visibleCell'+id+"oldStartHour").style.display="table-cell";	//sichtbar machen
 		document.getElementById('visibleCell'+id+"oldEndHour").style.display="table-cell";	//sichtbar machen
 		document.getElementById('visibleCell'+id+"oldTeShort").style.display="table-cell";	//sichtbar machen
+		document.getElementById('visibleSpan'+id).style.display="table-cell";	//sichtbar machen
+		document.getElementById(id+"comment").value="Entfällt";	//sichtbar machen
 	}
 	else if(typ == "add" ){
 		document.getElementById('visibleCell'+id+"suShort").style.display="table-cell";		//Zeile unsichtbar
+		document.getElementById('visibleSpan'+id).style.display="none";	//sichtbar machen
 		document.getElementById('visibleCell'+id+"teShort").style.display="table-cell";		//Zeile unsichtbar
 		document.getElementById('visibleCell'+id+"roName").style.display="table-cell";	//Zeile unsichtbar
 		document.getElementById('visibleCell'+id+"startHour").style.display="table-cell";		//Zeile unsichtbar
@@ -51,16 +58,19 @@ function Visibility(id,typ) {
 		document.getElementById('visibleCell'+id+"oldStartHour").style.display="none";	//sichtbar machen
 		document.getElementById('visibleCell'+id+"oldEndHour").style.display="none";	//sichtbar machen
 		document.getElementById('visibleCell'+id+"oldTeShort").style.display="none";	//sichtbar machen
+		document.getElementById(id+"comment").value="";	//sichtbar machen
 	}
 	else if(typ == "move" ){
 		document.getElementById('visibleCell'+id+"suShort").style.display="table-cell";		//Zeile unsichtbar
 		document.getElementById('visibleCell'+id+"teShort").style.display="table-cell";		//Zeile unsichtbar
+		document.getElementById('visibleSpan'+id).style.display="none";	//sichtbar machen
 		document.getElementById('visibleCell'+id+"roName").style.display="table-cell";	//Zeile unsichtbar
 		document.getElementById('visibleCell'+id+"startHour").style.display="table-cell";		//Zeile unsichtbar
 		document.getElementById('visibleCell'+id+"endHour").style.display="table-cell";	//Zeile unsichtbar
 		document.getElementById('visibleCell'+id+"oldStartHour").style.display="table-cell";	//sichtbar machen
 		document.getElementById('visibleCell'+id+"oldEndHour").style.display="table-cell";	//sichtbar machen
 		document.getElementById('visibleCell'+id+"oldTeShort").style.display="table-cell";	//sichtbar machen
+		document.getElementById(id+"comment").value="Verschiebung von";	//sichtbar machen
 	}
 }
 
