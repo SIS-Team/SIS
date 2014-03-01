@@ -1,17 +1,10 @@
 <?php
 session_start();
-//	error_reporting(E_ALL);
-
-// TODO für klasse oder lehrer -> done
-
 	/* /timetables/index.php
 	 * Autor: Weiland Mathias
 	 * Version: 0.1.0
 	 * Beschreibung:
 	 *	Gibt Stundenplan von Klasse aus
-	 *
-	 * Changelog:
-	 * 	0.1.0:  08. 10. 2013, Weiland Mathias  - erste Version
 	 */
 include_once("../config.php");
 include_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
@@ -23,7 +16,6 @@ $isTeacher =$_SESSION['isTeacher'];
 
 if($isTeacher) {
 	$name=$_SESSION['id'];	//Kontrolle ob Lehrer
-// TODO benannte konstante "lehrer" anstatt 1 -> done
 	$mode = "lehrer" ;
 }
 else {
@@ -63,7 +55,6 @@ echo "<th>Do</th>";
 echo "<th>Fr</th>";
 echo "</tr>";
 		
-// TODO why nget ->done
 $lessons = getLessons($name,$mode);  //fragt Stunden ab, die in der gesuchten Klasse stattfinden
 $hours = array();
 for ($i = 0; $i < count($lessons); $i++) {	
@@ -88,21 +79,19 @@ $dayShort= array(1=>'Mo',2=>'Di',3=>'Mi',4=>'Do',5=>'Fr');
 if(date("N")<6) $offset = 1-date("N");
 else $offset = 8-date("N");
 if($displaytype == "modificated" ){
- //---------------------------------------------------------------------------------------------------------------------------
 echo "Dieser Stundenplan ist g&uuml;ltig: ". date("Y.m.d",time()+24*60*60*$offset) ."-".date("Y.m.d",time()+24*60*60*($offset+5));
 
 	for($j=0;$j<5;$j++)
 	{
 		$substitudes = getSubstitude(date("Y-m-d",time()+24*60*60*$offset),$name,$mode);
 		$offset++;
-	//	print_r($substitudes);
 		
 		if(isset($substitudes)){
 			for($i=0; $i <count($substitudes); $i++)
 			{
  				$dayName =  $dayShort[date("N",strtotime($substitudes[$i]['time']))];
 				if($substitudes[$i]['newSub']){
- 				 	$hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "</td><td class ='changed'><span style=\" color:black \">".$substitudes[$i]['suShort']."</span>";
+ 				 	$hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "</td><td class ='changed'>".$substitudes[$i]['suShort'];
 					$hours[$substitudes[$i]['startHour']][$dayName]->startHour = $substitudes[$i]['startHour'];
 					$hours[$substitudes[$i]['startHour']][$dayName]->endHour = $substitudes[$i]['endHour'];
 				}
@@ -110,7 +99,7 @@ echo "Dieser Stundenplan ist g&uuml;ltig: ". date("Y.m.d",time()+24*60*60*$offse
 					$temp = $hours[$substitudes[$i]['oldStartHour']][$dayName]->suShort;
 					$temp = str_replace($substitudes[$i]['oldSuShort'],"",$temp);
 					$temp = str_replace("|","",$temp);
-					$hours[$substitudes[$i]['oldStartHour']][$dayName]->suShort = $temp;
+					$hours[$substitudes[$i]['oldStartHour']][$dayName]->suShort = "</td><td class ='changed'>".$temp;
 				}
 				if(!$substitudes[$i]['newSub'] and !$substitudes[$i]['remove']){
 					if(isset($hours[$substitudes[$i]['oldStartHour']][$dayName])){
@@ -120,9 +109,9 @@ echo "Dieser Stundenplan ist g&uuml;ltig: ". date("Y.m.d",time()+24*60*60*$offse
 						$hours[$substitudes[$i]['oldStartHour']][$dayName]->suShort = $temp;
 					}
 					if(isset($substitudes[$i]['suShort'])){
- 				 	$hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "</td><td class ='changed'><span style=\" color: black\">".$substitudes[$i]['suShort']."</span>";
+ 				 	$hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "</td><td class ='changed'>".$substitudes[$i]['suShort'];
 					}
-					else $hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "</td><td class ='changed'> <span style=\" color: black\">".$substitudes[$i]['oldSuShort']."</span>";
+					else $hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "</td><td class ='changed'>".$substitudes[$i]['oldSuShort'];
 					
 					$hours[$substitudes[$i]['startHour']][$dayName]->startHour = $substitudes[$i]['startHour'];
 					$hours[$substitudes[$i]['startHour']][$dayName]->endHour = $substitudes[$i]['endHour'];
@@ -131,7 +120,6 @@ echo "Dieser Stundenplan ist g&uuml;ltig: ". date("Y.m.d",time()+24*60*60*$offse
 			}
 		}
 	}
-//----------------------------------------------------------------------------------------------------------------------------
 }
 else echo "</br>";
 $classType = isEvening($hours);	//kontrolliert ob Abendschule
@@ -153,11 +141,11 @@ $days=array(0=> "Mo",1=> "Di",2=> "Mi",3=>"Do",4=>"Fr");
 for ($i = $tableBegin; $i < $tableEnd; $i++) {
  	echo "<tr>";
  	echo "<td style=\"width:50px\">".$i."</td>";			//gibt Stundennummer an
- 	if (!isset($hours[$i])){ //echo "check";
+ 	if (!isset($hours[$i])){ 
 		for ($j = 0; $j < 5; $j++) 
 			echo "<td>&#160;</td>"; //Ausgabe eines leeren Feldes, wenn keine Stunde vorhanden
 	} 
-	else {// echo "checkv2";
+	else {
 		for ($j = 0; $j < 5; $j++) {
 			if(isset($hours[$i][$days[$j]])){
 					 if(!strpos($hours[$i][$days[$j]]->suShort,"<td")){
@@ -202,7 +190,6 @@ function getLessons($name,$mode) {		//Abfrage von Stunden von vorgegebener Klass
 	}
 	$result = selectLesson($where, "");
 	$lessons = array();
-	echo mysql_error();
 	while ($row = mysql_fetch_object($result)) {
 		$lessons[] = $row;
 	}
@@ -236,10 +223,9 @@ function getSubstitude($date,$name,$mode){	//Supplierungen des gewählten Datums 
 		else {
 			$where = "time = '".mysql_real_escape_string($date)."' and teachers.short = '" . mysql_real_escape_string($name) . "'";
 		}	
-			$substitude_sql = selectSubstitude($where,"")	
-			or die("MySQL-Error: ".mysql_error());
+			$substitude_sql = selectSubstitude($where,"");
 			while($substitude = mysql_fetch_array($substitude_sql)) {    
-		 	$substitudes[]=$substitude;
+		 		$substitudes[]=$substitude;
 			}	
 			
 			if(isset($substitudes))	return $substitudes;

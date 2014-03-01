@@ -1,7 +1,6 @@
 .column {
 	position: absolute;
-	top: 150px;
-	width: 400px;
+	top: 60px;
 	font-size: 20px;
 	
 }
@@ -13,18 +12,25 @@
 }
 
 #d0 {
-	left: 5px;
+ 	float: left;
+ 	width: 100%;
+	margin-left: 1%;
 }
 
 #d1 {
-	left: 405px;
+	width: 100%;
+	position: float;
+	left: 450px;
 	padding-left: 5px;
 	border-right: solid 1px white;
 	border-left: solid 1px white;
 }
 
 #d2 {
-	left: 815px;
+	margin-right: 1%;
+	left: 890px;
+	float: right;
+	width: 100%;
 }
 
 .keys {
@@ -45,5 +51,4 @@
 .background table{
 /*	background-color: rgba(0,0,0,0.5);*/
 	
-
 }
