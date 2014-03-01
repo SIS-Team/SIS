@@ -18,6 +18,7 @@ function dateChange($date){
 <form method="post">
 	<table >
 		<tr style="vertical-align: bottom">
+			<button type="submit" name="ok" style="display:none"></button>
 			<button class="nonButton" name="left" align="absmiddle" value="1">
 				<?php include(ROOT_LOCATION . "/data/images/larrow.svg"); ?>
 			</button>
