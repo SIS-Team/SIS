@@ -2,7 +2,6 @@
 
 	/* /statistics/index.php
 	 * Autor: Handle Marco
-	 * Version: 0.2.0
 	 * Beschreibung:
 	 *	Erstellt das Formular für die Hilfe
 	 *
@@ -37,6 +36,9 @@ pageHeader("Statistiken","main");
 <script type="text/javascript" src="<?php echo RELATIVE_ROOT;?>/modules/external/jqplot/plugins/jqplot.canvasAxisLabelRenderer.min.js"></script>
 <script type="text/javascript" src="<?php echo RELATIVE_ROOT;?>/modules/external/jqplot/plugins/jqplot.canvasAxisTickRenderer.min.js"></script>
 <script type="text/javascript" src="<?php echo RELATIVE_ROOT;?>/modules/external/jqplot/plugins/jqplot.canvasTextRenderer.min.js"></script>
+<script type="text/javascript" src="<?php echo RELATIVE_ROOT;?>/modules/external/jqplot/plugins/jqplot.barRenderer.min.js"></script>
+<script type="text/javascript" src="<?php echo RELATIVE_ROOT;?>/modules/external/jqplot/plugins/jqplot.categoryAxisRenderer.min.js"></script>
+<script type="text/javascript" src="<?php echo RELATIVE_ROOT;?>/modules/external/jqplot/plugins/jqplot.pointLabels.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
     var s1 = [ <?php echo $browser; ?>];
@@ -213,47 +215,20 @@ $(document).ready(function(){
     });
 });
 $(document).ready(function(){
-  var s7 = [ <?php echo $hourFrequenzy; ?>];
-  var plot7 = $.jqplot('chart7', [s7], { 
-      series:[{showMarker:false}],
-      title:'Aufrufe/Stunde',
-      axes:{
-        xaxis:{
-          label:'Stunden',
-	  min: 0,
-	  max: 23,
-	  ticks: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23],
-          labelRenderer: $.jqplot.CanvasAxisLabelRenderer,
-          tickOptions: {
-		formatString: '%i',
-          },
-	  labelOptions: {
-            fontFamily: 'Georgia, Serif',
-            fontSize: '12pt',
-	    textColor: '#FFF',
-          }
-        },
-        yaxis:{
-	  min: 0,
-          labelRenderer: $.jqplot.CanvasAxisLabelRenderer,
-          labelOptions: {
-            fontFamily: 'Georgia, Serif',
-            fontSize: '12pt',
-	    textColor: 'white',
-          }
-        },
-	seriesDefaults:{
-        	rendererOptions:{
-				smooth: true,
-		},
-            pointLabels:{ 
-            	show: true 
+	var s7 = [ <?php echo $hourFrequenzy; ?>];
+	var plot7 = $.jqplot('chart7', [s7], {
+		title:'Aufrufe/Stunde',
+	        seriesDefaults: {
+	 		renderer:$.jqplot.BarRenderer,
+                	rendererOptions: {
+                	}
             	},
-            showMarker:false, 
-            color: '#4BB2C5'
-        },
-      }
-  });
+            	axes: {
+                	xaxis: {
+                    		renderer: $.jqplot.CategoryAxisRenderer
+                	}
+            	}
+	});
 });
 </script>
 <?php

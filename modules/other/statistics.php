@@ -4,7 +4,7 @@
 * Autor: Handle Marco,
 */
 
-include_once("../../config.php");
+
 include_once(ROOT_LOCATION."/modules/other/getBrowser.php");
 include_once(ROOT_LOCATION."/modules/general/Connect.php");
 
@@ -125,26 +125,6 @@ $str[]=getHourFrequenzy();
 $str[]=$str6;
 //echo $str;
 return $str;
-}
-
-function getHourFrequenzy(){
-
-$sql = "SELECT logsMain.time FROM logsMain LEFT JOIN logsUSConn ON logsUSConn.ID = logsMain.connFK LEFT JOIN logsSessions ON logsSessions.ID = logsUSConn.sessionFK LEFT JOIN logsUsers ON logsUsers.ID = logsUSConn.userFK WHERE logsUsers.LDAP!='20090334' AND logsUsers.LDAP!='20090319' AND logsUsers.LDAP!='20090340' AND logsUsers.LDAP!='20090396' AND logsUsers.LDAP!='20090359'";
-$result = mysql_query($sql);
-while($row=mysql_fetch_array($result)){
-	$hour[]=date("G",$row[0]);
-	$day[]=date("d.m.Y",$row[0]);
-}
-
-$hour = countDat($hour,"SORT_NUMERIC");
-$day = count(countDat($day,"SORT_STRING"));
-
-foreach($hour as $i => $h){
-	$str[] = "[".$h[0].",".round($h[1]/$day)."]";
-}
-
-return implode(",",$str);
-
 }
 
 function getHourFrequenzy(){
