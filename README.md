@@ -108,8 +108,8 @@ Installation
 /{config.def.php -> config.php}   
 /modules/general/{MySQLpassword.def.php -> MySQLpassword.php}   
 /modules/general/{LDAPpassword.def.php -> LDAPpassword.php}   
-/modules/external/fpdf -> fpdf.zip unzip ( from fpdf.org)   
-/modules/external/jqplot -> jqplot.zip unzip ( from jqplot.com)
+/modules/external/fpdf -> fpdf.zip unzip ( from http://www.fpdf.org)   
+/modules/external/jqplot -> jqplot.zip unzip ( from http://www.jqplot.com)
 
 Notes
 -----
