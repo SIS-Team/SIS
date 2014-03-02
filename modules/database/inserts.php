@@ -609,6 +609,43 @@ mysql_query($sql);	//Befehl ausführen
 
 }
 
+//Funktion zum löschen eines Datensatzes
+//$ID......Die Datensatz ID
+//$table...Tabellenname als String
+function hourDelete(){
+
+
+$sql="SELECT lessons.ID FROM lessons INNER JOIN lessonsBase ON lessonsBase.ID = lessons.lessonBaseFK INNER JOIN classes ON lessonsBase.classFK = classes.ID INNER JOIN hours ON lessonsBase.startHourFK = hours.ID WHERE classes.name = '".$_POST['class']."' AND hours.weekdayShort = '".$_POST['day']."'";
+$result = mysql_query($sql);
+
+while($lessons[]=mysql_fetch_array($result)){
+}
+unset($lessons[count($lessons)-1]);
+
+$sql="SELECT lessonsBase.ID FROM lessonsBase INNER JOIN classes ON lessonsBase.classFK = classes.ID INNER JOIN hours ON lessonsBase.startHourFK = hours.ID WHERE classes.name = '".$_POST['class']."' AND hours.weekdayShort = '".$_POST['day']."'";
+$result = mysql_query($sql);
+
+while($lessonsBase[]=mysql_fetch_array($result)){
+}
+unset($lessonsBase[count($lessonsBase)-1]);
+
+
+foreach($lessons as $l){
+
+$sql = "DELETE FROM lessons WHERE ID='".$l['ID']."'";
+mysql_query($sql);
+
+}
+
+foreach($lessonsBase as $l){
+
+$sql = "DELETE FROM lessonsBase WHERE ID='".$l['ID']."'";
+mysql_query($sql);
+
+}
+
+}
+
 //Funktion zum Kontrollieren von Selects und Post
 //Wird ein Post Wert gegeben und der Select ist leer --> Fehler
 //Beides leer --> richtig

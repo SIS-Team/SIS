@@ -48,6 +48,9 @@ if(!empty($_POST['save']) && $_POST['save']!=""){
 	HashCheck($hashGenerator);
 	lessons();
 }
+if(!empty($_POST['hourDelete']) && $_POST['hourDelete']!=""){
+	hourDelete();
+}
 
 
 //Seitenheader
@@ -76,8 +79,10 @@ printf("<noscript><br>Bitte aktivieren Sie JavaScript. Ohne JavaScript kann kein
 printf("Klasse: <a href=\"index.php\" >%s</a> und der Tag: %s",$_POST['class'],$_POST['day']);
 $days=prevNextDay($_POST['day']);
 //HashCheck();
-
-
+printf("<form method=\"POST\"><button type=\"submit\" name=\"hourDelete\" value=\"hourDelete\">Stundenplan l&ouml;schen</button>");
+printf("<input type=\"hidden\" name=\"class\" value=\"%s\"",$_POST['class']);
+printf("<input type=\"hidden\" name=\"class\" value=\"%s\"",$_POST['day']);
+printf("</form>");
 printf("<form action=\"lessons.php\" method=\"POST\">\n");
 printf("<table width=\"100%%\"><tr>");
 
