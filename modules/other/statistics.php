@@ -8,9 +8,18 @@
 include_once(ROOT_LOCATION."/modules/other/getBrowser.php");
 include_once(ROOT_LOCATION."/modules/general/Connect.php");
 
-function get(){
+function get($mode){
 
-$sql = "SELECT logsSessions.userAgent FROM logsMain LEFT JOIN logsUSConn ON logsUSConn.ID = logsMain.connFK LEFT JOIN logsSessions ON logsSessions.ID = logsUSConn.sessionFK LEFT JOIN logsUsers ON logsUsers.ID = logsUSConn.userFK WHERE logsUsers.LDAP!='20090334' AND logsUsers.LDAP!='20090319' AND logsUsers.LDAP!='20090340' AND logsUsers.LDAP!='20090396' AND logsUsers.LDAP!='20090359'";
+if($mode=="first"){
+	$timeRelease = strtotime("02-03-2013 20:39");
+}
+else if($mode=="second"){
+	$timeRelease = strtotime("02-03-2014 20:39");
+}
+
+//echo date("d-m-Y H:i:s",$timeRelease);
+
+$sql = "SELECT logsSessions.userAgent FROM logsMain LEFT JOIN logsUSConn ON logsUSConn.ID = logsMain.connFK LEFT JOIN logsSessions ON logsSessions.ID = logsUSConn.sessionFK LEFT JOIN logsUsers ON logsUsers.ID = logsUSConn.userFK WHERE logsUsers.LDAP!='20090334' AND logsUsers.LDAP!='20090319' AND logsUsers.LDAP!='20090340' AND logsUsers.LDAP!='20090396' AND logsUsers.LDAP!='20090359' AND logsMain.time > '".$timeRelease."'";
 $result = mysql_query($sql);
 while($row=mysql_fetch_array($result)){
 
@@ -22,7 +31,7 @@ while($row=mysql_fetch_array($result)){
 
 for($i=1;$i<8;$i++){
 
-$sql = "SELECT COUNT(classes.ID) FROM logsMain LEFT JOIN logsUSConn ON logsUSConn.ID = logsMain.connFK LEFT JOIN logsSessions ON logsSessions.ID = logsUSConn.sessionFK LEFT JOIN logsUsers ON logsUsers.ID = logsUSConn.userFK LEFT JOIN classes ON classes.ID = logsUsers.classesFK WHERE classes.name LIKE '".$i."%' AND logsUsers.LDAP!='20090334' AND logsUsers.LDAP!='20090319' AND logsUsers.LDAP!='20090340' AND logsUsers.LDAP!='20090396' AND logsUsers.LDAP!='20090359' AND logsUsers.isTeacher='0'";
+$sql = "SELECT COUNT(classes.ID) FROM logsMain LEFT JOIN logsUSConn ON logsUSConn.ID = logsMain.connFK LEFT JOIN logsSessions ON logsSessions.ID = logsUSConn.sessionFK LEFT JOIN logsUsers ON logsUsers.ID = logsUSConn.userFK LEFT JOIN classes ON classes.ID = logsUsers.classesFK WHERE classes.name LIKE '".$i."%' AND logsUsers.LDAP!='20090334' AND logsUsers.LDAP!='20090319' AND logsUsers.LDAP!='20090340' AND logsUsers.LDAP!='20090396' AND logsUsers.LDAP!='20090359' AND logsUsers.isTeacher='0' AND logsMain.time > '".$timeRelease."'";
 $result = mysql_query($sql);
 $temp = mysql_fetch_row($result);
 
@@ -30,7 +39,7 @@ if($temp[0]!=0)
 	$classes[]=array($i.". Jahrgang",$temp[0]);
 }
 
-$sql = "SELECT COUNT(logsUsers.ID) FROM logsMain LEFT JOIN logsUSConn ON logsUSConn.ID = logsMain.connFK LEFT JOIN logsSessions ON logsSessions.ID = logsUSConn.sessionFK LEFT JOIN logsUsers ON logsUsers.ID = logsUSConn.userFK WHERE logsUsers.LDAP!='20090334' AND logsUsers.LDAP!='20090319' AND logsUsers.LDAP!='20090340' AND logsUsers.LDAP!='20090396' AND logsUsers.LDAP!='20090359' AND logsUsers.isTeacher='1'";
+$sql = "SELECT COUNT(logsUsers.ID) FROM logsMain LEFT JOIN logsUSConn ON logsUSConn.ID = logsMain.connFK LEFT JOIN logsSessions ON logsSessions.ID = logsUSConn.sessionFK LEFT JOIN logsUsers ON logsUsers.ID = logsUSConn.userFK WHERE logsUsers.LDAP!='20090334' AND logsUsers.LDAP!='20090319' AND logsUsers.LDAP!='20090340' AND logsUsers.LDAP!='20090396' AND logsUsers.LDAP!='20090359' AND logsUsers.isTeacher='1' AND logsMain.time > '".$timeRelease."'";
 $result = mysql_query($sql);
 $temp = mysql_fetch_row($result);
 
@@ -39,7 +48,7 @@ if($temp[0]!=0)
 $section = array('N','E','W','M');
 foreach($section as $s){
 
-$sql = "SELECT COUNT(sections.ID) FROM logsMain LEFT JOIN logsUSConn ON logsUSConn.ID = logsMain.connFK LEFT JOIN logsSessions ON logsSessions.ID = logsUSConn.sessionFK LEFT JOIN logsUsers ON logsUsers.ID = logsUSConn.userFK LEFT JOIN sections ON sections.ID = logsUsers.sectionsFK WHERE sections.short LIKE '".$s."' AND logsUsers.LDAP!='20090334' AND logsUsers.LDAP!='20090319' AND logsUsers.LDAP!='20090340' AND logsUsers.LDAP!='20090396' AND logsUsers.LDAP!='20090359'";
+$sql = "SELECT COUNT(sections.ID) FROM logsMain LEFT JOIN logsUSConn ON logsUSConn.ID = logsMain.connFK LEFT JOIN logsSessions ON logsSessions.ID = logsUSConn.sessionFK LEFT JOIN logsUsers ON logsUsers.ID = logsUSConn.userFK LEFT JOIN sections ON sections.ID = logsUsers.sectionsFK WHERE sections.short LIKE '".$s."' AND logsUsers.LDAP!='20090334' AND logsUsers.LDAP!='20090319' AND logsUsers.LDAP!='20090340' AND logsUsers.LDAP!='20090396' AND logsUsers.LDAP!='20090359' AND logsMain.time > '".$timeRelease."'";
 $result = mysql_query($sql);
 $temp = mysql_fetch_row($result);
 
@@ -47,34 +56,34 @@ if($temp[0]!=0)
 	$sections[]=array($s." Abteilung",$temp[0]);
 }
 
-$sql = "SELECT COUNT(logsMain.ID) FROM logsMain LEFT JOIN logsUSConn ON logsUSConn.ID = logsMain.connFK LEFT JOIN logsSessions ON logsSessions.ID = logsUSConn.sessionFK LEFT JOIN logsUsers ON logsUsers.ID = logsUSConn.userFK WHERE logsMain.site LIKE '%timetables%' AND logsUsers.LDAP!='20090334' AND logsUsers.LDAP!='20090319' AND logsUsers.LDAP!='20090340' AND logsUsers.LDAP!='20090396' AND logsUsers.LDAP!='20090359'";
+$sql = "SELECT COUNT(logsMain.ID) FROM logsMain LEFT JOIN logsUSConn ON logsUSConn.ID = logsMain.connFK LEFT JOIN logsSessions ON logsSessions.ID = logsUSConn.sessionFK LEFT JOIN logsUsers ON logsUsers.ID = logsUSConn.userFK WHERE logsMain.site LIKE '%timetables%' AND logsUsers.LDAP!='20090334' AND logsUsers.LDAP!='20090319' AND logsUsers.LDAP!='20090340' AND logsUsers.LDAP!='20090396' AND logsUsers.LDAP!='20090359' AND logsMain.time > '".$timeRelease."'";
 $result = mysql_query($sql);
 $temp = mysql_fetch_row($result);
 
 if($temp[0]!=0)
 	$sitesSub[]=array("Stundenplan/Modifiziert",$temp[0]);
-$sql = "SELECT COUNT(logsMain.ID) FROM logsMain LEFT JOIN logsUSConn ON logsUSConn.ID = logsMain.connFK LEFT JOIN logsSessions ON logsSessions.ID = logsUSConn.sessionFK LEFT JOIN logsUsers ON logsUsers.ID = logsUSConn.userFK WHERE logsMain.site LIKE '%substitudes%' AND logsUsers.LDAP!='20090334' AND logsUsers.LDAP!='20090319' AND logsUsers.LDAP!='20090340' AND logsUsers.LDAP!='20090396' AND logsUsers.LDAP!='20090359'";
+$sql = "SELECT COUNT(logsMain.ID) FROM logsMain LEFT JOIN logsUSConn ON logsUSConn.ID = logsMain.connFK LEFT JOIN logsSessions ON logsSessions.ID = logsUSConn.sessionFK LEFT JOIN logsUsers ON logsUsers.ID = logsUSConn.userFK WHERE logsMain.site LIKE '%substitudes%' AND logsUsers.LDAP!='20090334' AND logsUsers.LDAP!='20090319' AND logsUsers.LDAP!='20090340' AND logsUsers.LDAP!='20090396' AND logsUsers.LDAP!='20090359' AND logsMain.time > '".$timeRelease."'";
 $result = mysql_query($sql);
 $temp = mysql_fetch_row($result);
 
 if($temp[0]!=0)
 	$sitesSub[]=array("Supplierplan",$temp[0]);
 
-$sql = "SELECT COUNT(logsMain.ID) FROM logsMain LEFT JOIN logsUSConn ON logsUSConn.ID = logsMain.connFK LEFT JOIN logsSessions ON logsSessions.ID = logsUSConn.sessionFK LEFT JOIN logsUsers ON logsUsers.ID = logsUSConn.userFK WHERE logsMain.site LIKE '%mobile/api/substitudes%' AND logsUsers.LDAP!='20090334' AND logsUsers.LDAP!='20090319' AND logsUsers.LDAP!='20090340' AND logsUsers.LDAP!='20090396' AND logsUsers.LDAP!='20090359'";
+$sql = "SELECT COUNT(logsMain.ID) FROM logsMain LEFT JOIN logsUSConn ON logsUSConn.ID = logsMain.connFK LEFT JOIN logsSessions ON logsSessions.ID = logsUSConn.sessionFK LEFT JOIN logsUsers ON logsUsers.ID = logsUSConn.userFK WHERE logsMain.site LIKE '%mobile/api/substitudes%' AND logsUsers.LDAP!='20090334' AND logsUsers.LDAP!='20090319' AND logsUsers.LDAP!='20090340' AND logsUsers.LDAP!='20090396' AND logsUsers.LDAP!='20090359' AND logsMain.time > '".$timeRelease."'";
 $result = mysql_query($sql);
 $temp = mysql_fetch_row($result);
 
 if($temp[0]!=0)
 	$sitesSub[]=array("Supplierplan Mobil",$temp[0]);
 
-$sql = "SELECT COUNT(logsMain.ID) FROM logsMain LEFT JOIN logsUSConn ON logsUSConn.ID = logsMain.connFK LEFT JOIN logsSessions ON logsSessions.ID = logsUSConn.sessionFK LEFT JOIN logsUsers ON logsUsers.ID = logsUSConn.userFK WHERE logsMain.site LIKE '%mobile%' AND logsUsers.LDAP!='20090334' AND logsUsers.LDAP!='20090319' AND logsUsers.LDAP!='20090340' AND logsUsers.LDAP!='20090396' AND logsUsers.LDAP!='20090359'";
+$sql = "SELECT COUNT(logsMain.ID) FROM logsMain LEFT JOIN logsUSConn ON logsUSConn.ID = logsMain.connFK LEFT JOIN logsSessions ON logsSessions.ID = logsUSConn.sessionFK LEFT JOIN logsUsers ON logsUsers.ID = logsUSConn.userFK WHERE logsMain.site LIKE '%mobile%' AND logsUsers.LDAP!='20090334' AND logsUsers.LDAP!='20090319' AND logsUsers.LDAP!='20090340' AND logsUsers.LDAP!='20090396' AND logsUsers.LDAP!='20090359' AND logsMain.time > '".$timeRelease."'";
 $result = mysql_query($sql);
 $temp = mysql_fetch_row($result);
 
 if($temp[0]!=0)
 	$mobileWeb[]=array("App",$temp[0]);
 
-$sql = "SELECT COUNT(logsMain.ID) FROM logsMain LEFT JOIN logsUSConn ON logsUSConn.ID = logsMain.connFK LEFT JOIN logsSessions ON logsSessions.ID = logsUSConn.sessionFK LEFT JOIN logsUsers ON logsUsers.ID = logsUSConn.userFK WHERE logsMain.site NOT LIKE '%mobile%' AND logsUsers.LDAP!='20090334' AND logsUsers.LDAP!='20090319' AND logsUsers.LDAP!='20090340' AND logsUsers.LDAP!='20090396' AND logsUsers.LDAP!='20090359'";
+$sql = "SELECT COUNT(logsMain.ID) FROM logsMain LEFT JOIN logsUSConn ON logsUSConn.ID = logsMain.connFK LEFT JOIN logsSessions ON logsSessions.ID = logsUSConn.sessionFK LEFT JOIN logsUsers ON logsUsers.ID = logsUSConn.userFK WHERE logsMain.site NOT LIKE '%mobile%' AND logsUsers.LDAP!='20090334' AND logsUsers.LDAP!='20090319' AND logsUsers.LDAP!='20090340' AND logsUsers.LDAP!='20090396' AND logsUsers.LDAP!='20090359' AND logsMain.time > '".$timeRelease."'";
 $result = mysql_query($sql);
 $temp = mysql_fetch_row($result);
 
@@ -121,15 +130,15 @@ $str[]=$str2;
 $str[]=$str3;
 $str[]=$str4;
 $str[]=$str5;
-$str[]=getHourFrequenzy();
+$str[]=getHourFrequenzy($timeRelease);
 $str[]=$str6;
 //echo $str;
 return $str;
 }
 
-function getHourFrequenzy(){
+function getHourFrequenzy($timeRelease){
 
-$sql = "SELECT logsMain.time FROM logsMain LEFT JOIN logsUSConn ON logsUSConn.ID = logsMain.connFK LEFT JOIN logsSessions ON logsSessions.ID = logsUSConn.sessionFK LEFT JOIN logsUsers ON logsUsers.ID = logsUSConn.userFK WHERE logsUsers.LDAP!='20090334' AND logsUsers.LDAP!='20090319' AND logsUsers.LDAP!='20090340' AND logsUsers.LDAP!='20090396' AND logsUsers.LDAP!='20090359'";
+$sql = "SELECT logsMain.time FROM logsMain LEFT JOIN logsUSConn ON logsUSConn.ID = logsMain.connFK LEFT JOIN logsSessions ON logsSessions.ID = logsUSConn.sessionFK LEFT JOIN logsUsers ON logsUsers.ID = logsUSConn.userFK WHERE logsUsers.LDAP!='20090334' AND logsUsers.LDAP!='20090319' AND logsUsers.LDAP!='20090340' AND logsUsers.LDAP!='20090396' AND logsUsers.LDAP!='20090359' AND logsMain.time > '".$timeRelease."'";
 $result = mysql_query($sql);
 while($row=mysql_fetch_array($result)){
 	$hour[]=date("G",$row[0]);
@@ -138,7 +147,7 @@ while($row=mysql_fetch_array($result)){
 
 $hour = countDat($hour,"SORT_NUMERIC");
 $day = count(countDat($day,"SORT_STRING"));
-
+//print_R($hour);
 foreach($hour as $i => $h){
 	$str[] = "[".$h[0].",".round($h[1]/$day)."]";
 }

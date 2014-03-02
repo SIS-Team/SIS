@@ -16,7 +16,11 @@ if (!($_SESSION['rights']['root'])){
 	exit();
 }
 
-$temp = get();
+if(!empty($_POST['release']) && $_POST['release']=="first")
+	$temp = get("first");
+else
+	$temp = get("second");
+
 $os=$temp[1];
 $browser = $temp[0];
 $classes = $temp[2];
@@ -26,7 +30,17 @@ $hourFrequenzy = $temp[5];
 $mobileWeb = $temp[6];
 //Seitenheader
 pageHeader("Statistiken","main");
+
+if(!empty($_POST['release']) && $_POST['release']=="first")
+	$checkedFirst="checked";
+else
+	$checkedSecond="checked";
 ?>
+<form method="POST">
+<input type="radio" name="release" value="first" onclick="this.form.submit()" <?php echo $checkedFirst;?>>Seit Ersetem Release<br />
+<input type="radio" name="release" value="second" onclick="this.form.submit()" <?php echo $checkedSecond;?>>Seit Zweitem Release<br />
+</form>
+Das Entwicklungsteam wir nicht mitgez&auml;hlt!!!<br />
 <a href="">Reload</a><br /><br />
 <script type="text/javascript" src="<?php echo RELATIVE_ROOT;?>/modules/external/jqplot/jquery.min.js"></script>
 <script type="text/javascript" src="<?php echo RELATIVE_ROOT;?>/modules/external/jqplot/jquery.jqplot.min.js"></script>
@@ -190,7 +204,7 @@ $(document).ready(function(){
     var s6 = [ <?php echo $mobileWeb; ?>];
          
     var plot6 = $.jqplot('chart6', [s6], {
-	title:'Seiten Supplierungen',
+	title:'App/Web',
         seriesDefaults: {
         // Make this a pie chart.
         renderer: $.jqplot.PieRenderer,
