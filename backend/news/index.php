@@ -59,7 +59,8 @@ if($isAdmin){
 	$sql ="SELECT `news`.`ID`, `title`, `text`, `startDay` , `endDay`, `display`, `sections`.`short` AS seShort FROM `news` LEFT JOIN `sections` ON `news`.`sectionFK`= `sections`.`ID`";
 	$result = mysql_query($sql);
 	while ($row = mysql_fetch_array($result)){	//Fügt solange eine neue Formularzeile hinzu, solange ein Inhalt zur Verfügung steht
-		form_new($fields,$row,$hashGenerator);		//Formular wird erstellt
+		if($row['endDay']<(date("Y-m-d",time()-30*60*60*24))) deleteID($row['ID'],"news");
+		else form_new($fields,$row,$hashGenerator);		//Formular wird erstellt
 	}
 }
 form_new($fields,false,$hashGenerator);
