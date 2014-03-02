@@ -32,7 +32,7 @@
 		}
 	}
 	if (!$_SESSION['loggedIn']) {
-		pageHeader("Login", "supmain", isset($_GET['noMobile']));
+		pageHeader("Login", "supmain", !isset($_GET['noMobile']));
 ?>
 
 <div class="point vCenter hCenter">
