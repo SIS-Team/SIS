@@ -45,8 +45,8 @@
 	$buttons[4]['enabled'] = $_SESSION['rights']['root'];
 	$buttons[4]['svg'] = ROOT_LOCATION . "/data/images/administration/logs.svg";
 	$buttons[4]['text'] = "Statistiken";
-	$buttons[4]['url'] = RELATIVE_ROOT . "/backend/administration/logs/";
-	$buttons[4]['jsurl'] = RELATIVE_ROOT . "/backend/administration/logs/?js";
+	$buttons[4]['url'] = RELATIVE_ROOT . "/backend/administration/statistics/";
+	$buttons[4]['jsurl'] = RELATIVE_ROOT . "/backend/administration/statistics/?js";
 	
 	$buttons[5]['displayed'] = true;
 	$buttons[5]['enabled'] = $_SESSION['rights']['root'];

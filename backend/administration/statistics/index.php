@@ -12,7 +12,7 @@ include("../config.php");
 include_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
 include_once(ROOT_LOCATION . "/modules/other/statistics.php");
 
-if (!($_SESSION['loggedIn'])){
+if (!($_SESSION['rights']['root'])){
 	header("Location: ".RELATIVE_ROOT."/");
 	exit();
 }
@@ -26,7 +26,7 @@ $sitesSub = $temp[4];
 $hourFrequenzy = $temp[5];
 $mobileWeb = $temp[6];
 //Seitenheader
-pageHeader("Hilfe/Fehlermeldung","main");
+pageHeader("Statistiken","main");
 ?>
 <script type="text/javascript" src="<?php echo RELATIVE_ROOT;?>/modules/external/jqplot/jquery.min.js"></script>
 <script type="text/javascript" src="<?php echo RELATIVE_ROOT;?>/modules/external/jqplot/jquery.jqplot.min.js"></script>
