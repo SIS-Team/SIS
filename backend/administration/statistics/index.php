@@ -27,6 +27,7 @@ $mobileWeb = $temp[6];
 //Seitenheader
 pageHeader("Statistiken","main");
 ?>
+<a href="">Reload</a><br /><br />
 <script type="text/javascript" src="<?php echo RELATIVE_ROOT;?>/modules/external/jqplot/jquery.min.js"></script>
 <script type="text/javascript" src="<?php echo RELATIVE_ROOT;?>/modules/external/jqplot/jquery.jqplot.min.js"></script>
 <script type="text/javascript" src="<?php echo RELATIVE_ROOT;?>/modules/external/jqplot/plugins/jqplot.pieRenderer.min.js"></script>
