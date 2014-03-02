@@ -8,7 +8,7 @@
 	 *
 	 */
 	 
-include("../config.php");
+include("../../../config.php");
 include_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
 include_once(ROOT_LOCATION . "/modules/other/statistics.php");
 
