@@ -9,10 +9,9 @@
 	 */
 	 
 include("../config.php");
-include_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
-include_once(ROOT_LOCATION . "/modules/form/form.php");					//Stell die Formularmasken zur Verfügung			
+include_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Design zur Verfügung			
 include_once(ROOT_LOCATION . "/modules/form/hashCheckFail.php");		
-include_once(ROOT_LOCATION . "/modules/form/hashGenerator.php");
+include_once(ROOT_LOCATION . "/modules/form/HashGenerator.php");
 
 $hashGenerator = new HashGenerator("Help", __FILE__);
 

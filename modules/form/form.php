@@ -35,7 +35,7 @@ $fields = array(
 
 
 error_reporting(E_ALL);
-include_once("../../../config.php");
+//include_once("../../../config.php");
 include_once(ROOT_LOCATION . "/modules/form/HashGenerator.php");
 /*Funktion um die Formulare zu erstellen
  *
@@ -338,7 +338,7 @@ printf("<table style=\"width:100%%;text-align:right\">\n");	//Tabellen Tag auf
   			//FÃƒÂ¯Ã‚Â¿Ã‚Â½r jeden Eintrag im Array field einmal diese Schleife durchlaufen
 			foreach($fieldRow1 as $f) {	
 				
-				if($content!=false)	//Wenn Content mitgeliefert wird und der Typ des aktuellen Inputs kein DropDown, dann Content austauschen
+				if($content!=false && $f[0]!="add" && $f[0]!="free")	//Wenn Content mitgeliefert wird und der Typ des aktuellen Inputs kein DropDown, dann Content austauschen
 				{
 					$f[5]=$content[$f[0]];					//Content des aktuellen Inputs austauschen, Name des Array-Indizes ist der name des Inputs
 				}
@@ -410,7 +410,7 @@ printf("<table style=\"width:100%%;text-align:right\">\n");	//Tabellen Tag auf
   			printf("<td colspan=\"2\"></td>\n");
 			foreach($fieldRow2 as $f) {	
 					
-				if($content!=false)	//Wenn Content mitgeliefert, dann Content austauschen
+				if($content!=false && $f[0]!="add" && $f[0]!="free")	//Wenn Content mitgeliefert, dann Content austauschen
 				{
 					$f[5]=$content[$f[0]];					//Content des aktuellen Inputs austauschen, Name des Array-Indizes ist der name des Inputs
 				}
