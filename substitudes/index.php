@@ -113,10 +113,16 @@ if($mode != "teacher"){
 			}
 			
 			if(!empty($substitudes[$count]['startHour'])){
-				echo "<td>".$substitudes[$count]['startHour']." - ".$substitudes[$count]['endHour']."</td>";	//supplierte Stunde
+				if($substitudes[$count]['startHour'] != $substitudes[$count]['endHour']){
+					echo "<td>".$substitudes[$count]['startHour']." - ".$substitudes[$count]['endHour']."</td>";	//supplierte Stunde
+				}
+				else echo "<td>".$substitudes[$count]['startHour']."</td>";
 			}
 			else {
-				echo "<td>".$substitudes[$count]['oldStartHour']." - ".$substitudes[$count]['oldEndHour']."</td>";
+				if($substitudes[$count]['oldStartHour'] != $substitudes[$count]['oldEndHour']){
+					echo "<td>".$substitudes[$count]['oldStartHour']." - ".$substitudes[$count]['oldEndHour']."</td>";	//supplierte Stunde
+				}
+				else echo "<td>".$substitudes[$count]['oldStartHour']."</td>";
 			}
 			
 			if(!empty($substitudes[$count]['teShort'])){
