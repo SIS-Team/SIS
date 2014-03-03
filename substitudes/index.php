@@ -43,8 +43,14 @@ for($counter = 0; $counter <=2; $counter++)
 	//Tabellenkopfausgabe
 	echo "<table style =\"border-collapse:collapse\">";
 	echo "<tr>";
-	if($mode != "student")	echo "<th>Klasse</th>";
-	echo "<th>Stunden</th>";
+	if($mode == "teacher"){
+ 		echo "<th>Stunden</th>";
+		echo "<th>Klasse</th>";
+	}
+	else{
+		if($mode != "student")	echo "<th>Klasse</th>";
+		echo "<th>Stunden</th>";
+	}
 	echo "<th>Sup</th>";
 	echo "<th>Fach</th>";
 	echo "<th>urs.</th>";
@@ -56,23 +62,43 @@ for($counter = 0; $counter <=2; $counter++)
 	for($count = 0;$count<count($substitudes); $count++)	//Supplierungen ausgeben
 		{
 			echo "<tr>";
-			if($mode !="student"){ 
-				if($oldClass != $substitudes[$count]['clName']){
-	 				if($count != count($substitudes)-1) echo "<td style=\"border-bottom:0\">";
-					else echo "<td>";
-					echo $substitudes[$count]['clName']."</td>";	//Klassenname
-					$oldClass = $substitudes[$count]['clName'];
+			if($mode == "teacher"){
+ 
+				if(!empty($substitudes[$count]['startHour'])){
+					if($substitudes[$count]['startHour'] != $substitudes[$count]['endHour']){	
+						echo "<td>".$substitudes[$count]['startHour']." - ".$substitudes[$count]['endHour']."</td>";	//supplierte Stunde
+						}
+					else echo "<td>".$substitudes[$count]['startHour'];
 				}
 				else {
-	 				if($count != count($substitudes)-1) echo "<td style=\"border-top:0; border-bottom:0\"></td>";
-					else echo "<td style=\"border-top:0\"></td>";		
+					if($substitudes[$count]['oldStartHour'] != $substitudes[$count]['oldEndHour']){	
+						echo "<td>".$substitudes[$count]['oldStartHour']." - ".$substitudes[$count]['oldEndHour']."</td>";	//supplierte Stunde
+						}
+					else echo "<td>".$substitudes[$count]['oldStartHour'];
 				}
-			}
-			if(!empty($substitudes[$count]['startHour'])){
-				echo "<td>".$substitudes[$count]['startHour']." - ".$substitudes[$count]['endHour']."</td>";	//supplierte Stunde
-			}
-			else {
-				echo "<td>".$substitudes[$count]['oldStartHour']." - ".$substitudes[$count]['oldEndHour']."</td>";
+				
+ 				echo "<td>".$substitudes[$count]['clName']."</td>";
+ 			}
+			else{
+				if($mode !="student"){ 
+					if($oldClass != $substitudes[$count]['clName']){
+		 				if($count != count($substitudes)-1) echo "<td style=\"border-bottom:0\">";
+						else echo "<td>";
+						echo $substitudes[$count]['clName']."</td>";	//Klassenname
+						$oldClass = $substitudes[$count]['clName'];
+					}
+					else {
+		 				if($count != count($substitudes)-1) echo "<td style=\"border-top:0; border-bottom:0\"></td>";
+						else echo "<td style=\"border-top:0\"></td>";		
+					}
+				}
+			
+				if(!empty($substitudes[$count]['startHour'])){
+					echo "<td>".$substitudes[$count]['startHour']." - ".$substitudes[$count]['endHour']."</td>";	//supplierte Stunde
+				}
+				else {
+					echo "<td>".$substitudes[$count]['oldStartHour']." - ".$substitudes[$count]['oldEndHour']."</td>";
+				}
 			}
 			if(!empty($substitudes[$count]['teShort'])){
 				echo "<td>".$substitudes[$count]['teShort']."</td>";	//supplierender Lehrer
