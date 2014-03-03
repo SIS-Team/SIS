@@ -41,8 +41,7 @@ for($counter = 0; $counter <=1; $counter++)
 	echo "Supplierungen vom ". weekday(date("Y-m-d",time() + 24*60*60*$day_counter)) ." ". date("d.",time() + 24*60*60*$day_counter). month(date("n",time() + 24*60*60*$day_counter)) ;
 	$allSubstitudes = array();
 	$substitudes = getSubstitude($day,$mode);		//Supplierungen des gewählten Datums abrufen
-//----------------------------------------------------------------------------------------------------------------------------------------------------
-if($_SESSION['id']== 'WS'){
+if($mode=="teacher"){
 	for($i=0;$i<count($substitudes);$i++)
 	{
  		
@@ -74,9 +73,7 @@ if($_SESSION['id']== 'WS'){
 		}
 		
 	}
-//	print_r($allSubstitudes);
 }
-//----------------------------------------------------------------------------------------------------------------------------------------------------
 
 if($mode != "teacher"){
 
@@ -141,7 +138,6 @@ if($mode != "teacher"){
 	if(count($substitudes) == 0) echo "<tr><td colspan = 6 align = center> F&uuml;r diesen Tag sind keine Supplierungen vorgesehen</td></tr>";
 	echo "</table>";
 }
-//------------------------------------------------------------------------------------------------------------------------------------
 else{
  	$empty = 0;
 	echo "<table style =\"border-collapse:collapse\">";
@@ -163,7 +159,6 @@ else{
 	if($empty == 16) echo "<tr><td colspan = 6>F&uuml;r diesen Tag sind keine Supplierungen vorhanden</td></tr>";
 	echo "</table>"; 
 }
-//-------------------------------------------------------------------------------------------------------------------------------------
 
 	echo "</div>";
 	$day_counter++;
