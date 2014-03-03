@@ -1,5 +1,4 @@
 .column {
-	position: absolute;
 	top: 60px;
 	font-size: 20px;
 	
@@ -12,30 +11,25 @@
 }
 
 #d0 {
+ 	margin-top: 50px;
  	float: left;
- 	width: 100%;
+ 	width: 48%;
 	margin-left: 1%;
 }
 
 #d1 {
-	width: 100%;
-	position: float;
-	left: 450px;
-	padding-left: 5px;
-	border-right: solid 1px white;
-	border-left: solid 1px white;
-}
-
-#d2 {
+ 	margin-top: 50px;
+	width: 48%;
+	float:right;
 	margin-right: 1%;
-	left: 890px;
-	float: right;
-	width: 100%;
+	padding-left: 5px;
+	border-left: solid 1px white;
 }
 
 .keys {
  	color: white;
 	display: inline;
+	margin-right: 50%;
 
 }
 

@@ -26,20 +26,61 @@ $substitudes = array();
 //Seitenheader
 pageHeader("Supplierplan","main");
 
-echo "<div class ='keys'>";
+echo "<div class ='keys' >";
 echo "Sup. ...Supplierlehrer; ";
 echo "urs. ... urspr&uumlnglicher Lehrer; ";
 echo "</div>";
 $day_counter = 0;
 
-for($counter = 0; $counter <=2; $counter++)
+for($counter = 0; $counter <=1; $counter++)
 {   
 	if(date("w", time() + 24 * 60 * 60 * $day_counter)==0) $day_counter++;
 	if(date("w", time() + 24 * 60 * 60 * $day_counter)==6) $day_counter+=2;
 	echo "<div id='d" . $counter . "' class='column background'>";
 	$day = captureDate($day_counter);		//aktuelles Datum abfragen
 	echo "Supplierungen vom ". weekday(date("Y-m-d",time() + 24*60*60*$day_counter)) ." ". date("d.",time() + 24*60*60*$day_counter). month(date("n",time() + 24*60*60*$day_counter)) ;
-		 
+	$allSubstitudes = array();
+	$substitudes = getSubstitude($day,$mode);		//Supplierungen des gewählten Datums abrufen
+//----------------------------------------------------------------------------------------------------------------------------------------------------
+if($_SESSION['id']== 'WS'){
+	for($i=0;$i<count($substitudes);$i++)
+	{
+ 		
+		if(!empty($substitudes[$i]['startHour'])){
+ 			$startHour = $substitudes[$i]['startHour'];
+		}
+		else {
+ 			$startHour = $substitudes[$i]['oldStartHour'];
+		}
+
+		 if(!empty($substitudes[$i]['endHour'])){
+ 			$endHour = $substitudes[$i]['endHour'];
+		}
+		else {
+ 			$endHour = $substitudes[$i]['oldEndHour'];
+		}
+		if(empty($allSubstitudes[$startHour])){
+			$allSubstitudes[$startHour]['comment'] = $substitudes[$i]['comment'];
+			$allSubstitudes[$startHour]['class'] = $substitudes[$i]['clName'];			
+			$allSubstitudes[$startHour]['Subject'] = $substitudes[$i]['suShort'];
+			$allSubstitudes[$startHour]['oldTeacher'] = $substitudes[$i]['oldTeShort'];
+			$allSubstitudes[$startHour]['newTeacher'] = $substitudes[$i]['teShort'];
+			$allSubstitudes[$startHour]['endHour'] = $endHour;
+		}
+		else {
+ 		
+			$allSubstitudes[$startHour]['class'] .= "|". $substitudes[$i]['clName'];	
+		
+		}
+		
+	}
+//	print_r($allSubstitudes);
+}
+//----------------------------------------------------------------------------------------------------------------------------------------------------
+
+if($mode != "teacher"){
+
+
 	//Tabellenkopfausgabe
 	echo "<table style =\"border-collapse:collapse\">";
 	echo "<tr>";
@@ -58,48 +99,29 @@ for($counter = 0; $counter <=2; $counter++)
 	echo "</tr>";
 		
 	$oldClass = "";
-	$substitudes = getSubstitude($day,$mode);		//Supplierungen des gewählten Datums abrufen
 	for($count = 0;$count<count($substitudes); $count++)	//Supplierungen ausgeben
 		{
 			echo "<tr>";
-			if($mode == "teacher"){
- 
-				if(!empty($substitudes[$count]['startHour'])){
-					if($substitudes[$count]['startHour'] != $substitudes[$count]['endHour']){	
-						echo "<td>".$substitudes[$count]['startHour']." - ".$substitudes[$count]['endHour']."</td>";	//supplierte Stunde
-						}
-					else echo "<td>".$substitudes[$count]['startHour'];
+			if($mode !="student"){ 
+				if($oldClass != $substitudes[$count]['clName']){
+		 			if($count != count($substitudes)-1) echo "<td style=\"border-bottom:0\">";
+					else echo "<td>";
+					echo $substitudes[$count]['clName']."</td>";	//Klassenname
+					$oldClass = $substitudes[$count]['clName'];
 				}
 				else {
-					if($substitudes[$count]['oldStartHour'] != $substitudes[$count]['oldEndHour']){	
-						echo "<td>".$substitudes[$count]['oldStartHour']." - ".$substitudes[$count]['oldEndHour']."</td>";	//supplierte Stunde
-						}
-					else echo "<td>".$substitudes[$count]['oldStartHour'];
-				}
-				
- 				echo "<td>".$substitudes[$count]['clName']."</td>";
- 			}
-			else{
-				if($mode !="student"){ 
-					if($oldClass != $substitudes[$count]['clName']){
-		 				if($count != count($substitudes)-1) echo "<td style=\"border-bottom:0\">";
-						else echo "<td>";
-						echo $substitudes[$count]['clName']."</td>";	//Klassenname
-						$oldClass = $substitudes[$count]['clName'];
-					}
-					else {
-		 				if($count != count($substitudes)-1) echo "<td style=\"border-top:0; border-bottom:0\"></td>";
-						else echo "<td style=\"border-top:0\"></td>";		
-					}
-				}
-			
-				if(!empty($substitudes[$count]['startHour'])){
-					echo "<td>".$substitudes[$count]['startHour']." - ".$substitudes[$count]['endHour']."</td>";	//supplierte Stunde
-				}
-				else {
-					echo "<td>".$substitudes[$count]['oldStartHour']." - ".$substitudes[$count]['oldEndHour']."</td>";
+		 			if($count != count($substitudes)-1) echo "<td style=\"border-top:0; border-bottom:0\"></td>";
+					else echo "<td style=\"border-top:0\"></td>";		
 				}
 			}
+			
+			if(!empty($substitudes[$count]['startHour'])){
+				echo "<td>".$substitudes[$count]['startHour']." - ".$substitudes[$count]['endHour']."</td>";	//supplierte Stunde
+			}
+			else {
+				echo "<td>".$substitudes[$count]['oldStartHour']." - ".$substitudes[$count]['oldEndHour']."</td>";
+			}
+			
 			if(!empty($substitudes[$count]['teShort'])){
 				echo "<td>".$substitudes[$count]['teShort']."</td>";	//supplierender Lehrer
 			}
@@ -118,6 +140,31 @@ for($counter = 0; $counter <=2; $counter++)
 		}
 	if(count($substitudes) == 0) echo "<tr><td colspan = 6 align = center> F&uuml;r diesen Tag sind keine Supplierungen vorgesehen</td></tr>";
 	echo "</table>";
+}
+//------------------------------------------------------------------------------------------------------------------------------------
+else{
+ 	$empty = 0;
+	echo "<table style =\"border-collapse:collapse\">";
+	echo "<tr><th>Stunden</th><th>Klasse</th><th>Sup</th><th>Fach</th><th>urs.</th><th>Bemerkung</th></tr>";
+	for($i=1;$i<17;$i++){
+	 	if(!empty($allSubstitudes[$i])){
+ 			echo "<tr>";
+			if($i != $allSubstitudes[$i]['endHour']) echo "<td>". $i."-".$allSubstitudes[$i]['endHour']."</td>";
+			else echo "<td>" . $i ."</td>";
+			echo "<td>".$allSubstitudes[$i]['class']."</td>";
+			echo "<td>".$allSubstitudes[$i]['newTeacher']."</td>";
+			echo "<td>".$allSubstitudes[$i]['Subject']."</td>";
+			echo "<td>".$allSubstitudes[$i]['oldTeacher']."</td>";
+			echo "<td>".$allSubstitudes[$i]['comment']."</td>";
+			echo "</tr>";
+		}
+		else $empty++;
+	}
+	if($empty == 16) echo "<tr><td colspan = 6>F&uuml;r diesen Tag sind keine Supplierungen vorhanden</td></tr>";
+	echo "</table>"; 
+}
+//-------------------------------------------------------------------------------------------------------------------------------------
+
 	echo "</div>";
 	$day_counter++;
 }
