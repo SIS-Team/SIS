@@ -11,7 +11,7 @@ function getBrowser($user_agent) {
         $bname = 'Mozilla Firefox';
     } else if (eregi('Chrome', $visitor_user_agent)) {
         $bname = 'Google Chrome';
-    } else if (eregi('Safari', $visitor_user_agent)) {
+    } else if (eregi('Safari', $visitor_user_agent) && !eregi('Android', $visitor_user_agent)) {
         $bname = 'Apple Safari';
     } else if (eregi('Opera', $visitor_user_agent)) {
         $bname = 'Opera';
@@ -45,6 +45,8 @@ function getBrowser($user_agent) {
         $bname = 'Fluid';
     } else if(eregi('IE',$visitor_user_agent)){
         $bname = 'Internet Explorer';
+    } else if(eregi('Android',$visitor_user_agent) && eregi('Safari',$visitor_user_agent)){
+        $bname = 'Android Browser';
     }
       else{
    	$bname = 'Other';
@@ -78,6 +80,12 @@ function getBrowser($user_agent) {
                 $os_platform    .=  " 3.11";
 	    } else if (preg_match('/phone/i', $visitor_user_agent)) {
                 $os_platform    .=  " Phone";
+                if (preg_match('/phone 7/i', $visitor_user_agent)) {
+                $os_platform    .=  " 7";
+            } else if (preg_match('/phone 8/i', $visitor_user_agent)) {
+                $os_platform    .=  " 8";
+			}
+
             }
         } else if (preg_match('/macintosh|mac os x/i', $visitor_user_agent)) {
             $os_platform    =   'Mac';
@@ -92,16 +100,36 @@ function getBrowser($user_agent) {
 
         if (preg_match('/iphone/i', $visitor_user_agent)) {
             $os_platform    =   "iPhone";
+            if (preg_match('/OS 7/i', $visitor_user_agent)) {
+                $os_platform    .=  " 7.x.x";
+            } else if (preg_match('/OS 6/i', $visitor_user_agent)) {
+                $os_platform    .=  " 6.x.x";
+			}
         } else if (preg_match('/android/i', $visitor_user_agent)) {
             $os_platform    =   "Android";
+            if (preg_match('/android 2/i', $visitor_user_agent)) {
+                $os_platform    .=  " 2.x.x";
+            } else if (preg_match('/android 4/i', $visitor_user_agent)) {
+                $os_platform    .=  " 4.x.x";
+			}
         } else if (preg_match('/blackberry/i', $visitor_user_agent)) {
             $os_platform    =   "BlackBerry";
         } else if (preg_match('/webos/i', $visitor_user_agent)) {
             $os_platform    =   "Mobile";
         } else if (preg_match('/ipod/i', $visitor_user_agent)) {
             $os_platform    =   "iPod";
+            if (preg_match('/OS 7/i', $visitor_user_agent)) {
+                $os_platform    .=  " 7.x.x";
+            } else if (preg_match('/OS 6/i', $visitor_user_agent)) {
+                $os_platform    .=  " 6.x.x";
+			}
         } else if (preg_match('/ipad/i', $visitor_user_agent)) {
             $os_platform    =   "iPad";
+            if (preg_match('/OS 7/i', $visitor_user_agent)) {
+                $os_platform    .=  " 7.x.x";
+            } else if (preg_match('/OS 6/i', $visitor_user_agent)) {
+                $os_platform    .=  " 6.x.x";
+			}
         }
  	
 	//echo $bname.";".$os_platform."<br>";
