@@ -2,13 +2,9 @@
 
 	/* /backend/substitude/index.php
 	 * Autor: Handle Marco
-	 * Version: 0.2.0
 	 * Beschreibung:
 	 * Erstellt die Formulare fuer die Eingabe der Supplierungen
 	 *
-	 * Changelog:
-	 * 	0.1.0:  22. 07. 2013, Handle Marco - erste Version
-	 *  0.2.0:  27. 08. 2013, Handle Marco - Update,Save,delete implementiert
 	 */
 
 include("../../../config.php");
@@ -78,7 +74,7 @@ $fieldsRow1 = array(
 $fieldsRow2 = array(
 	array( "move",	 	"Verschiebung: ", 	"radio", 		"8",	"",	"",			""),
 	array( "add",	 	"Hinzuf&uuml;gen: ", 	"radio", 		"8",	"",	"",			""),
-	array( "remove",	"L&ouml;schen: ", 	"radio", 		"8",	"",	"",			""),
+	array( "remove",	"Entf&auml;llt: ", 	"radio", 		"8",	"",	"",			""),
 	array( "oldStartHour",  "Urs. Start-St.: ", 	"text",		"5",	"",		"",		""),
 	array( "oldEndHour",	"Urs. End-St.: ",	"text",		"4",	"",		"",		""),
 	array( "oldTeShort",  	"Urs. Lehrer: ", 	"dropdown",	"5",	"",		$selectTeachers,""),
