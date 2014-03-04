@@ -225,8 +225,13 @@ Für dieses Projekt wurden verschiedener Fremdcode verwendet.<br />
 		<a target="_blank" href="http://www.itnewb.com/tutorial/Creating-the-Smooth-Scroll-Effect-with-JavaScript">Smooth-Scroll</a> <sup>1</sup>
 	</li>
 </ul>
-
 <sup>1</sup>) Dieser Fremdcode wurde an die Gegebenheiten angepasst.<br /><br />
+
+<h2>Fonts</h2>
+
+<h3>abduction2002</h3>
+This font is (c) 2002 Jakob Fischer at <a target="_blank" href="http://www.pizzadude.dk">www.pizzadude.dk</a>,  all rights reserved.<br />
+
 
 <hr />
 <a name="privacy" id="privacy"></a>
