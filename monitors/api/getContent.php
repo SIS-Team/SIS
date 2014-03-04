@@ -202,7 +202,7 @@
 			$response['content'] .= "<div id='t".$j."'>";
 			$response['content'] .= $day[ date("N",time() + 24*60*60*$day_counter)] ." ". date("d.m.y",time() + 24*60*60*$day_counter);
 			$response['content'] .= "<table class = 'substitude'>"; 
-			$response['content'] .= "<tr><th>Klasse</th><th>Std.</th><th>Suppl. durch</th><th>Fach</th><th>Bemerkung</th></tr>								";
+			$response['content'] .= "<tr><th>Klasse</th><th>Stunden</th><th>Suppl. durch</th><th>Fach</th><th>Bemerkung</th></tr>								";
 			if(isset($results)){
 				for($i = 0; $i <count($results);$i++){
  					if($results[$i]['time'] >= date("Y-m-d", time()+ 24 *60 *60 * $day_counter)  and $results[$i]['time'] < date("Y-m-d", time()+ 24 *60 *60 * ($day_counter+1)) and $results[$i]['display'] == 1){

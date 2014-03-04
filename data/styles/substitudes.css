@@ -4,10 +4,26 @@
 	
 }
 
-.column table td {
- 	border-collapse: collapse;
+.column table {
  	border: solid 2px white;
+	border-collapse: collapse;
+	background-color: rgba(0,0,0,0.5);
+	width: 100%;
  	
+}
+
+.column th{
+ 	border: 0px;
+	color: black;
+	background-color: rgba(255,255,255,0.8);
+ 
+}
+
+.column td{
+ 	border: solid 2px white;
+	border-left: 0px;
+	border-right: 0px;
+ 
 }
 
 #d0 {
@@ -26,9 +42,11 @@
 	border-left: solid 1px white;
 }
 
+
+
 .keys {
  	color: white;
-	display: inline;
+	display: block;
 	margin-right: 50%;
 
 }
@@ -37,12 +55,9 @@
 	width: 100%;
 }
 
-.background {
-		
-	opacity: 1;
+.column table{
+
 	
 }
-.background table{
-/*	background-color: rgba(0,0,0,0.5);*/
-	
-}
+
+

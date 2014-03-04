@@ -38,7 +38,7 @@ for($counter = 0; $counter <=1; $counter++)
 	if(date("w", time() + 24 * 60 * 60 * $day_counter)==6) $day_counter+=2;
 	echo "<div id='d" . $counter . "' class='column background'>";
 	$day = captureDate($day_counter);		//aktuelles Datum abfragen
-	echo "Supplierungen vom ". weekday(date("Y-m-d",time() + 24*60*60*$day_counter)) ." ". date("d.",time() + 24*60*60*$day_counter). month(date("n",time() + 24*60*60*$day_counter)) ;
+	echo "Supplierungen vom ". weekday(date("Y-m-d",time() + 24*60*60*$day_counter)) .", ". date("d.",time() + 24*60*60*$day_counter). month(date("n",time() + 24*60*60*$day_counter)) ;
 	$allSubstitudes = array();
 	$substitudes = getSubstitude($day,$mode);		//Supplierungen des gewählten Datums abrufen
 if($mode=="teacher"){
@@ -79,7 +79,7 @@ if($mode != "teacher"){
 
 
 	//Tabellenkopfausgabe
-	echo "<table style =\"border-collapse:collapse\">";
+	echo "<table>";
 	echo "<tr>";
 	if($mode == "teacher"){
  		echo "<th>Stunden</th>";
@@ -134,7 +134,7 @@ if($mode != "teacher"){
 			echo "<td>".$substitudes[$count]['suShort']."</td>";	//Fach
 			echo "<td>".$substitudes[$count]['oldTeShort']."</td>";	//ursprünglicher Lehrer
 			if(!empty($substitudes[$count]['comment'])){
- 				echo "<td class='comment background'>".$substitudes[$count]['comment']."</td>";	//Bemerkung
+ 				echo "<td>".$substitudes[$count]['comment']."</td>";	//Bemerkung
 			}
 			else {
  				echo "<td>&#160;</td>";
@@ -146,7 +146,7 @@ if($mode != "teacher"){
 }
 else{
  	$empty = 0;
-	echo "<table style =\"border-collapse:collapse\">";
+	echo "<table>";
 	echo "<tr><th>Stunden</th><th>Klasse</th><th>Sup</th><th>Fach</th><th>urs.</th><th>Bemerkung</th></tr>";
 	for($i=1;$i<17;$i++){
 	 	if(!empty($allSubstitudes[$i])){
