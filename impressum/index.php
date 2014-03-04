@@ -87,8 +87,8 @@ A-6020 Innsbruck<br />
 		</td>
 	</tr>
 </table>
-<br />
-<h2>Direktor</h2>
+
+<h3>Direktor</h3>
 
 Mag. Günther LANER<br />
 <table>
@@ -101,6 +101,28 @@ Mag. Günther LANER<br />
 		</td>
 	</tr>
 </table><br />
+<hr />
+
+<h2>Diese Seite ist optimiert für</h2>
+<ul>
+		<li>
+			Chromium Version 32.0.1700.123 (Google Chrome)
+		</li>
+</ul>
+
+<h2>Diese Seite ist getestet unter</h2>
+
+<ul>
+		<li>
+			Mozilla Firefox Version 27.01, 28
+		</li>
+		<li>
+			Apple Safari Version 7.0.1
+		</li>
+		<li>
+			Opera Version 12.16.1860
+		</li>
+</ul><br />
 
 <hr />
 <a name="team" id="team"></a>
@@ -138,6 +160,7 @@ Zuständig für:<br />
 	</li>
 	<li>
 		Raspberry Hardware Setup
+	</li>
 </ul><br />
 
 Matthias KLOTZ<br />
