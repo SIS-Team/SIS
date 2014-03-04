@@ -21,6 +21,7 @@ else if($mode=="second"){
 
 $sql = "SELECT logsSessions.userAgent FROM logsMain LEFT JOIN logsUSConn ON logsUSConn.ID = logsMain.connFK LEFT JOIN logsSessions ON logsSessions.ID = logsUSConn.sessionFK LEFT JOIN logsUsers ON logsUsers.ID = logsUSConn.userFK WHERE logsUsers.LDAP!='20090334' AND logsUsers.LDAP!='20090319' AND logsUsers.LDAP!='20090340' AND logsUsers.LDAP!='20090396' AND logsUsers.LDAP!='20090359' AND logsMain.time > '".$timeRelease."'";
 $result = mysql_query($sql);
+$row=array();
 while($row=mysql_fetch_array($result)){
 
 	$temp=getBrowser($row[0]);
@@ -93,6 +94,22 @@ if($temp[0]!=0)
 $browser_count = countDat($browser,"SORT_STRING");
 $os_count = countDat($os,"SORT_STRING");
 
+$row=array();
+$sql = "select logsMain.site,count(*) from logsMain LEFT JOIN logsUSConn ON logsUSConn.ID = logsMain.connFK LEFT JOIN logsSessions ON logsSessions.ID = logsUSConn.sessionFK LEFT JOIN logsUsers ON logsUsers.ID = logsUSConn.userFK WHERE (logsMain.site LIKE '/help%' OR logsMain.site LIKE '/news%' OR site LIKE '/substitudes/' OR logsMain.site LIKE '/timetables%' OR logsMain.site LIKE '/impressum%' ) AND logsUsers.LDAP!='20090334' AND logsUsers.LDAP!='20090319' AND logsUsers.LDAP!='20090340' AND logsUsers.LDAP!='20090396' AND logsUsers.LDAP!='20090359' AND logsMain.time > '".$timeRelease."' group by logsMain.site";
+$result = mysql_query($sql);
+while($row[]=mysql_fetch_array($result)){
+}
+unset($row[count($row)-1]);
+$sitesClient = $row;
+
+$row=array();
+$sql = "select logsMain.site,count(*) from logsMain LEFT JOIN logsUSConn ON logsUSConn.ID = logsMain.connFK LEFT JOIN logsSessions ON logsSessions.ID = logsUSConn.sessionFK LEFT JOIN logsUsers ON logsUsers.ID = logsUSConn.userFK WHERE (logsMain.site LIKE '%api/alttimetables%' OR logsMain.site LIKE '%api/news%' OR site LIKE '%api/substitudes%' OR logsMain.site LIKE '%api/timetables%') AND logsUsers.LDAP!='20090334' AND logsUsers.LDAP!='20090319' AND logsUsers.LDAP!='20090340' AND logsUsers.LDAP!='20090396' AND logsUsers.LDAP!='20090359' AND logsMain.time > '".$timeRelease."' group by logsMain.site";
+$result = mysql_query($sql);
+while($row[]=mysql_fetch_array($result)){
+}
+unset($row[count($row)-1]);
+$sitesMobile = $row;	
+
 foreach($browser_count as $b){
 	$str1[]="['".$b[0]."',".$b[1]."]";
 }
@@ -125,6 +142,20 @@ foreach($mobileWeb as $b){
 }
 $str6 = implode(",",$str6);
 
+foreach($sitesClient as $b){
+	$str7[]="['".$b[0]."',".$b[1]."]";
+}
+$str7 = implode(",",$str7);
+
+foreach($sitesMobile as $b){
+	$temp = explode( "/",$b[0]);
+	$temp = $temp[3];
+	$temp = explode(".",$temp);
+
+	$str8[]="['".$temp[0]."',".$b[1]."]";
+}
+$str8 = implode(",",$str8);
+
 $str[]=$str1;
 $str[]=$str2;
 $str[]=$str3;
@@ -132,6 +163,8 @@ $str[]=$str4;
 $str[]=$str5;
 $str[]=getHourFrequenzy($timeRelease);
 $str[]=$str6;
+$str[]=$str7;
+$str[]=$str8;
 //echo $str;
 return $str;
 }

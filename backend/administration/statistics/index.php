@@ -28,6 +28,8 @@ $sections = $temp[3];
 $sitesSub = $temp[4];
 $hourFrequenzy = $temp[5];
 $mobileWeb = $temp[6];
+$sitesClients = $temp[7];
+$sitesMobile = $temp[8];
 //Seitenheader
 pageHeader("Statistiken","main");
 
@@ -230,6 +232,64 @@ $(document).ready(function(){
     });
 });
 $(document).ready(function(){
+    var s8 = [ <?php echo $sitesClients; ?>];
+         
+    var plot8 = $.jqplot('chart8', [s8], {
+	title:'Seitenaufrufe Web',
+        seriesDefaults: {
+        // Make this a pie chart.
+        renderer: $.jqplot.PieRenderer,
+        rendererOptions: {
+          // Put data labels on the pie slices.
+          // By default, labels show the percentage of the slice.
+          showDataLabels: true
+        }
+      },
+	grid: {
+    	drawGridLines: true,        // wether to draw lines across the grid or not.
+        gridLineColor: '#cccccc',   // CSS color spec of the grid lines.
+        background: 'transparent',      // CSS color spec for background color of grid.
+        borderColor: '#999999',     // CSS color spec for border around grid.
+        borderWidth: 2.0,           // pixel width of border around grid.
+        shadow: true,               // draw a shadow for grid.
+        shadowAngle: 45,            // angle of the shadow.  Clockwise from x axis.
+        shadowOffset: 1.5,          // offset from the line of the shadow.
+        shadowWidth: 3,             // width of the stroke for the shadow.
+        shadowDepth: 3
+}, 
+      legend: { show:true, location: 'e' }
+    });
+});
+$(document).ready(function(){
+    var s9 = [ <?php echo $sitesMobile; ?>];
+         
+    var plot9 = $.jqplot('chart9', [s9], {
+	title:'Seitenaufrufe Apps',
+        seriesDefaults: {
+        // Make this a pie chart.
+        renderer: $.jqplot.PieRenderer,
+        rendererOptions: {
+          // Put data labels on the pie slices.
+          // By default, labels show the percentage of the slice.
+          showDataLabels: true
+        }
+      },
+	grid: {
+    	drawGridLines: true,        // wether to draw lines across the grid or not.
+        gridLineColor: '#cccccc',   // CSS color spec of the grid lines.
+        background: 'transparent',      // CSS color spec for background color of grid.
+        borderColor: '#999999',     // CSS color spec for border around grid.
+        borderWidth: 2.0,           // pixel width of border around grid.
+        shadow: true,               // draw a shadow for grid.
+        shadowAngle: 45,            // angle of the shadow.  Clockwise from x axis.
+        shadowOffset: 1.5,          // offset from the line of the shadow.
+        shadowWidth: 3,             // width of the stroke for the shadow.
+        shadowDepth: 3
+}, 
+      legend: { show:true, location: 'e' }
+    });
+});
+$(document).ready(function(){
 	var s7 = [ <?php echo $hourFrequenzy; ?>];
 	var plot7 = $.jqplot('chart7', [s7], {
 		title:'Aufrufe/Stunde',
@@ -253,6 +313,8 @@ printf("<div  id=\"chart3\" style=\"height:400px;width:600px;float:left;\"></div
 printf("<div  id=\"chart4\" style=\"height:400px;width:600px;float:left;\"></div>");
 printf("<div  id=\"chart5\" style=\"height:400px;width:600px;float:left;\"></div>");
 printf("<div  id=\"chart6\" style=\"height:400px;width:600px;float:left;\"></div>");
+printf("<div  id=\"chart8\" style=\"height:400px;width:600px;float:left;\"></div>");
+printf("<div  id=\"chart9\" style=\"height:400px;width:600px;float:left;\"></div>");
 printf("<div  id=\"chart7\" style=\"height:400px;width:1200px;float:left;\"></div>");
 //Seitenfooter
 
