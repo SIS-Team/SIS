@@ -59,7 +59,7 @@ body {
 }
 
 #content {
-	padding: 20px;
+	width:98%;
 	position: absolute;
 	top: 60px;
 	text-align: justify;
