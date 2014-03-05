@@ -108,6 +108,9 @@ Mag. Günther LANER<br />
 		<li>
 			Chromium Version 32.0.1700.123 (Google Chrome)
 		</li>
+		<li>
+			Auflösung: min. 1200px zu 600px
+		</li>
 </ul>
 
 <h2>Diese Seite ist getestet unter</h2>
