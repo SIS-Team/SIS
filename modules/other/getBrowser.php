@@ -43,7 +43,7 @@ function getBrowser($user_agent) {
         $bname = 'AIR';
     } else if (eregi('Fluid', $visitor_user_agent)) {
         $bname = 'Fluid';
-    } else if(eregi('IE',$visitor_user_agent)){
+    } else if(eregi('IE',$visitor_user_agent) || eregi('trident',$visitor_user_agent)){
         $bname = 'Internet Explorer';
     } else if(eregi('Android',$visitor_user_agent) && eregi('Safari',$visitor_user_agent)){
         $bname = 'Android Browser';
