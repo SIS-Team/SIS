@@ -27,13 +27,13 @@
           <h1>Mobile Apps</h1>
                 <center>
                     <a href="" title="App f&uuml;r Windows Phone ansehen">
-                        <img src="<?php echo RELATIVE_ROOT; ?>/data/images/mobile/windowsphone.svg" alt="Windows Phone Store">
+                        <img src="<?php echo RELATIVE_ROOT; ?>/data/images/mobile/windowsphone.png" alt="Windows Phone Store">
                     </a>
                     <a href="" title="App f&uuml;r iOS ansehen">
-                        <img src="<?php echo RELATIVE_ROOT; ?>/data/images/mobile/ios.svg" alt="App Store">
+                        <img src="<?php echo RELATIVE_ROOT; ?>/data/images/mobile/ios.png" alt="App Store">
                     </a>
                     <a href="<?php echo RELATIVE_ROOT; ?>/mobile/download/SIS.apk" title="App f&uuml;r Android ansehen">
-                        <img src="<?php echo RELATIVE_ROOT; ?>/data/images/mobile/android.svg" alt="GooglePlay Store">
+                        <img src="<?php echo RELATIVE_ROOT; ?>/data/images/mobile/android.png" alt="GooglePlay Store">
                     </a>
                 </center>
                     <br />
@@ -42,7 +42,7 @@
           <h1>Desktop Version</h1>
                 <center>
                     <a href="<?php echo RELATIVE_ROOT; ?>/?noJS&noMobile" title="Desktop Version der Seite besuchen">
-                        <img src="<?php echo RELATIVE_ROOT; ?>/data/images/mobile/desktop.svg" alt="Desktop Version">
+                        <img src="<?php echo RELATIVE_ROOT; ?>/data/images/mobile/desktop.png" alt="Desktop Version">
                     </a>
                     <br />
                     <br /> 
