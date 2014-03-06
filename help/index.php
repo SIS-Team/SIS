@@ -99,7 +99,7 @@ if($cFail){
 	function newCaptcha() {
 		document.getElementById("captcha").getElementsByTagName("img")[0].src = "<?php echo RELATIVE_ROOT; ?>/data/images/loading.gif";
 		window.setTimeout(function() {
-			document.getElementById("captcha").getElementsByTagName("img")[0].src = "<?php echo RELATIVE_ROOT; ?>/data/images/captcha.png";
+			document.getElementById("captcha").getElementsByTagName("img")[0].src = "<?php echo RELATIVE_ROOT; ?>/data/images/captcha.png?preventCaching=" + parseInt((Math.random() * 100));
 		}, 700)
 	}
 </script>
