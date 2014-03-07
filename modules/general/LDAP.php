@@ -56,8 +56,7 @@
 		}
 		$con = ldap_connect($host);
 		
-		// temporär, weil der LDAP-Benutzer vermurkste Rechte hat
-		//$ok  = ldap_bind($con, $user, $passwd);
+		$ok  = ldap_bind($con, $user, $passwd);
 		
 		$res = ldap_search($con, "o=SIS", "cn=" . $cn, 
 			array("groupmembership", "ou", "givenname", "sn", "initials"), 0, 0, 0, LDAP_DEREF_ALWAYS);
