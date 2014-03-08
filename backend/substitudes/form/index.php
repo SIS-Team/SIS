@@ -108,9 +108,10 @@ while ($row = mysql_fetch_array($result)){	//Fügt solange eine neue Formularzei
 	//print_r($row);
 	form_substitudes($fieldsRow1,$fieldsRow2 ,$row,$section,$hashGenerator);		//Formular wird erstellt
 }
-
-form_substitudes($fieldsRow1,$fieldsRow2,false,$section,$hashGenerator);			//Formular für einen neuen Eintrag
-
+if($fail===false)
+	form_substitudes($fieldsRow1,$fieldsRow2,$_POST,$section,$hashGenerator);			//Formular für einen neuen Eintrag
+else
+	form_substitudes($fieldsRow1,$fieldsRow2,false,$section,$hashGenerator);			//Formular für einen neuen Eintrag
 //Seitenfooter
 pageFooter();
 ?>
