@@ -28,7 +28,7 @@ else {
 
 pageHeader("Stundenplan","main");
 
-echo "<form  method = \"get\">";
+echo "<form  method = \"get\" style=\" float:left\">";
 if(!isset($_GET['displaytype'])) $displaytype = "modificated";
 else $displaytype = $_GET['displaytype'];
 if($displaytype == "normal"){
@@ -37,11 +37,28 @@ if($displaytype == "normal"){
 }
 else {
 	echo "<input type =\"radio\" name = \"displaytype\" onclick= \"this.form.submit()\" value = \"normal\">normal";
-	echo "<input type =\"radio\" name = \"displaytype\" onclick= \"this.form.submit()\" value = \"modificated\" checked>modifiziert";
+	echo "<input type =\"radio\" name = \"displaytype\" onclick= \"this.form.submit()\" value = \"modificated\" checked>modifiziert  ";
 } 
 echo "<noscript><input type =\"submit\" value=\"Anzeige &auml;ndern\"></noscript>"; 
 echo "</form>";
+if($displaytype == "normal") echo "</br>";
+if($displaytype =="modificated"){
 
+	if(!isset($_GET['week'])) $week = "actual";
+	else $week = $_GET['week'];
+	echo "<form method=\"get\">";
+	echo "|";
+	if($week == "actual"){
+		echo "<input type =\"radio\" name = \"week\" onclick= \"this.form.submit()\" value = \"actual\" checked>aktuelle Woche";
+		echo "<input type =\"radio\" name = \"week\" onclick= \"this.form.submit()\" value = \"next\" >n&auml;chste Woche";
+	}
+	else {
+		echo "<input type =\"radio\" name = \"week\" onclick= \"this.form.submit()\" value = \"actual\">aktuelle Woche";
+		echo "<input type =\"radio\" name = \"week\" onclick= \"this.form.submit()\" value = \"next\" checked>n&auml;chste Woche"; 
+	}
+	echo "<noscript><input type =\"submit\" value=\"Anzeige &auml;ndern\"></noscript>"; 
+	echo "</form>";
+}
 echo "<div class ='timetable_column'>";	
 
 //Tabellenkopfausgabe
@@ -78,9 +95,9 @@ $offset = 0;
 $dayShort= array(1=>'Mo',2=>'Di',3=>'Mi',4=>'Do',5=>'Fr');
 if(date("N")<6) $offset = 1-date("N");
 else $offset = 8-date("N");
+if(isset($week) && $week == "next") $offset+=7;
 if($displaytype == "modificated" ){
 echo "Dieser Stundenplan ist g&uuml;ltig: ". date("Y.m.d",time()+24*60*60*$offset) ."-".date("Y.m.d",time()+24*60*60*($offset+5));
-
 	for($j=0;$j<5;$j++)
 	{
 		$substitudes = getSubstitude(date("Y-m-d",time()+24*60*60*$offset),$name,$mode);
