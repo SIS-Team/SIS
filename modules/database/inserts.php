@@ -372,17 +372,20 @@ if(!isset($post["delete"]) && $post["delete"]==""){
 					while($row[]=mysql_fetch_array($result)){
 					}
 					unset($row[count($row)-1]);
+					if($row != array()){
+						foreach($row as $i => $r){
+							$data["lessonFK"]=$r["ID"];
+							//Erste LessonsID auf Display 1
+							if($i < 1)
+								$data["display"]=true;
+							else	//Weiteren auf 0
+								$data["display"]=false;
 
-					foreach($row as $i => $r){
-						$data["lessonFK"]=$r["ID"];
-						//Erste LessonsID auf Display 1
-						if($i < 1)
-							$data["display"]=true;
-						else	//Weiteren auf 0
-							$data["display"]=false;
-
-						saveupdate($data,"substitudes");
+							saveupdate($data,"substitudes");
+						}
 					}
+					else
+						return false;
 				}
 				else{	//Wenn ein Lehrer mitgegeben wurde nur für diesen eine Supplierung eintragen
 					//ID der Lesson für die Basisstunde und dem Lehrer finden
@@ -390,7 +393,10 @@ if(!isset($post["delete"]) && $post["delete"]==""){
 					$temp = mysql_fetch_array(mysql_query($sql));
 					$data["display"]=true;
 					$data["lessonFK"]=$temp["ID"];
-					saveupdate($data,"substitudes");
+					if($temp["ID"]!="")
+						saveupdate($data,"substitudes");
+					else 
+						return false;
 				}
 			}	
 		}
@@ -512,8 +518,10 @@ if(!isset($post["delete"]) && $post["delete"]==""){
 					$data["display"]=true;
 				else	//Weiteren auf 0
 					$data["display"]=false;
-
-				saveupdate($data,"substitudes");
+				if($temp[0]!="")
+					saveupdate($data,"substitudes");
+				else 
+					return false;
 			}
 			//Wenn kein fehlender Lehrer gefunden ist Fehler zurückgeben --> falsche Eingabe
 			if(empty($missTeacher))
