@@ -80,17 +80,33 @@ for ($i = 0; $i < count($lessons); $i++) {
 		$hours[$index] = array(); //Wenn für die betreffende Startstunde kein Eintrag vorhanden -> leeres Array erstellen
 	if(isset($hours[$index][$lessons[$i]->weekdayShort])) //Kontrolle ob bereits ein Eintag vorhanden
 	{ 
-		 if($hours[$index][$lessons[$i]->weekdayShort]->suShort != $lessons[$i]->suShort) //Kontrolle ob  neuer Eintrag und vorhandener Eintrag unterschiedlich
+		 if($hours[$index][$lessons[$i]->weekdayShort]->suShort != $lessons[$i]->suShort){ //Kontrolle ob  neuer Eintrag und vorhandener Eintrag unterschiedlich
 		 	if(!strpos($hours[$index][$lessons[$i]->weekdayShort]->suShort,$lessons[$i]->suShort)) //Wenn neuer Eintrag nicht in altem Eintrag vorhanden -> zusammenhängen, getrennt mit |
 			{
 				$hours[$index][$lessons[$i]->weekdayShort]->suShort .= " | " .$lessons[$i]->suShort;
+				$popup = "&#xD;".$lessons[$i]->suShort.": ".$lessons[$i]->teShort." ".$lessons[$i]->roName;
+				$hours[$index][$lessons[$i]->weekdayShort]->popup .=  $popup;
 			}
+			else{
+ 				$popup = "&#xD;".$lessons[$i]->suShort.": ".$lessons[$i]->teShort." ".$lessons[$i]->roName;
+				$hours[$index][$lessons[$i]->weekdayShort]->popup .=  $popup;
+			}
+		}
+		else{
+ 				$popup = "&#xD;".$lessons[$i]->suShort.": ".$lessons[$i]->teShort." ".$lessons[$i]->roName;
+				$hours[$index][$lessons[$i]->weekdayShort]->popup .=  $popup;
+		}
 	}
 	else {
 		$hours[$index][$lessons[$i]->weekdayShort] = $lessons[$i] ; //erstellen eines Eintrages wenn keiner vorhanden
+
+		$popup = $lessons[$i]->suShort.": ".$lessons[$i]->teShort." ".$lessons[$i]->roName;
+		$hours[$index][$lessons[$i]->weekdayShort]->popup = $popup;
 	}
 	
 }
+
+//if($_SESSION['id'] == '20090396') print_r($hours);
 $offset = 0;
 $dayShort= array(1=>'Mo',2=>'Di',3=>'Mi',4=>'Do',5=>'Fr');
 if(date("N")<6) $offset = 1-date("N");
@@ -108,7 +124,7 @@ echo "Dieser Stundenplan ist g&uuml;ltig: ". date("Y.m.d",time()+24*60*60*$offse
 			{
  				$dayName =  $dayShort[date("N",strtotime($substitudes[$i]['time']))];
 				if($substitudes[$i]['newSub']){
- 				 	$hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "</td><td class ='changed'>".$substitudes[$i]['suShort'];
+ 				 	$hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "</td><td class ='changed' title='".$hours[$substitudes[$i]['startHour']][$dayName]->popup."'>".$substitudes[$i]['suShort'];
 					$hours[$substitudes[$i]['startHour']][$dayName]->startHour = $substitudes[$i]['startHour'];
 					$hours[$substitudes[$i]['startHour']][$dayName]->endHour = $substitudes[$i]['endHour'];
 				}
@@ -116,7 +132,7 @@ echo "Dieser Stundenplan ist g&uuml;ltig: ". date("Y.m.d",time()+24*60*60*$offse
 					$temp = $hours[$substitudes[$i]['oldStartHour']][$dayName]->suShort;
 					$temp = str_replace($substitudes[$i]['oldSuShort'],"",$temp);
 					$temp = str_replace("|","",$temp);
-					$hours[$substitudes[$i]['oldStartHour']][$dayName]->suShort = "</td><td class ='changed'>".$temp;
+					$hours[$substitudes[$i]['oldStartHour']][$dayName]->suShort = "</td><td class ='changed' title='".$hours[$substitudes[$i]['startHour']][$dayName]->popup."'>".$temp;
 				}
 				if(!$substitudes[$i]['newSub'] and !$substitudes[$i]['remove']){
 					if(isset($hours[$substitudes[$i]['oldStartHour']][$dayName])){
@@ -126,9 +142,9 @@ echo "Dieser Stundenplan ist g&uuml;ltig: ". date("Y.m.d",time()+24*60*60*$offse
 						$hours[$substitudes[$i]['oldStartHour']][$dayName]->suShort = $temp;
 					}
 					if(isset($substitudes[$i]['suShort'])){
- 				 	$hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "</td><td class ='changed'>".$substitudes[$i]['suShort'];
+ 				 	$hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "</td><td class ='changed' title='".$hours[$substitudes[$i]['startHour']][$dayName]->popup."'>".$substitudes[$i]['suShort'];
 					}
-					else $hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "</td><td class ='changed'>".$substitudes[$i]['oldSuShort'];
+					else $hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "</td><td class ='changed' title='".$hours[$substitudes[$i]['startHour']][$dayName]->popup."'>".$substitudes[$i]['oldSuShort'];
 					
 					$hours[$substitudes[$i]['startHour']][$dayName]->startHour = $substitudes[$i]['startHour'];
 					$hours[$substitudes[$i]['startHour']][$dayName]->endHour = $substitudes[$i]['endHour'];
@@ -168,8 +184,9 @@ for ($i = $tableBegin; $i < $tableEnd; $i++) {
 					 if(!strpos($hours[$i][$days[$j]]->suShort,"<td")){
 					 echo "<td>";					 
 					}
-					echo $hours[$i][$days[$j]]->suShort;
-				
+
+					echo "<span title=\"".$hours[$i][$days[$j]]->popup."\">" . $hours[$i][$days[$j]]->suShort ."</span>";
+			
 			
 			echo "</td>";
 					if(($hours[$i][$days[$j]]->endHour) > $i) {//kopiert aktuelle Stunde in nächste Stunde, wenn mehr als eine Stunde nacheinander stattfindet
@@ -178,7 +195,8 @@ for ($i = $tableBegin; $i < $tableEnd; $i++) {
 						
 						$hours[$i+1][$days[$j]]->suShort = $hours[$i][$days[$j]]->suShort;
 						 $hours[$i+1][$days[$j]]->teShort = $hours[$i][$days[$j]]->teShort;
-						 $hours[$i+1][$days[$j]]->endHour = $hours[$i][$days[$j]]->endHour;	 	
+						 $hours[$i+1][$days[$j]]->endHour = $hours[$i][$days[$j]]->endHour;	
+						 $hours[$i+1][$days[$j]]->popup = $hours[$i][$days[$j]]->popup;	 	
 					}
 				
 			}
