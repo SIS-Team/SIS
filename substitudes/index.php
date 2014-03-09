@@ -21,6 +21,9 @@ else{
 		else $mode = "student";
 	}
 }
+
+
+
 $substitudes = array();
 
 //Seitenheader
@@ -30,12 +33,28 @@ echo "<div class ='keys' >";
 echo "Sup. ...Supplierlehrer; ";
 echo "urs. ... urspr&uumlnglicher Lehrer; ";
 echo "</div>";
+
+	if(!isset($_GET['change'])) $change = "actual";
+	else $change = $_GET['change'];
+	echo "<form method=\"get\">";
+	if($change == "actual"){
+		echo "<input type =\"radio\" name = \"change\" onclick= \"this.form.submit()\" value = \"actual\" checked>aktuelle Eintr&auml;ge";
+		echo "<input type =\"radio\" name = \"change\" onclick= \"this.form.submit()\" value = \"next\" >n&auml;chste Eintr&auml;ge";
+	}
+	else {
+		echo "<input type =\"radio\" name = \"change\" onclick= \"this.form.submit()\" value = \"actual\">aktuelle Eintr&auml;ge";
+		echo "<input type =\"radio\" name = \"change\" onclick= \"this.form.submit()\" value = \"next\" checked>n&auml;chste Eintr&auml;ge"; 
+	}
+	echo "<noscript><input type =\"submit\" value=\"Anzeige &auml;ndern\"></noscript>"; 
+	echo "</form>"; 
+
 $day_counter = 0;
 
 for($counter = 0; $counter <=1; $counter++)
 {   
 	if(date("w", time() + 24 * 60 * 60 * $day_counter)==0) $day_counter++;
 	if(date("w", time() + 24 * 60 * 60 * $day_counter)==6) $day_counter+=2;
+	if($change != 'actual' && $counter == 0) $day_counter+=2;
 	echo "<div id='d" . $counter . "' class='column background'>";
 	$day = captureDate($day_counter);		//aktuelles Datum abfragen
 	echo "Supplierungen vom ". weekday(date("Y-m-d",time() + 24*60*60*$day_counter)) .", ". date("d.",time() + 24*60*60*$day_counter). month(date("n",time() + 24*60*60*$day_counter)) ;
