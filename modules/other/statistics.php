@@ -226,13 +226,13 @@ function getDayFrequenzy($timeRelease){
 $sql = "SELECT logsMain.time FROM logsMain LEFT JOIN logsUSConn ON logsUSConn.ID = logsMain.connFK LEFT JOIN logsSessions ON logsSessions.ID = logsUSConn.sessionFK LEFT JOIN logsUsers ON logsUsers.ID = logsUSConn.userFK WHERE logsUsers.LDAP!='20090334' AND logsUsers.LDAP!='20090319' AND logsUsers.LDAP!='20090340' AND logsUsers.LDAP!='20090396' AND logsUsers.LDAP!='20090359' AND logsMain.time > '".$timeRelease."'";
 $result = mysql_query($sql);
 while($row=mysql_fetch_array($result)){
-	$day[]=date("d.m.Y",$row[0]);
+	$day[]=strtotime(date("Y-m-d",$row[0]));
 }
 
-$day = countDat($day,"SORT_STRING");
+$day = countDat($day,"SORT_NUMERIC");
 
 foreach($day as $i => $h){
-	$str[] = "['".$h[0]."',".$h[1]."]";
+	$str[] = "['".date("Y-m-d",$h[0])."',".$h[1]."]";
 }
 
 return implode(",",$str);

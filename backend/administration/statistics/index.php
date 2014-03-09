@@ -59,7 +59,7 @@ Das Entwicklungsteam wir nicht mitgez&auml;hlt!!!<br />
 <script type="text/javascript" src="<?php echo RELATIVE_ROOT;?>/modules/external/jqplot/plugins/jqplot.barRenderer.min.js"></script>
 <script type="text/javascript" src="<?php echo RELATIVE_ROOT;?>/modules/external/jqplot/plugins/jqplot.categoryAxisRenderer.min.js"></script>
 <script type="text/javascript" src="<?php echo RELATIVE_ROOT;?>/modules/external/jqplot/plugins/jqplot.pointLabels.min.js"></script>
-<script type="text/javascript" src="<?php echo RELATIVE_ROOT;?>/modules/external/plugins/jqplot.dateAxisRenderer.min.js"></script>
+<script type="text/javascript" src="<?php echo RELATIVE_ROOT;?>/modules/external/jqplot/plugins/jqplot.dateAxisRenderer.min.js"></script>
 
 <script type="text/javascript">
 $(document).ready(function(){
@@ -403,8 +403,18 @@ $(document).ready(function(){
         },
         axes: {
            	xaxis: {
-           		renderer: $.jqplot.CategoryAxisRenderer
-        	}
+           		renderer: $.jqplot.DateAxisRenderer,
+			abelRenderer: $.jqplot.CanvasAxisLabelRenderer,
+                	tickRenderer: $.jqplot.CanvasAxisTickRenderer,
+                	tickOptions: {
+                    		angle: -40,
+				textColor: 'white',
+				formatString: '%#d %b %Y',
+                	},
+        	},
+		yaxis:{
+			min:0,
+		}
         },
         grid: {
 		   	drawGridLines: true,        // wether to draw lines across the grid or not.
