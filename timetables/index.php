@@ -97,7 +97,7 @@ if(date("N")<6) $offset = 1-date("N");
 else $offset = 8-date("N");
 if(isset($week) && $week == "next") $offset+=7;
 if($displaytype == "modificated" ){
-echo "Dieser Stundenplan ist g&uuml;ltig: ". date("Y.m.d",time()+24*60*60*$offset) ."-".date("Y.m.d",time()+24*60*60*($offset+5));
+echo "Dieser Stundenplan ist g&uuml;ltig: ". date("Y.m.d",time()+24*60*60*$offset) ."-".date("Y.m.d",time()+24*60*60*($offset+4));
 	for($j=0;$j<5;$j++)
 	{
 		$substitudes = getSubstitude(date("Y-m-d",time()+24*60*60*$offset),$name,$mode);
