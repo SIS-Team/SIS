@@ -211,6 +211,7 @@ for ($i = $tableBegin; $i < $tableEnd; $i++) {
 echo "</div>";
 echo "</table>";
 
+echo "Dieser Stundenplan wurde generiert: ". date("d.m.Y H:i:s");
 
 function getLessons($name,$mode) {		//Abfrage von Stunden von vorgegebener Klasse/vorgegebenem Lehrer
 	if($mode == "schueler" ){

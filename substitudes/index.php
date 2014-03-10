@@ -45,8 +45,11 @@ echo "</div>";
 		echo "<input type =\"radio\" name = \"change\" onclick= \"this.form.submit()\" value = \"actual\">aktuelle Eintr&auml;ge";
 		echo "<input type =\"radio\" name = \"change\" onclick= \"this.form.submit()\" value = \"next\" checked>n&auml;chste Eintr&auml;ge"; 
 	}
-	echo "<noscript><input type =\"submit\" value=\"Anzeige &auml;ndern\"></noscript>"; 
+	echo "<noscript><input type =\"submit\" value=\"Anzeige &auml;ndern\"></noscript>";
+	echo "</br>Dieser Supplierplan wurde generiert: ". date("d.m.Y H:i:s");
 	echo "</form>"; 
+
+	
 
 $day_counter = 0;
 
@@ -188,6 +191,8 @@ else{
 	echo "</div>";
 	$day_counter++;
 }
+
+
 
 function getSubstitude($date,$mode){	//Supplierungen des gewählten Datums abrufen
 	
