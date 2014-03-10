@@ -111,7 +111,7 @@
 		INNER JOIN `classes` AS `c` ON `lb`.`classFK` = `c`.`ID`
 		WHERE `r`.`name` = '". $monitor->room."'";
 		$result = mysql_query($sql);
-		$response['content'] .= "<table border=1 class = \"timetable\">";
+		$response['content'] .= "<table class = \"timetable\">";
 		$response['content'] .= "<tr><th>" . "Stunde" . "</th>";
 		$response['content'] .= "<th>" . "Montag" . "</th>";
 		$response['content'] .= "<th>" . "Dienstag" . "</th>";

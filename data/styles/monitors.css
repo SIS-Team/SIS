@@ -185,20 +185,24 @@ body {
 }
 
 .timetable {
- 	background-color:rgba(0,0,0,0.5);
  	margin : auto auto;
  	margin-top: 240px;
- 	border-radius:30px;
  	padding: 1%;
+	border: 1px solid;
+	border-collapse:collapse;
  }
  .timetable th {
   text-align: center;
   font-size: 35px;
+  color: black;
+  background-color: rgba(255,255,255,0.8);
  }
  
 .timetable td {
   text-align: center;
   font-size: 30px;
+  border: 1px solid;
+  background-color: rgba(0,0,0,0.5);
  }
  
 #t0 {
