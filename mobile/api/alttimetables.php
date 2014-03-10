@@ -64,13 +64,15 @@ $( document ).ready(function() {
 	var i;
 	var iOld;
 	var Lesson;
-
+	var oldCell = "";
+	var newCell = "";
 
 for(aSubstitude in subsObject){					
 		var substitude = subsObject[aSubstitude];
 		substitude.substitude = "1";
+		var date = new Date(substitude.time);
 		console.log(substitude.subject);
-		
+		var weekday = date.getDay();
 		switch(substitude.weekdayShort)
 		{
 		case "Mo":
@@ -92,50 +94,56 @@ for(aSubstitude in subsObject){
 
 		var oldStart = substitude.oldStartHour;
 		var newStart = substitude.startHour;
-		var oldCell = "" + day + oldStart;
-		var newCell = "" + day + newStart;
+		var oldCell = "" + weekday + oldStart;
+		var newCell = "" + weekday + newStart;
 
 		for(;parseInt(oldStart) <= substitude.oldEndHour; oldStart=parseInt(oldStart) + 1)
 		{
 			
-			var oldCell = "" + day + oldStart;	//Variable wird aus Zahl in String umgewandelt
+			var oldCell = "" + weekday + oldStart;	//Variable wird aus Zahl in String umgewandelt
 			console.log(oldCell);
 			console.log(substitude.suShort);
 
-			if(substitude.remove == "1")
+			if(substitude.remove == "1" && document.getElementById(oldCell).style.color!="green")
 			{				
 				document.getElementById(oldCell).style.color="red";
+				document.getElementById(oldCell).innerHTML="";
 			}
 			else if(substitude.move == "1")
 			{
 				document.getElementById(oldCell).style.color="red";
+				document.getElementById(oldCell).innerHTML="";
 			}
 			else if(substitude.remove != "1" && substitude.move != "1" && substitude.newSub != "1")
 			{
 				document.getElementById(oldCell).style.color="yellow";
+				document.getElementById(oldCell).setAttribute("data-substitude", aSubstitude);
+
 			}
 			
 			
 		}
 
-		for(;parseInt(newStart) <= substitude.oldEndHour; newStart=parseInt(newStart) + 1)
+		for(;parseInt(newStart) <= substitude.endHour; newStart=parseInt(newStart) + 1)
 		{
 			
 			var newCell = "" + day + newStart;	//Variable wird aus Zahl in String umgewandelt
 			console.log(newCell);
 			console.log(substitude.suShort);
 
-			else if(substitude.move == "1")
+			if(substitude.move == "1")
 			{
 				document.getElementById(newCell).style.color="green";
-				var Lesson = lesson.suShort;
+				var Lesson = substitude.suShort;
 				document.getElementById(newCell).innerHTML=Lesson;
+				document.getElementById(newCell).setAttribute("data-substitude", aSubstitude);
 			}
 			else if(substitude.newSub == "1")
 			{
-				document.getElementById(newCell).style.color="yellow";
-				var Lesson = lesson.suShort;
+				document.getElementById(newCell).style.color="green";
+				var Lesson = substitude.suShort;
 				document.getElementById(newCell).innerHTML=Lesson;
+				document.getElementById(newCell).setAttribute("data-substitude", aSubstitude);
 			}
 			
 			

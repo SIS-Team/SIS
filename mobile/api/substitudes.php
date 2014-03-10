@@ -33,7 +33,7 @@
 	}
 	else	//ansonsten(also Lehrer) alle Einträge des selben Lehrers
 	{
-		$where = "newTeacher.short='".$id."' AND time >='".$date."'";
+		$where = "(teachers.short='".$id."' OR oldTeacher.short='".$id."') AND time >='".$date."'";
 
 		echo "var teacher = '$name';\n";
 	}
@@ -68,9 +68,9 @@ $( document ).ready(function() {
 		
 
 		
-		var start = substitude.startHour;
+		var start = substitude.oldStartHour;
 
-		for(;parseInt(start) <= substitude.endHour; start=parseInt(start) + 1)
+		for(;parseInt(start) <= substitude.oldEndHour; start=parseInt(start) + 1)
 		{	
 
 			j = start;
@@ -98,14 +98,21 @@ $( document ).ready(function() {
 				newTD.id = i + j + "3";
 				newTD.style.borderTop = "7px solid white";
 				newTR.appendChild(newTD);
-
+				/*
+				if(teacher != 0){
+					var newTD = document.createElement("td");
+					newTD.id = i + j + "4";
+					newTD.style.borderTop = "7px solid white";
+					newTR.appendChild(newTD);
+				}
+				*/
 				var newTD = document.createElement("td");
-				newTD.id = i + j + "4";
+				newTD.id = i + j + "5";
 				newTD.style.borderTop = "7px solid white";
 				newTR.appendChild(newTD);
 
 				var newTD = document.createElement("td");
-				newTD.id = i + j + "5";
+				newTD.id = i + j + "6";
 				newTD.style.borderTop = "7px solid white";
 				newTR.appendChild(newTD);
 			}
@@ -122,22 +129,31 @@ $( document ).ready(function() {
 				var newTD = document.createElement("td");
 				newTD.id = i + j + "3";
 				newTR.appendChild(newTD);
-
+				/*
+				if(teacher != 0){
+					var newTD = document.createElement("td");
+					newTD.id = i + j + "4";
+					newTR.appendChild(newTD);
+				}
+				*/
 				var newTD = document.createElement("td");
-				newTD.id = i + j + "4";
+				newTD.id = i + j + "5";
 				newTR.appendChild(newTD);
 
 				var newTD = document.createElement("td");
-				newTD.id = i + j + "5";
+				newTD.id = i + j + "6";
 				newTR.appendChild(newTD);
 			}
 			
 			//Der Inhalt wird in die Zeile eingetragen
 			document.getElementById(i + j + "1").innerHTML=substitude.time;
 			document.getElementById(i + j + "2").innerHTML=start;
-			document.getElementById(i + j + "3").innerHTML=substitude.suShort;
-			document.getElementById(i + j + "4").innerHTML=substitude.teShort;
-			document.getElementById(i + j + "5").innerHTML=substitude.comment;
+			document.getElementById(i + j + "3").innerHTML=substitude.oldSuShort;
+			/*if(teacher != 0){
+				document.getElementById(i + j + "4").innerHTML=substitude.clName;
+			}*/
+			document.getElementById(i + j + "5").innerHTML=substitude.teShort;
+			document.getElementById(i + j + "6").innerHTML=substitude.comment;
 			j++;
 
 			timeOld=substitude.time;
