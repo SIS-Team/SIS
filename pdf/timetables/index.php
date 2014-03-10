@@ -8,12 +8,15 @@ include_once(ROOT_LOCATION . "/modules/other/miscellaneous.php");
 ifNotLoggedInGotoLogin();	
 
 $permission = getPermission();
-if($permission != "root" and $permission != "admin") noPermission();
+if($permission == "root" or $permission == "admin") $mode =$permission;
+else{
+ 	if(!getPermission() and !empty($_SESSION['isTeacher'])) $mode = 'teacher'; 
+	else $mode = 'student';
+}
 if(isset($_GET['section'])) $section =$_GET['section'];
 else $section = 'N';
 if(isset($_GET['class'])) $class =$_GET['class'];
 else exit();
-
 $sql ="SELECT 
 		`su`.`short` AS `suShort`,
 		`sH`.`hour` AS `startHour`,
@@ -64,7 +67,21 @@ $pdf->Cell('25','10','Mi','1');
 $pdf->Cell('25','10','Do','1');
 $pdf->Cell('25','10','Fr','1','1');
 $pdf->SetFont('gothic','',12);
-for($i=1;$i<17;$i++){
+$type = isEvening($hours);
+if($type == "evening"){
+	$end = 17;
+	$start = 12;
+}
+else if($type == "normal"){
+ 	$end = 12;
+	$start = 1;
+}
+else {
+	$end = 17;
+	$start = 1;
+}
+
+for($i=$start;$i<$end;$i++){
 	$pdf->Cell('25','10',$i,'1');
 	for($j=1;$j<6;$j++){
 		if(isset($hours[$i][$day[$j]])){
@@ -76,4 +93,21 @@ for($i=1;$i<17;$i++){
 	$pdf->Cell('1','10','','','1');
 }
 $pdf->Output();
+
+function isEvening($hours){
+$check = 0;
+for($i=1;$i<12;$i++){
+	if(!isset($hours[$i])) $check++;
+}
+if($check == 11) return "evening";
+else $check = 0;
+
+for($i=12;$i<17;$i++){
+	if(!isset($hours[$i])) $check++;
+}
+if($check == 5) return "normal";
+else return "all";
+
+}
+
 ?>
