@@ -15,8 +15,16 @@ else{
 }
 if(isset($_GET['section'])) $section =$_GET['section'];
 else $section = 'N';
+
+if(isset($_GET['teacher'])) $teacher =$_GET['teacher'];
+else $teacher ="";
+if($mode == 'teacher') $teacher = $_SESSION['id'];
 if(isset($_GET['class'])) $class =$_GET['class'];
-else exit();
+else $class = "";
+if($mode == 'student') {
+	$class = $_SESSION['class'];
+	$teacher = "";
+}
 $sql ="SELECT 
 		`su`.`short` AS `suShort`,
 		`sH`.`hour` AS `startHour`,
@@ -28,27 +36,31 @@ $sql ="SELECT
 		INNER JOIN classes AS `c` ON `lb`.`classFK` = `c`.`ID`
 		INNER JOIN hours AS `sH` ON `lb`.`startHourFK` = `sH`.`ID`
 		INNER JOIN hours AS `eH` ON `lb`.`endHourFK` = `eH`.`ID`
-		WHERE `c`.`name` = '".$class."'
+		INNER JOIN teachers AS `t` ON `l`.`teachersFK`=`t`.`ID`
 ";
+if(!empty($teacher)) $sql .= "WHERE `t`.`short` = '".$teacher."'";
+else $sql .= "WHERE `c`.`name` = '".$class."'";
 $sql_result  = mysql_query($sql);
 echo mysql_error();
 while($result = mysql_fetch_array($sql_result)) {    
 	$results[]=$result;
 }
 $hours = array();
-for($j=0;$j<count($results);$j++){
- 	$startHour =$results[$j]['startHour'];
-
-	while($startHour <= $results[$j]['endHour'])
-	{	
- 		if(isset($hours[$startHour][$results[$j]['weekday']]) && $hours[$startHour][$results[$j]['weekday']] != $results[$j]['suShort'])
-		{
- 			if(!strpos($hours[$startHour][$results[$j]['weekday']],$results[$j]['suShort']))
-			$hours[$startHour][$results[$j]['weekday']] .= " | ".$results[$j]['suShort'];
+if(isset($results)){
+	for($j=0;$j<count($results);$j++){
+	 	$startHour =$results[$j]['startHour'];
+	
+		while($startHour <= $results[$j]['endHour'])
+		{	
+	 		if(isset($hours[$startHour][$results[$j]['weekday']]) && $hours[$startHour][$results[$j]['weekday']] != $results[$j]['suShort'])
+			{
+	 			if(!strpos($hours[$startHour][$results[$j]['weekday']],$results[$j]['suShort']))
+				$hours[$startHour][$results[$j]['weekday']] .= " | ".$results[$j]['suShort'];
+			}
+			else $hours[$startHour][$results[$j]['weekday']] = $results[$j]['suShort'];
+		$startHour++;
 		}
-		else $hours[$startHour][$results[$j]['weekday']] = $results[$j]['suShort'];
-	$startHour++;
-	}
+}
 }
 
 $day = array(1=>'Mo',2=>'Di',3=>'Mi',4=>'Do',5=>'Fr');
@@ -58,7 +70,8 @@ $pdf->AddFont('gothic');
 $pdf->AddFont('gothic','B');
 $pdf->SetFont('gothic','B',20);
 $pdf->Cell('130','25','HTL Anichstraße');
-$pdf->CELL('10','25','Klasse: '.$class,'','1');
+if(!empty($teacher)) $pdf->Cell('10','25','Lehrer: '.$teacher,'','1');
+else $pdf->Cell('10','25','Klasse: '.$class,'','1');
 $pdf->SetFont('gothic','B',16);
 $pdf->Cell('25','10','Stunde','1');
 $pdf->Cell('25','10','Mo','1');
