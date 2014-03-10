@@ -132,7 +132,9 @@ echo "Dieser Stundenplan ist g&uuml;ltig: ". date("Y.m.d",time()+24*60*60*$offse
 					$temp = $hours[$substitudes[$i]['oldStartHour']][$dayName]->suShort;
 					$temp = str_replace($substitudes[$i]['oldSuShort'],"",$temp);
 					$temp = str_replace("|","",$temp);
-					$hours[$substitudes[$i]['oldStartHour']][$dayName]->suShort = "</td><td class ='changed' title='".$hours[$substitudes[$i]['startHour']][$dayName]->popup."'>".$temp;
+					if(isset($hours[$substitudes[$i]['startHour']][$dayName]->popup)) $temp2=$hours[$substitudes[$i]['startHour']][$dayName]->popup;
+					else $temp2="";
+					$hours[$substitudes[$i]['oldStartHour']][$dayName]->suShort = "</td><td class ='changed' title='".$temp2."'>".$temp;
 				}
 				if(!$substitudes[$i]['newSub'] and !$substitudes[$i]['remove']){
 					if(isset($hours[$substitudes[$i]['oldStartHour']][$dayName])){
