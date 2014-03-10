@@ -113,11 +113,11 @@
 		$result = mysql_query($sql);
 		$response['content'] .= "<table border=1 class = \"timetable\">";
 		$response['content'] .= "<tr><th>" . "Stunde" . "</th>";
-		$response['content'] .= "<th colspan =2>" . "Montag" . "</th>";
-		$response['content'] .= "<th colspan =2>" . "Dienstag" . "</th>";
-		$response['content'] .= "<th colspan =2>" . "Mittwoch" . "</th>";
-		$response['content'] .= "<th colspan =2>" . "Donnerstag" . "</th>";
-		$response['content'] .= "<th colspan =2>" . "Freitag" . "</th></tr>";
+		$response['content'] .= "<th>" . "Montag" . "</th>";
+		$response['content'] .= "<th>" . "Dienstag" . "</th>";
+		$response['content'] .= "<th>" . "Mittwoch" . "</th>";
+		$response['content'] .= "<th>" . "Donnerstag" . "</th>";
+		$response['content'] .= "<th>" . "Freitag" . "</th></tr>";
 		while ($row = mysql_fetch_object($result)) {
 				$results[] = $row;
 		}
@@ -134,14 +134,13 @@
 		 	$response['content'] .= "<tr><td>".$i."</td>";
 			for($j=0;$j<5;$j++){
 			 if(isset($lesson[$i][$days[$j]])){
-				$response['content'] .= "<td>". $lesson[$i][$days[$j]]['suShort'] ."</td>";	
-				$response['content'] .= "<td>". $lesson[$i][$days[$j]]['className'] ."</td>";
+				$response['content'] .= "<td>". $lesson[$i][$days[$j]]['suShort'] ."</br>".$lesson[$i][$days[$j]]['className']." ".$lesson[$i][$days[$j]]['teShort']."</td>";	
 				if($lesson[$i][$days[$j]]['endHour']> $i){
 				   $lesson[$i+1][$days[$j]] = $lesson[$i][$days[$j]];
 				}
 				
 			 }
-			else $response['content'] .= "<td> &#160; </td><td> &#160; </td>";
+			else $response['content'] .= "<td> &#160;</br>&#160; </td>";
 			}
 			$response['content'] .= "</tr>";
 		}
