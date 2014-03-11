@@ -32,7 +32,7 @@ if(isset($news)){
 		$endDate = $news[$i]->endDay;		//Enddatum abfragen
 	 	if(($startDate <= $date) && ($endDate >= $date) && ($news[$i]->display ==1)){ //nur wenn aktuelles Datum zwischen Start- und Enddatum 
 			echo "<h2>" . $news[$i]->title . "</h2>";
-	  		echo $news[$i]->text;
+	  		echo str_replace("\n","<br />",$news[$i]->text);
 	  		echo "</br></br>";
 		}
 	}

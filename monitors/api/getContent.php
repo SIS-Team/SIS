@@ -84,7 +84,7 @@
 		$response['content'] .= "<table class=\"news\">";
 		while ($row = mysql_fetch_object($result)) {
 			$response['content'] .= "<tr><th>" . $row->title . "</th></tr>";
-			$response['content'] .= "<tr><td>" . $row->text  . "</td></tr>";
+			$response['content'] .= "<tr><td>" . str_replace("\n", "<br />", $row->text)  . "</td></tr>";
 		}
 		$response['content'] .= "</table>";
 		$hash .= md5($response['content']); // ugly
