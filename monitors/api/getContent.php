@@ -134,7 +134,7 @@
 		 	$response['content'] .= "<tr><td>".$i."</td>";
 			for($j=0;$j<5;$j++){
 			 if(isset($lesson[$i][$days[$j]])){
-				$response['content'] .= "<td>". $lesson[$i][$days[$j]]['suShort'] ."</br>".$lesson[$i][$days[$j]]['className']." ".$lesson[$i][$days[$j]]['teShort']."</td>";	
+				$response['content'] .= "<td><span class =\"timetableUpper\">". $lesson[$i][$days[$j]]['className'] ."</span></br>".$lesson[$i][$days[$j]]['suShort']." ".$lesson[$i][$days[$j]]['teShort']."</td>";	
 				if($lesson[$i][$days[$j]]['endHour']> $i){
 				   $lesson[$i+1][$days[$j]] = $lesson[$i][$days[$j]];
 				}
