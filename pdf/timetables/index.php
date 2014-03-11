@@ -8,19 +8,22 @@ include_once(ROOT_LOCATION . "/modules/other/miscellaneous.php");
 ifNotLoggedInGotoLogin();	
 
 $permission = getPermission();
-if($permission == "root" or $permission == "admin") $mode =$permission;
+if($permission == "root" or $permission == "admin") {
+	$mode ="admin";
+	if(isset($_GET['class'])) $class =$_GET['class'];
+	else {
+ 		if(isset($_GET['teacher'])) $teacher =$_GET['teacher'];
+		else $teacher =$_SESSION['id'];
+	}
+	
+}
 else{
  	if(!getPermission() and !empty($_SESSION['isTeacher'])) $mode = 'teacher'; 
 	else $mode = 'student';
 }
-if(isset($_GET['section'])) $section =$_GET['section'];
-else $section = 'N';
 
-if(isset($_GET['teacher'])) $teacher =$_GET['teacher'];
-else $teacher ="";
 if($mode == 'teacher') $teacher = $_SESSION['id'];
-if(isset($_GET['class'])) $class =$_GET['class'];
-else $class = "";
+
 if($mode == 'student') {
 	$class = $_SESSION['class'];
 	$teacher = "";
