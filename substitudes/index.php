@@ -52,12 +52,12 @@ echo "</div>";
 	
 
 $day_counter = 0;
+if($change != 'actual') $day_counter=2;
 
 for($counter = 0; $counter <=1; $counter++)
 {   
 	if(date("w", time() + 24 * 60 * 60 * $day_counter)==0) $day_counter++;
 	if(date("w", time() + 24 * 60 * 60 * $day_counter)==6) $day_counter+=2;
-	if($change != 'actual' && $counter == 0) $day_counter+=2;
 	echo "<div id='d" . $counter . "' class='column background'>";
 	$day = captureDate($day_counter);		//aktuelles Datum abfragen
 	echo "Supplierungen vom ". weekday(date("Y-m-d",time() + 24*60*60*$day_counter)) .", ". date("d.",time() + 24*60*60*$day_counter). month(date("n",time() + 24*60*60*$day_counter)) ;
