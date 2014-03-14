@@ -100,7 +100,8 @@ for ($i = 0; $i < count($lessons); $i++) {
 	else {
 		$hours[$index][$lessons[$i]->weekdayShort] = $lessons[$i] ; //erstellen eines Eintrages wenn keiner vorhanden
 
-		$popup = $lessons[$i]->suShort.": ".$lessons[$i]->teShort." ".$lessons[$i]->roName;
+		if($mode == 'schueler')$popup = $lessons[$i]->suShort.": ".$lessons[$i]->teShort." ".$lessons[$i]->roName;
+		else $popup = $lessons[$i]->clName." ".$lessons[$i]->roName;
 		$hours[$index][$lessons[$i]->weekdayShort]->popup = $popup;
 	}
 	
@@ -124,9 +125,11 @@ echo "Dieser Stundenplan ist g&uuml;ltig: ". date("Y.m.d",time()+24*60*60*$offse
 			{
  				$dayName =  $dayShort[date("N",strtotime($substitudes[$i]['time']))];
 				if($substitudes[$i]['newSub']){
- 				 	$hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "</td><td class ='changed' title='".$hours[$substitudes[$i]['startHour']][$dayName]->popup."'>".$substitudes[$i]['suShort'];
+ 					$popup = "sdfjhl";
+ 				 	$hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "</td><td class ='changed' title='".$popup."'>".$substitudes[$i]['suShort'];
 					$hours[$substitudes[$i]['startHour']][$dayName]->startHour = $substitudes[$i]['startHour'];
 					$hours[$substitudes[$i]['startHour']][$dayName]->endHour = $substitudes[$i]['endHour'];
+					$hours[$substitudes[$i]['startHour']][$dayName]->popup = "entf&aumll;t";
 				}
 				if($substitudes[$i]['remove']){
 					$temp = $hours[$substitudes[$i]['oldStartHour']][$dayName]->suShort;
@@ -144,13 +147,19 @@ echo "Dieser Stundenplan ist g&uuml;ltig: ". date("Y.m.d",time()+24*60*60*$offse
 						$hours[$substitudes[$i]['oldStartHour']][$dayName]->suShort = $temp;
 					}
 					if(isset($substitudes[$i]['suShort'])){
- 				 	$hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "</td><td class ='changed' title='".$hours[$substitudes[$i]['startHour']][$dayName]->popup."'>".$substitudes[$i]['suShort'];
+ 					if(isset($hours[$substitudes[$i]['startHour']][$dayName]->popup)) $title = $hours[$substitudes[$i]['startHour']][$dayName]->popup;
+					else{ 
+ 					if($mode =='schueler')$title = $substitudes[$i]['suShort'].":". $substitudes[$i]['teShort']." ".$substitudes[$i]['roName'];
+					else $title = $substitudes[$i]['clName']."    ".$substitudes[$i]['roName'];
 					}
-					else $hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "</td><td class ='changed' title='".$hours[$substitudes[$i]['startHour']][$dayName]->popup."'>".$substitudes[$i]['oldSuShort'];
+ 				 	$hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "</td><td class ='changed' title='".$title."'>".$substitudes[$i]['suShort'];
+					}
+					else $hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "</td><td class ='changed' title='".$title."'>".$substitudes[$i]['oldSuShort'];
 					
 					$hours[$substitudes[$i]['startHour']][$dayName]->startHour = $substitudes[$i]['startHour'];
 					$hours[$substitudes[$i]['startHour']][$dayName]->endHour = $substitudes[$i]['endHour'];
 					$hours[$substitudes[$i]['startHour']][$dayName]->teShort = $substitudes[$i]['teShort'];
+					$hours[$substitudes[$i]['startHour']][$dayName]->popup = "siehe Supplierplan";
 				}
 			}
 		}
