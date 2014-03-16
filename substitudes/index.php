@@ -90,8 +90,7 @@ if($mode=="teacher"){
 			$allSubstitudes[$startHour]['endHour'] = $endHour;
 		}
 		else {
- 		
-			$allSubstitudes[$startHour]['class'] .= "|". $substitudes[$i]['clName'];	
+ 			if(!strpos($allSubstitudes[$startHour]['class'],$substitudes[$i]['clName']))$allSubstitudes[$startHour]['class'] .= "|". $substitudes[$i]['clName'];	
 		
 		}
 		
