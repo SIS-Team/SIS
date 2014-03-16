@@ -28,6 +28,14 @@ else {
 
 pageHeader("Stundenplan","main");
 
+echo "<div id=\"print\">";
+echo "<a href=\"".RELATIVE_ROOT."/pdf/timetables/\" target=\"_blank\">";
+echo "<button class =\"nonButton\">";
+include(ROOT_LOCATION . "/data/images/print.svg");
+echo "</button>";
+echo "</a>";
+echo "</div>";
+
 echo "<form  method = \"get\" style=\" float:left\">";
 if(!isset($_GET['displaytype'])) $displaytype = "modificated";
 else $displaytype = $_GET['displaytype'];
