@@ -33,6 +33,17 @@ $sitesMobile = $temp[8];
 $osM=$temp[10];
 $browserM = $temp[9];
 $dayFrequenzy = $temp[11];
+
+
+$x = strptime(strftime("%d %b %Y",$temp[12][0]), "%d %b %Y");
+$y = mktime($x["tm_hour"], $x["tm_min"], $x["tm_sec"], 
+		$x["tm_mon"]+1, $x["tm_mday"]-1, 1900+$x["tm_year"] );
+$d_min = strftime("%d %b %Y", $y);
+
+$x = strptime(strftime("%d %b %Y",$temp[12][1]), "%d %b %Y");
+$y = mktime($x["tm_hour"], $x["tm_min"], $x["tm_sec"], 
+		$x["tm_mon"]+1, $x["tm_mday"]+1, 1900+$x["tm_year"] );
+$d_max = strftime("%d %b %Y", $y);
 //Seitenheader
 pageHeader("Statistiken","main");
 
@@ -409,8 +420,10 @@ $(document).ready(function(){
                 	tickOptions: {
                     		angle: -40,
 				textColor: 'white',
-				formatString: '%#d %b %Y',
+				formatString: '%a %d %b %Y',
                 	},
+			min: '<?php echo $d_min; ?>',
+			max: '<?php echo $d_max; ?>',
         	},
 		yaxis:{
 			min:0,
