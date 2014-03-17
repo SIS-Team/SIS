@@ -669,12 +669,10 @@ mysql_query($sql);
 //$field.....Name des nicht gefundenen Wertes als String
 function control($post,$select,$field)
 {
-
-if($post != "" && $select == ""){	//Wenn Post nicht leer, aber select leer --> Fehler
-	printf("<script> window.alert('%s nicht gefunden!');</script> ",$field);	//Alert ausgeben
-	return 0;	//0 zurückgeben
-}
-else	//sons 1
+	if($post != "" && $select == ""){	//Wenn Post nicht leer, aber select leer --> Fehler
+		printf("<script> window.alert('%s nicht gefunden!');</script> ",$field);	//Alert ausgeben
+		return 0;	//0 zurückgeben
+	}
 	return 1;
 }
 
