@@ -58,7 +58,7 @@ if(isset($results)){
 	 		if(isset($hours[$startHour][$results[$j]['weekday']]) && $hours[$startHour][$results[$j]['weekday']] != $results[$j]['suShort'])
 			{
 	 			if(!strpos($hours[$startHour][$results[$j]['weekday']],$results[$j]['suShort']))
-				$hours[$startHour][$results[$j]['weekday']] .= " | ".$results[$j]['suShort'];
+				$hours[$startHour][$results[$j]['weekday']] .= " |  ".$results[$j]['suShort'];
 			}
 			else $hours[$startHour][$results[$j]['weekday']] = $results[$j]['suShort'];
 		$startHour++;
@@ -77,11 +77,11 @@ if(!empty($teacher)) $pdf->Cell('10','25','Lehrer: '.$teacher,'','1');
 else $pdf->Cell('10','25','Klasse: '.$class,'','1');
 $pdf->SetFont('gothic','B',16);
 $pdf->Cell('25','10','Stunde','1');
-$pdf->Cell('25','10','Mo','1');
-$pdf->Cell('25','10','Di','1');
-$pdf->Cell('25','10','Mi','1');
-$pdf->Cell('25','10','Do','1');
-$pdf->Cell('25','10','Fr','1','1');
+$pdf->Cell('30','10','Mo','1');
+$pdf->Cell('30','10','Di','1');
+$pdf->Cell('30','10','Mi','1');
+$pdf->Cell('30','10','Do','1');
+$pdf->Cell('30','10','Fr','1','1');
 $pdf->SetFont('gothic','',12);
 $type = isEvening($hours);
 if($type == "evening"){
@@ -98,15 +98,36 @@ else {
 }
 
 for($i=$start;$i<$end;$i++){
-	$pdf->Cell('25','10',$i,'1');
+ 	$newY = 0;
+	$pdf->Cell('25','10',$i,'RLT');
 	for($j=1;$j<6;$j++){
 		if(isset($hours[$i][$day[$j]])){
- 			$pdf->Cell('25','10',$hours[$i][$day[$j]],'1');
+ 			$y = $pdf->GetY();
+			$x = $pdf->GetX();
+ 			$pdf->MultiCell('30','10',$hours[$i][$day[$j]],'RLT');
+			if($pdf->GetY() > $newY)$newY=$pdf->GetY();
+			$pdf->SetY($y);
+			$pdf->SetX($x+30);
 			
 		}
-		else $pdf->Cell('25','10','','1');
+		else {
+ 			$y = $pdf->GetY();
+ 			$pdf->Cell('30','10','','RLT');	
+			if($pdf->GetY() > $newY)$newY=$pdf->GetY();
+		}
 	}
+	$pdf->SetY($y);
+
+ 	$otherY = $newY-$y;
+	if($otherY== 0) $otherY+= 10;
+	$pdf->Cell('25',$otherY,'','RLB');
+	for($j=1;$j<6;$j++)
+	{
+		$pdf->Cell('30',$otherY,'','RLB');
+	}
+
 	$pdf->Cell('1','10','','','1');
+	$pdf->SetY($newY);
 }
 $pdf->Output();
 
