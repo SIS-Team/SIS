@@ -12,6 +12,11 @@
 	else if ($monitor->displayMode == "permanent Aus")
 		die("false");
 	else {
+	
+		// monitor off on sat and sun
+		if (date("N") >= 6)
+			die("true");
+	
 		$on = $monitor->startTime;
 		$off = $monitor->endTime;
 		$on = $on % (24 * 60 * 60);
