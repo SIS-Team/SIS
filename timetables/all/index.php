@@ -15,21 +15,55 @@ $permission = getPermission();
 if($permission !='root' && $permission != 'admin') noPermission();
 pageHeader("Alle Stundenpl&auml;ne","main");
 
+$mode = $_GET['mode'];
+$name= $_GET['name'];
 
-if(!empty($_GET['teacher'])){
-	$name = $_GET['teacher'];
-	$mode = 'teacher'; 
-}
-else {
-	if(!empty($_GET['class'])){
-		$name = $_GET['class'];
-		$mode = 'class'; 
-	}
-	else {
- 	unset($mode);
-	}
+if($mode != 'Lehrer' && $mode != 'Klasse') unset($mode);
+
+//Ausdruckbutton
+echo "<div id=\"print\">";
+if(isset($mode) && $mode == 'Lehrer') echo "<a href=\"".RELATIVE_ROOT."/pdf/timetables/?teacher=".$name."\" target=\"_blank\">";
+else if(isset($mode) && $mode == 'Klasse')echo "<a href=\"".RELATIVE_ROOT."/pdf/timetables/?class=".$name."\" target=\"_blank\">";
+echo "<button class =\"nonButton\">";
+include(ROOT_LOCATION . "/data/images/print.svg");
+echo "</button>";
+echo "</a>";
+echo "</div>";
+
+$sql = "SELECT name FROM classes ORDER BY name";
+$result = mysql_query($sql);
+while($results = mysql_fetch_array($result)) {    
+		$classes[]=$results;
 }
 
+$sql = "SELECT short AS name FROM teachers ORDER BY short";
+$result = mysql_query($sql);
+while($results = mysql_fetch_array($result)) {    
+		$teachers[]=$results;
+}
+echo "<form method=\"get\">";
+echo "<select name=\"mode\" style=\"color:#000\">";
+echo "<option style=\"color:#000\">Lehrer</option>";
+echo "<option style=\"color:#000\">Klasse</option>";
+echo "</select>";
+
+echo "<select name=\"name\" style=\"color:#000\">";
+for($i=0;$i<count($classes);$i++)
+{
+	echo "<option style=\"color:#000\">".$classes[$i]['name']."</option>";
+}
+echo "</select>";
+
+echo "<select name=\"name\" style=\"color:#000\">";
+for($i=0;$i<count($teachers);$i++)
+{
+	echo "<option style=\"color:#000\">".$teachers[$i]['name']."</option>";
+}
+echo "</select>";
+
+echo "<input type=\"submit\">";
+
+echo "</form>";
 
 if(isset($mode)){
 	$lessons = getLessons ($name,$mode);
@@ -78,7 +112,7 @@ else{
 pageFooter();
 
 function getLessons($name,$mode){
-	if($mode == 'class') $where = "classes.name = '".mysql_real_escape_string($name) ."'";
+	if($mode == 'Klasse') $where = "classes.name = '".mysql_real_escape_string($name) ."'";
 	else $where = "teachers.short = '".mysql_real_escape_string($name)."'";
 
 	$result = selectLesson($where,"");
