@@ -92,6 +92,11 @@ $month = array(1=>'J&auml;nner',2=>'Februar',3=>'M&auml;rz',4=>'April',5=>'Mai',
 return $month[$number];
 }
 
+function dayShort($number) {
+$dayShort = array(1=>'Mo',2=>'Di',3=>'Mi',4=>'Do',5=>'Fr');
+
+return $dayShort[$number];
+}
 
 
 ?>
