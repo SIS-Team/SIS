@@ -23,6 +23,7 @@
 	echo "var actualClass = 0;\n";
 	echo "var teacher = 0;\n";
 	$date = strftime("%Y-%m-%d");
+	$substitudes = array();
 
 
 
@@ -68,9 +69,17 @@ $( document ).ready(function() {
 		
 
 		
-		var start = substitude.oldStartHour;
+		if(substitude.oldStartHour)
+			var start = substitude.oldStartHour;
+		else
+			var start = substitude.startHour;
 
-		for(;parseInt(start) <= substitude.oldEndHour; start=parseInt(start) + 1)
+		if(substitude.oldEndHour)
+			var end = substitude.oldEndHour;
+		else
+			var end = substitude.endHour;
+
+		for(;parseInt(start) <= parseInt(end); start=parseInt(start) + 1)
 		{	
 
 			j = start;
