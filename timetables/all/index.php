@@ -14,12 +14,12 @@ ifNotLoggedInGotoLogin();	//Kontrolle ob angemeldet
 $permission = getPermission();
 if($permission !='root' && $permission != 'admin') noPermission();
 pageHeader("Alle Stundenpl&auml;ne","main");
-
-$mode = $_GET['mode'];
-$name= $_GET['name'];
-
-if($mode != 'Lehrer' && $mode != 'Klasse') unset($mode);
-
+if(isset($_GET['mode']))
+{$mode = $_GET['mode'];
+	if($mode == 'Lehrer')$name= $_GET['teacher'];
+	else $name = $_GET['class'];
+	if($mode != 'Lehrer' && $mode != 'Klasse') unset($mode);
+}
 //Ausdruckbutton
 echo "<div id=\"print\">";
 if(isset($mode) && $mode == 'Lehrer') echo "<a href=\"".RELATIVE_ROOT."/pdf/timetables/?teacher=".$name."\" target=\"_blank\">";
@@ -41,25 +41,65 @@ $result = mysql_query($sql);
 while($results = mysql_fetch_array($result)) {    
 		$teachers[]=$results;
 }
+?>
+<script type="text/javascript">
+
+var show_elements = function()
+{
+	var elementNames = show_elements.arguments;
+	for (var i=0; i<elementNames.length; i++)
+   	{
+     	var elementName = elementNames[i];
+     	document.getElementById(elementName).style.display='block';
+   	}
+}
+
+var hide_elements = function()
+{
+	var elementNames = hide_elements.arguments;
+	for (var i=0; i<elementNames.length; i++)
+   	{
+     	var elementName = elementNames[i];
+     	document.getElementById(elementName).style.display='none';
+   	}
+} 
+
+</script>
+
+<?php
 echo "<form method=\"get\">";
+
 echo "<select name=\"mode\" style=\"color:#000\">";
-echo "<option style=\"color:#000\">Lehrer</option>";
-echo "<option style=\"color:#000\">Klasse</option>";
+	echo "<option style=\"color:#000\" onclick=\"show_elements('selected_teacher');hide_elements('selected_class')\" selected>Lehrer</option>";
+	echo "<option style=\"color:#000\" onclick=\"show_elements('selected_class');hide_elements('selected_teacher')\" ";
+	if(isset($mode) and $mode == 'Klasse') echo "selected";
+	 echo ">Klasse</option>";
 echo "</select>";
 
-echo "<select name=\"name\" style=\"color:#000\">";
-for($i=0;$i<count($classes);$i++)
-{
-	echo "<option style=\"color:#000\">".$classes[$i]['name']."</option>";
-}
-echo "</select>";
+echo "<div id=\"selected_class\"";
+if(!isset($mode) or $mode != 'Klasse')echo "style= \" display : none\"";
+echo ">";
+	echo "<select name=\"class\" style=\"color:#000\">";
+		for($i=0;$i<count($classes);$i++)
+		{ if(isset($_GET['class']) and $classes[$i]['name'] == $_GET['class'])echo "<option style=\"color:#000\" selected>";
+		  else echo  "<option style=\"color:#000\">";
+			echo $classes[$i]['name']."</option>";
+		}
+	echo "</select>";
+echo "</div>";
 
-echo "<select name=\"name\" style=\"color:#000\">";
-for($i=0;$i<count($teachers);$i++)
-{
-	echo "<option style=\"color:#000\">".$teachers[$i]['name']."</option>";
-}
-echo "</select>";
+echo "<div id = \"selected_teacher\"";
+if(!isset($mode) or $mode != 'Lehrer')echo " style= \" display : none\"";
+echo ">";
+	echo "<select name=\"teacher\" style=\"color:#000\">";
+		for($i=0;$i<count($teachers);$i++)
+		{
+			if(isset($_GET['teacher']) and $teachers[$i]['name'] == $_GET['teacher'])echo "<option style=\"color:#000\" selected>";
+		  	else echo  "<option style=\"color:#000\">";
+			echo $teachers[$i]['name']."</option>";
+		}
+	echo "</select>";
+echo "</div>";
 
 echo "<input type=\"submit\">";
 
