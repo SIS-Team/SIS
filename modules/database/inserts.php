@@ -309,9 +309,9 @@ if($post["ID"]!=""){
 
 }
 //Neue Supplierung erstellen, wenn delete nicht gesetzt
-if(!isset($post["delete"]) && $post["delete"]==""){
+if(empty($post["delete"])){
 	//Wenn die Eingabe eine Freie eingabe ist
-	if($post["free"]=="free"){
+	if(!empty($post["free"]) && $post["free"]=="free"){
 		//Wenn die Stunde hinzugefügt wird
 		if($post["freeRadio"]=="add"){
 			//Alles Werte in das Daten-Array schreiben
