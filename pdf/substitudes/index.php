@@ -18,7 +18,6 @@ else $section = 'N';
 						`newSub`,
 						`remove`,
 						`move`,
-						`s`.`display`,
 						`s`.`comment`,
 						IFNULL(`nC`.`name`,`c`.`name`) AS `className`,
 						`nT`.`short` AS `newTeacher`,
@@ -44,7 +43,7 @@ else $section = 'N';
 				LEFT JOIN `classes` AS `nC` ON `s`.`classFK` = `nC`.`ID`
 				LEFT JOIN `sections` AS `sec` ON `c`.`sectionFK` = `sec`.`ID`
 				LEFT JOIN `sections` AS `nSec` ON `nC`.`sectionFK`=`nSec`.`ID`
-			WHERE time = '". mysql_real_escape_string($date) . "' and (`sec`.`short` = '".mysql_real_escape_string($section)."' or `nSec`.`short` = '".mysql_real_escape_string($section)."') AND `s`.`display` = '1'
+			WHERE time = '". mysql_real_escape_string($date) . "' and (`sec`.`short` = '".mysql_real_escape_string($section)."' or `nSec`.`short` = '".mysql_real_escape_string($section)."') 
 			ORDER BY `className`, `startHour`		
 		";
 $result = mysql_query($sql);
