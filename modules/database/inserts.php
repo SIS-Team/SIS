@@ -276,35 +276,15 @@ $post=$_POST;	//alle Post Parameter in eine Variable schreiben
 unset($post["save"]);	//Save Parameter im Array löschen
 
 //Definition der Spalten in der MYSQL Tabelle
-$data=array("ID" => "","time" => "","newSub" => "","remove" => "","move" => "","lessonFK" => "","startHourFK" => "","endHourFK" => "","teacherFK" => "","subjectFK" => "","roomFK" => "","classFK" => "","display" => "","comment" => "");
+$data=array("ID" => "","time" => "","newSub" => "","remove" => "","move" => "","lessonFK" => "","startHourFK" => "","endHourFK" => "","teacherFK" => "","subjectFK" => "","roomFK" => "","classFK" => "","comment" => "");
 
 //Wenn die ID nicht leer ist, dann update, also zuvor Supplierung aus DB löschen
-if($post["ID"]!=""){
-	//Parameter der Supplierungen auslesen
-	$sql="SELECT move,newSub,remove,classFK,subjectFK,teacherFK,time,roomFK,startHourFK,endHourFK FROM substitudes WHERE ID = '".intval($post['ID'])."'";
-	$result = mysql_query($sql);
-	$result = mysql_fetch_array($result);
+if($post["ID"]!=""){	
 	
-	//alle Supplierugnen mit gleichen Parameter, aber display 0 auslesen
-	$sql = "SELECT ID FROM substitudes WHERE remove = '".$result["remove"]."' AND newSub = '".$result["newSub"]."' AND move = '".$result["move"]."' AND classFK = '".$result["classFK"]."' AND subjectFK = '".$result["subjectFK"]."' AND teacherFK = '".$result["teacherFK"]."' AND time = '".$result["time"]."' AND roomFK = '".$result["roomFK"]."' AND startHourFK = '".$result["startHourFK"]."' AND endHourFK = '".$result["endHourFK"]."' AND display = 0";
-	$temp = mysql_query($sql);
+	//ID löschen
+	$sql="DELETE FROM substitudes WHERE ID=".$post["ID"];
+	mysql_query($sql);
 	
-	//Alles ID's in Array schreiben
-	while($tempIDs[] = mysql_fetch_array($temp)){
-	}
-	unset($tempIDs[count($tempIDs)-1]);
-	
-	
-	$IDs[] = $post["ID"];	//zusätzlich die mitgelieferte ID auch
-	foreach($tempIDs as $i){
-		$IDs[] = $i["ID"];	
-	}
-	
-	//ID's löschen
-	foreach($IDs as $i){
-		$sql="DELETE FROM substitudes WHERE ID=".$i;
-		mysql_query($sql);
-	}
 	$post["ID"]="";
 
 }
@@ -335,7 +315,6 @@ if(empty($post["delete"])){
 			$data["time"]=$post["time"];
 			$data["comment"]=htmlspecialchars($post["comment"]);
 			$data["newSub"]=true;
-			$data["display"]=true;
 			$temp = mysql_fetch_array(mysql_query("SELECT ID FROM classes WHERE name='".mysql_real_escape_string(htmlspecialchars($post['clName']))."'"));
 			$ok6 = control($post["clName"],$temp["ID"],"Klasse");		
 			$data["classFK"] = $temp['ID'];
@@ -375,12 +354,6 @@ if(empty($post["delete"])){
 					if($row != array()){
 						foreach($row as $i => $r){
 							$data["lessonFK"]=$r["ID"];
-							//Erste LessonsID auf Display 1
-							if($i < 1)
-								$data["display"]=true;
-							else	//Weiteren auf 0
-								$data["display"]=false;
-
 							saveupdate($data,"substitudes");
 						}
 					}
@@ -391,7 +364,6 @@ if(empty($post["delete"])){
 					//ID der Lesson für die Basisstunde und dem Lehrer finden
 					$sql = "SELECT lessons.ID FROM lessons INNER JOIN lessonsBase ON lessonsBase.ID=lessons.lessonBaseFK WHERE lessonsBase.startHourFK='".$startHour."' AND lessonsBase.endHourFK='".$endHour."' AND lessonsBase.classFK='".$class."' AND lessons.teachersFK='".$teacher."'";
 					$temp = mysql_fetch_array(mysql_query($sql));
-					$data["display"]=true;
 					$data["lessonFK"]=$temp["ID"];
 					if($temp["ID"]!="")
 						saveupdate($data,"substitudes");
@@ -447,12 +419,6 @@ if(empty($post["delete"])){
 					if($row != array()){
 						foreach($row as $i => $r){
 							$data["lessonFK"]=$r["ID"];
-							//Erste LessonsID auf Display 1
-							if($i < 1)
-								$data["display"]=true;
-							else	//Weiteren auf 0
-								$data["display"]=false;
-
 							saveupdate($data,"substitudes");
 						}
 					}
@@ -463,7 +429,6 @@ if(empty($post["delete"])){
 					//ID der Lesson für die Basisstunde und dem Lehrer finden
 					$sql = "SELECT lessons.ID FROM lessons INNER JOIN lessonsBase ON lessonsBase.ID=lessons.lessonBaseFK WHERE lessonsBase.startHourFK='".$startHour."' AND lessonsBase.endHourFK='".$endHour."' AND lessonsBase.classFK='".$class."' AND lessons.teachersFK='".$teacher."'";
 					$temp = mysql_fetch_array(mysql_query($sql));
-					$data["display"]=true;
 					$data["lessonFK"]=$temp["ID"];
 					if($temp["ID"]!="")
 						saveupdate($data,"substitudes");
@@ -513,11 +478,7 @@ if(empty($post["delete"])){
 				$temp = mysql_query($sql);
 				$temp = mysql_fetch_row($temp);
 				$data["lessonFK"] = $temp[0];
-				//Erste LessonsID auf Display 1
-				if($i < 1)
-					$data["display"]=true;
-				else	//Weiteren auf 0
-					$data["display"]=false;
+
 				if($temp[0]!="")
 					saveupdate($data,"substitudes");
 				else 
