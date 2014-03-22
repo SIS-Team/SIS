@@ -196,6 +196,7 @@ $str[]=$str8;
 $str[]=$str9;
 $str[]=$str10;
 $str[]=getDayFrequenzy($timeRelease);
+$str[]=getFirstLastDay($timeRelease);
 
 //echo $str;
 return $str;
@@ -236,6 +237,20 @@ foreach($day as $i => $h){
 }
 
 return implode(",",$str);
+
+}
+
+function getFirstLastDay($timeRelease){
+
+$sql = "SELECT MIN(logsMain.time) FROM logsMain LEFT JOIN logsUSConn ON logsUSConn.ID = logsMain.connFK LEFT JOIN logsSessions ON logsSessions.ID = logsUSConn.sessionFK LEFT JOIN logsUsers ON logsUsers.ID = logsUSConn.userFK WHERE logsUsers.LDAP!='20090334' AND logsUsers.LDAP!='20090319' AND logsUsers.LDAP!='20090340' AND logsUsers.LDAP!='20090396' AND logsUsers.LDAP!='20090359' AND logsMain.time > '".$timeRelease."'";
+$result = mysql_query($sql);
+$min=mysql_fetch_array($result);
+
+$sql = "SELECT MAX(logsMain.time) FROM logsMain LEFT JOIN logsUSConn ON logsUSConn.ID = logsMain.connFK LEFT JOIN logsSessions ON logsSessions.ID = logsUSConn.sessionFK LEFT JOIN logsUsers ON logsUsers.ID = logsUSConn.userFK WHERE logsUsers.LDAP!='20090334' AND logsUsers.LDAP!='20090319' AND logsUsers.LDAP!='20090340' AND logsUsers.LDAP!='20090396' AND logsUsers.LDAP!='20090359' AND logsMain.time > '".$timeRelease."'";
+$result = mysql_query($sql);
+$max=mysql_fetch_array($result);
+
+return array($min[0],$max[0]);
 
 }
 

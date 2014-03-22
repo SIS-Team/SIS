@@ -1,23 +1,22 @@
  <?php
+ // (c) 2014 @htlinn.ac.at (or something alike)
+ 
 	include($_SERVER['DOCUMENT_ROOT'] . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
 	//die nächste datei würde dei db connect ersetzen
 	include($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Connect.php");			//Bindet die Datenbank ein
 
 	header('Content-Type: application/javascript; charset=UTF-8');					//setzt den Content-Type auf application/javascript damit die JSON-Übertragung funktioniert
-			
-		
+
 	//call the passed in functions
 	if(isset($_GET['method'])&& !empty($_GET['method'])) {
 		if(function_exists($_GET['method'])){
 			$_GET['method']();
 		}
-
 	}
 
 	function loginApp(){
-		
+		// include inside function. not accessed outside. 
 		include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/general/SessionManager.php");
-
 		try {
 			login($_GET['username'],$_GET['password']);
 		} catch (Exception $e) {
@@ -27,7 +26,6 @@
 		getLessonsByClass();
 	}
 
-	//methods
 	function getLessonsByClass(){
 		$class = $_GET['class'];
 		//$class = $_SESSION['class'];
@@ -42,7 +40,6 @@
 		echo $_GET['jsoncallback'] . '(' . $lessons . ')';
 	}
 
-
 	function getLessonsByTeacher(){
 		$teacher = $_GET['teacher'];
 
@@ -56,12 +53,9 @@
 		echo $_GET['jsoncallback'] . '(' . $sections . ')';
 	}
 
-
 	function getSubstitude(){
 		$class = $_GET['class'];
 		$start = $_GET['startHour'];
-
-		
 
 		$where = "classes.name='".$class."'";
 		$section_sql = selectSubstitude($where,"substitudes.time, hoursStart.hour");	
@@ -72,6 +66,5 @@
 		$sections = json_encode($sections);
 		echo $_GET['jsoncallback'] . '(' . $sections . ')';
 	}
-	
 
 ?>

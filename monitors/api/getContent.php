@@ -84,7 +84,7 @@
 		$response['content'] .= "<table class=\"news\">";
 		while ($row = mysql_fetch_object($result)) {
 			$response['content'] .= "<tr><th>" . $row->title . "</th></tr>";
-			$response['content'] .= "<tr><td>" . $row->text  . "</td></tr>";
+			$response['content'] .= "<tr><td>" . str_replace("\n", "<br />", $row->text)  . "</td></tr>";
 		}
 		$response['content'] .= "</table>";
 		$hash .= md5($response['content']); // ugly
@@ -158,7 +158,6 @@
 						`newSub`,
 						`remove`,
 						`move`,
-						`s`.`display`,
 						`s`.`comment`,
 						IFNULL(`nC`.`name`,`c`.`name`) AS `className`,
 						`nT`.`display` AS `teacher`,
@@ -204,7 +203,7 @@
 			$response['content'] .= "<tr><th>Klasse</th><th>Stunden</th><th>Suppl. durch</th><th>Fach</th><th>Bemerkung</th></tr>								";
 			if(isset($results)){
 				for($i = 0; $i <count($results);$i++){
- 					if($results[$i]['time'] >= date("Y-m-d", time()+ 24 *60 *60 * $day_counter)  and $results[$i]['time'] < date("Y-m-d", time()+ 24 *60 *60 * ($day_counter+1)) and $results[$i]['display'] == 1){
+ 					if($results[$i]['time'] >= date("Y-m-d", time()+ 24 *60 *60 * $day_counter)  and $results[$i]['time'] < date("Y-m-d", time()+ 24 *60 *60 * ($day_counter+1))){
 							
 			 				$response['content'] .= "<tr>";
 							if($results[$i]['className'] != $upperClass) {

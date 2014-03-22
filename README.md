@@ -42,8 +42,6 @@ Files
 * /cookies/   
   -> Cookies-Akzeptier-Seite
 * /data/   
-  * ./ajax/   
-    -> generelle AJAX-Scripts (serverseitig)
   * ./fonts/   
     -> Schriftarten
   * ./images/   
@@ -53,10 +51,6 @@ Files
     -> Javascripts
   * ./styles/   
     -> Stylesheets (CSS)
-* /doc/   
-  -> Gesamtdokumentation
-  * ./instructions/   
-    -> Anleitungen
 * /impressum/   
   -> Impressum, Datenschutzbestimmungen, Nutzungsbedingungen   
 * /login/   

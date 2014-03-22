@@ -5,23 +5,26 @@ include_once(ROOT_LOCATION . "/modules/general/Connect.php");
 include_once(ROOT_LOCATION . "/modules/general/SessionManager.php");
 include_once(ROOT_LOCATION . "/modules/other/miscellaneous.php");	
 
-ifNotLoggedInGotoLogin();	
+ifNotLoggedInGotoLogin();	//Kontrolle ob angemeldet
 
 $permission = getPermission();
-if($permission == "root" or $permission == "admin") $mode =$permission;
+if($permission == "root" or $permission == "admin") {  
+	$mode ="admin";
+	if(isset($_GET['class'])) $class =$_GET['class'];
+	else {
+ 		if(isset($_GET['teacher'])) $teacher =$_GET['teacher'];
+		else $teacher =$_SESSION['id'];
+	}
+	
+}
 else{
- 	if(!getPermission() and !empty($_SESSION['isTeacher'])) $mode = 'teacher'; 
+ 	if(!getPermission() and !empty($_SESSION['isTeacher'])) $mode = 'teacher'; //keine Rechte und isTeacher => Lehrer
 	else $mode = 'student';
 }
-if(isset($_GET['section'])) $section =$_GET['section'];
-else $section = 'N';
 
-if(isset($_GET['teacher'])) $teacher =$_GET['teacher'];
-else $teacher ="";
-if($mode == 'teacher') $teacher = $_SESSION['id'];
-if(isset($_GET['class'])) $class =$_GET['class'];
-else $class = "";
-if($mode == 'student') {
+if($mode == 'teacher') $teacher = $_SESSION['id'];	
+
+if($mode == 'student') { //verhindert das Schüler Lehrerstundenpläne sehen
 	$class = $_SESSION['class'];
 	$teacher = "";
 }
@@ -38,31 +41,33 @@ $sql ="SELECT
 		INNER JOIN hours AS `eH` ON `lb`.`endHourFK` = `eH`.`ID`
 		INNER JOIN teachers AS `t` ON `l`.`teachersFK`=`t`.`ID`
 ";
-if(!empty($teacher)) $sql .= "WHERE `t`.`short` = '".$teacher."'";
+if(!empty($teacher)) $sql .= "WHERE `t`.`short` = '".$teacher."'"; //wenn Lehrermitgegeben Lehrerabfrage
 else $sql .= "WHERE `c`.`name` = '".$class."'";
 $sql_result  = mysql_query($sql);
-echo mysql_error();
 while($result = mysql_fetch_array($sql_result)) {    
 	$results[]=$result;
 }
 $hours = array();
 if(isset($results)){
-	for($j=0;$j<count($results);$j++){
+	for($j=0;$j<count($results);$j++){ //alle LEssons durchlaufen
 	 	$startHour =$results[$j]['startHour'];
 	
-		while($startHour <= $results[$j]['endHour'])
+		while($startHour <= $results[$j]['endHour']) //für Stunden die länger als eine Stunde dauern
 		{	
-	 		if(isset($hours[$startHour][$results[$j]['weekday']]) && $hours[$startHour][$results[$j]['weekday']] != $results[$j]['suShort'])
+	 		if(isset($hours[$startHour][$results[$j]['weekday']])) //Abfrage ob bereits Eintrag vorhanden
 			{
-	 			if(!strpos($hours[$startHour][$results[$j]['weekday']],$results[$j]['suShort']))
-				$hours[$startHour][$results[$j]['weekday']] .= " | ".$results[$j]['suShort'];
+ 				//Abfrage ob neuer Eintrag beriets in altem enthalten ist	
+ 				if(strpos($hours[$startHour][$results[$j]['weekday']],$results[$j]['suShort'])=== false)
+				{
+				$hours[$startHour][$results[$j]['weekday']] .= " |  ".$results[$j]['suShort'];
+				}
 			}
-			else $hours[$startHour][$results[$j]['weekday']] = $results[$j]['suShort'];
+			else $hours[$startHour][$results[$j]['weekday']] = $results[$j]['suShort']; // sonst Eintrag überschreiben
 		$startHour++;
 		}
 }
 }
-
+//Ausgabe Tabellenkopf
 $day = array(1=>'Mo',2=>'Di',3=>'Mi',4=>'Do',5=>'Fr');
 $pdf = new FPDF();
 $pdf->AddPage();
@@ -74,11 +79,11 @@ if(!empty($teacher)) $pdf->Cell('10','25','Lehrer: '.$teacher,'','1');
 else $pdf->Cell('10','25','Klasse: '.$class,'','1');
 $pdf->SetFont('gothic','B',16);
 $pdf->Cell('25','10','Stunde','1');
-$pdf->Cell('25','10','Mo','1');
-$pdf->Cell('25','10','Di','1');
-$pdf->Cell('25','10','Mi','1');
-$pdf->Cell('25','10','Do','1');
-$pdf->Cell('25','10','Fr','1','1');
+$pdf->Cell('30','10','Mo','1');
+$pdf->Cell('30','10','Di','1');
+$pdf->Cell('30','10','Mi','1');
+$pdf->Cell('30','10','Do','1');
+$pdf->Cell('30','10','Fr','1','1');
 $pdf->SetFont('gothic','',12);
 $type = isEvening($hours);
 if($type == "evening"){
@@ -94,18 +99,41 @@ else {
 	$start = 1;
 }
 
-for($i=$start;$i<$end;$i++){
-	$pdf->Cell('25','10',$i,'1');
+for($i=$start;$i<$end;$i++){ //Stundenplanausgabe
+ 	$newY = 0;
+	$pdf->Cell('25','10',$i,'RLT');	//Stundennummer ausgeben
 	for($j=1;$j<6;$j++){
+ 		
+		$y = $pdf->GetY();	//aktuelle Y-Position speichern
+		$x = $pdf->GetX();	//aktuelle X-Position speichern
 		if(isset($hours[$i][$day[$j]])){
- 			$pdf->Cell('25','10',$hours[$i][$day[$j]],'1');
-			
+ 			$pdf->MultiCell('30','10',$hours[$i][$day[$j]],'RLT'); 
+			//Multicell, da Eintrag länger als eingestellte Breite der Spalte sein kann 
+			//RLT = Rand oben, links und rechts
+			if($pdf->GetY() > $newY)$newY=$pdf->GetY();	//neue Y-Position speichern
+			//Y-Position ändert sich, da nach Multicell automatisch in einer neuen Zeile begonnen wird
 		}
-		else $pdf->Cell('25','10','','1');
+		else {
+ 			$pdf->MultiCell('30','10','','RLT');	
+			if($pdf->GetY() > $newY)$newY=$pdf->GetY();
+		}
+		//Position neben vorheriger Zelle wiederherstellen, zuerst muss Y, dann X eingestellt werden
+
+		$pdf->SetY($y);
+		$pdf->SetX($x+30);
 	}
-	$pdf->Cell('1','10','','','1');
+	$pdf->SetY($y);	//da bei set Y zum Zeilenbeginn zurückgesprungen wird ,muss dies nocheinmal ausgeführt werden
+
+ 	$newHeight = $newY-$y; //Höhe der zuerstellenden Zelle
+	$pdf->Cell('25',$newHeight,'','RLB'); //Zelle mit neure Höhe und Rand unten, rechts und links
+	for($j=1;$j<6;$j++)
+	{
+		$pdf->Cell('30',$newHeight,'','RLB');
+	}
+
+	$pdf->SetY($newY);	//Zeilenumbruch
 }
-$pdf->Output();
+$pdf->Output(); //PDF ausgeben
 
 function isEvening($hours){
 $check = 0;
