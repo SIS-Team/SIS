@@ -304,7 +304,7 @@ printf("<table style=\"width:100%%;text-align:right\">\n");	//Tabellen Tag auf
 				$content["newSub"]=true;
 			else if($content["freeRadio"]=="remove")
 				$content["remove"]=true;
-			}
+		}
 		
 		if($content["move"]){
 			//echo "move";
