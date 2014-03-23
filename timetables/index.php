@@ -114,8 +114,6 @@ for ($i = 0; $i < count($lessons); $i++) {
 	}
 	
 }
-
-//if($_SESSION['id'] == '20090396') print_r($hours);
 $offset = 0;
 $dayShort= array(1=>'Mo',2=>'Di',3=>'Mi',4=>'Do',5=>'Fr');
 if(date("N")<6) $offset = 1-date("N");
@@ -123,8 +121,27 @@ else $offset = 8-date("N");
 if(isset($week) && $week == "next") $offset+=7;
 if($displaytype == "modificated" ){
 echo "Dieser Stundenplan ist g&uuml;ltig: ". date("Y.m.d",time()+24*60*60*$offset) ."-".date("Y.m.d",time()+24*60*60*($offset+4));
+
 	for($j=0;$j<5;$j++)
 	{
+ 		$missingClasses= getMissingClasses(date("Y-m-d",time()+24*60*60*$offset) ); 
+		if(isset($missingClasses))
+		{	
+			for($i=0;$i<17;$i++)
+			{
+ 			
+ 				if(isset($missingClasses[$i])&& isset($hours[$i][$dayShort[$j+1]]))
+				{
+ 					
+					if(array_key_exists($hours[$i][$dayShort[$j+1]]->clName,$missingClasses[$i])) 
+					{
+ 						$className= $hours[$i][$dayShort[$j+1]]->clName;
+ 						$hours[$i][$dayShort[$j+1]]->suShort = "&#160;";
+						$hours[$i][$dayShort[$j+1]]->popup = $missingClasses[$i][$className];
+ 					}
+ 				}
+			}		
+		}
 		$substitudes = getSubstitude(date("Y-m-d",time()+24*60*60*$offset),$name,$mode);
 		$offset++;
 		
@@ -133,20 +150,26 @@ echo "Dieser Stundenplan ist g&uuml;ltig: ". date("Y.m.d",time()+24*60*60*$offse
 			{
  				$dayName =  $dayShort[date("N",strtotime($substitudes[$i]['time']))];
 				if($substitudes[$i]['newSub']){
- 					$popup = "sdfjhl";
- 				 	$hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "</td><td class ='changed' title='".$popup."'>".$substitudes[$i]['suShort'];
+ 					$popup = $substitudes[$i]['suShort']. ": " . $substitudes[$i]['teShort'] . " ". $substitudes[$i]['roName'];
+					$popup .= "&#xD;" . $substitudes[$i]['comment'];
+ 				 	$hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "<td class ='changed' title='".$popup."'>".$substitudes[$i]['suShort'];
 					$hours[$substitudes[$i]['startHour']][$dayName]->startHour = $substitudes[$i]['startHour'];
 					$hours[$substitudes[$i]['startHour']][$dayName]->endHour = $substitudes[$i]['endHour'];
-					$hours[$substitudes[$i]['startHour']][$dayName]->popup = "entf&aumll;t";
+					$hours[$substitudes[$i]['startHour']][$dayName]->teShort = $substitudes[$i]['teShort'];
+					$hours[$substitudes[$i]['startHour']][$dayName]->popup = "" ;
 				}
+
+
 				if($substitudes[$i]['remove']){
 					$temp = $hours[$substitudes[$i]['oldStartHour']][$dayName]->suShort;
 					$temp = str_replace($substitudes[$i]['oldSuShort'],"",$temp);
 					$temp = str_replace("|","",$temp);
-					if(isset($hours[$substitudes[$i]['startHour']][$dayName]->popup)) $temp2=$hours[$substitudes[$i]['startHour']][$dayName]->popup;
-					else $temp2="";
-					$hours[$substitudes[$i]['oldStartHour']][$dayName]->suShort = "</td><td class ='changed' title='".$temp2."'>".$temp;
+					if(isset($hours[$substitudes[$i]['startHour']][$dayName]->popup)) $temp2=$hours[$substitudes[$i]['startHour']][$dayName]->popup . $substitudes[$i]['comment'];
+					else $temp2=$substitudes[$i]['comment'];
+					$hours[$substitudes[$i]['oldStartHour']][$dayName]->suShort = "<td class ='changed' title='".$temp2."'>".$temp;
 				}
+
+
 				if(!$substitudes[$i]['newSub'] and !$substitudes[$i]['remove']){
 					if(isset($hours[$substitudes[$i]['oldStartHour']][$dayName])){
 						$temp = $hours[$substitudes[$i]['oldStartHour']][$dayName]->suShort;
@@ -157,17 +180,21 @@ echo "Dieser Stundenplan ist g&uuml;ltig: ". date("Y.m.d",time()+24*60*60*$offse
 					if(isset($substitudes[$i]['suShort'])){
  					if(isset($hours[$substitudes[$i]['startHour']][$dayName]->popup)) $title = $hours[$substitudes[$i]['startHour']][$dayName]->popup;
 					else{ 
- 					if($mode =='schueler')$title = $substitudes[$i]['suShort'].":". $substitudes[$i]['teShort']." ".$substitudes[$i]['roName'];
+ 					if($mode =='schueler')
+					{
+ 						$title = $substitudes[$i]['suShort'].":". $substitudes[$i]['teShort']." ".$substitudes[$i]['roName'];
+						$title .= "&#xD;" . $substitudes[$i]['comment'];
+					}
 					else $title = $substitudes[$i]['clName']."    ".$substitudes[$i]['roName'];
 					}
- 				 	$hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "</td><td class ='changed' title='".$title."'>".$substitudes[$i]['suShort'];
+ 				 	$hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "<td class ='changed' title='".$title."'>".$substitudes[$i]['suShort'];
 					}
-					else $hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "</td><td class ='changed' title='".$title."'>".$substitudes[$i]['oldSuShort'];
+					else $hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "<td class ='changed' title='".$title."'>".$substitudes[$i]['oldSuShort'];
 					
 					$hours[$substitudes[$i]['startHour']][$dayName]->startHour = $substitudes[$i]['startHour'];
 					$hours[$substitudes[$i]['startHour']][$dayName]->endHour = $substitudes[$i]['endHour'];
 					$hours[$substitudes[$i]['startHour']][$dayName]->teShort = $substitudes[$i]['teShort'];
-					$hours[$substitudes[$i]['startHour']][$dayName]->popup = "siehe Supplierplan";
+					$hours[$substitudes[$i]['startHour']][$dayName]->popup = $substitudes[$i]['comment'];
 				}
 			}
 		}
@@ -191,20 +218,23 @@ else {	//nur erste 11 Stunden
  	}
 $days=array(0=> "Mo",1=> "Di",2=> "Mi",3=>"Do",4=>"Fr");
 for ($i = $tableBegin; $i < $tableEnd; $i++) {
+ 	
  	echo "<tr>";
  	echo "<td style=\"width:50px\">".$i."</td>";			//gibt Stundennummer an
  	if (!isset($hours[$i])){ 
-		for ($j = 0; $j < 5; $j++) 
-			echo "<td>&#160;</td>"; //Ausgabe eines leeren Feldes, wenn keine Stunde vorhanden
+		for ($j = 0; $j < 5; $j++)
+		{ 
+			echo "<td></td>"; //Ausgabe eines leeren Feldes, wenn keine Stunde vorhanden
+		}
 	} 
 	else {
 		for ($j = 0; $j < 5; $j++) {
 			if(isset($hours[$i][$days[$j]])){
-					 if(!strpos($hours[$i][$days[$j]]->suShort,"<td")){
-					 echo "<td>";					 
+					 if(strpos($hours[$i][$days[$j]]->suShort,"<td") === false){
+					 echo "<td title=\"".$hours[$i][$days[$j]]->popup."\">";					 
 					}
 
-					echo "<span title=\"".$hours[$i][$days[$j]]->popup."\">" . $hours[$i][$days[$j]]->suShort ."</span>";
+					echo $hours[$i][$days[$j]]->suShort;
 			
 			
 			echo "</td>";
@@ -220,7 +250,7 @@ for ($i = $tableBegin; $i < $tableEnd; $i++) {
 				
 			}
 			else {
-				echo "<td>&#160;</td>";
+				echo "<td></td>";
 		}		
 		}
 		
@@ -285,6 +315,31 @@ function getSubstitude($date,$name,$mode){	//Supplierungen des gewählten Datums 
 			
 			if(isset($substitudes))	return $substitudes;
 }
+function getMissingClasses($date){ //fehlende Klassen abrufen
 
+	$where = "startDay <= '". $date."' and endDay >= '".$date ."'";
+ 	$missingClasses_sql = selectMissingClass($where,"");
+	while($result = mysql_fetch_array($missingClasses_sql)) {    
+		 		$results[]=$result;
+			
+			}	
+	if(isset($results))	//umornen in Array $missinClasses[Stunde][Klasse] = Grund
+	{
+		for($i=0; $i <count($results);$i++)
+		{
+ 			$hour = $results[$i]['startHour'];
+			$endHour = $results[$i]['endHour'];
+			if($date != $results[$i]['endDay']) $endHour = 16;
+			while($hour <= $endHour)
+			{
+ 				$missingClasses[$hour][$results[$i]['clName']] = $results[$i]['reason'];
+				$hour++;
+ 			}
+ 			
+ 		} 
+		return $missingClasses;
+	}
+	else return Array();
+}
 pageFooter();
 ?>
