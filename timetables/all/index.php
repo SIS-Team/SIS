@@ -79,26 +79,32 @@ echo "</select>";
 echo "<div id=\"selected_class\"";
 if(!isset($mode) or $mode != 'Klasse')echo "style= \" display : none\"";
 echo ">";
-	echo "<select name=\"class\" style=\"color:#000\">";
+	echo "<datalist id='class' style=\"color:#000\">";
 		for($i=0;$i<count($classes);$i++)
-		{ if(isset($_GET['class']) and $classes[$i]['name'] == $_GET['class'])echo "<option style=\"color:#000\" selected>";
-		  else echo  "<option style=\"color:#000\">";
+		{   echo  "<option style=\"color:#000\">";
 			echo $classes[$i]['name']."</option>";
 		}
-	echo "</select>";
+	echo "</datalist>";
+	if(isset($_GET['class']))$temp = "value ='".$_GET['class']."'";
+	else $temp = "";
+	echo "<input list='class' name='class' ".$temp."></input>"; 
 echo "</div>";
 
 echo "<div id = \"selected_teacher\"";
-if(!isset($mode) or $mode != 'Lehrer')echo " style= \" display : none\"";
+if(isset($mode) and $mode != 'Lehrer')echo " style= \" display : none\"";
 echo ">";
-	echo "<select name=\"teacher\" style=\"color:#000\">";
+	echo "<datalist id='teacher' style='color:#000'>";
 		for($i=0;$i<count($teachers);$i++)
 		{
 			if(isset($_GET['teacher']) and $teachers[$i]['name'] == $_GET['teacher'])echo "<option style=\"color:#000\" selected>";
 		  	else echo  "<option style=\"color:#000\">";
 			echo $teachers[$i]['name']."</option>";
 		}
-	echo "</select>";
+	echo "</datalist>";
+	if(isset($_GET['teacher']))$temp = "value ='".$_GET['teacher']."'";
+	else $temp = "";
+	echo "<input list='teacher' name='teacher' ".$temp."></input>";// value='".."'
+
 echo "</div>";
 
 echo "<input type=\"submit\">";
