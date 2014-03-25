@@ -93,10 +93,12 @@ for ($i = 0; $i < count($lessons); $i++) {
 		{//Wenn neuer Eintrag nicht in altem Eintrag vorhanden -> zusammenhängen, getrennt mit |
 			$hours[$index][$lessons[$i]->weekdayShort]->suShort .= " | " .$lessons[$i]->suShort;
 			$popup = "&#xD;".$lessons[$i]->suShort.": ".$lessons[$i]->teShort." ".$lessons[$i]->roName;
+			if(isset($lessons[$i]->comment)) $popup.="&#xD;" . $lessons[$i]; 
 			$hours[$index][$lessons[$i]->weekdayShort]->popup .=  $popup;
 		}
 		else{ //wenn bereits vorhanden -> Popup erweitern
  			$popup = "&#xD;".$lessons[$i]->suShort.": ".$lessons[$i]->teShort." ".$lessons[$i]->roName;
+			if(isset($lessons[$i]->comment)) $popup.="&#xD;" . $lessons[$i]->comment;
 			$hours[$index][$lessons[$i]->weekdayShort]->popup .=  $popup;
 		}
 		
@@ -107,6 +109,7 @@ for ($i = 0; $i < count($lessons); $i++) {
 
 		if($mode == 'schueler')$popup = $lessons[$i]->suShort.": ".$lessons[$i]->teShort." ".$lessons[$i]->roName;
 		else $popup = $lessons[$i]->clName." ".$lessons[$i]->roName;
+		if(isset($lessons[$i]->comment)) $popup.="&#xD;" . $lessons[$i]->comment;
 		$hours[$index][$lessons[$i]->weekdayShort]->popup = $popup;
 	}
 	
