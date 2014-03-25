@@ -80,7 +80,7 @@ $fieldsRow2 = array(
 	array( "oldTeShort",  	"Urs. Lehrer: ", 	"dropdown",	"5",	"",		$selectTeachers,""),
 	);
 if($fail===false)
-	printf("<div>Es ist ein Fehler bei der Eingabe aufgetreten. M&ouml;glicherweise ist f&uuml;r diese Stunde keine Supplierung<br>n&ouml;tig, weil der Lehrer nicht verhindert ist.<div><br><br>");
+	printf("<div>Es ist ein Fehler bei der Eingabe aufgetreten. M&ouml;glicherweise ist f&uuml;r diese Stunde keine Supplierung<br>n&ouml;tig, weil der Lehrer nicht verhindert ist oder ein anderer Eingabefehler ist aufgetreten<div><br><br>");
 
 
 printf("<script language=\"javascript\" type=\"text/javascript\" src=\"%s/data/scripts/substitudes.js\"></script>",RELATIVE_ROOT);
@@ -93,6 +93,8 @@ $where = "substitudes.time = '".$date."' AND sections.short = '".$section."'";		
 $sort = "classes.name, hoursStart.hour";		//Sortierung nach dem Klassenname und der Startstunde
 
 ?>
+<br />
+<br />
 <div id="print">
 	<a href="<?php echo RELATIVE_ROOT; ?>/pdf/substitudes/?date=<?php echo $date; ?>&section=<?php echo $section; ?>" target="_blank">
 		<button class="nonButton">

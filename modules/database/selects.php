@@ -183,11 +183,11 @@ function selectMissingClass($where,$order){
  *$where string zum Filtern
  *$order string zum Sortieren
  *	
- *ID,newSub,move,remove,short,clName,suShort,teShort,timeroName,startHour,endHour,comment,oldStartHour,oldEndHour,weekdayShort,oldTeShort,oldSuShort,oldRoName
+ *ID,newSub,move,remove,short,clName,suShort,teShort,time,roName,startHour,endHour,comment,oldStartHour,oldEndHour,weekdayShort,oldTeShort,oldSuShort,oldRoName,lessonBaseFK
  */
 function selectSubstitude($where,$order){
 
- 	$sql= "SELECT substitudes.ID, substitudes.newSub, substitudes.move, substitudes.remove, sections.short, classes.name as clName, subjects.short as suShort, teachers.short as teShort, substitudes.time, rooms.name as roName, hoursStart.hour as startHour, hoursEnd.hour as endHour, substitudes.comment, oldHoursStart.hour as oldStartHour, oldHoursEnd.hour as oldEndHour, hoursStart.weekdayShort, oldTeacher.short as oldTeShort , oldSubjects.short as oldSuShort,  oldRooms.name as oldRoName
+ 	$sql= "SELECT substitudes.ID, substitudes.newSub, substitudes.move, substitudes.remove, sections.short, classes.name as clName, subjects.short as suShort, teachers.short as teShort, substitudes.time, rooms.name as roName, hoursStart.hour as startHour, hoursEnd.hour as endHour, substitudes.comment, oldHoursStart.hour as oldStartHour, oldHoursEnd.hour as oldEndHour, hoursStart.weekdayShort, oldTeacher.short as oldTeShort , oldSubjects.short as oldSuShort,  oldRooms.name as oldRoName, lessons.lessonBaseFK
 		FROM substitudes 
 		LEFT JOIN lessons ON lessons.ID=substitudes.lessonFK 
 		LEFT JOIN lessonsBase ON lessonsBase.ID=lessons.lessonBaseFK

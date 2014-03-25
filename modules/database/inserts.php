@@ -93,7 +93,7 @@ $lessonsBaseInsert["ID"] = $temp["ID"];
 
 //Alles Werte in das Daten-Array schreiben
 $temp = mysql_fetch_array(mysql_query("SELECT ID FROM teachers WHERE short='".mysql_real_escape_string(htmlspecialchars($post["teShort"]))."'"));
-$ok1 = control($post["seShort"],$temp["ID"],"Lehrer");
+$ok1 = control($post["teShort"],$temp["ID"],"Lehrer");
 $lessonsInsert["teachersFK"] = $temp["ID"];
 $temp = mysql_fetch_array(mysql_query("SELECT ID FROM rooms WHERE name='".mysql_real_escape_string(htmlspecialchars($post["roName"]))."'"));
 $ok2 = control($post["roName"],$temp["ID"],"Raum");
@@ -465,30 +465,52 @@ if(empty($post["delete"])){
 		//Wenn die Kontrolle erfolgreich ist
 		if(($ok1*$ok2*$ok3*$ok4*$ok5*$ok6)==1){
 			//Alles fehlende Lehrer die zur Supplierzeit fehlen und die die Supplierung betrifft finden
-			$sql = "SELECT missingTeachers.teacherFK FROM missingTeachers INNER JOIN hours as hourST ON hourST.ID = missingTeachers.startHourFK INNER JOIN hours as hourEN ON hourEN.ID = missingTeachers.endHourFK INNER JOIN lessons ON missingTeachers.teacherFK = lessons.teachersFK INNER JOIN lessonsBase ON lessonsBase.ID = lessons.lessonBaseFK WHERE missingTeachers.startDay <='".mysql_real_escape_string(htmlspecialchars($post['time']))."' AND missingTeachers.endDay >='".mysql_real_escape_string(htmlspecialchars($post['time']))."' AND hourST.hour <='".intval($post['startHour'])."' AND hourEN.hour >='".intval($post['endHour'])."' AND lessonsBase.startHourFK='".$data["startHourFK"]."' AND lessonsBase.endHourFK='".$data["endHourFK"]."' AND lessonsBase.classFK='".$class."'";
+			$sql = "SELECT missingTeachers.teacherFK,missingTeachers.startDay, missingTeachers.endDay,hourST.hour as startHour, hourEN.hour as endHour FROM missingTeachers INNER JOIN hours as hourST ON hourST.ID = missingTeachers.startHourFK INNER JOIN hours as hourEN ON hourEN.ID = missingTeachers.endHourFK INNER JOIN lessons ON missingTeachers.teacherFK = lessons.teachersFK INNER JOIN lessonsBase ON lessonsBase.ID = lessons.lessonBaseFK WHERE missingTeachers.startDay <='".mysql_real_escape_string(htmlspecialchars($post['time']))."' AND missingTeachers.endDay >='".mysql_real_escape_string(htmlspecialchars($post['time']))."' AND lessonsBase.startHourFK='".$data["startHourFK"]."' AND lessonsBase.endHourFK='".$data["endHourFK"]."' AND lessonsBase.classFK='".$class."'";
 			$temp = mysql_query($sql);
 			while($missTeacher[] = mysql_fetch_array($temp)){
 			}
 			unset($missTeacher[count($missTeacher)-1]);
-			
-			//Für jeden fehlenden Lehrer eine Supplierung eintragen
-			foreach($missTeacher as $i => $m){
-				//Lessons ID finden
-				$sql = "SELECT lessons.ID FROM lessons INNER JOIN lessonsBase ON lessonsBase.ID = lessons.lessonBaseFK WHERE lessonsBase.startHourFK='".$data["startHourFK"]."' AND lessonsBase.endHourFK='".$data["endHourFK"]."' AND lessonsBase.classFK='".$class."' AND lessons.teachersFK = '".$m["teacherFK"]."'";
-				$temp = mysql_query($sql);
-				$temp = mysql_fetch_row($temp);
-				$data["lessonFK"] = $temp[0];
 
-				if($temp[0]!="")
-					saveupdate($data,"substitudes");
-				else 
-					return false;
-			}
+			if(!empty($missTeacher)){
+				//Für jeden fehlenden Lehrer eine Supplierung eintragen
+				foreach($missTeacher as $i => $m){
+					//Lessons ID finden
+					if($m['startDay']==$data['time'] && $m['startHour']<=$post['startHour']){
+						$sql = "SELECT lessons.ID FROM lessons INNER JOIN lessonsBase ON lessonsBase.ID = lessons.lessonBaseFK WHERE lessonsBase.startHourFK='".$data["startHourFK"]."' AND lessonsBase.endHourFK='".$data["endHourFK"]."' AND lessonsBase.classFK='".$class."' AND lessons.teachersFK = '".$m["teacherFK"]."'";
+						$temp = mysql_query($sql);
+						$temp = mysql_fetch_row($temp);
+						$data["lessonFK"] = $temp[0];
+						if($temp[0]!="")
+							saveupdate($data,"substitudes");
+
+					}
+					else if($m['endDay']==$data['time'] && $m['endHour']>=$post['endHour']){
+						$sql = "SELECT lessons.ID FROM lessons INNER JOIN lessonsBase ON lessonsBase.ID = lessons.lessonBaseFK WHERE lessonsBase.startHourFK='".$data["startHourFK"]."' AND lessonsBase.endHourFK='".$data["endHourFK"]."' AND lessonsBase.classFK='".$class."' AND lessons.teachersFK = '".$m["teacherFK"]."'";
+						$temp = mysql_query($sql);
+						$temp = mysql_fetch_row($temp);
+						$data["lessonFK"] = $temp[0];
+	
+						if($temp[0]!="")
+							saveupdate($data,"substitudes");
+
+					}
+					else if($m['startDay']<$data['time'] && $data['time'] < $m['endDay']){
+						$sql = "SELECT lessons.ID FROM lessons INNER JOIN lessonsBase ON lessonsBase.ID = lessons.lessonBaseFK WHERE lessonsBase.startHourFK='".$data["startHourFK"]."' AND lessonsBase.endHourFK='".$data["endHourFK"]."' AND lessonsBase.classFK='".$class."' AND lessons.teachersFK = '".$m["teacherFK"]."'";
+						$temp = mysql_query($sql);
+						$temp = mysql_fetch_row($temp);
+						$data["lessonFK"] = $temp[0];
+	
+						if($temp[0]!="")
+							saveupdate($data,"substitudes");
+
+					}
+					else
+						return false;
+				}
 			//Wenn kein fehlender Lehrer gefunden ist Fehler zurückgeben --> falsche Eingabe
-			if(empty($missTeacher))
-				return false;
+			}
 			else
-				return true;	//sonst true
+				return false;	//sonst true
 		}	
 	}
 }
