@@ -126,7 +126,7 @@ echo "Dieser Stundenplan ist g&uuml;ltig: ". date("Y.m.d",time()+24*60*60*$offse
 	{	//fehlende Klassen abfragen
  		$missingClasses= getMissingClasses(date("Y-m-d",time()+24*60*60*$offset) ); 
 		if(isset($missingClasses))
-		{	
+		{
 			for($i=0;$i<17;$i++)
 			{
  			
@@ -140,7 +140,7 @@ echo "Dieser Stundenplan ist g&uuml;ltig: ". date("Y.m.d",time()+24*60*60*$offse
 						$hours[$i][$dayShort[$j+1]]->popup = $missingClasses[$i][$className];
  					}
  				}
-			}		
+			}
 		}
 		//Supplierungen abfragen
 		$substitudes = getSubstitude(date("Y-m-d",time()+24*60*60*$offset),$name,$mode);
@@ -163,11 +163,23 @@ echo "Dieser Stundenplan ist g&uuml;ltig: ". date("Y.m.d",time()+24*60*60*$offse
 
 				if($substitudes[$i]['remove']){ //wenn Stunde gelöscht wurde
 					$temp = $hours[$substitudes[$i]['oldStartHour']][$dayName]->suShort;
-					$temp = str_replace($substitudes[$i]['oldSuShort'],"",$temp);
-					$temp = str_replace("|","",$temp);
-					if(isset($hours[$substitudes[$i]['startHour']][$dayName]->popup)) $temp2=$hours[$substitudes[$i]['startHour']][$dayName]->popup . $substitudes[$i]['comment'];
-					else $temp2=$substitudes[$i]['comment'];
+					
+					$temp = str_replace("<td class ='changed' title='". $hours[$substitudes[$i]['oldStartHour']][$dayName]->popup ."'>","",$temp);
+					if(CheckOnlyLesson($substitudes[$i]['lessonBaseFK'],$substitudes[$i]['oldSuShort'])) {
+						$temp = str_replace($substitudes[$i]['oldSuShort'],"",$temp);
+						$temp = str_replace("|","",$temp);
+						
+					}
+
+					if(isset($hours[$substitudes[$i]['oldStartHour']][$dayName]->popup))
+					{
+						$temp2=$hours[$substitudes[$i]['oldStartHour']][$dayName]->popup;
+						$temp2 = str_replace($substitudes[$i]['oldTeShort'],$substitudes[$i]['oldTeShort']." ".$substitudes[$i]['comment'],$temp2);
+						$temp2 = str_replace($substitudes[$i]['oldRoName'],'',$temp2);
+					}
+					else $temp2=  $substitudes[$i]['comment'];
 					$hours[$substitudes[$i]['oldStartHour']][$dayName]->suShort = "<td class ='changed' title='".$temp2."'>".$temp;
+					$hours[$substitudes[$i]['oldStartHour']][$dayName]->popup = $temp2;
 				}
 
 
@@ -339,6 +351,7 @@ function getMissingClasses($date){ //fehlende Klassen abrufen
  			$hour = $results[$i]['startHour'];
 			$endHour = $results[$i]['endHour'];
 			if($date != $results[$i]['endDay']) $endHour = 16;
+			if($date != $results[$i]['startDay']) $hour = 1;
 			while($hour <= $endHour)
 			{
  				$missingClasses[$hour][$results[$i]['clName']] = $results[$i]['reason'];
@@ -350,5 +363,17 @@ function getMissingClasses($date){ //fehlende Klassen abrufen
 	}
 	else return Array();
 }
+
+function checkOnlyLesson($id,$subject){
+ 	$i=0;
+ 	$sql = "SELECT * FROM substitudes INNER JOIN lessons on substitudes.lessonFK = lessons.ID INNER JOIN subjects ON lessons.subjectFK = subjects.ID WHERE lessonBaseFK = '".$id."' and subjects.short = '".$subject."'";
+	$onlyLesson_sql = mysql_query($sql);
+	while($result = mysql_fetch_array($onlyLesson_sql)) {    
+		 		$i++;
+			}	
+	if($i != 1) return false;
+	else return true;
+ }
+
 pageFooter();
 ?>
