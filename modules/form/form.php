@@ -180,7 +180,7 @@ printf("<table>\n");	//Tabellen Tag auf
 			if(!empty($length) && $length>1 && $startHour != $hour && $zeile1==1){
 									
 				$length--;
-				$visibility="style=\"visibility:none\"";
+				$visibility="style=\"display:none\"";
 			
 			}
 		}

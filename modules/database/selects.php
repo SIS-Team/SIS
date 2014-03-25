@@ -113,11 +113,11 @@ function selectClass($where,$order){
  *$where string zum Filtern
  *$order string zum Sortieren
  *	
- *ID,clName,roName,teShort,suShort,weekdayShort,startHour,endHour,comment
+ *ID,clName,roName,teShort,suShort,weekdayShort,startHour,endHour,comment,lessonsBaseFK
  */
 function selectLesson($where,$order){
 
-  	$sql= "SELECT lessons.ID, hoursStart.hour as startHour, hoursEnd.hour as endHour, rooms.name as roName, teachers.short as teShort, subjects.short as suShort, hoursStart.weekdayShort, classes.name as clName, lessons.comment 
+  	$sql= "SELECT lessons.ID, hoursStart.hour as startHour, hoursEnd.hour as endHour, rooms.name as roName, teachers.short as teShort, subjects.short as suShort, hoursStart.weekdayShort, classes.name as clName, lessons.comment, lessons.lessonsBaseFK 
 		FROM lessons 
 		LEFT JOIN rooms ON rooms.ID = lessons.roomFK 
 		INNER JOIN teachers ON teachers.ID = lessons.teachersFK 

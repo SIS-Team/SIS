@@ -65,7 +65,7 @@ include_once(ROOT_LOCATION . "/modules/form/dropdownSelects.php");		//Stellt die
 //Formularmaske
 $fields = array(
 	array( "ID", 		"",			 		"hidden", 	"",		"",		"",					""),
-	array( "roName",	"Raum: ", 			"dropdown", "8",	"",		$selectRooms,		"required"),
+	array( "roName",	"Raum: ", 			"dropdown", "8",	"",		$selectRooms,		""),
 	array( "teShort", 	"Lehrer: ",	 		"dropdown",	"5",	"",		$selectTeachers,	"required"),
 	array( "suShort", 	"Fach: ", 			"dropdown",	"10",	"",		$selectSubjects,	"required"),
 	array( "comment", 	"Kommentar: ",		"text",		"20",	"",		"",					""),
@@ -80,8 +80,8 @@ printf("Klasse: <a href=\"index.php\" >%s</a> und der Tag: %s",$_POST['class'],$
 $days=prevNextDay($_POST['day']);
 //HashCheck();
 printf("<form method=\"POST\"><button type=\"submit\" name=\"hourDelete\" value=\"hourDelete\">Stundenplan l&ouml;schen</button>");
-printf("<input type=\"hidden\" name=\"class\" value=\"%s\"",$_POST['class']);
-printf("<input type=\"hidden\" name=\"class\" value=\"%s\"",$_POST['day']);
+printf("<input type=\"hidden\" name=\"class\" value=\"%s\">",$_POST['class']);
+printf("<input type=\"hidden\" name=\"day\" value=\"%s\">",$_POST['day']);
 printf("</form>");
 printf("<form action=\"lessons.php\" method=\"POST\">\n");
 printf("<table width=\"100%%\"><tr>");
