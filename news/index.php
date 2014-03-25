@@ -1,7 +1,6 @@
 <?php
 	/* /news/index.php
 	 * Autor: Weiland Mathias
-	 * Version: 0.1.0
 	 * Beschreibung:
 	 *	Gibt News aus
 	 */	 
@@ -21,7 +20,7 @@ while ($row = mysql_fetch_object($section_result)) {
 }
 if(isset($section)) $where  = " sectionFK = '".$section->ID."' OR sectionFK = '0'" ;
 else $where = "";
-$result = selectAll("news",$where,"");	//gesamte News-Tabelle abfragen wo die Abteilung des Bnutzers oder all Abteilungen eingetragen ist
+$result = selectAll("news",$where,"");	//gesamte News-Tabelle abfragen wo die Abteilung des Benutzers oder alle Abteilungen eingetragen ist
 while ($row = mysql_fetch_object($result)) {
 		$news[] = $row;
 }
