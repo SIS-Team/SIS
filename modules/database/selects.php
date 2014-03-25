@@ -117,7 +117,7 @@ function selectClass($where,$order){
  */
 function selectLesson($where,$order){
 
-  	$sql= "SELECT lessons.ID, hoursStart.hour as startHour, hoursEnd.hour as endHour, rooms.name as roName, teachers.short as teShort, subjects.short as suShort, hoursStart.weekdayShort, classes.name as clName, lessons.comment, lessons.lessonsBaseFK 
+  	$sql= "SELECT lessons.ID, hoursStart.hour as startHour, hoursEnd.hour as endHour, rooms.name as roName, teachers.short as teShort, subjects.short as suShort, hoursStart.weekdayShort, classes.name as clName, lessons.comment, lessons.lessonBaseFK 
 		FROM lessons 
 		LEFT JOIN rooms ON rooms.ID = lessons.roomFK 
 		INNER JOIN teachers ON teachers.ID = lessons.teachersFK 
