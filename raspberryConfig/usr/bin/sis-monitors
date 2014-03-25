@@ -4,7 +4,7 @@ name=( $(cat /etc/sis.conf ) )
 
 while true
 do
-	wget -O /run/sis.www.tmp http://sis.client.htlinn.ac.at/monitors/api/display.php?$name >> /dev/null 2>&1
+	wget -O /run/sis.www.tmp http://sis.clients.htlinn.ac.at/monitors/api/display.php?$name >> /dev/null 2>&1
 	monitor=( $(cat /run/sis.www.tmp ) )
 	if test "$monitor" = "none"
 	then
@@ -18,7 +18,7 @@ do
 		monitorOff
 	fi
 	
-	wget -O /run/sis.www.tmp http://sis.client.htlinn.ac.at/monitors/api/restart.php >> /dev/null 2>&1
+	wget -O /run/sis.www.tmp http://sis.clients.htlinn.ac.at/monitors/api/restart.php >> /dev/null 2>&1
 	reboot=( $(cat /run/sis.www.tmp ) )
 	if test "$reboot" = "kill"
 	then
