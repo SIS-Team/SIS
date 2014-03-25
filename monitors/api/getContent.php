@@ -203,29 +203,29 @@
 			$response['content'] .= "<tr><th>Klasse</th><th>Stunden</th><th>Suppl. durch</th><th>Fach</th><th>Bemerkung</th></tr>								";
 			if(isset($results)){
 				for($i = 0; $i <count($results);$i++){
- 					if($results[$i]['time'] >= date("Y-m-d", time()+ 24 *60 *60 * $day_counter)  and $results[$i]['time'] < date("Y-m-d", time()+ 24 *60 *60 * ($day_counter+1))){
+ 					if($results[$i]['time'] == date("Y-m-d", time()+ 24 *60 *60 * $day_counter)){ 
 							
-			 				$response['content'] .= "<tr>";
-							if($results[$i]['className'] != $upperClass) {
- 								$response['content'] .= "<td>".$results[$i]['className']."</td>";						 	 
-								$upperClass = $results[$i]['className'];
-							}
-							else $response['content'] .= "<td style=\"border : 0px\"></td>";
-							if($results[$i]['startHour'] == $results[$i]['endHour'] ){
- 								$response['content'] .= "<td>".$results[$i]['startHour']."</td>";	
-							}
-							else $response['content'] .= "<td>".$results[$i]['startHour'] ." - ".$results[$i]['endHour']."</td>";
-							$response['content'] .= "<td>".$results[$i]['teacher']."</td>";	
-							$response['content'] .= "<td>".$results[$i]['suShort']."</td>";	
-							$response['content'] .= "<td>".$results[$i]['comment']."</td>";						
-							$response['content'] .= "</tr>";
+			 			$response['content'] .= "<tr>";
+						if($results[$i]['className'] != $upperClass) {
+ 							$response['content'] .= "<td>".$results[$i]['className']."</td>";						 	 
+							$upperClass = $results[$i]['className'];
+						}
+						else $response['content'] .= "<td style=\"border : 0px\"></td>";
+						if($results[$i]['startHour'] == $results[$i]['endHour'] ){
+ 							$response['content'] .= "<td>".$results[$i]['startHour']."</td>";	
+						}
+						else $response['content'] .= "<td>".$results[$i]['startHour'] ." - ".$results[$i]['endHour']."</td>";
+						$response['content'] .= "<td>".$results[$i]['teacher']."</td>";	
+						$response['content'] .= "<td>".$results[$i]['suShort']."</td>";	
+						$response['content'] .= "<td>".$results[$i]['comment']."</td>";						
+						$response['content'] .= "</tr>";
 						
-				}
+					}
 			
 				}
 			}
 			else {
- 			$response['content'] .= "<tr><th colspan = 5>F&uuml;r diesen Tag sind keine Supplierungen vorgesehen.</th></tr>";
+ 				$response['content'] .= "<tr><th colspan = 5>F&uuml;r diesen Tag sind keine Supplierungen vorgesehen.</th></tr>";
 			}
 
 			$response['content'] .= "</table></div>";
