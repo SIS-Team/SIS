@@ -57,16 +57,16 @@
 		}
 
 		if (!isset($_GET['submodeChange'])) {
-			$_GET['submodeChange'] = time() + 20;
+			$_GET['submodeChange'] = time() + 30;
 		}
 		
 		if (intval($_GET['submodeChange']) <= time()) {
 			$response['submode'] = (intval($_GET['submode']) + 1) % 2;
 			
 			if ($response['submode'] == 0)
-				$response['submodeChange'] = time() + 20;
+				$response['submodeChange'] = time() + 30;
 			else
-				$response['submodeChange'] = time() + 10;
+				$response['submodeChange'] = time() + 20;
 		} else {
 			$response['submodeChange'] = $_GET['submodeChange'];
 		}
