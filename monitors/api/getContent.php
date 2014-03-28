@@ -191,7 +191,7 @@
 		while ($row = mysql_fetch_array($result)) {
 			$results[] = $row;
 		}
-	$day = array(1=>'MO', 2=>'DI' , 3=> 'MI', 4=>'D0', 5 =>'FR');
+	$day = array(1=>'MO', 2=>'DI' , 3=> 'MI', 4=>'DO', 5 =>'FR');
 		$day_counter = 0;
 		for($j = 0; $j<2;$j++){
  			$upperClass = 0;
