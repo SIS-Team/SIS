@@ -8,14 +8,9 @@
 include_once(ROOT_LOCATION."/modules/other/getBrowser.php");
 include_once(ROOT_LOCATION."/modules/general/Connect.php");
 
-function get($mode){
+function get(){
 
-if($mode=="first"){
-	$timeRelease = strtotime("02-03-2013 20:39");
-}
-else if($mode=="second"){
-	$timeRelease = strtotime("02-03-2014 20:39");
-}
+$timeRelease = strtotime("02-03-2013 20:39");
 
 //echo date("d-m-Y H:i:s",$timeRelease);
 
@@ -88,6 +83,14 @@ $temp = mysql_fetch_row($result);
 if($temp[0]!=0)
 	$sitesSub[]=array("Supplierplan Mobil",$temp[0]);
 
+$sql = "SELECT COUNT(logsMain.ID) FROM logsMain LEFT JOIN logsUSConn ON logsUSConn.ID = logsMain.connFK LEFT JOIN logsSessions ON logsSessions.ID = logsUSConn.sessionFK LEFT JOIN logsUsers ON logsUsers.ID = logsUSConn.userFK WHERE logsMain.site LIKE '%mobile/api/alttimetables%' AND logsUsers.LDAP!='20090334' AND logsUsers.LDAP!='20090319' AND logsUsers.LDAP!='20090340' AND logsUsers.LDAP!='20090396' AND logsUsers.LDAP!='20090359' AND logsMain.time > '".$timeRelease."'";
+$result = mysql_query($sql);
+$temp = mysql_fetch_row($result);
+
+if($temp[0]!=0)
+	$sitesSub[]=array("Modifiziert Mobil",$temp[0]);
+
+
 $sql = "SELECT COUNT(logsMain.ID) FROM logsMain LEFT JOIN logsUSConn ON logsUSConn.ID = logsMain.connFK LEFT JOIN logsSessions ON logsSessions.ID = logsUSConn.sessionFK LEFT JOIN logsUsers ON logsUsers.ID = logsUSConn.userFK WHERE logsMain.site LIKE '%api%' AND logsUsers.LDAP!='20090334' AND logsUsers.LDAP!='20090319' AND logsUsers.LDAP!='20090340' AND logsUsers.LDAP!='20090396' AND logsUsers.LDAP!='20090359' AND logsMain.time > '".$timeRelease."'";
 $result = mysql_query($sql);
 $temp = mysql_fetch_row($result);
@@ -118,7 +121,7 @@ unset($row[count($row)-1]);
 $sitesClient = $row;
 
 $row=array();
-$sql = "select logsMain.site,count(*) from logsMain LEFT JOIN logsUSConn ON logsUSConn.ID = logsMain.connFK LEFT JOIN logsSessions ON logsSessions.ID = logsUSConn.sessionFK LEFT JOIN logsUsers ON logsUsers.ID = logsUSConn.userFK WHERE (logsMain.site LIKE '%api/alttimetables%' OR logsMain.site LIKE '%api/news%' OR site LIKE '%api/substitudes%' OR logsMain.site LIKE '%api/timetables%') AND logsUsers.LDAP!='20090334' AND logsUsers.LDAP!='20090319' AND logsUsers.LDAP!='20090340' AND logsUsers.LDAP!='20090396' AND logsUsers.LDAP!='20090359' AND logsMain.time > '".$timeRelease."' group by logsMain.site";
+$sql = "select logsMain.site,count(*) from logsMain LEFT JOIN logsUSConn ON logsUSConn.ID = logsMain.connFK LEFT JOIN logsSessions ON logsSessions.ID = logsUSConn.sessionFK LEFT JOIN logsUsers ON logsUsers.ID = logsUSConn.userFK WHERE (logsMain.site LIKE '%api/alttimetables.%' OR logsMain.site LIKE '%api/news.%' OR site LIKE '%api/substitudes.%' OR logsMain.site LIKE '%api/timetables.%' OR logsMain.site LIKE '%api/allTimetables.%') AND logsUsers.LDAP!='20090334' AND logsUsers.LDAP!='20090319' AND logsUsers.LDAP!='20090340' AND logsUsers.LDAP!='20090396' AND logsUsers.LDAP!='20090359' AND logsMain.time > '".$timeRelease."' group by logsMain.site";
 $result = mysql_query($sql);
 while($row[]=mysql_fetch_array($result)){
 }

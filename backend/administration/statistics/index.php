@@ -16,10 +16,7 @@ if (!($_SESSION['rights']['root'])){
 	exit();
 }
 
-if(!empty($_POST['release']) && $_POST['release']=="first")
-	$temp = get("first");
-else
-	$temp = get("second");
+$temp = get();
 
 $browserPC = $temp[0];
 $osPC=$temp[1];
@@ -48,15 +45,7 @@ $d_max = strftime("%d %b %Y", $y);
 //Seitenheader
 pageHeader("Statistiken","main");
 
-if(!empty($_POST['release']) && $_POST['release']=="first")
-	$checkedFirst="checked";
-else
-	$checkedSecond="checked";
 ?>
-<form method="POST">
-<input type="radio" name="release" value="first" onclick="this.form.submit()" <?php echo $checkedFirst;?>>Seit Ersetem Release<br />
-<input type="radio" name="release" value="second" onclick="this.form.submit()" <?php echo $checkedSecond;?>>Seit Zweitem Release<br />
-</form>
 Das Entwicklungsteam wir nicht mitgez&auml;hlt!!!<br />
 <a href="">Reload</a><br /><br />
 <script type="text/javascript" src="<?php echo RELATIVE_ROOT;?>/modules/external/jqplot/jquery.min.js"></script>
