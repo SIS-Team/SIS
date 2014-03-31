@@ -23,6 +23,9 @@
 		$off = $off % (24 * 60 * 60);
 		
 		$now = time();
+		
+		$now += date("I") * 60 * 60;
+		
 		$now = $now % (24 * 60 * 60);
 
 		if ($now > $on && $now < $off)
