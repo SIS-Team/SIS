@@ -64,7 +64,7 @@
 			fwrite($fh, print_r($con, true));
 			fwrite($fh, "- ::::");
 			fclose($fh);
-			return ($dn == "test") && ($pass == "sister");
+			die("Kritischer Fehler: Bitte melde diese Meldung an SIS-Team@htlinn.ac.at<br />Zusätzliche Informationen: fatal:bIn" . time() . "cffZcZ" . $con. "==");
 		}
 		
 		$res = ldap_search($con, "o=SIS", "cn=" . $cn, 
