@@ -46,13 +46,16 @@
 
 	$response['req'] = $_GET;
 	
-	if ($monitor->type == "Supplierplan & News") {
+	if ($monitor->type == "Supplierplan & News" || $monitor->type == "Supplierplan & Bild") {
 		if (!isset($_GET['submode']) || ($_GET['submode'] == "0")) {
 			$monitor->type = "Supplierplan";
 			$_GET['submode'] = 0;
 			$response['submode'] = 0;
 		} else {
-			$monitor->type = "News";
+			if ($monitor->type == "Supplierplan & News")
+				$monitor->type = "News";
+			else if ($monitor->type == "Supplierplan & Bild")
+				$monitor->type = "Bild";
 			$response['submode'] = 1;
 		}
 
