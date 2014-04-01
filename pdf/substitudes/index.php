@@ -99,7 +99,8 @@ while($count<12 or $count2 <1){
 	$count2++;
  }
 $pdf->Cell('',10,'s.L. ... supplierender Lehrer, u.L. ... ursprünglicher Lehrer');
-$pdf->Output();
+$filename = "substitudes_". $section;
+$pdf->Output($filename,'I');
 
 function check_date($date)
 {
