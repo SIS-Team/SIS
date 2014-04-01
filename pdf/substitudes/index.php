@@ -14,6 +14,33 @@ if(isset($_GET['date']) && check_date($_GET['date']))$date = $_GET['date'];
 else $date = date("Y-m-d");
 if(isset($_GET['section'])) $section =$_GET['section'];
 else $section = 'N';
+
+class PDF extends FPDF
+{
+	//Kopfzeile
+	function Header()
+	{
+	    //Logo
+		$this->Image("../../data/images/logo.png",90,3,30,30);
+	    //Gothic fett 20
+		$this->AddFont('gothic','B');
+		$this->SetFont('gothic','B',20);
+		$this->Cell('130','25','HTL Anichstraße');
+	    //Zeilenumbruch
+	    $this->Ln(20);
+	}
+	
+	//Fusszeile
+	function Footer()
+	{
+	    //Position 1,5 cm von unten
+	    $this->SetY(-15);
+	    //Arial kursiv 8
+	    $this->SetFont('Arial','I',10);
+	    //Seitenzahl
+	    $this->Cell(0,10,'Diese Ausgabe wurde mittels SIS (School Information System) generiert',0,0,'C');
+	}
+}
 		$sql = "SELECT `time`,
 						`newSub`,
 						`remove`,
@@ -51,14 +78,14 @@ while($substitude = mysql_fetch_object($result)) {
  	$substitudes[]=$substitude;
 }
 
-$pdf = new FPDF();
+$pdf = new PDF();
 $pdf->AddPage();
 $pdf->AddFont('gothic');
 $pdf->AddFont('gothic','B');
 $pdf->SetFont('gothic','B',20);
-$pdf->Cell('75','25','HTL Anichstraße');
-$pdf->Cell('75','25',weekday($date).". ". $date);
+$pdf->SetXY(135,10);
 $pdf->Cell('','25','Abteilung '.$section,'','1');
+$pdf->Cell('','25',weekday($date).". ". $date,'','1','C');
 $pdf->SetFont('gothic','',12);
 $pdf->Cell(30,10,'Klasse','1');
 $pdf->Cell(16,10,'Stunde','1');
@@ -99,7 +126,7 @@ while($count<12 or $count2 <1){
 	$count2++;
  }
 $pdf->Cell('',10,'s.L. ... supplierender Lehrer, u.L. ... ursprünglicher Lehrer');
-$filename = "substitudes_". $section;
+$filename = "substitudes_". $section .".pdf";
 $pdf->Output($filename,'I');
 
 function check_date($date)
