@@ -238,11 +238,13 @@
 		break;
 		
 	case "Bild":
+		$response['modus'] = "Bild";
 		$hash .= md5($monitor->file);
 		$response['content'] = "<img src=\"&media:img;\" />";
 		$response['media']['img'] = $monitor->file;
 		break;
 	case "Video":
+		$response['modus'] = "Video";
 		$hash .= md5($monitor->file);
 		$response['content'] = "<video autoplay=\"autoplay\" loop=\"true\"><source src=\"&media:vid;\" type=\"video/mp4\" /></video>";
 		$response['media']['vid'] = $monitor->file;
