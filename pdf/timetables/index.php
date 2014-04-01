@@ -47,6 +47,35 @@ $sql_result  = mysql_query($sql);
 while($result = mysql_fetch_array($sql_result)) {    
 	$results[]=$result;
 }
+
+class PDF extends FPDF
+{
+	//Kopfzeile
+	function Header()
+	{
+	    //Logo
+		$this->Image("../../data/images/logo.png",85,3,30,30);
+	    //Gothic fett 20
+		$this->AddFont('gothic','B');
+		$this->SetFont('gothic','B',20);
+		$this->Cell('130','25','HTL Anichstraße');
+	    //Zeilenumbruch
+	    $this->Ln(20);
+	}
+	
+	//Fusszeile
+	function Footer()
+	{
+	    //Position 1,5 cm von unten
+	    $this->SetY(-15);
+	    //Arial kursiv 8
+	    $this->SetFont('Arial','I',10);
+	    //Seitenzahl
+	    $this->Cell(0,10,'Diese Ausgabe wurde mittels SIS- School Information System generiert',0,0,'C');
+	}
+}
+
+
 $hours = array();
 if(isset($results)){
 	for($j=0;$j<count($results);$j++){ //alle LEssons durchlaufen
@@ -69,13 +98,10 @@ if(isset($results)){
 }
 //Ausgabe Tabellenkopf
 $day = array(1=>'Mo',2=>'Di',3=>'Mi',4=>'Do',5=>'Fr');
-$pdf = new FPDF();
+$pdf = new PDF();
 $pdf->AddPage();
 $pdf->AddFont('gothic');
-$pdf->AddFont('gothic','B');
-$pdf->SetFont('gothic','B',20);
-$pdf->Image("../../data/images/logo.png",85,0,30,30);
-$pdf->Cell('130','25','HTL Anichstraße');
+$pdf->SetXY(135,10);
 if(!empty($teacher)) $pdf->Cell('10','25','Lehrer: '.$teacher,'','1');
 else $pdf->Cell('10','25','Klasse: '.$class,'','1');
 $pdf->SetFont('gothic','B',16);
@@ -138,6 +164,7 @@ for($i=$start;$i<$end;$i++){ //Stundenplanausgabe
 $filename = "timetable_";
 if($mode == 'teacher') $filename .= $teacher;
 else $filename .=$class;
+$filename.= ".pdf";
 $pdf->Output($filename,'I'); //PDF ausgeben
 
 function isEvening($hours){
