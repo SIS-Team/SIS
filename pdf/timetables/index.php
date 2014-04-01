@@ -134,7 +134,11 @@ for($i=$start;$i<$end;$i++){ //Stundenplanausgabe
 
 	$pdf->SetY($newY);	//Zeilenumbruch
 }
-$pdf->Output(); //PDF ausgeben
+
+$filename = "timetable_";
+if($mode == 'teacher') $filename .= $teacher;
+else $filename .=$class;
+$pdf->Output($filename,'I'); //PDF ausgeben
 
 function isEvening($hours){
 $check = 0;
