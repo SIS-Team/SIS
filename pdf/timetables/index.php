@@ -74,6 +74,7 @@ $pdf->AddPage();
 $pdf->AddFont('gothic');
 $pdf->AddFont('gothic','B');
 $pdf->SetFont('gothic','B',20);
+$pdf->Image("../../data/images/logo.png",85,0,30,30);
 $pdf->Cell('130','25','HTL Anichstraße');
 if(!empty($teacher)) $pdf->Cell('10','25','Lehrer: '.$teacher,'','1');
 else $pdf->Cell('10','25','Klasse: '.$class,'','1');
