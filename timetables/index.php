@@ -35,7 +35,19 @@ echo "<div id=\"print\">";
 		echo "</button>";
 	echo "</a>";
 echo "</div>";
-//Auswahl er Anzeige
+
+$permission = getPermission();
+if($permission =='root' || $permission == 'admin'){
+
+//Button für alle Stundenpläne
+echo "<div id=\"allTimetables\">";
+	echo "<a href=\"".RELATIVE_ROOT."/timetables/all\" >";
+			echo "Alle Stundenpl&auml;ne anzeigen";
+	echo "</a>";
+echo "</div>";
+
+}
+//Auswahl der Anzeige
 echo "<form  method = \"get\" style=\" float:left\">";
 if(!isset($_GET['displaytype'])) $displaytype = "modificated";
 else $displaytype = $_GET['displaytype'];
