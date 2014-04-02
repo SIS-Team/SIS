@@ -171,64 +171,80 @@ echo "Dieser Stundenplan ist g&uuml;ltig: ". date("Y.m.d",time()+24*60*60*$offse
 					$hours[$substitudes[$i]['startHour']][$dayName]->teShort = $substitudes[$i]['teShort'];
 					$hours[$substitudes[$i]['startHour']][$dayName]->popup = "" ;
 				}
-
-
-				if($substitudes[$i]['remove']){ //wenn Stunde gelöscht wurde
-					$temp = $hours[$substitudes[$i]['oldStartHour']][$dayName]->suShort;
-					
-					$temp = str_replace("<td class ='changed' title='". $hours[$substitudes[$i]['oldStartHour']][$dayName]->popup ."'>","",$temp);
-					if(CheckOnlyLesson($substitudes[$i]['lessonBaseFK'],$substitudes[$i]['oldSuShort'])) {
-						$temp = str_replace($substitudes[$i]['oldSuShort'],"",$temp);
-						$temp = str_replace("|","",$temp);
-						
-					}
-
-					if(isset($hours[$substitudes[$i]['oldStartHour']][$dayName]->popup))
-					{
-						$temp2=$hours[$substitudes[$i]['oldStartHour']][$dayName]->popup;
-						$temp2 = str_replace($substitudes[$i]['oldTeShort'],$substitudes[$i]['oldTeShort']." ".$substitudes[$i]['comment'],$temp2);
-						$temp2 = str_replace($substitudes[$i]['oldRoName'],'',$temp2);
-					}
-					else $temp2=  $substitudes[$i]['comment'];
-					$hours[$substitudes[$i]['oldStartHour']][$dayName]->suShort = "<td class ='changed' title='".$temp2."'>".$temp;
-					$hours[$substitudes[$i]['oldStartHour']][$dayName]->popup = $temp2;
-				}
-
-
-				if(!$substitudes[$i]['newSub'] and !$substitudes[$i]['remove'])
-				{ //wenn Stunde verschoben wurde
-					if(isset($hours[$substitudes[$i]['oldStartHour']][$dayName])){
+				else{
+	 				if($substitudes[$i]['remove']){ //wenn Stunde gelöscht wurde
 						$temp = $hours[$substitudes[$i]['oldStartHour']][$dayName]->suShort;
-						$temp = str_replace($substitudes[$i]['oldSuShort'],"",$temp);
-						$temp = str_replace("|","",$temp);
-						$hours[$substitudes[$i]['oldStartHour']][$dayName]->suShort = $temp;
-					}
-					if(isset($substitudes[$i]['suShort'])){
- 						if(isset($hours[$substitudes[$i]['startHour']][$dayName]->popup))
-						{
-							$title = $hours[$substitudes[$i]['startHour']][$dayName]->popup;
+						
+						$temp = str_replace("<td class ='changed' title='". $hours[$substitudes[$i]['oldStartHour']][$dayName]->popup ."'>","",$temp);
+						if(CheckOnlyLesson($substitudes[$i]['lessonBaseFK'],$substitudes[$i]['oldSuShort'])) {
+							$temp = str_replace($substitudes[$i]['oldSuShort'],"",$temp);
+							$temp = str_replace("|","",$temp);
+							
 						}
-						else{ 
- 							if($mode =='schueler')
-							{
- 								$title = $substitudes[$i]['suShort'].":". $substitudes[$i]['teShort']." ".$substitudes[$i]['roName'];
-								$title .= "&#xD;" . $substitudes[$i]['comment'];
+	
+						if(isset($hours[$substitudes[$i]['oldStartHour']][$dayName]->popup))
+						{
+							$temp2=$hours[$substitudes[$i]['oldStartHour']][$dayName]->popup;
+							$temp2 = str_replace($substitudes[$i]['oldTeShort'],$substitudes[$i]['oldTeShort']." ".$substitudes[$i]['comment'],$temp2);
+							$temp2 = str_replace($substitudes[$i]['oldRoName'],'',$temp2);
+						}
+						else $temp2=  $substitudes[$i]['comment'];
+						$hours[$substitudes[$i]['oldStartHour']][$dayName]->suShort = "<td class ='changed' title='".$temp2."'>".$temp;
+						$hours[$substitudes[$i]['oldStartHour']][$dayName]->popup = $temp2;
+					}
+					else{
+						if($substitudes[$i]['move'])
+						{ //wenn Stunde verschoben wurde
+							if(isset($hours[$substitudes[$i]['oldStartHour']][$dayName])){
+								$temp = $hours[$substitudes[$i]['oldStartHour']][$dayName]->suShort;
+								$temp = str_replace($substitudes[$i]['oldSuShort'],"",$temp);
+								$temp = str_replace("|","",$temp);
+								$hours[$substitudes[$i]['oldStartHour']][$dayName]->suShort = $temp;
+							}
+							if(isset($substitudes[$i]['suShort'])){
+		 						if(isset($hours[$substitudes[$i]['startHour']][$dayName]->popup))
+								{
+									$title = $hours[$substitudes[$i]['startHour']][$dayName]->popup;
+								}
+								else{ 
+		 							if($mode =='schueler')
+									{
+		 								$title = $substitudes[$i]['suShort'].":". $substitudes[$i]['teShort']." ".$substitudes[$i]['roName'];
+										$title .= "&#xD;" . $substitudes[$i]['comment'];
+									}
+									else
+									{
+		 								$title = $substitudes[$i]['clName']."    ".$substitudes[$i]['roName'];
+									}
+								}
+		 				 		$hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "<td class ='changed' title='".$title."'>".$substitudes[$i]['suShort'];
 							}
 							else
 							{
- 								$title = $substitudes[$i]['clName']."    ".$substitudes[$i]['roName'];
+		 						$hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "<td class ='changed' title='".$title."'>".$substitudes[$i]['oldSuShort'];
 							}
+							$hours[$substitudes[$i]['startHour']][$dayName]->startHour = $substitudes[$i]['startHour'];
+							$hours[$substitudes[$i]['startHour']][$dayName]->endHour = $substitudes[$i]['endHour'];
+							$hours[$substitudes[$i]['startHour']][$dayName]->teShort = $substitudes[$i]['teShort'];
+							$hours[$substitudes[$i]['startHour']][$dayName]->popup = $substitudes[$i]['comment'];
 						}
- 				 		$hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "<td class ='changed' title='".$title."'>".$substitudes[$i]['suShort'];
+						else{//"echte" Supplierung
+
+							$temp = $hours[$substitudes[$i]['startHour']][$dayName]->popup;
+
+							if(isset($substitudes[$i]['suShort']) && $substitudes[$i]['suShort'] == $substitudes[$i]['oldSuShort'])
+							{  							
+ 								$replacement = $substitudes[$i]['teShort'];
+								if(isset($substitudes[$i]['roName'])) $roName =$substitudes[$i]['roName'];
+								else $roName = $substitudes[$i]['oldRoName'];
+								$replacement .= " " . $roName ."&#xD;" . $substitudes[$i]['comment'];
+ 								$temp = str_replace($substitudes[$i]['oldTeShort'] ." ".$substitudes[$i]['oldRoName'],$replacement,$temp);
+							}
+							
+							$title = $temp;
+							$hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "<td class ='changed' title='".$title."'>".$substitudes[$i]['oldSuShort'];
+ 						}	
 					}
-					else
-					{
- 						$hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "<td class ='changed' title='".$title."'>".$substitudes[$i]['oldSuShort'];
-					}
-					$hours[$substitudes[$i]['startHour']][$dayName]->startHour = $substitudes[$i]['startHour'];
-					$hours[$substitudes[$i]['startHour']][$dayName]->endHour = $substitudes[$i]['endHour'];
-					$hours[$substitudes[$i]['startHour']][$dayName]->teShort = $substitudes[$i]['teShort'];
-					$hours[$substitudes[$i]['startHour']][$dayName]->popup = $substitudes[$i]['comment'];
 				}
 			}
 		}
