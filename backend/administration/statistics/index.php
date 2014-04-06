@@ -46,7 +46,7 @@ $d_max = strftime("%d %b %Y", $y);
 pageHeader("Statistiken","main");
 
 ?>
-Das Entwicklungsteam wir nicht mitgez&auml;hlt!!!<br />
+Das Entwicklungsteam wird nicht mitgez&auml;hlt!!!<br />
 <a href="">Reload</a><br /><br />
 <script type="text/javascript" src="<?php echo RELATIVE_ROOT;?>/modules/external/jqplot/jquery.min.js"></script>
 <script type="text/javascript" src="<?php echo RELATIVE_ROOT;?>/modules/external/jqplot/jquery.jqplot.min.js"></script>
