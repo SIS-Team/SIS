@@ -39,7 +39,7 @@ if(!empty($_POST['save']) && $_POST['save']!=""){
 }
 //var_dump(pageHeader);
 //Seitenheader
-pageHeader("Zeiten","main");
+pageHeader("Zeiten f&uuml;r ".$_POST['day'],"main");
 
 $hashGenerator->generate();
 HashFail();
