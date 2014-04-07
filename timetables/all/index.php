@@ -111,7 +111,7 @@ echo "<input type=\"submit\">";
 
 echo "</form>";
 
-if(isset($mode)){
+if(isset($mode) && isset($name)){
 	$lessons = getLessons ($name,$mode);
 	$hours = orderLessons($lessons);
 
@@ -139,9 +139,14 @@ if(isset($mode)){
 	{ 
 	 	echo "<tr><td>".$i."</td>";
 		for($j=1;$j<6;$j++)
-		{
+		{	$title = "";
  			$weekday = dayShort($j);
-			if(isset($hours[$i][dayShort($j)]))	echo "<td>".$hours[$i][dayShort($j)]->suShort."</td>";
+			if(isset($hours[$i][dayShort($j)])){
+				if($mode =='Lehrer') { $title = $hours[$i][dayShort($j)]->clName ." "; }
+				if($mode =='Klasse') {$title = $hours[$i][dayShort($j)]->teShort."&#xD;";}
+				$title .=$hours[$i][dayShort($j)]->roName;
+				echo "<td title = \"".$title."\">".$hours[$i][dayShort($j)]->suShort."</td>";
+			}
 			else echo "<td>&#160;</td>";
 		}
 		echo "</tr>";
@@ -182,9 +187,16 @@ function orderLessons($lessons){
  			}
 		}
 		else{
- 			if(!strpos($hours[$lessons[$i]->startHour][$lessons[$i]->weekdayShort]->suShort,$lessons[$i]->suShort))
-			if($hours[$lessons[$i]->startHour][$lessons[$i]->weekdayShort]->suShort != $lessons[$i]->suShort)
- 		 $hours[$lessons[$i]->startHour][$lessons[$i]->weekdayShort]->suShort .= " | ". $lessons[$i]->suShort;	
+ 			if(!strpos($hours[$lessons[$i]->startHour][$lessons[$i]->weekdayShort]->suShort,$lessons[$i]->suShort)){
+				if($hours[$lessons[$i]->startHour][$lessons[$i]->weekdayShort]->suShort != $lessons[$i]->suShort)
+				{
+ 					$hours[$lessons[$i]->startHour][$lessons[$i]->weekdayShort]->suShort .= " | ". $lessons[$i]->suShort;
+					
+					
+				}
+			}
+			$hours[$lessons[$i]->startHour][$lessons[$i]->weekdayShort]->roName  .= " | ". $lessons[$i]->roName;
+			$hours[$lessons[$i]->startHour][$lessons[$i]->weekdayShort]->teShort  .= " | ". $lessons[$i]->teShort;	
 		}
 
 	
