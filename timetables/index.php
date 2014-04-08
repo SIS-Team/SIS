@@ -229,20 +229,17 @@ echo "Dieser Stundenplan ist g&uuml;ltig: ". date("Y.m.d",time()+24*60*60*$offse
 							$hours[$substitudes[$i]['startHour']][$dayName]->popup = $substitudes[$i]['comment'];
 						}
 						else{//"echte" Supplierung
-
 							$temp = $hours[$substitudes[$i]['startHour']][$dayName]->popup;
-
-							if(isset($substitudes[$i]['suShort']) && $substitudes[$i]['suShort'] == $substitudes[$i]['oldSuShort'])
-							{  							
- 								$replacement = $substitudes[$i]['teShort'];
-								if(isset($substitudes[$i]['roName'])) $roName =$substitudes[$i]['roName'];
+ 							$temp = str_replace($substitudes[$i]['oldTeShort'] ." ".$substitudes[$i]['oldRoName'],"-",$temp);
+							if(isset($substitudes[$i]['roName'])) $roName =$substitudes[$i]['roName'];
 								else $roName = $substitudes[$i]['oldRoName'];
-								$replacement .= " " . $roName ."&#xD;" . $substitudes[$i]['comment'];
- 								$temp = str_replace($substitudes[$i]['oldTeShort'] ." ".$substitudes[$i]['oldRoName'],$replacement,$temp);
+							if(isset($substitudes[$i]['suShort'])){
+ 								$temp .= $substitudes[$i]['suShort'] .": " . $substitudes[$i]['teShort'] ." " . $roName . " ";
 							}
-							
+							$temp .= $substitudes[$i]['comment'];
 							$title = $temp;
 							$hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "<td class ='changed' title='".$title."'>".$substitudes[$i]['oldSuShort'];
+							$hours[$substitudes[$i]['startHour']][$dayName]->endHour =  $substitudes[$i]['endHour'];
  						}	
 					}
 				}
