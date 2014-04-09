@@ -80,9 +80,14 @@
 	case "News":
 		$response['modus'] = "News";
 		$today = date("Y-m-d");
-		$sql = "SELECT * FROM `news` 
-		LEFT JOIN `sections` AS `se` ON `news`.`sectionFK` = `se`.`ID`
-		WHERE `startDay` <= '" . $today . "' AND `endDay` >= '" . $today . "' AND `display` = 1 AND (`se`.`name` = '".$monitor->section."' OR `news`.`sectionFK` = '0') AND `web` = '0'";
+		$sql = "SELECT	*
+				FROM `news` 
+				LEFT JOIN `sections` AS `se` ON `news`.`sectionFK` = `se`.`ID`
+				WHERE 	`startDay` <= '" . $today . "' 
+						AND `endDay` >= '" . $today . "' 
+						AND `display` = 1 
+						AND (`se`.`name` = '".$monitor->section."' OR `news`.`sectionFK` = '0')
+						AND `web` = '0'";
 		$result = mysql_query($sql);
 		$response['content'] .= "<table class=\"news\">";
 		while ($row = mysql_fetch_object($result)) {
@@ -94,7 +99,6 @@
 		break;
 		
 	case "Stundenplan":
-	
 		
 		$response['modus'] = "Stundenplan";
 		$sql = "SELECT 
@@ -125,7 +129,7 @@
 				$results[] = $row;
 		}
 		$lesson = array();
-		if(isset($results)){
+		if(isset($results)){ 
 			for($i=0;$i<count($results);$i++){
 				 $index = $results[$i]->startHour;
 				 $day = $results[$i]->weekday;
@@ -133,8 +137,8 @@
 			}
 		}
 		$days=array(0=> "Mo",1=> "Di",2=> "Mi",3=>"Do",4=>"Fr");
-		for($i = 1; $i<12 ;$i++){
- //--------------------------------------------------------------------------------------------------------------------------------------------
+		for($i = 1; $i<12 ;$i++){ 
+ 			//Stundenzeiten abfragen
 			$time_sql ="SELECT startTime,endTime FROM hours WHERE hour='".$i."'";
 			$time_result = mysql_query($time_sql);
 			$check_time = 0;
@@ -151,9 +155,9 @@
 			$corStartTime = $expStartTime[0] .":".$expStartTime[1];
 			$corEndTime = $expEndTime[0] .":".$expEndTime[1];
 			if($check_time = 10) $check = true;
-//--------------------------------------------------------------------------------------------------------------------------------------------
+			
 		 	$response['content'] .= "<tr><td>".$i;
-			if($check)$response['content'] .= "<br />" . $corStartTime ."-". $corEndTime;
+			if($check)$response['content'] .= "<br />" . $corStartTime ."-". $corEndTime; //nur ausgeben wenn Zeiten jeden Tag gleich sind
 			$response['content'] .= "</td>";
 			for($j=0;$j<5;$j++){
 			 if(isset($lesson[$i][$days[$j]])){
@@ -167,10 +171,8 @@
 			}
 			$response['content'] .= "</tr>";
 		}
-	
-		$response['content'] .= "</table>";
-		
-		
+
+		$response['content'] .= "</table>";	
 		$hash .= md5($response['content']);
 		break; 
 		
@@ -215,7 +217,6 @@
 			$results[] = $row;
 		}
 
-
 		$day = array(1=>'MO', 2=>'DI' , 3=> 'MI', 4=>'DO', 5 =>'FR');
 		$day_counter = 0;
 		for($j = 0; $j<2;$j++){
@@ -225,13 +226,13 @@
 			$response['content'] .= "<div id='t".$j."'>";
 			$response['content'] .= $day[ date("N",time() + 24*60*60*$day_counter)] ." ". date("d.m.y",time() + 24*60*60*$day_counter);
 			$response['content'] .= "<table class = 'substitude'>"; 
-			$response['content'] .= "<tr><th>Klasse</th><th>Stunden</th><th>Suppl. durch</th><th>Fach</th><th>Bemerkung</th></tr>								";
+			$response['content'] .= "<tr><th>Klasse</th><th>Stunden</th><th>Suppl. durch</th><th>Fach</th><th>Bemerkung</th></tr>";
 			if(isset($results)){
 				for($i = 0; $i <count($results);$i++){
  					if($results[$i]['time'] == date("Y-m-d", time()+ 24 *60 *60 * $day_counter)){ 
 							
 			 			$response['content'] .= "<tr>";
-						if($results[$i]['className'] != $upperClass) {
+						if($results[$i]['className'] != $upperClass) { //nur Klassennamen wenn erste Supplierung von dieser
  							$response['content'] .= "<td>".$results[$i]['className']."</td>";						 	 
 							$upperClass = $results[$i]['className'];
 						}
@@ -243,10 +244,8 @@
 						$response['content'] .= "<td>".$results[$i]['teacher']."</td>";	
 						$response['content'] .= "<td>".$results[$i]['suShort']."</td>";	
 						$response['content'] .= "<td>".$results[$i]['comment']."</td>";						
-						$response['content'] .= "</tr>";
-						
+						$response['content'] .= "</tr>";	
 					}
-			
 				}
 			}
 			else {

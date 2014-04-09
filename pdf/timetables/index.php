@@ -1,4 +1,9 @@
 <?php
+	/* /pdf/timetables/index.php
+	 * Autor: Weiland Mathias
+	 * Beschreibung:
+	 *	Erzeugt die PDF-Ausgabe für den Stundenplan
+	 */	
 include_once("../../config.php");	 
 require_once(ROOT_LOCATION . "/modules/external/fpdf/fpdf.php");
 include_once(ROOT_LOCATION . "/modules/general/Connect.php");			
@@ -8,14 +13,13 @@ include_once(ROOT_LOCATION . "/modules/other/miscellaneous.php");
 ifNotLoggedInGotoLogin();	//Kontrolle ob angemeldet
 
 $permission = getPermission();
-if($permission == "root" or $permission == "admin") {  
+if($permission == "root" or $permission == "admin") {  //Schüler sehen nur ihren eigenen Stundenplan
 	$mode ="admin";
 	if(isset($_GET['class'])) $class =$_GET['class'];
 	else {
  		if(isset($_GET['teacher'])) $teacher =$_GET['teacher'];
 		else $teacher =$_SESSION['id'];
-	}
-	
+	}	
 }
 else{
  	if(!getPermission() and !empty($_SESSION['isTeacher'])) $mode = 'teacher'; //keine Rechte und isTeacher => Lehrer
@@ -23,7 +27,6 @@ else{
 }
 
 if($mode == 'teacher') $teacher = $_SESSION['id'];	
-
 if($mode == 'student') { //verhindert das Schüler Lehrerstundenpläne sehen
 	$class = $_SESSION['class'];
 	$teacher = "";
@@ -49,7 +52,7 @@ while($result = mysql_fetch_array($sql_result)) {
 }
 
 class PDF extends FPDF
-{
+{//um indiiduellen Inhalt in Kopf- bzw. Fusszeile zu ermöglichen
 	//Kopfzeile
 	function Header()
 	{
@@ -94,7 +97,7 @@ if(isset($results)){
 			else $hours[$startHour][$results[$j]['weekday']] = $results[$j]['suShort']; // sonst Eintrag überschreiben
 		$startHour++;
 		}
-}
+	}
 }
 //Ausgabe Tabellenkopf
 $day = array(1=>'Mo',2=>'Di',3=>'Mi',4=>'Do',5=>'Fr');

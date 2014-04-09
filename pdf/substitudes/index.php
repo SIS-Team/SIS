@@ -1,4 +1,9 @@
 <?php
+	/* /pdf/substitudes/index.php
+	 * Autor: Weiland Mathias
+	 * Beschreibung:
+	 *	Erzeugt die PDF-Ausgabe des Supplierplans
+	 */	
 include_once("../../config.php");	 
 require_once(ROOT_LOCATION . "/modules/external/fpdf/fpdf.php");
 include_once(ROOT_LOCATION . "/modules/general/Connect.php");			
@@ -16,7 +21,7 @@ if(isset($_GET['section'])) $section =$_GET['section'];
 else $section = 'N';
 
 class PDF extends FPDF
-{
+{ //Um der Kopf- bzw. der Fusszeile individuellen Inhalt zu geben
 	//Kopfzeile
 	function Header()
 	{
@@ -70,14 +75,15 @@ class PDF extends FPDF
 				LEFT JOIN `classes` AS `nC` ON `s`.`classFK` = `nC`.`ID`
 				LEFT JOIN `sections` AS `sec` ON `c`.`sectionFK` = `sec`.`ID`
 				LEFT JOIN `sections` AS `nSec` ON `nC`.`sectionFK`=`nSec`.`ID`
-			WHERE time = '". mysql_real_escape_string($date) . "' and (`sec`.`short` = '".mysql_real_escape_string($section)."' or `nSec`.`short` = '".mysql_real_escape_string($section)."') 
+			WHERE 	time = '". mysql_real_escape_string($date) . "' 
+					AND (`sec`.`short` = '".mysql_real_escape_string($section)."' OR `nSec`.`short` = '".mysql_real_escape_string($section)."') 
 			ORDER BY `className`, `startHour`		
 		";
 $result = mysql_query($sql);
 while($substitude = mysql_fetch_object($result)) {    
  	$substitudes[]=$substitude;
 }
-
+//PDF-Erzeugung
 $pdf = new PDF();
 $pdf->AddPage();
 $pdf->AddFont('gothic');
@@ -115,7 +121,7 @@ if(isset($substitudes)){
 	}
 }
 $count2 = 0;
-while($count<12 or $count2 <1){
+while($count<12 or $count2 <1){ //Mindestlänge herstellen
  	$pdf->Cell(30,10,'','1');
 	$pdf->Cell(16,10,'','1');
 	$pdf->Cell(15,10,'','1');
@@ -127,10 +133,10 @@ while($count<12 or $count2 <1){
  }
 $pdf->Cell('',10,'s.L. ... supplierender Lehrer, u.L. ... ursprünglicher Lehrer');
 $filename = "substitudes_". $section .".pdf";
-$pdf->Output($filename,'I');
+$pdf->Output($filename,'I'); //I bedeutet im Browser öffnen
 
 function check_date($date)
-{
+{//Gültigkeit des Datums kontrollieren
 	$date_parts = array();
  	$date_parts =  explode('-',$date,3);
 	return checkdate($date_parts[1],$date_parts[2],$date_parts[0]);
