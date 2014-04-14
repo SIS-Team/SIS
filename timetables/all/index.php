@@ -12,13 +12,17 @@ include_once(ROOT_LOCATION . "/modules/other/dateFunctions.php");		//Stellt Datu
 
 ifNotLoggedInGotoLogin();	//Kontrolle ob angemeldet
 $permission = getPermission();
-if($permission !='root' && $permission != 'admin') noPermission();
+if($permission =='root' or $permission == 'admin') $admin=true;
+else $admin = false;
+if(!$admin && !isset($_SESSION['isTeacher'])) noPermission();
 pageHeader("Alle Stundenpl&auml;ne","main");
 if(isset($_GET['mode']))
-{$mode = $_GET['mode'];
+{	if(!$admin) $mode ='Klasse';
+ 	else $mode = $_GET['mode'];
 	if($mode == 'Lehrer')$name= $_GET['teacher'];
 	else $name = $_GET['class'];
 	if($mode != 'Lehrer' && $mode != 'Klasse') unset($mode);
+	
 }
 //Ausdruckbutton
 echo "<div id=\"print\">";
@@ -70,7 +74,9 @@ var hide_elements = function()
 echo "<form method=\"get\">";
 
 echo "<select name=\"mode\" style=\"color:#000\">";
-	echo "<option style=\"color:#000\" onclick=\"show_elements('selected_teacher');hide_elements('selected_class')\" selected>Lehrer</option>";
+	if($admin) {
+ 		echo "<option style=\"color:#000\" onclick=\"show_elements('selected_teacher');hide_elements('selected_class')\" selected>Lehrer</option>";
+	}
 	echo "<option style=\"color:#000\" onclick=\"show_elements('selected_class');hide_elements('selected_teacher')\" ";
 	if(isset($mode) and $mode == 'Klasse') echo "selected";
 	 echo ">Klasse</option>";

@@ -37,7 +37,7 @@ echo "<div id=\"print\">";
 echo "</div>";
 
 $permission = getPermission();
-if($permission =='root' || $permission == 'admin'){
+if($permission =='root' || $permission == 'admin' || isset($_SESSION['isTeacher'])){
 
 //Button für alle Stundenpläne
 echo "<div id=\"allTimetables\">";
