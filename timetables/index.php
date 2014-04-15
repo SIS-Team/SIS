@@ -21,13 +21,33 @@ if($isTeacher) {
 else {
 	$name =$_SESSION['class'];
 	if(!isset($name)) { 	//abbruch wenn kein Klassenname übergeben
-		die("Critical Error </br> Bist du sicher, dass du einer Klasse zugeordnet bist?");
+		die("Critical Error </br> Du bist keiner Klasse zugewissen. Kl&auml;re dies bitte mit dem Systemadministrator.");
 	}
 	$mode = "schueler";
 }
 
 pageHeader("Stundenplan","main");
+//Button zum Ausdrucken
+echo "<div id=\"print\">";
+	echo "<a href=\"".RELATIVE_ROOT."/pdf/timetables/\" target=\"_blank\">";
+		echo "<button class =\"nonButton\">";
+			include(ROOT_LOCATION . "/data/images/print.svg");
+		echo "</button>";
+	echo "</a>";
+echo "</div>";
 
+$permission = getPermission();
+if($permission =='root' || $permission == 'admin' || isset($_SESSION['isTeacher'])){
+
+//Button für alle Stundenpläne
+echo "<div id=\"allTimetables\">";
+	echo "<a href=\"".RELATIVE_ROOT."/timetables/all\" >";
+			echo "Alle Stundenpl&auml;ne anzeigen";
+	echo "</a>";
+echo "</div>";
+
+}
+//Auswahl der Anzeige
 echo "<form  method = \"get\" style=\" float:left\">";
 if(!isset($_GET['displaytype'])) $displaytype = "modificated";
 else $displaytype = $_GET['displaytype'];
@@ -41,8 +61,9 @@ else {
 } 
 echo "<noscript><input type =\"submit\" value=\"Anzeige &auml;ndern\"></noscript>"; 
 echo "</form>";
+
 if($displaytype == "normal") echo "</br>";
-if($displaytype =="modificated"){
+if($displaytype =="modificated"){ //Auswahl ob diese oder nächste Woche
 
 	if(!isset($_GET['week'])) $week = "actual";
 	else $week = $_GET['week'];
@@ -59,8 +80,8 @@ if($displaytype =="modificated"){
 	echo "<noscript><input type =\"submit\" value=\"Anzeige &auml;ndern\"></noscript>"; 
 	echo "</form>";
 }
-echo "<div class ='timetable_column'>";	
 
+echo "<div class ='timetable_column'>";	
 //Tabellenkopfausgabe
 echo "<table border = 1>";
 echo "<tr>";
@@ -80,33 +101,31 @@ for ($i = 0; $i < count($lessons); $i++) {
 		$hours[$index] = array(); //Wenn für die betreffende Startstunde kein Eintrag vorhanden -> leeres Array erstellen
 	if(isset($hours[$index][$lessons[$i]->weekdayShort])) //Kontrolle ob bereits ein Eintag vorhanden
 	{ 
-		 if($hours[$index][$lessons[$i]->weekdayShort]->suShort != $lessons[$i]->suShort){ //Kontrolle ob  neuer Eintrag und vorhandener Eintrag unterschiedlich
-		 	if(!strpos($hours[$index][$lessons[$i]->weekdayShort]->suShort,$lessons[$i]->suShort)) //Wenn neuer Eintrag nicht in altem Eintrag vorhanden -> zusammenhängen, getrennt mit |
-			{
-				$hours[$index][$lessons[$i]->weekdayShort]->suShort .= " | " .$lessons[$i]->suShort;
-				$popup = "&#xD;".$lessons[$i]->suShort.": ".$lessons[$i]->teShort." ".$lessons[$i]->roName;
-				$hours[$index][$lessons[$i]->weekdayShort]->popup .=  $popup;
-			}
-			else{
- 				$popup = "&#xD;".$lessons[$i]->suShort.": ".$lessons[$i]->teShort." ".$lessons[$i]->roName;
-				$hours[$index][$lessons[$i]->weekdayShort]->popup .=  $popup;
-			}
+		if(strpos($hours[$index][$lessons[$i]->weekdayShort]->suShort,$lessons[$i]->suShort) === false) 
+		{//Wenn neuer Eintrag nicht in altem Eintrag vorhanden -> zusammenhängen, getrennt mit |
+			$hours[$index][$lessons[$i]->weekdayShort]->suShort .= " | " .$lessons[$i]->suShort;
+			$popup = "&#xD;".$lessons[$i]->suShort.": ".$lessons[$i]->teShort." ".$lessons[$i]->roName;
+			if(isset($lessons[$i]->comment)) $popup.="&#xD;" . $lessons[$i]->comment; 
+			$hours[$index][$lessons[$i]->weekdayShort]->popup .=  $popup;
 		}
-		else{
- 				$popup = "&#xD;".$lessons[$i]->suShort.": ".$lessons[$i]->teShort." ".$lessons[$i]->roName;
-				$hours[$index][$lessons[$i]->weekdayShort]->popup .=  $popup;
+		else{ //wenn bereits vorhanden -> Popup erweitern
+ 			$popup = "&#xD;".$lessons[$i]->suShort.": ".$lessons[$i]->teShort." ".$lessons[$i]->roName;
+			if(isset($lessons[$i]->comment)) $popup.="&#xD;" . $lessons[$i]->comment;
+			$hours[$index][$lessons[$i]->weekdayShort]->popup .=  $popup;
 		}
+		
+		
 	}
 	else {
 		$hours[$index][$lessons[$i]->weekdayShort] = $lessons[$i] ; //erstellen eines Eintrages wenn keiner vorhanden
 
-		$popup = $lessons[$i]->suShort.": ".$lessons[$i]->teShort." ".$lessons[$i]->roName;
+		if($mode == 'schueler')$popup = $lessons[$i]->suShort.": ".$lessons[$i]->teShort." ".$lessons[$i]->roName;
+		else $popup = $lessons[$i]->clName." ".$lessons[$i]->roName;
+		if(isset($lessons[$i]->comment)) $popup.="&#xD;" . $lessons[$i]->comment;
 		$hours[$index][$lessons[$i]->weekdayShort]->popup = $popup;
 	}
 	
 }
-
-//if($_SESSION['id'] == '20090396') print_r($hours);
 $offset = 0;
 $dayShort= array(1=>'Mo',2=>'Di',3=>'Mi',4=>'Do',5=>'Fr');
 if(date("N")<6) $offset = 1-date("N");
@@ -114,8 +133,28 @@ else $offset = 8-date("N");
 if(isset($week) && $week == "next") $offset+=7;
 if($displaytype == "modificated" ){
 echo "Dieser Stundenplan ist g&uuml;ltig: ". date("Y.m.d",time()+24*60*60*$offset) ."-".date("Y.m.d",time()+24*60*60*($offset+4));
+
 	for($j=0;$j<5;$j++)
-	{
+	{	//fehlende Klassen abfragen
+ 		$missingClasses= getMissingClasses(date("Y-m-d",time()+24*60*60*$offset) ); 
+		if(isset($missingClasses))
+		{
+			for($i=0;$i<17;$i++)
+			{
+ 			
+ 				if(isset($missingClasses[$i])&& isset($hours[$i][$dayShort[$j+1]]))
+				{
+ 					
+					if(array_key_exists($hours[$i][$dayShort[$j+1]]->clName,$missingClasses[$i])) 
+					{
+ 						$className= $hours[$i][$dayShort[$j+1]]->clName;
+ 						$hours[$i][$dayShort[$j+1]]->suShort = "&#160;";
+						$hours[$i][$dayShort[$j+1]]->popup = $missingClasses[$i][$className];
+ 					}
+ 				}
+			}
+		}
+		//Supplierungen abfragen
 		$substitudes = getSubstitude(date("Y-m-d",time()+24*60*60*$offset),$name,$mode);
 		$offset++;
 		
@@ -123,32 +162,86 @@ echo "Dieser Stundenplan ist g&uuml;ltig: ". date("Y.m.d",time()+24*60*60*$offse
 			for($i=0; $i <count($substitudes); $i++)
 			{
  				$dayName =  $dayShort[date("N",strtotime($substitudes[$i]['time']))];
-				if($substitudes[$i]['newSub']){
- 				 	$hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "</td><td class ='changed' title='".$hours[$substitudes[$i]['startHour']][$dayName]->popup."'>".$substitudes[$i]['suShort'];
-					$hours[$substitudes[$i]['startHour']][$dayName]->startHour = $substitudes[$i]['startHour'];
-					$hours[$substitudes[$i]['startHour']][$dayName]->endHour = $substitudes[$i]['endHour'];
-				}
-				if($substitudes[$i]['remove']){
-					$temp = $hours[$substitudes[$i]['oldStartHour']][$dayName]->suShort;
-					$temp = str_replace($substitudes[$i]['oldSuShort'],"",$temp);
-					$temp = str_replace("|","",$temp);
-					$hours[$substitudes[$i]['oldStartHour']][$dayName]->suShort = "</td><td class ='changed' title='".$hours[$substitudes[$i]['startHour']][$dayName]->popup."'>".$temp;
-				}
-				if(!$substitudes[$i]['newSub'] and !$substitudes[$i]['remove']){
-					if(isset($hours[$substitudes[$i]['oldStartHour']][$dayName])){
-						$temp = $hours[$substitudes[$i]['oldStartHour']][$dayName]->suShort;
-						$temp = str_replace($substitudes[$i]['oldSuShort'],"",$temp);
-						$temp = str_replace("|","",$temp);
-						$hours[$substitudes[$i]['oldStartHour']][$dayName]->suShort = $temp;
-					}
-					if(isset($substitudes[$i]['suShort'])){
- 				 	$hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "</td><td class ='changed' title='".$hours[$substitudes[$i]['startHour']][$dayName]->popup."'>".$substitudes[$i]['suShort'];
-					}
-					else $hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "</td><td class ='changed' title='".$hours[$substitudes[$i]['startHour']][$dayName]->popup."'>".$substitudes[$i]['oldSuShort'];
-					
+				if($substitudes[$i]['newSub']){ //wenn Stunde hinzugefügt wurde
+ 					$popup = $substitudes[$i]['suShort']. ": " . $substitudes[$i]['teShort'] . " ". $substitudes[$i]['roName'];
+					$popup .= "&#xD;" . $substitudes[$i]['comment'];
+ 				 	$hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "<td class ='changed' title='".$popup."'>".$substitudes[$i]['suShort'];
 					$hours[$substitudes[$i]['startHour']][$dayName]->startHour = $substitudes[$i]['startHour'];
 					$hours[$substitudes[$i]['startHour']][$dayName]->endHour = $substitudes[$i]['endHour'];
 					$hours[$substitudes[$i]['startHour']][$dayName]->teShort = $substitudes[$i]['teShort'];
+					$hours[$substitudes[$i]['startHour']][$dayName]->popup = "" ;
+				}
+				else{
+	 				if($substitudes[$i]['remove']){ //wenn Stunde gelöscht wurde
+						$temp = $hours[$substitudes[$i]['oldStartHour']][$dayName]->suShort;
+						
+						$temp = str_replace("<td class ='changed' title='". $hours[$substitudes[$i]['oldStartHour']][$dayName]->popup ."'>","",$temp);
+						if(CheckOnlyLesson($substitudes[$i]['lessonBaseFK'],$substitudes[$i]['oldSuShort'])) {
+							$temp = str_replace($substitudes[$i]['oldSuShort'],"",$temp);
+							$temp = str_replace("|","",$temp);
+							
+						}
+	
+						if(isset($hours[$substitudes[$i]['oldStartHour']][$dayName]->popup))
+						{
+							$temp2=$hours[$substitudes[$i]['oldStartHour']][$dayName]->popup;
+							$temp2 = str_replace($substitudes[$i]['oldTeShort'],$substitudes[$i]['oldTeShort']." ".$substitudes[$i]['comment'],$temp2);
+							$temp2 = str_replace($substitudes[$i]['oldRoName'],'',$temp2);
+						}
+						else $temp2=  $substitudes[$i]['comment'];
+						$hours[$substitudes[$i]['oldStartHour']][$dayName]->suShort = "<td class ='changed' title='".$temp2."'>".$temp;
+						$hours[$substitudes[$i]['oldStartHour']][$dayName]->popup = $temp2;
+					}
+					else{
+						if($substitudes[$i]['move'])
+						{ //wenn Stunde verschoben wurde
+							if(isset($hours[$substitudes[$i]['oldStartHour']][$dayName])){
+								$temp = $hours[$substitudes[$i]['oldStartHour']][$dayName]->suShort;
+								$temp = str_replace($substitudes[$i]['oldSuShort'],"",$temp);
+								$temp = str_replace("|","",$temp);
+								$hours[$substitudes[$i]['oldStartHour']][$dayName]->suShort = $temp;
+							}
+							if(isset($substitudes[$i]['suShort'])){
+		 						if(isset($hours[$substitudes[$i]['startHour']][$dayName]->popup))
+								{
+									$title = $hours[$substitudes[$i]['startHour']][$dayName]->popup;
+								}
+								else{ 
+		 							if($mode =='schueler')
+									{
+		 								$title = $substitudes[$i]['suShort'].":". $substitudes[$i]['teShort']." ".$substitudes[$i]['roName'];
+										$title .= "&#xD;" . $substitudes[$i]['comment'];
+									}
+									else
+									{
+		 								$title = $substitudes[$i]['clName']."    ".$substitudes[$i]['roName'];
+									}
+								}
+		 				 		$hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "<td class ='changed' title='".$title."'>".$substitudes[$i]['suShort'];
+							}
+							else
+							{
+		 						$hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "<td class ='changed' title='".$title."'>".$substitudes[$i]['oldSuShort'];
+							}
+							$hours[$substitudes[$i]['startHour']][$dayName]->startHour = $substitudes[$i]['startHour'];
+							$hours[$substitudes[$i]['startHour']][$dayName]->endHour = $substitudes[$i]['endHour'];
+							$hours[$substitudes[$i]['startHour']][$dayName]->teShort = $substitudes[$i]['teShort'];
+							$hours[$substitudes[$i]['startHour']][$dayName]->popup = $substitudes[$i]['comment'];
+						}
+						else{//"echte" Supplierung
+							$temp = $hours[$substitudes[$i]['startHour']][$dayName]->popup;
+ 							$temp = str_replace($substitudes[$i]['oldTeShort'] ." ".$substitudes[$i]['oldRoName'],"-",$temp);
+							if(isset($substitudes[$i]['roName'])) $roName =$substitudes[$i]['roName'];
+								else $roName = $substitudes[$i]['oldRoName'];
+							if(isset($substitudes[$i]['suShort'])){
+ 								$temp .= $substitudes[$i]['suShort'] .": " . $substitudes[$i]['teShort'] ." " . $roName . " ";
+							}
+							$temp .= $substitudes[$i]['comment'];
+							$title = $temp;
+							$hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "<td class ='changed' title='".$title."'>".$substitudes[$i]['oldSuShort'];
+							$hours[$substitudes[$i]['startHour']][$dayName]->endHour =  $substitudes[$i]['endHour'];
+ 						}	
+					}
 				}
 			}
 		}
@@ -172,37 +265,39 @@ else {	//nur erste 11 Stunden
  	}
 $days=array(0=> "Mo",1=> "Di",2=> "Mi",3=>"Do",4=>"Fr");
 for ($i = $tableBegin; $i < $tableEnd; $i++) {
+ 	
  	echo "<tr>";
  	echo "<td style=\"width:50px\">".$i."</td>";			//gibt Stundennummer an
  	if (!isset($hours[$i])){ 
-		for ($j = 0; $j < 5; $j++) 
-			echo "<td>&#160;</td>"; //Ausgabe eines leeren Feldes, wenn keine Stunde vorhanden
+		for ($j = 0; $j < 5; $j++)
+		{ 
+			echo "<td></td>"; //Ausgabe eines leeren Feldes, wenn keine Stunde vorhanden
+		}
 	} 
 	else {
 		for ($j = 0; $j < 5; $j++) {
 			if(isset($hours[$i][$days[$j]])){
-					 if(!strpos($hours[$i][$days[$j]]->suShort,"<td")){
-					 echo "<td>";					 
+					 if(strpos($hours[$i][$days[$j]]->suShort,"<td") === false){
+					 echo "<td title=\"".$hours[$i][$days[$j]]->popup."\">";					 
 					}
 
-					echo "<span title=\"".$hours[$i][$days[$j]]->popup."\">" . $hours[$i][$days[$j]]->suShort ."</span>";
+					echo $hours[$i][$days[$j]]->suShort;
 			
 			
 			echo "</td>";
-					if(($hours[$i][$days[$j]]->endHour) > $i) {//kopiert aktuelle Stunde in nächste Stunde, wenn mehr als eine Stunde nacheinander stattfindet
+					if(($hours[$i][$days[$j]]->endHour) > $i) {
+ 						//kopiert aktuelle Stunde in nächste Stunde, wenn mehr als eine Stunde nacheinander stattfindet
 						$hours[$i+1][$days[$j]] = NULL;
-						
-						
 						$hours[$i+1][$days[$j]]->suShort = $hours[$i][$days[$j]]->suShort;
-						 $hours[$i+1][$days[$j]]->teShort = $hours[$i][$days[$j]]->teShort;
-						 $hours[$i+1][$days[$j]]->endHour = $hours[$i][$days[$j]]->endHour;	
-						 $hours[$i+1][$days[$j]]->popup = $hours[$i][$days[$j]]->popup;	 	
+						$hours[$i+1][$days[$j]]->teShort = $hours[$i][$days[$j]]->teShort;
+						$hours[$i+1][$days[$j]]->endHour = $hours[$i][$days[$j]]->endHour;	
+						$hours[$i+1][$days[$j]]->popup = $hours[$i][$days[$j]]->popup;	 	
 					}
 				
 			}
 			else {
-				echo "<td>&#160;</td>";
-		}		
+				echo "<td></td>";
+			}		
 		}
 		
 	}
@@ -211,6 +306,7 @@ for ($i = $tableBegin; $i < $tableEnd; $i++) {
 echo "</div>";
 echo "</table>";
 
+echo "Dieser Stundenplan wurde generiert: ". date("d.m.Y H:i:s");
 
 function getLessons($name,$mode) {		//Abfrage von Stunden von vorgegebener Klasse/vorgegebenem Lehrer
 	if($mode == "schueler" ){
@@ -231,7 +327,7 @@ function getLessons($name,$mode) {		//Abfrage von Stunden von vorgegebener Klass
 	return $lessons;
 }
 
-function isEvening($hours)
+function isEvening($hours) //Abfrage ob Abendschule,normal oder alle Stunden
 {
  $check = 0;
  for ($i = 1; $i < 12; $i++)	//wenn erste 11 Stunden leer -> Abendschule
@@ -265,6 +361,44 @@ function getSubstitude($date,$name,$mode){	//Supplierungen des gewählten Datums 
 			
 			if(isset($substitudes))	return $substitudes;
 }
+function getMissingClasses($date){ //fehlende Klassen abrufen
+
+	$where = "startDay <= '". $date."' and endDay >= '".$date ."'";
+ 	$missingClasses_sql = selectMissingClass($where,"");
+	while($result = mysql_fetch_array($missingClasses_sql)) {    
+		 		$results[]=$result;
+			
+			}	
+	if(isset($results))	//umordnen in Array $missinClasses[Stunde][Klasse] = Grund
+	{
+		for($i=0; $i <count($results);$i++)
+		{
+ 			$hour = $results[$i]['startHour'];
+			$endHour = $results[$i]['endHour'];
+			if($date != $results[$i]['endDay']) $endHour = 16;
+			if($date != $results[$i]['startDay']) $hour = 1;
+			while($hour <= $endHour)
+			{
+ 				$missingClasses[$hour][$results[$i]['clName']] = $results[$i]['reason'];
+				$hour++;
+ 			}
+ 			
+ 		} 
+		return $missingClasses;
+	}
+	else return Array();
+}
+
+function checkOnlyLesson($id,$subject){
+ 	$i=0;
+ 	$sql = "SELECT * FROM substitudes INNER JOIN lessons on substitudes.lessonFK = lessons.ID INNER JOIN subjects ON lessons.subjectFK = subjects.ID WHERE lessonBaseFK = '".$id."' and subjects.short = '".$subject."'";
+	$onlyLesson_sql = mysql_query($sql);
+	while($result = mysql_fetch_array($onlyLesson_sql)) {    
+		 		$i++;
+			}	
+	if($i != 1) return false;
+	else return true;
+ }
 
 pageFooter();
 ?>

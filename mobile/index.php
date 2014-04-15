@@ -26,13 +26,13 @@
         <div id="content">
           <h1>Mobile Apps</h1>
                 <center>
-                    <a href="" title="App f&uuml;r Windows Phone ansehen">
+                    <a href="http://www.windowsphone.com/de-at/store/app/sis/bac43498-c9dd-4b5d-aa33-d4112ee7939b" title="App f&uuml;r Windows Phone ansehen">
                         <img src="<?php echo RELATIVE_ROOT; ?>/data/images/mobile/windowsphone.png" alt="Windows Phone Store">
                     </a>
-                    <a href="" title="App f&uuml;r iOS ansehen">
+                    <a href="http://build.phonegap.com/apps/460326/install/?qr_key=RNAZb2HBmUZ8Lr1nGrSQ" title="App f&uuml;r iOS ansehen">
                         <img src="<?php echo RELATIVE_ROOT; ?>/data/images/mobile/ios.png" alt="App Store">
                     </a>
-                    <a href="<?php echo RELATIVE_ROOT; ?>/mobile/download/SIS.apk" title="App f&uuml;r Android ansehen">
+                    <a href="https://play.google.com/store/apps/details?id=com.SIS_App" title="App f&uuml;r Android ansehen">
                         <img src="<?php echo RELATIVE_ROOT; ?>/data/images/mobile/android.png" alt="GooglePlay Store">
                     </a>
                 </center>

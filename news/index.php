@@ -1,7 +1,6 @@
 <?php
 	/* /news/index.php
 	 * Autor: Weiland Mathias
-	 * Version: 0.1.0
 	 * Beschreibung:
 	 *	Gibt News aus
 	 */	 
@@ -19,8 +18,9 @@ $section_result  = mysql_query($sql);
 while ($row = mysql_fetch_object($section_result)) {
 		$section = $row;
 }
-$where  = " sectionFK = '".$section->ID."' OR sectionFK = '0'" ;
-$result = selectAll("news",$where,"");	//gesamte News-Tabelle abfragen wo die Abteilung des Bnutzers oder all Abteilungen eingetragen ist
+if(isset($section)) $where  = " sectionFK = '".$section->ID."' OR sectionFK = '0'" ;
+else $where = "";
+$result = selectAll("news",$where,"");	//gesamte News-Tabelle abfragen wo die Abteilung des Benutzers oder alle Abteilungen eingetragen ist
 while ($row = mysql_fetch_object($result)) {
 		$news[] = $row;
 }
@@ -32,7 +32,7 @@ if(isset($news)){
 		$endDate = $news[$i]->endDay;		//Enddatum abfragen
 	 	if(($startDate <= $date) && ($endDate >= $date) && ($news[$i]->display ==1)){ //nur wenn aktuelles Datum zwischen Start- und Enddatum 
 			echo "<h2>" . $news[$i]->title . "</h2>";
-	  		echo $news[$i]->text;
+	  		echo str_replace("\n","<br />",$news[$i]->text);
 	  		echo "</br></br>";
 		}
 	}

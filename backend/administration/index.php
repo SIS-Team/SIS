@@ -36,7 +36,7 @@
 	
 	$buttons[3]['displayed'] = true;
 	$buttons[3]['enabled'] = $_SESSION['rights']['root'];
-	$buttons[3]['svg'] = ROOT_LOCATION . "/data/images/lr.svg";
+	$buttons[3]['svg'] = ROOT_LOCATION . "/data/images/administration/subjects.svg";
 	$buttons[3]['text'] = "Fächer";
 	$buttons[3]['url'] = RELATIVE_ROOT . "/backend/administration/subjects/";
 	$buttons[3]['jsurl'] = RELATIVE_ROOT . "/backend/administration/subjects/?js";
@@ -50,7 +50,7 @@
 	
 	$buttons[5]['displayed'] = true;
 	$buttons[5]['enabled'] = $_SESSION['rights']['root'];
-	$buttons[5]['svg'] = ROOT_LOCATION . "/data/images/lr.svg";
+	$buttons[5]['svg'] = ROOT_LOCATION . "/data/images/administration/rooms.svg";
 	$buttons[5]['text'] = "Räume";
 	$buttons[5]['url'] = RELATIVE_ROOT . "/backend/administration/rooms/";
 	$buttons[5]['jsurl'] = RELATIVE_ROOT . "/backend/administration/rooms/?js";

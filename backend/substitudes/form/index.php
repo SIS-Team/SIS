@@ -39,7 +39,7 @@ if(!empty($_POST['save']) && $_POST['save']!=""){
 if (empty($_POST["date"]) && empty($_POST['time'])) {		//wenn nichts zurückgegeben wird, dann heute
 	$date = no_weekend(strftime("%Y-%m-%d"));
 }
-else if($_POST['date']!=""){								//sonst zurückgegebenes Datum
+else if(!empty($_POST["date"]) && $_POST['date']!=""){								//sonst zurückgegebenes Datum
 	$date = no_weekend($_POST["date"]);
 }
 else{
@@ -80,7 +80,7 @@ $fieldsRow2 = array(
 	array( "oldTeShort",  	"Urs. Lehrer: ", 	"dropdown",	"5",	"",		$selectTeachers,""),
 	);
 if($fail===false)
-	printf("<div>Es ist ein Fehler bei der Eingabe aufgetreten. M&ouml;glicherweise ist f&uuml;r diese Stunde keine Supplierung<br>n&ouml;tig, weil der Lehrer nicht verhindert ist.<div><br><br>");
+	printf("<div>Es ist ein Fehler bei der Eingabe aufgetreten. M&ouml;glicherweise ist f&uuml;r diese Stunde keine Supplierung<br>n&ouml;tig, weil der Lehrer nicht verhindert ist oder ein anderer Eingabefehler ist aufgetreten<div><br><br>");
 
 
 printf("<script language=\"javascript\" type=\"text/javascript\" src=\"%s/data/scripts/substitudes.js\"></script>",RELATIVE_ROOT);
@@ -89,10 +89,12 @@ printf("<noscript><br>Bitte aktivieren Sie JavaScript. Ohne JavaScript kann kein
 $date = dateChange($date);		//Datumsauswahl erzeugen
 $fieldsRow1[1][5] = $date;	//Standartdatum ins Formular schreiben
 
-$where = "substitudes.time = '".$date."' AND sections.short = '".$section."' AND substitudes.display = 1";		//Filter
+$where = "substitudes.time = '".$date."' AND sections.short = '".$section."'";		//Filter
 $sort = "classes.name, hoursStart.hour";		//Sortierung nach dem Klassenname und der Startstunde
 
 ?>
+<br />
+<br />
 <div id="print">
 	<a href="<?php echo RELATIVE_ROOT; ?>/pdf/substitudes/?date=<?php echo $date; ?>&section=<?php echo $section; ?>" target="_blank">
 		<button class="nonButton">

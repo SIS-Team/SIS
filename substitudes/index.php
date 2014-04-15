@@ -45,16 +45,20 @@ echo "</div>";
 		echo "<input type =\"radio\" name = \"change\" onclick= \"this.form.submit()\" value = \"actual\">aktuelle Eintr&auml;ge";
 		echo "<input type =\"radio\" name = \"change\" onclick= \"this.form.submit()\" value = \"next\" checked>n&auml;chste Eintr&auml;ge"; 
 	}
-	echo "<noscript><input type =\"submit\" value=\"Anzeige &auml;ndern\"></noscript>"; 
+	echo "<noscript><input type =\"submit\" value=\"Anzeige &auml;ndern\"></noscript>";
+	echo "</br>Dieser Supplierplan wurde generiert: ". date("d.m.Y H:i:s");
 	echo "</form>"; 
 
-$day_counter = 0;
+	
 
+$day_counter = 0;
+if($change !='actual') {
+	$day_counter+= 2;
+	if($change != 'actual' && date("N", time())>4)  $day_counter+= 8-date("N", time());
+}
 for($counter = 0; $counter <=1; $counter++)
-{   
-	if(date("w", time() + 24 * 60 * 60 * $day_counter)==0) $day_counter++;
-	if(date("w", time() + 24 * 60 * 60 * $day_counter)==6) $day_counter+=2;
-	if($change != 'actual' && $counter == 0) $day_counter+=2;
+{   if(date("N", time() + 24 * 60 * 60 * $day_counter)>5)  $day_counter+= 8-date("N", time() + 24 * 60 * 60 * $day_counter);
+	
 	echo "<div id='d" . $counter . "' class='column background'>";
 	$day = captureDate($day_counter);		//aktuelles Datum abfragen
 	echo "Supplierungen vom ". weekday(date("Y-m-d",time() + 24*60*60*$day_counter)) .", ". date("d.",time() + 24*60*60*$day_counter). month(date("n",time() + 24*60*60*$day_counter)) ;
@@ -86,8 +90,7 @@ if($mode=="teacher"){
 			$allSubstitudes[$startHour]['endHour'] = $endHour;
 		}
 		else {
- 		
-			$allSubstitudes[$startHour]['class'] .= "|". $substitudes[$i]['clName'];	
+ 			if(!strpos($allSubstitudes[$startHour]['class'],$substitudes[$i]['clName']))$allSubstitudes[$startHour]['class'] .= "|". $substitudes[$i]['clName'];	
 		
 		}
 		
@@ -188,6 +191,8 @@ else{
 	echo "</div>";
 	$day_counter++;
 }
+
+
 
 function getSubstitude($date,$mode){	//Supplierungen des gewählten Datums abrufen
 	

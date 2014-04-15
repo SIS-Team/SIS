@@ -1,13 +1,13 @@
 <?php
 
-function ifNotLoggedInGotoLogin(){
+function ifNotLoggedInGotoLogin(){ //wenn nicht angemeldet zu gegebener Seite weiterleiten
 	if(!($_SESSION['loggedIn'])){
 		header("LOCATION: " . RELATIVE_ROOT . "/");
 		exit();
 	}
 }
 
-function getPermission(){
+function getPermission(){ //gibt die Berechtigungsstufe zurück
 	$isAdmin = $_SESSION['rights']['E'] || $_SESSION['rights']['N'] || $_SESSION['rights']['W'] || $_SESSION['rights']['M'];
 	if(($_SESSION['rights']['root'])){
  			return "root";
@@ -21,12 +21,12 @@ function getPermission(){
 	else return false;			
 }
 
-function noPermission(){
+function noPermission(){ //wenn keine Berechtigung vorhanden -> weiterleitung
  		header("Location: ".RELATIVE_ROOT."/");
 		exit();
  }
 
-function getAdminSection(){
+function getAdminSection(){ //Abteilung des Administrators abfragen
 	if($_SESSION['rights']['E']) return 'E';
 	if($_SESSION['rights']['N']) return 'N';
 	if($_SESSION['rights']['W']) return 'W';

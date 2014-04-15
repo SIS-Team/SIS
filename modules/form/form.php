@@ -180,7 +180,7 @@ printf("<table>\n");	//Tabellen Tag auf
 			if(!empty($length) && $length>1 && $startHour != $hour && $zeile1==1){
 									
 				$length--;
-				$visibility="style=\"visibility:none\"";
+				$visibility="style=\"display:none\"";
 			
 			}
 		}
@@ -297,14 +297,14 @@ printf("<table style=\"width:100%%;text-align:right\">\n");	//Tabellen Tag auf
 		else
 			$color = "white";
 
-		if(!empty($content["free"]) && $content["free"]=="free")
+		if(!empty($content["free"]) && $content["free"]=="free"){
 			if($content["freeRadio"]=="move")
 				$content["move"]=true;
 			else if($content["freeRadio"]=="add")
 				$content["newSub"]=true;
 			else if($content["freeRadio"]=="remove")
 				$content["remove"]=true;
-
+		}
 		
 		if($content["move"]){
 			//echo "move";

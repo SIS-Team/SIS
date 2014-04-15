@@ -41,7 +41,7 @@
 	$buttons[6]['text'] = "Eingaben";		
 	$buttons[6]['url'] = RELATIVE_ROOT . "/backend/?noJS" . (isset($_GET['noMobile']) ? "&noMobile" : "");
 	$buttons[6]['jsurl'] = RELATIVE_ROOT . "/backend/?js&menu";
-	
+	// TODO next is absolute magig. any not empty "rights" is sufficient, maybe call it different NEEDS documentation 
 	foreach ($_SESSION['rights'] as $value) {
 		if ($value)			
 			$buttons[6]['enabled'] = true;

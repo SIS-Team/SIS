@@ -37,7 +37,7 @@
 
 		if (!isset($host)) {
 			$fh = fopen(ROOT_LOCATION . "/logs/ldap-fails", "a");
-			fwrite($fh, time() . ": no host, get user, cn: " . urlencode($cn) . "\n");
+			fwrite($fh, time() . ": no host, get user, cn: " . urlencode($cn) . " ::::\n");
 			fclose($fh);
 			$ent = array();
 			$ent[0] = array();
@@ -57,6 +57,15 @@
 		$con = ldap_connect($host);
 		
 		$ok  = ldap_bind($con, $user, $passwd);
+		
+		if (!($ok)) {
+			$fh = fopen(ROOT_LOCATION . "/logs/ldap-fails", "a");
+			fwrite($fh, time() . ": fatal bind: " . $user . " ::::\n");
+			fwrite($fh, print_r($con, true));
+			fwrite($fh, "- ::::");
+			fclose($fh);
+			die("Kritischer Fehler: Bitte melde diese Meldung an SIS-Team@htlinn.ac.at<br />Zusätzliche Informationen: fatal:bIn" . time() . "cffZcZ" . $con. "==");
+		}
 		
 		$res = ldap_search($con, "o=SIS", "cn=" . $cn, 
 			array("groupmembership", "ou", "givenname", "sn", "initials"), 0, 0, 0, LDAP_DEREF_ALWAYS);

@@ -16,10 +16,7 @@ if (!($_SESSION['rights']['root'])){
 	exit();
 }
 
-if(!empty($_POST['release']) && $_POST['release']=="first")
-	$temp = get("first");
-else
-	$temp = get("second");
+$temp = get();
 
 $browserPC = $temp[0];
 $osPC=$temp[1];
@@ -33,19 +30,23 @@ $sitesMobile = $temp[8];
 $osM=$temp[10];
 $browserM = $temp[9];
 $dayFrequenzy = $temp[11];
+
+//Für die Tagesaufrufe wird das erste Datum (min) des ersten Eintrages um einen Tag verringert um eine bessere Darstellung zu erreichen
+//Selbes gilt für den letzten Einrag der Aufrufe. Nur wird hier ein Tag erhöht.
+$x = strptime(strftime("%d %b %Y",$temp[12][0]), "%d %b %Y");
+$y = mktime($x["tm_hour"], $x["tm_min"], $x["tm_sec"], 
+		$x["tm_mon"]+1, $x["tm_mday"]-1, 1900+$x["tm_year"] );
+$d_min = strftime("%d %b %Y", $y);
+
+$x = strptime(strftime("%d %b %Y",$temp[12][1]), "%d %b %Y");
+$y = mktime($x["tm_hour"], $x["tm_min"], $x["tm_sec"], 
+		$x["tm_mon"]+1, $x["tm_mday"]+1, 1900+$x["tm_year"] );
+$d_max = strftime("%d %b %Y", $y);
 //Seitenheader
 pageHeader("Statistiken","main");
 
-if(!empty($_POST['release']) && $_POST['release']=="first")
-	$checkedFirst="checked";
-else
-	$checkedSecond="checked";
 ?>
-<form method="POST">
-<input type="radio" name="release" value="first" onclick="this.form.submit()" <?php echo $checkedFirst;?>>Seit Ersetem Release<br />
-<input type="radio" name="release" value="second" onclick="this.form.submit()" <?php echo $checkedSecond;?>>Seit Zweitem Release<br />
-</form>
-Das Entwicklungsteam wir nicht mitgez&auml;hlt!!!<br />
+Das Entwicklungsteam wird nicht mitgez&auml;hlt!!!<br />
 <a href="">Reload</a><br /><br />
 <script type="text/javascript" src="<?php echo RELATIVE_ROOT;?>/modules/external/jqplot/jquery.min.js"></script>
 <script type="text/javascript" src="<?php echo RELATIVE_ROOT;?>/modules/external/jqplot/jquery.jqplot.min.js"></script>
@@ -409,8 +410,10 @@ $(document).ready(function(){
                 	tickOptions: {
                     		angle: -40,
 				textColor: 'white',
-				formatString: '%#d %b %Y',
+				formatString: '%a %d %b %Y',
                 	},
+			min: '<?php echo $d_min; ?>',
+			max: '<?php echo $d_max; ?>',
         	},
 		yaxis:{
 			min:0,

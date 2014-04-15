@@ -1,4 +1,9 @@
 <?php
+	/* /pdf/substitudes/index.php
+	 * Autor: Weiland Mathias
+	 * Beschreibung:
+	 *	Erzeugt die PDF-Ausgabe des Supplierplans
+	 */	
 include_once("../../config.php");	 
 require_once(ROOT_LOCATION . "/modules/external/fpdf/fpdf.php");
 include_once(ROOT_LOCATION . "/modules/general/Connect.php");			
@@ -14,11 +19,37 @@ if(isset($_GET['date']) && check_date($_GET['date']))$date = $_GET['date'];
 else $date = date("Y-m-d");
 if(isset($_GET['section'])) $section =$_GET['section'];
 else $section = 'N';
+
+class PDF extends FPDF
+{ //Um der Kopf- bzw. der Fusszeile individuellen Inhalt zu geben
+	//Kopfzeile
+	function Header()
+	{
+	    //Logo
+		$this->Image("../../data/images/logo.png",90,3,30,30);
+	    //Gothic fett 20
+		$this->AddFont('gothic','B');
+		$this->SetFont('gothic','B',20);
+		$this->Cell('130','25','HTL Anichstraße');
+	    //Zeilenumbruch
+	    $this->Ln(20);
+	}
+	
+	//Fusszeile
+	function Footer()
+	{
+	    //Position 1,5 cm von unten
+	    $this->SetY(-15);
+	    //Arial kursiv 8
+	    $this->SetFont('Arial','I',10);
+	    //Seitenzahl
+	    $this->Cell(0,10,'Diese Ausgabe wurde mittels SIS (School Information System) generiert',0,0,'C');
+	}
+}
 		$sql = "SELECT `time`,
 						`newSub`,
 						`remove`,
 						`move`,
-						`s`.`display`,
 						`s`.`comment`,
 						IFNULL(`nC`.`name`,`c`.`name`) AS `className`,
 						`nT`.`short` AS `newTeacher`,
@@ -44,22 +75,23 @@ else $section = 'N';
 				LEFT JOIN `classes` AS `nC` ON `s`.`classFK` = `nC`.`ID`
 				LEFT JOIN `sections` AS `sec` ON `c`.`sectionFK` = `sec`.`ID`
 				LEFT JOIN `sections` AS `nSec` ON `nC`.`sectionFK`=`nSec`.`ID`
-			WHERE time = '". mysql_real_escape_string($date) . "' and (`sec`.`short` = '".mysql_real_escape_string($section)."' or `nSec`.`short` = '".mysql_real_escape_string($section)."')
+			WHERE 	time = '". mysql_real_escape_string($date) . "' 
+					AND (`sec`.`short` = '".mysql_real_escape_string($section)."' OR `nSec`.`short` = '".mysql_real_escape_string($section)."') 
 			ORDER BY `className`, `startHour`		
 		";
 $result = mysql_query($sql);
 while($substitude = mysql_fetch_object($result)) {    
  	$substitudes[]=$substitude;
 }
-
-$pdf = new FPDF();
+//PDF-Erzeugung
+$pdf = new PDF();
 $pdf->AddPage();
 $pdf->AddFont('gothic');
 $pdf->AddFont('gothic','B');
 $pdf->SetFont('gothic','B',20);
-$pdf->Cell('75','25','HTL Anichstraße');
-$pdf->Cell('75','25',weekday($date).". ". $date);
+$pdf->SetXY(135,10);
 $pdf->Cell('','25','Abteilung '.$section,'','1');
+$pdf->Cell('','25',weekday($date).". ". $date,'','1','C');
 $pdf->SetFont('gothic','',12);
 $pdf->Cell(30,10,'Klasse','1');
 $pdf->Cell(16,10,'Stunde','1');
@@ -89,7 +121,7 @@ if(isset($substitudes)){
 	}
 }
 $count2 = 0;
-while($count<12 or $count2 <1){
+while($count<12 or $count2 <1){ //Mindestlänge herstellen
  	$pdf->Cell(30,10,'','1');
 	$pdf->Cell(16,10,'','1');
 	$pdf->Cell(15,10,'','1');
@@ -100,10 +132,11 @@ while($count<12 or $count2 <1){
 	$count2++;
  }
 $pdf->Cell('',10,'s.L. ... supplierender Lehrer, u.L. ... ursprünglicher Lehrer');
-$pdf->Output();
+$filename = "substitudes_". $section .".pdf";
+$pdf->Output($filename,'I'); //I bedeutet im Browser öffnen
 
 function check_date($date)
-{
+{//Gültigkeit des Datums kontrollieren
 	$date_parts = array();
  	$date_parts =  explode('-',$date,3);
 	return checkdate($date_parts[1],$date_parts[2],$date_parts[0]);
