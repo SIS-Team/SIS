@@ -14,17 +14,19 @@
 	$class = $_SESSION['class'];
 	$id = $_SESSION['id'];
 	$name = $_SESSION['name'];
+	//$classes = $_GET['classes'];
 	$where = "";
 
 	echo "var actualClass = 0;\n";
 	echo "var teacher = 0;\n";
+	//echo "var classes = '".$classes."';\n";
 	$date = strftime("%Y-%m-%d");
 
 
 
 	if(!$_SESSION['isTeacher'])	//Wenn Schüler dann alle Einträge der selben Klasse
 	{
-		echo "alert('Sie sind nicht als Lehrer angemeldet!!!');\n";
+		echo "alert('Sie sind nicht als Lehrer angemeldet!!!getClasses');\n";
 	}
 	else	//ansonsten(also Lehrer) alle Einträge des selben Lehrers
 	{
@@ -56,11 +58,14 @@ $( document ).ready(function() {
 		var lesson = allClassesObject[aLesson];		
 
 		var newOption = document.createElement("option");
-		newOption.id = i;
+		newOption.id = "option" + i;
 		newOption.value = lesson.clName;
 		document.getElementById("classes").appendChild(newOption);
 
-		document.getElementById(i).innerHTML=lesson.clName;
+		document.getElementById("option" + i).innerHTML=lesson.clName;
+		
+		if(classes == lesson.clName)
+			newOption.selected="selected";
 
 		i++;
 	}

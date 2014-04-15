@@ -36,8 +36,10 @@
 	//Einträge werden aus Datenbank ausgelesen
 	$lesson_sql = selectLesson($where,"");	
 	$lesson = array();
+	$lessons = array();
 	while($lesson = mysql_fetch_array($lesson_sql)) {	//durchlauft die Schleife so oft wie es Datensätze gibt
 		$lessons[]=$lesson;
+		
 	}
 	$lessons = json_encode($lessons);	//die Daten aus der Datenbank werden in ein JSON-Objekt umgewandelt, um die Nutzung der Daten mit JS zu vereinfachen
 
@@ -126,8 +128,7 @@ $( document ).ready(function() {
 		}		
 
 	}
+
 });
 
-$.get("./css/main.css", function(css) {
-$("head").append("<style type='text/css'>"+css+"</style>");
-});
+
