@@ -113,11 +113,11 @@ function selectClass($where,$order){
  *$where string zum Filtern
  *$order string zum Sortieren
  *	
- *ID,clName,roName,teShort,suShort,weekdayShort,startHour,endHour,comment,lessonsBaseFK
+ *ID,clName,roName,teShort,teDisplay,suShort,weekdayShort,startHour,endHour,comment,lessonsBaseFK
  */
 function selectLesson($where,$order){
 
-  	$sql= "SELECT lessons.ID, hoursStart.hour as startHour, hoursEnd.hour as endHour, rooms.name as roName, teachers.short as teShort, subjects.short as suShort, hoursStart.weekdayShort, classes.name as clName, lessons.comment, lessons.lessonBaseFK 
+  	$sql= "SELECT lessons.ID, hoursStart.hour as startHour, hoursEnd.hour as endHour, rooms.name as roName, teachers.short as teShort, teachers.display as teDisplay, subjects.short as suShort, hoursStart.weekdayShort, classes.name as clName, lessons.comment, lessons.lessonBaseFK 
 		FROM lessons 
 		LEFT JOIN rooms ON rooms.ID = lessons.roomFK 
 		INNER JOIN teachers ON teachers.ID = lessons.teachersFK 
@@ -183,11 +183,11 @@ function selectMissingClass($where,$order){
  *$where string zum Filtern
  *$order string zum Sortieren
  *	
- *ID,newSub,move,remove,short,clName,suShort,teShort,time,roName,startHour,endHour,comment,oldStartHour,oldEndHour,weekdayShort,oldTeShort,oldSuShort,oldRoName,lessonBaseFK
+ *ID,newSub,move,remove,short,clName,suShort,teShort,teDisplay,time,roName,startHour,endHour,comment,oldStartHour,oldEndHour,weekdayShort,oldTeShort,oldSuShort,oldRoName,lessonBaseFK
  */
 function selectSubstitude($where,$order){
 
- 	$sql= "SELECT substitudes.ID, substitudes.newSub, substitudes.move, substitudes.remove, sections.short, classes.name as clName, subjects.short as suShort, teachers.short as teShort, substitudes.time, rooms.name as roName, hoursStart.hour as startHour, hoursEnd.hour as endHour, substitudes.comment, oldHoursStart.hour as oldStartHour, oldHoursEnd.hour as oldEndHour, hoursStart.weekdayShort, oldTeacher.short as oldTeShort , oldSubjects.short as oldSuShort,  oldRooms.name as oldRoName, lessons.lessonBaseFK
+ 	$sql= "SELECT substitudes.ID, substitudes.newSub, substitudes.move, substitudes.remove, sections.short, classes.name as clName, subjects.short as suShort, teachers.short as teShort, teachers.display as teDisplay, substitudes.time, rooms.name as roName, hoursStart.hour as startHour, hoursEnd.hour as endHour, substitudes.comment, oldHoursStart.hour as oldStartHour, oldHoursEnd.hour as oldEndHour, hoursStart.weekdayShort, oldTeacher.short as oldTeShort , oldSubjects.short as oldSuShort,  oldRooms.name as oldRoName, lessons.lessonBaseFK
 		FROM substitudes 
 		LEFT JOIN lessons ON lessons.ID=substitudes.lessonFK 
 		LEFT JOIN lessonsBase ON lessonsBase.ID=lessons.lessonBaseFK
