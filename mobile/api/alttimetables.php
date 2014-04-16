@@ -135,6 +135,7 @@ for(aSubstitude in subsObject){
 					{				
 						document.getElementById(oldCell).style.color="red";
 						document.getElementById(oldCell).innerHTML="";
+						document.getElementById(oldCell).style.backgroundColor="#e05050";
 					}
 					else if(substitude.move == "1")
 					{
