@@ -163,7 +163,7 @@ for($i=$start;$i<$end;$i++){ //Stundenplanausgabe
 
 $filename = "timetable_";
 if($mode == 'teacher') $filename .= $teacher;
-else $filename .=$class;
+else if(isset($class))$filename .=$class;
 $filename.= ".pdf";
 $pdf->Output($filename,'I'); //PDF ausgeben
 
