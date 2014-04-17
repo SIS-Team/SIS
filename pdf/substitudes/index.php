@@ -106,16 +106,27 @@ if(isset($substitudes)){
 	 	$start = $substitudes[$i]->startHour;
 	    $end = $substitudes[$i]->endHour; 
 			if($oldClass != $substitudes[$i]->className) {
- 				$pdf->Cell(30,10,$substitudes[$i]->className,'RTL');
+ 				$pdf->Cell(30,10,$substitudes[$i]->className,'T');
 				$oldClass = $substitudes[$i]->className;
 			}
-			else $pdf->Cell(30,10,"",'RL');
-			if($end != $start) $pdf->Cell(16,10,$start."-".$end,'1');
-			else $pdf->Cell(16,10,$start,'1');
-			$pdf->Cell(15,10,$substitudes[$i]->newTeacher,'1');
-			$pdf->Cell(15,10,$substitudes[$i]->oldTeacher,'1');
-			$pdf->Cell(30,10,$substitudes[$i]->suShort,'1');
-			$pdf->Cell(85,10,utf8_decode($substitudes[$i]->comment),'1','1');
+			else $pdf->Cell(30,10,"",'T');
+			if($end != $start) $pdf->Cell(16,10,$start."-".$end,'T');
+			else $pdf->Cell(16,10,$start,'T');
+			$pdf->Cell(15,10,$substitudes[$i]->newTeacher,'T');
+			$pdf->Cell(15,10,$substitudes[$i]->oldTeacher,'T');
+			$pdf->Cell(30,10,$substitudes[$i]->suShort,'T');
+			$y = $pdf->GetY();
+			$pdf->MultiCell(85,10,utf8_decode($substitudes[$i]->comment),'1','1');
+			$newY = $pdf->GetY();
+			$differenceY = $newY - $y;
+			//echo $y .' '. $newY .' '. $differenceY;
+			$pdf->SetY($y);
+			$pdf->Cell(30,$differenceY,'','DRL');
+			$pdf->Cell(16,$differenceY,'','DRL');
+			$pdf->Cell(15,$differenceY,'','DRL');
+			$pdf->Cell(15,$differenceY,'','DRL');
+			$pdf->Cell(30,$differenceY,'','DRL');
+			$pdf->SetY($newY);
 			$count++;
 		
 	}

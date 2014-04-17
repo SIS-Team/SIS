@@ -52,7 +52,7 @@ while($result = mysql_fetch_array($sql_result)) {
 }
 
 class PDF extends FPDF
-{//um indiiduellen Inhalt in Kopf- bzw. Fusszeile zu ermöglichen
+{//um individuellen Inhalt in Kopf- bzw. Fusszeile zu ermöglichen
 	//Kopfzeile
 	function Header()
 	{
@@ -81,9 +81,8 @@ class PDF extends FPDF
 
 $hours = array();
 if(isset($results)){
-	for($j=0;$j<count($results);$j++){ //alle LEssons durchlaufen
+	for($j=0;$j<count($results);$j++){ //alle Lessons durchlaufen
 	 	$startHour =$results[$j]['startHour'];
-	
 		while($startHour <= $results[$j]['endHour']) //für Stunden die länger als eine Stunde dauern
 		{	
 	 		if(isset($hours[$startHour][$results[$j]['weekday']])) //Abfrage ob bereits Eintrag vorhanden
@@ -133,8 +132,7 @@ for($i=$start;$i<$end;$i++){ //Stundenplanausgabe
  	$newY = 0;
 	$pdf->Cell('25','10',$i,'RLT');	//Stundennummer ausgeben
 	for($j=1;$j<6;$j++){
- 		
-		$y = $pdf->GetY();	//aktuelle Y-Position speichern
+ 		$y = $pdf->GetY();	//aktuelle Y-Position speichern
 		$x = $pdf->GetX();	//aktuelle X-Position speichern
 		if(isset($hours[$i][$day[$j]])){
  			$pdf->MultiCell('30','10',$hours[$i][$day[$j]],'RLT'); 
@@ -148,7 +146,6 @@ for($i=$start;$i<$end;$i++){ //Stundenplanausgabe
 			if($pdf->GetY() > $newY)$newY=$pdf->GetY();
 		}
 		//Position neben vorheriger Zelle wiederherstellen, zuerst muss Y, dann X eingestellt werden
-
 		$pdf->SetY($y);
 		$pdf->SetX($x+30);
 	}
@@ -171,19 +168,16 @@ $filename.= ".pdf";
 $pdf->Output($filename,'I'); //PDF ausgeben
 
 function isEvening($hours){
-$check = 0;
-for($i=1;$i<12;$i++){
-	if(!isset($hours[$i])) $check++;
+	$check = 0;
+	for($i=1;$i<12;$i++){
+		if(!isset($hours[$i])) $check++;
+	}
+	if($check == 11) return "evening";
+	else $check = 0;
+	for($i=12;$i<17;$i++){
+		if(!isset($hours[$i])) $check++;
+	}
+	if($check == 5) return "normal";
+	else return "all";
 }
-if($check == 11) return "evening";
-else $check = 0;
-
-for($i=12;$i<17;$i++){
-	if(!isset($hours[$i])) $check++;
-}
-if($check == 5) return "normal";
-else return "all";
-
-}
-
 ?>
