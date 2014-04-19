@@ -363,7 +363,7 @@ function getSubstitude($date,$name,$mode){	//Supplierungen des gewählten Datums 
 }
 function getMissingClasses($date){ //fehlende Klassen abrufen
 
-	$where = "startDay <= '". $date."' and endDay >= '".$date ."'";
+	$where = "startDay <= '". mysql_real_escape_string($date)."' and endDay >= '".mysql_real_escape_string($date) ."'";
  	$missingClasses_sql = selectMissingClass($where,"");
 	while($result = mysql_fetch_array($missingClasses_sql)) {    
 		 		$results[]=$result;
@@ -391,7 +391,7 @@ function getMissingClasses($date){ //fehlende Klassen abrufen
 
 function checkOnlyLesson($id,$subject){
  	$i=0;
- 	$sql = "SELECT * FROM substitudes INNER JOIN lessons on substitudes.lessonFK = lessons.ID INNER JOIN subjects ON lessons.subjectFK = subjects.ID WHERE lessonBaseFK = '".$id."' and subjects.short = '".$subject."'";
+ 	$sql = "SELECT * FROM substitudes INNER JOIN lessons on substitudes.lessonFK = lessons.ID INNER JOIN subjects ON lessons.subjectFK = subjects.ID WHERE lessonBaseFK = '".mysql_real_escape_string($id)."' and subjects.short = '".mysql_real_escape_string($subject)."'";
 	$onlyLesson_sql = mysql_query($sql);
 	while($result = mysql_fetch_array($onlyLesson_sql)) {    
 		 		$i++;
