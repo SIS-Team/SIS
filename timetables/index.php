@@ -113,8 +113,6 @@ for ($i = 0; $i < count($lessons); $i++) {
 			if(isset($lessons[$i]->comment)) $popup.="&#xD;" . $lessons[$i]->comment;
 			$hours[$index][$lessons[$i]->weekdayShort]->popup .=  $popup;
 		}
-		
-		
 	}
 	else {
 		$hours[$index][$lessons[$i]->weekdayShort] = $lessons[$i] ; //erstellen eines Eintrages wenn keiner vorhanden
@@ -123,8 +121,7 @@ for ($i = 0; $i < count($lessons); $i++) {
 		else $popup = $lessons[$i]->clName." ".$lessons[$i]->roName;
 		if(isset($lessons[$i]->comment)) $popup.="&#xD;" . $lessons[$i]->comment;
 		$hours[$index][$lessons[$i]->weekdayShort]->popup = $popup;
-	}
-	
+	}	
 }
 $offset = 0;
 $dayShort= array(1=>'Mo',2=>'Di',3=>'Mi',4=>'Do',5=>'Fr');
@@ -265,7 +262,6 @@ else {	//nur erste 11 Stunden
  	}
 $days=array(0=> "Mo",1=> "Di",2=> "Mi",3=>"Do",4=>"Fr");
 for ($i = $tableBegin; $i < $tableEnd; $i++) {
- 	
  	echo "<tr>";
  	echo "<td style=\"width:50px\">".$i."</td>";			//gibt Stundennummer an
  	if (!isset($hours[$i])){ 
@@ -277,14 +273,11 @@ for ($i = $tableBegin; $i < $tableEnd; $i++) {
 	else {
 		for ($j = 0; $j < 5; $j++) {
 			if(isset($hours[$i][$days[$j]])){
-					 if(strpos($hours[$i][$days[$j]]->suShort,"<td") === false){
-					 echo "<td title=\"".$hours[$i][$days[$j]]->popup."\">";					 
+					if(strpos($hours[$i][$days[$j]]->suShort,"<td") === false){
+						echo "<td title=\"".$hours[$i][$days[$j]]->popup."\">";					 
 					}
-
 					echo $hours[$i][$days[$j]]->suShort;
-			
-			
-			echo "</td>";
+					echo "</td>";
 					if(($hours[$i][$days[$j]]->endHour) > $i) {
  						//kopiert aktuelle Stunde in nächste Stunde, wenn mehr als eine Stunde nacheinander stattfindet
 						$hours[$i+1][$days[$j]] = NULL;
@@ -293,7 +286,6 @@ for ($i = $tableBegin; $i < $tableEnd; $i++) {
 						$hours[$i+1][$days[$j]]->endHour = $hours[$i][$days[$j]]->endHour;	
 						$hours[$i+1][$days[$j]]->popup = $hours[$i][$days[$j]]->popup;	 	
 					}
-				
 			}
 			else {
 				echo "<td></td>";
@@ -329,25 +321,23 @@ function getLessons($name,$mode) {		//Abfrage von Stunden von vorgegebener Klass
 
 function isEvening($hours) //Abfrage ob Abendschule,normal oder alle Stunden
 {
- $check = 0;
- for ($i = 1; $i < 12; $i++)	//wenn erste 11 Stunden leer -> Abendschule
- 	{
- 	 if (!isset($hours[$i])) $check++;
-	  }
-	if($check == 11) return "evening";;
+$check = 0;
+for ($i = 1; $i < 12; $i++)	//wenn erste 11 Stunden leer -> Abendschule
+{
+	if (!isset($hours[$i])) $check++;
+}
+if($check == 11) return "evening";;
 	
-	$check = 0;
- for ($i = 12; $i < 17; $i++) //wenn erste 11 Stunden befüllt und letzte 5 Stunden leer -> normal
- 	{
- 	 if (!isset($hours[$i])) $check++;
- 	 }	
-	if($check == 5) return "normal";
-	else return "all";	//alle Stunden
+$check = 0;
+for ($i = 12; $i < 17; $i++) //wenn erste 11 Stunden befüllt und letzte 5 Stunden leer -> normal
+{
+	if (!isset($hours[$i])) $check++;
+}	
+if($check == 5) return "normal";
+else return "all";	//alle Stunden
 }
 
 function getSubstitude($date,$name,$mode){	//Supplierungen des gewählten Datums abrufen
-	 
-		
 		if($mode == "schueler"){
 		 	$where = "time = '".mysql_real_escape_string($date)."' and classes.name = '" . mysql_real_escape_string($name) . "'";	
 		}
@@ -358,17 +348,14 @@ function getSubstitude($date,$name,$mode){	//Supplierungen des gewählten Datums 
 			while($substitude = mysql_fetch_array($substitude_sql)) {    
 		 		$substitudes[]=$substitude;
 			}	
-			
 			if(isset($substitudes))	return $substitudes;
 }
 function getMissingClasses($date){ //fehlende Klassen abrufen
-
 	$where = "startDay <= '". mysql_real_escape_string($date)."' and endDay >= '".mysql_real_escape_string($date) ."'";
  	$missingClasses_sql = selectMissingClass($where,"");
 	while($result = mysql_fetch_array($missingClasses_sql)) {    
-		 		$results[]=$result;
-			
-			}	
+		 		$results[]=$result;		
+	}	
 	if(isset($results))	//umordnen in Array $missinClasses[Stunde][Klasse] = Grund
 	{
 		for($i=0; $i <count($results);$i++)
@@ -382,8 +369,7 @@ function getMissingClasses($date){ //fehlende Klassen abrufen
  				$missingClasses[$hour][$results[$i]['clName']] = $results[$i]['reason'];
 				$hour++;
  			}
- 			
- 		} 
+  		} 
 		return $missingClasses;
 	}
 	else return Array();
@@ -399,6 +385,5 @@ function checkOnlyLesson($id,$subject){
 	if($i != 1) return false;
 	else return true;
  }
-
 pageFooter();
 ?>
