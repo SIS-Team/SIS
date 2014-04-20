@@ -145,8 +145,7 @@ echo "Dieser Stundenplan ist g&uuml;ltig: ". date("Y.m.d",time()+24*60*60*$offse
 					if(array_key_exists($hours[$i][$dayShort[$j+1]]->clName,$missingClasses[$i])) 
 					{
  						$className= $hours[$i][$dayShort[$j+1]]->clName;
- 						$hours[$i][$dayShort[$j+1]]->suShort = "&#160;";
-						$hours[$i][$dayShort[$j+1]]->popup = $missingClasses[$i][$className];
+ 						$hours[$i][$dayShort[$j+1]]->suShort = "<td class ='changed' title =".$missingClasses[$i][$className]." > &#160;";
  					}
  				}
 			}
@@ -202,6 +201,10 @@ echo "Dieser Stundenplan ist g&uuml;ltig: ". date("Y.m.d",time()+24*60*60*$offse
 		 						if(isset($hours[$substitudes[$i]['startHour']][$dayName]->popup))
 								{
 									$title = $hours[$substitudes[$i]['startHour']][$dayName]->popup;
+									$title = str_replace($substitudes[$i]['oldTeShort'],$substitudes[$i]['teShort'],$title);
+									if(isset($substitudes[$i]['roName'])){
+										$title = str_replace($substitudes[$i]['oldRoName'],$substitudes[$i]['roName'],$title);
+									}
 								}
 								else{ 
 		 							if($mode =='schueler')
@@ -214,10 +217,16 @@ echo "Dieser Stundenplan ist g&uuml;ltig: ". date("Y.m.d",time()+24*60*60*$offse
 		 								$title = $substitudes[$i]['clName']."    ".$substitudes[$i]['roName'];
 									}
 								}
-		 				 		$hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "<td class ='changed' title='".$title."'>".$substitudes[$i]['suShort'];
+								$suShort = "<td class ='changed' title='".$title."'>";
+								if(isset($hours[$substitudes[$i]['startHour']][$dayName]->suShort))
+								{
+									$suShort .= $hours[$substitudes[$i]['startHour']][$dayName]->suShort."|";
+								}	
+		 				 		$hours[$substitudes[$i]['startHour']][$dayName]->suShort =  $suShort. $substitudes[$i]['suShort'];
 							}
 							else
 							{
+ 								$title = "sd";
 		 						$hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "<td class ='changed' title='".$title."'>".$substitudes[$i]['oldSuShort'];
 							}
 							$hours[$substitudes[$i]['startHour']][$dayName]->startHour = $substitudes[$i]['startHour'];
@@ -231,13 +240,13 @@ echo "Dieser Stundenplan ist g&uuml;ltig: ". date("Y.m.d",time()+24*60*60*$offse
 							if(isset($substitudes[$i]['roName'])) $roName =$substitudes[$i]['roName'];
 								else $roName = $substitudes[$i]['oldRoName'];
 							if(isset($substitudes[$i]['suShort'])){
- 								$temp .= $substitudes[$i]['suShort'] .": " . $substitudes[$i]['teShort'] ." " . $roName . " ";
+ 								$temp .= "&#xD;" . $substitudes[$i]['suShort'] .": " . $substitudes[$i]['teShort'] ." " . $roName . " ";
 							}
 							$temp .= $substitudes[$i]['comment'];
 							$title = $temp;
 							$hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "<td class ='changed' title='".$title."'>".$substitudes[$i]['oldSuShort'];
 							$hours[$substitudes[$i]['startHour']][$dayName]->endHour =  $substitudes[$i]['endHour'];
- 						}	
+ 						}
 					}
 				}
 			}
