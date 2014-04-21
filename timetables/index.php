@@ -226,7 +226,7 @@ echo "Dieser Stundenplan ist g&uuml;ltig: ". date("Y.m.d",time()+24*60*60*$offse
 							}
 							else
 							{
- 								$title = "sd";
+ 								$title = "";
 		 						$hours[$substitudes[$i]['startHour']][$dayName]->suShort =  "<td class ='changed' title='".$title."'>".$substitudes[$i]['oldSuShort'];
 							}
 							$hours[$substitudes[$i]['startHour']][$dayName]->startHour = $substitudes[$i]['startHour'];
