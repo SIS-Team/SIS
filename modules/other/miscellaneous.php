@@ -22,8 +22,8 @@ function getPermission(){ //gibt die Berechtigungsstufe zurück
 }
 
 function noPermission(){ //wenn keine Berechtigung vorhanden -> weiterleitung
- 		header("Location: ".RELATIVE_ROOT."/");
-		exit();
+ 	header("Location: ".RELATIVE_ROOT."/");
+	exit();
  }
 
 function getAdminSection(){ //Abteilung des Administrators abfragen
@@ -33,4 +33,10 @@ function getAdminSection(){ //Abteilung des Administrators abfragen
 	if($_SESSION['rights']['M']) return 'M';
 	else return false;
 }
+
+// maskiert alle nicht-ascii-Zeichen im Parameter 
+function sanitize($s) {
+	return preg_replace('/[^a-zA-Z0-9_.]/', '_', $s);
+}
+
 ?>

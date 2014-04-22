@@ -14,6 +14,7 @@
 
 	include_once("../../config.php");
 	include_once(ROOT_LOCATION . "/modules/general/Main.php");
+	include_once(ROOT_LOCATION . "/modules/other/miscellaneous.php");
 	include_once(ROOT_LOCATION . "/modules/monitors/Main.php");
 	include_once(ROOT_LOCATION . "/modules/form/HashGenerator.php");
 	
@@ -105,7 +106,10 @@
 				$time = mktime($array[0], $array[1], $array[2]);
 				$query .= "`displayStartDaytime`=" . $time . " ";
 				if (!empty($_FILES['file']['name']) || !empty($_POST['displayOff']))
-					$query .= ", ";
+					$query .= ", ";// maskiert alle nicht-ascii-Zeichen im Parameter 
+	function sanitize($s) {
+       		return preg_replace('/[^a-zA-Z0-9_.]/', '_', $s);
+	}
 			}
 
 			if (!empty($_POST['displayOff'])) {

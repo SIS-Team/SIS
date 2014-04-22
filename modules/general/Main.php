@@ -11,9 +11,4 @@
 	include_once(ROOT_LOCATION . "/modules/general/Connect.php");
 	include_once(ROOT_LOCATION . "/modules/general/Site.php");
 
-	// maskiert alle nicht-ascii-Zeichen im Parameter 
-	function sanitize($s) {
-       		return preg_replace('/[^a-zA-Z0-9_.]/', '_', $s);
-	}
-
 ?>
