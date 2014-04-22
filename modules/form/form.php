@@ -3,28 +3,15 @@
 	 * Autor: Handle Marco
 	 * Version: 0.4.0
 	 * Beschreibung:
-	 *	Funktionen fÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¼r Formulare
-	 *
-	 * Changelog:
-	 * 	0.1.0:  23. 06. 2013, Handle Marco - erste Version
-	 *	0.2.0	24. 06. 2013, Handle Marco - Erweiterung Formular erstellen
-	 *	0.3.0	28. 06. 2013, Handle Marco - Funktion fÃƒÂ¯Ã‚Â¿Ã‚Â½r Speicher und LÃƒÂ¯Ã‚Â¿Ã‚Â½sch-Button
-	 *	0.4.0	22. 07. 2013, Handle Marco - Ersetzen des Dropdown-Menues mit datalist(HTML5)
+	 *	Funktionen f�r Formulare
 	 */
 /*
-//Bei einem Dropdown-MenÃƒÂ¯Ã‚Â¿Ã‚Â½ werden die Auswahltexte wie folgt angegeben:
-			value		name		select(true||"")
-$select = array(
-	array( "test1", 	"Test1", 	"true"),
-	array( "test2", 	"Test2", 	""),
-	array( "test3", 	"Test3", 	""),
-	);
 
 //Das Formular wird wie folgt beschrieben:
 			name		Text			Typ			size_a	size_b	value		sonstiges	
 $fields = array(
 	array( "std", 		"Stunde(n): ", 	"text", 	"15",	"",		"test",		"readonly=\"true\""),
-	array( "datum", 	"Datum: ", 		"textarea", "10",	"10",	"haÃƒÂ¯Ã‚Â¿Ã‚Â½ÃƒÂ¯Ã‚Â¿Ã‚Â½p",	""),
+	array( "datum", 	"Datum: ", 		"textarea", "10",	"10",	"",	""),
 	array( "klasse", 	"Klasse: ", 	"checkbox", "",		"",		"checked",	""),
 	array( "lehrer", 	"Lehrer: ", 	"checkbox", "",		"",		"",			""),
 	array( "fach", 		"Fach: ", 		"button", 	"",		"",		"",			""),
@@ -33,19 +20,13 @@ $fields = array(
 
 */
 
-
-error_reporting(E_ALL);
-//include_once("../../../config.php");
 include_once(ROOT_LOCATION . "/modules/form/HashGenerator.php");
 /*Funktion um die Formulare zu erstellen
  *
- *$field - Array das die Informationen ÃƒÂ¯Ã‚Â¿Ã‚Â½ber das Formular enthÃƒÂ¯Ã‚Â¿Ã‚Â½lt als string 
+ *$field - Array das die Informationen �ber das Formular enth�lt als string 
  *$content- Inhalt des Formulars wenn leeres Formular false sonst array mit Inhalten
  *
  */
-
-
- 
 function form_new($field,$content,$hashGenerator)
 {	
 
@@ -55,17 +36,15 @@ $allowedSites = array('substitudes','absentees','news');
 printf("<table>\n");	//Tabellen Tag auf
 	printf("<tr>\n");	//Zeilen 	Tag auf
   		printf("<form method=\"post\">\n");	//Formular Anfang Tag
-  			//FÃƒÂ¯Ã‚Â¿Ã‚Â½r jeden Eintrag im Array field einmal diese Schleife durchlaufen
+  			//F�r jeden Eintrag im Array field einmal diese Schleife durchlaufen
   			$hashGenerator->printForm();
 			foreach($field as $f) {	
 				
-				if($content!=false)	//Wenn Content mitgeliefert wird und der Typ des aktuellen Inputs kein DropDown, dann Content austauschen
-				{
+				if($content!=false){	//Wenn Content mitgeliefert wird und der Typ des aktuellen Inputs kein DropDown, dann Content austauschen
 					$f[5]=$content[$f[0]];					//Content des aktuellen Inputs austauschen, Name des Array-Indizes ist der name des Inputs
 				}
-	
-				if ($f[2] == "checkbox") {		//Checkbox
 				
+				if ($f[2] == "checkbox") {		//Checkbox
 					if($f[5]==true){			//Wenn gecheckt, dann Variable checked auf checked setzen
 						$checked="checked";
 					}
@@ -75,43 +54,35 @@ printf("<table>\n");	//Tabellen Tag auf
 					
 					printf("<td>%s <input type=\"checkbox\" name=\"%s\" %s value=\"%s\" %s>\n",		//Checkbox erstellen
 							$f[1], $f[0], $checked, $f[0],$f[6]);
-					
 				}
 				else if($f[2] == "text") {
 					printf("<td>%s <input type=\"text\" name=\"%s\" size=\"%spx\" value=\"%s\" %s >\n",	//Textbox erstellen
 							$f[1], $f[0], $f[3], $f[5], $f[6]);
-
 				}
 				else if($f[2] == "date") {
 					printf("<td>%s <input type=\"date\" name=\"%s\" size=\"%spx\" value=\"%s\" %s >\n",	//Textbox erstellen
 							$f[1], $f[0], $f[3], $f[5], $f[6]);
-
 				}
 				else if($f[2] == "textarea") {
 					printf("<td>%s <textarea name=\"%s\" cols=\"%s\" rows=\"%s\" %s>%s</textarea>\n",	//Textarea erstellen
 							$f[1], $f[0], $f[3], $f[4], $f[6], $f[5]);
-
 				}
 				else if($f[2] == "button") {
 					printf("<td><input type=\"submit\" name=\"%s\" value=\"%s\" style=\"width: %spx; height: %spx\" %s>\n",	//Button erstellen
 							$f[0], $f[1], $f[3], $f[4], $f[6]);
-
 				}
 				else if($f[2] == "hidden") {
 					printf("<td><input type=\"hidden\" name=\"%s\" value=\"%s\">\n",			//Versteckten Typ erstellen
 							$f[0], $f[5]);
-
 				}
-				else if($f[2] == "dropdown") {												//Dropdown MenÃƒÂ¯Ã‚Â¿Ã‚Â½ erstellen
-
+				else if($f[2] == "dropdown") {												//Dropdown Men� erstellen
 					printf("<td>%s <input value=\"%s\" autocomplete=\"off\" size=\"%s\" list=\"%s\" name=\"%s\" %s></td>\n",
-							$f[1], $f[5], $f[3], $f[0], $f[0], $f[6]);
-							
+							$f[1], $f[5], $f[3], $f[0], $f[0], $f[6]);			
 				}
 				
 			}
 			
-			$temp = explode("/", $_SERVER['REQUEST_URI']);
+			$temp = explode("/", $_SERVER['REQUEST_URI']);	//URL Zerlegen
 						
 			if($content==false)
 			{

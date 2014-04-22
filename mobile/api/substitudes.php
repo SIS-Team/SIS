@@ -23,6 +23,7 @@
 	echo "var actualClass = 0;\n";
 	echo "var teacher = 0;\n";
 	$date = strftime("%Y-%m-%d");
+	$substitudes = array();
 
 
 
@@ -37,6 +38,7 @@
 
 		echo "var teacher = '$name';\n";
 	}
+
 
 	//Einträge werden aus Datenbank ausgelesen
 	$substitude_sql = selectSubstitude($where,"substitudes.time, hoursStart.hour");	
@@ -68,9 +70,17 @@ $( document ).ready(function() {
 		
 
 		
-		var start = substitude.oldStartHour;
+		if(substitude.oldStartHour)
+			var start = substitude.oldStartHour;
+		else
+			var start = substitude.startHour;
 
-		for(;parseInt(start) <= substitude.oldEndHour; start=parseInt(start) + 1)
+		if(substitude.oldEndHour)
+			var end = substitude.oldEndHour;
+		else
+			var end = substitude.endHour;
+
+		for(;parseInt(start) <= parseInt(end); start=parseInt(start) + 1)
 		{	
 
 			j = start;
@@ -78,86 +88,66 @@ $( document ).ready(function() {
 			i++;
 
 			var newTR = document.createElement("tr");
-			newTR.id = "Supplierung";
+			newTR.id = "Supplierung" + i;
 			document.getElementById("Tabelle").appendChild(newTR);
 
-			if(substitude.time != timeOld && timeOld != 0){
-			
-				//Eine Zeile aus der Supplierplantabelle wird erzeugt und dargestellt						
-				var newTD = document.createElement("td");
-				newTD.id = i + j + "1";
-				newTD.style.borderTop = "7px solid white";
-				newTR.appendChild(newTD);
-
-				var newTD = document.createElement("td");
-				newTD.id = i + j + "2";
-				newTD.style.borderTop = "7px solid white";
-				newTR.appendChild(newTD);
-
-				var newTD = document.createElement("td");
-				newTD.id = i + j + "3";
-				newTD.style.borderTop = "7px solid white";
-				newTR.appendChild(newTD);
-				/*
-				if(teacher != 0){
+			if(substitude.time != timeOld && timeOld != 0){ 
+				
+				for(var k=0; k<5; k++){
 					var newTD = document.createElement("td");
-					newTD.id = i + j + "4";
 					newTD.style.borderTop = "7px solid white";
 					newTR.appendChild(newTD);
-				}
-				*/
-				var newTD = document.createElement("td");
-				newTD.id = i + j + "5";
-				newTD.style.borderTop = "7px solid white";
-				newTR.appendChild(newTD);
 
-				var newTD = document.createElement("td");
-				newTD.id = i + j + "6";
-				newTD.style.borderTop = "7px solid white";
-				newTR.appendChild(newTD);
+					var newA = document.createElement("a");
+					newA.href = "";
+					newTD.appendChild(newA);
+					
+					var newDiv = document.createElement("div");
+					newDiv.id = i + j + "" + k;
+					newDiv.style.color="white";
+					newDiv.setAttribute("class", "openPopup");
+					newDiv.setAttribute("data-substitude", aSubstitude);
+					newA.appendChild(newDiv);
+								
+				}
+
+
+				//Eine Zeile aus der Supplierplantabelle wird erzeugt und dargestellt						
 			}
 			else{
-				//Eine Zeile aus der Supplierplantabelle wird erzeugt und dargestellt						
-				var newTD = document.createElement("td");
-				newTD.id = i + j + "1";
-				newTR.appendChild(newTD);
 
-				var newTD = document.createElement("td");
-				newTD.id = i + j + "2";
-				newTR.appendChild(newTD);
-
-				var newTD = document.createElement("td");
-				newTD.id = i + j + "3";
-				newTR.appendChild(newTD);
-				/*
-				if(teacher != 0){
+				for(var k=0; k<5; k++){
 					var newTD = document.createElement("td");
-					newTD.id = i + j + "4";
 					newTR.appendChild(newTD);
-				}
-				*/
-				var newTD = document.createElement("td");
-				newTD.id = i + j + "5";
-				newTR.appendChild(newTD);
 
-				var newTD = document.createElement("td");
-				newTD.id = i + j + "6";
-				newTR.appendChild(newTD);
+					var newA = document.createElement("a");
+					newA.href = "";
+					newTD.appendChild(newA);
+
+					var newDiv = document.createElement("div");
+					newDiv.id = i + j + ""+ k;
+					newDiv.style.color="white";
+					newDiv.setAttribute("class", "openPopup");
+					newDiv.setAttribute("data-substitude", aSubstitude);
+					newA.appendChild(newDiv);
+				}
+				//Eine Zeile aus der Supplierplantabelle wird erzeugt und dargestellt						
+				
 			}
 			
 			//Der Inhalt wird in die Zeile eingetragen
-			document.getElementById(i + j + "1").innerHTML=substitude.time;
-			document.getElementById(i + j + "2").innerHTML=start;
-			document.getElementById(i + j + "3").innerHTML=substitude.oldSuShort;
-			/*if(teacher != 0){
-				document.getElementById(i + j + "4").innerHTML=substitude.clName;
-			}*/
-			document.getElementById(i + j + "5").innerHTML=substitude.teShort;
-			document.getElementById(i + j + "6").innerHTML=substitude.comment;
+			document.getElementById(i + j + "0").innerHTML=substitude.time;
+			document.getElementById(i + j + "1").innerHTML=start;
+			document.getElementById(i + j + "2").innerHTML=substitude.oldSuShort;
+			document.getElementById(i + j + "3").innerHTML=substitude.teShort;
+			document.getElementById(i + j + "4").innerHTML=substitude.comment;
 			j++;
 
 			timeOld=substitude.time;
 		}
 	}
 
+	var script = document.createElement("script");
+	script.src = "js/supplPopup.js";	
+	document.body.appendChild(script);
 });

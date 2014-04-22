@@ -1,4 +1,9 @@
 <?php
+	/* /pdf/substitudes/index.php
+	 * Autor: Weiland Mathias
+	 * Beschreibung:
+	 *	Erzeugt die PDF-Ausgabe des Supplierplans
+	 */	
 include_once("../../config.php");	 
 require_once(ROOT_LOCATION . "/modules/external/fpdf/fpdf.php");
 include_once(ROOT_LOCATION . "/modules/general/Connect.php");			
@@ -16,7 +21,7 @@ if(isset($_GET['section'])) $section =$_GET['section'];
 else $section = 'N';
 
 class PDF extends FPDF
-{
+{ //Um der Kopf- bzw. der Fusszeile individuellen Inhalt zu geben
 	//Kopfzeile
 	function Header()
 	{
@@ -70,14 +75,15 @@ class PDF extends FPDF
 				LEFT JOIN `classes` AS `nC` ON `s`.`classFK` = `nC`.`ID`
 				LEFT JOIN `sections` AS `sec` ON `c`.`sectionFK` = `sec`.`ID`
 				LEFT JOIN `sections` AS `nSec` ON `nC`.`sectionFK`=`nSec`.`ID`
-			WHERE time = '". mysql_real_escape_string($date) . "' and (`sec`.`short` = '".mysql_real_escape_string($section)."' or `nSec`.`short` = '".mysql_real_escape_string($section)."') 
+			WHERE 	time = '". mysql_real_escape_string($date) . "' 
+					AND (`sec`.`short` = '".mysql_real_escape_string($section)."' OR `nSec`.`short` = '".mysql_real_escape_string($section)."') 
 			ORDER BY `className`, `startHour`		
 		";
 $result = mysql_query($sql);
 while($substitude = mysql_fetch_object($result)) {    
  	$substitudes[]=$substitude;
 }
-
+//PDF-Erzeugung
 $pdf = new PDF();
 $pdf->AddPage();
 $pdf->AddFont('gothic');
@@ -100,22 +106,33 @@ if(isset($substitudes)){
 	 	$start = $substitudes[$i]->startHour;
 	    $end = $substitudes[$i]->endHour; 
 			if($oldClass != $substitudes[$i]->className) {
- 				$pdf->Cell(30,10,$substitudes[$i]->className,'RTL');
+ 				$pdf->Cell(30,10,$substitudes[$i]->className,'T');
 				$oldClass = $substitudes[$i]->className;
 			}
-			else $pdf->Cell(30,10,"",'RL');
-			if($end != $start) $pdf->Cell(16,10,$start."-".$end,'1');
-			else $pdf->Cell(16,10,$start,'1');
-			$pdf->Cell(15,10,$substitudes[$i]->newTeacher,'1');
-			$pdf->Cell(15,10,$substitudes[$i]->oldTeacher,'1');
-			$pdf->Cell(30,10,$substitudes[$i]->suShort,'1');
-			$pdf->Cell(85,10,utf8_decode($substitudes[$i]->comment),'1','1');
+			else $pdf->Cell(30,10,"",'T');
+			if($end != $start) $pdf->Cell(16,10,$start."-".$end,'T');
+			else $pdf->Cell(16,10,$start,'T');
+			$pdf->Cell(15,10,$substitudes[$i]->newTeacher,'T');
+			$pdf->Cell(15,10,$substitudes[$i]->oldTeacher,'T');
+			$pdf->Cell(30,10,$substitudes[$i]->suShort,'T');
+			$y = $pdf->GetY();
+			$pdf->MultiCell(85,10,utf8_decode($substitudes[$i]->comment),'1','1');
+			$newY = $pdf->GetY();
+			$differenceY = $newY - $y;
+			//echo $y .' '. $newY .' '. $differenceY;
+			$pdf->SetY($y);
+			$pdf->Cell(30,$differenceY,'','DRL');
+			$pdf->Cell(16,$differenceY,'','DRL');
+			$pdf->Cell(15,$differenceY,'','DRL');
+			$pdf->Cell(15,$differenceY,'','DRL');
+			$pdf->Cell(30,$differenceY,'','DRL');
+			$pdf->SetY($newY);
 			$count++;
 		
 	}
 }
 $count2 = 0;
-while($count<12 or $count2 <1){
+while($count<12 or $count2 <1){ //Mindestlänge herstellen
  	$pdf->Cell(30,10,'','1');
 	$pdf->Cell(16,10,'','1');
 	$pdf->Cell(15,10,'','1');
@@ -127,10 +144,10 @@ while($count<12 or $count2 <1){
  }
 $pdf->Cell('',10,'s.L. ... supplierender Lehrer, u.L. ... ursprünglicher Lehrer');
 $filename = "substitudes_". $section .".pdf";
-$pdf->Output($filename,'I');
+$pdf->Output($filename,'I'); //I bedeutet im Browser öffnen
 
 function check_date($date)
-{
+{//Gültigkeit des Datums kontrollieren
 	$date_parts = array();
  	$date_parts =  explode('-',$date,3);
 	return checkdate($date_parts[1],$date_parts[2],$date_parts[0]);

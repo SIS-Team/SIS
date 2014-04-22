@@ -21,7 +21,7 @@
 
 	echo "var response =".$response."\n";
 	$response = json_encode($response);
-	$response = str_replace('\n',' ', $response);
+	$response = str_replace('\n','<br>', $response);
 	$response = str_replace('\r','', $response);
 	echo "var newsObject = JSON.parse('" . $response . "');\n";
 

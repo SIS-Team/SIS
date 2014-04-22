@@ -16,12 +16,14 @@
 	$class = $_SESSION['class'];
 	$id = $_SESSION['id'];
 	$name = $_SESSION['name'];
-
+    
+	$week = $_GET['week'];
 	
 	/*************************
 	Einlesen der Supplierungen
 	*************************/
-
+	echo "var week = 1;\n";
+	echo "var week =". $week . ";\n";
 	echo "var actualClass = 0;\n";
 	echo "var teacher = 0;\n";
 	$date = strftime("%Y-%m-%d");
@@ -34,12 +36,13 @@
 	}
 	else
 	{
-		$where = "teachers.short='".$id."' AND time >='".$date."'";
+		$where = "(teachers.short='".$id."' OR oldTeacher.short='".$id."') AND time >='".$date."'";
 		echo "var teacher = '$name';\n";
 	}
 
 	$substitude_sql = selectSubstitude($where,"substitudes.time, hoursStart.hour");	
 	$substitude = array();
+	$substitudes = array();
 	while($substitude = mysql_fetch_array($substitude_sql)) {	//durchlauft die Schleife so oft wie es Datensätze gibt
 		$substitudes[]=$substitude;
 	}
@@ -66,6 +69,23 @@ $( document ).ready(function() {
 	var Lesson;
 	var oldCell = "";
 	var newCell = "";
+	var today = new Date();
+	var today2 = new Date();
+
+	var d = new Date();
+	var weekDay = d.getDay();
+	var diff = d.getDate() - weekDay;
+	var displayDate = new Date(d.setDate(diff));
+	var displ_date = displayDate.getDate();
+	var displ_month = displayDate.getMonth();
+	var displ_year = displayDate.getFullYear();
+
+
+	//if(week==1)
+	//	document.getElementById("weekDate").innerHTML= displ_date + 1 + "-" + displ_month + "-" + displ_year ;
+	//else if(week==2)
+	//	document.getElementById("weekDate").innerHTML= displ_date + 8 + "-" + displ_month + "-" + displ_year;
+
 
 for(aSubstitude in subsObject){					
 		var substitude = subsObject[aSubstitude];
@@ -97,64 +117,126 @@ for(aSubstitude in subsObject){
 		var oldCell = "" + weekday + oldStart;
 		var newCell = "" + weekday + newStart;
 
-		for(;parseInt(oldStart) <= substitude.oldEndHour; oldStart=parseInt(oldStart) + 1)
-		{
-			
-			var oldCell = "" + weekday + oldStart;	//Variable wird aus Zahl in String umgewandelt
-			console.log(oldCell);
-			console.log(substitude.suShort);
 
-			if(substitude.remove == "1" && document.getElementById(oldCell).style.color!="green")
-			{				
-				document.getElementById(oldCell).style.color="red";
-				document.getElementById(oldCell).innerHTML="";
-			}
-			else if(substitude.move == "1")
-			{
-				document.getElementById(oldCell).style.color="red";
-				document.getElementById(oldCell).innerHTML="";
-			}
-			else if(substitude.remove != "1" && substitude.move != "1" && substitude.newSub != "1")
-			{
-				document.getElementById(oldCell).style.color="yellow";
-				document.getElementById(oldCell).setAttribute("data-substitude", aSubstitude);
+		if(week == 1){
+			
+			today.setDate(today.getDate() - today.getDay() + 6);
+			
+			if(today >= date){
+				console.log("do her a nu");
+				for(;parseInt(oldStart) <= substitude.oldEndHour; oldStart=parseInt(oldStart) + 1)
+				{
+					
+					var oldCell = "" + weekday + oldStart;	//Variable wird aus Zahl in String umgewandelt
+					console.log(oldCell + "des is Woche 1");
+					console.log(substitude.suShort);
 
+					if(substitude.remove == "1" && document.getElementById(oldCell).style.color!="green")
+					{				
+						document.getElementById(oldCell).style.color="red";
+						document.getElementById(oldCell).innerHTML="";
+						document.getElementById(oldCell).style.backgroundColor="#e05050";
+					}
+					else if(substitude.move == "1")
+					{
+						document.getElementById(oldCell).style.color="red";
+						document.getElementById(oldCell).innerHTML="";
+					}
+					else if(substitude.remove != "1" && substitude.move != "1" && substitude.newSub != "1")
+					{
+						document.getElementById(oldCell).style.color="yellow";
+						document.getElementById(oldCell).setAttribute("data-substitude", aSubstitude);
+						if(!document.getElementById(oldCell).innerHTML)
+							document.getElementById(oldCell).innerHTML = substitude.suShort;
+
+					}
+					
+					
+				}
+
+				for(;parseInt(newStart) <= substitude.endHour; newStart=parseInt(newStart) + 1)
+				{
+					
+					var newCell = "" + day + newStart;	//Variable wird aus Zahl in String umgewandelt
+					console.log(newCell);
+					console.log(substitude.suShort);
+
+					if(substitude.move == "1")
+					{
+						document.getElementById(newCell).style.color="green";
+						var Lesson = substitude.suShort;
+						document.getElementById(newCell).innerHTML=Lesson;
+						document.getElementById(newCell).setAttribute("data-substitude", aSubstitude);
+					}
+					else if(substitude.newSub == "1")
+					{
+						document.getElementById(newCell).style.color="green";
+						var Lesson = substitude.suShort;
+						document.getElementById(newCell).innerHTML=Lesson;
+						document.getElementById(newCell).setAttribute("data-substitude", aSubstitude);
+					}
+									
+				}
 			}
-			
-			
 		}
+		else if(week = 2){
+			today2.setDate(today2.getDate() - today2.getDay() + 13);
+			today.setDate(today.getDate() - today.getDay() + 6);
 
-		for(;parseInt(newStart) <= substitude.endHour; newStart=parseInt(newStart) + 1)
-		{
-			
-			var newCell = "" + day + newStart;	//Variable wird aus Zahl in String umgewandelt
-			console.log(newCell);
-			console.log(substitude.suShort);
+			if(today2 >= date && today < date){
+				
+				for(;parseInt(oldStart) <= substitude.oldEndHour; oldStart=parseInt(oldStart) + 1)
+				{
+					
+					var oldCell = "" + weekday + oldStart;	//Variable wird aus Zahl in String umgewandelt
+					console.log(oldCell);
+					console.log(substitude.suShort);
 
-			if(substitude.move == "1")
-			{
-				document.getElementById(newCell).style.color="green";
-				var Lesson = substitude.suShort;
-				document.getElementById(newCell).innerHTML=Lesson;
-				document.getElementById(newCell).setAttribute("data-substitude", aSubstitude);
+					if(substitude.remove == "1" && document.getElementById(oldCell).style.color!="green")
+					{				
+						document.getElementById(oldCell).style.color="red";
+						document.getElementById(oldCell).innerHTML="";
+					}
+					else if(substitude.move == "1")
+					{
+						document.getElementById(oldCell).style.color="red";
+						document.getElementById(oldCell).innerHTML="";
+					}
+					else if(substitude.remove != "1" && substitude.move != "1" && substitude.newSub != "1")
+					{
+						document.getElementById(oldCell).style.color="yellow";
+						document.getElementById(oldCell).setAttribute("data-substitude", aSubstitude);
+
+					}
+					
+					
+				}
+
+				for(;parseInt(newStart) <= substitude.endHour; newStart=parseInt(newStart) + 1)
+				{
+					
+					var newCell = "" + day + newStart;	//Variable wird aus Zahl in String umgewandelt
+					console.log(newCell);
+					console.log(substitude.suShort);
+
+					if(substitude.move == "1")
+					{
+						document.getElementById(newCell).style.color="green";
+						var Lesson = substitude.suShort;
+						document.getElementById(newCell).innerHTML=Lesson;
+						document.getElementById(newCell).setAttribute("data-substitude", aSubstitude);
+					}
+					else if(substitude.newSub == "1")
+					{
+						document.getElementById(newCell).style.color="green";
+						var Lesson = substitude.suShort;
+						document.getElementById(newCell).innerHTML=Lesson;
+						document.getElementById(newCell).setAttribute("data-substitude", aSubstitude);
+					}
+									
+				}
 			}
-			else if(substitude.newSub == "1")
-			{
-				document.getElementById(newCell).style.color="green";
-				var Lesson = substitude.suShort;
-				document.getElementById(newCell).innerHTML=Lesson;
-				document.getElementById(newCell).setAttribute("data-substitude", aSubstitude);
-			}
-			
-			
 		}
-
-
-
-	
-
-
-
 
 	}
 				

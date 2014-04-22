@@ -15,26 +15,33 @@
 	
 
 	//Die Session und die Klasse des Nutzers werden bestimmt 
-	$class = $_SESSION['class'];
+	//$class = $_SESSION['class'];
 	$id = $_SESSION['id'];
 	$name = $_SESSION['name'];
 
+	$classes = $_GET['classes'];
+
+	echo "var classes = '" . $classes . "';";
 	echo "var actualClass = 0;\n";
 	echo "var teacher = 0;\n";
 
 	if(!$_SESSION['isTeacher'])//Wenn Schüler dann alle Einträge der selben Klasse
 	{
-		echo "alert("Du bist nicht als Lehrer angemeldet!!!");";
+		echo "alert('Du bist nicht als Lehrer angemeldet!!!');";
+		$where = "tote Hose";
 	}
 	else 	//ansonsten(also Lehrer) alle Einträge des selben Lehrers
 	{
-		$where = $_POST['classes'];
+		//$where = $_POST['classes'];
 		echo "var teacher = '$name';\n";
+		$where = "classes.name='".$classes."'";
+		echo "var actualClass = 1;\n";
 	}
 	
 	//Einträge werden aus Datenbank ausgelesen
 	$lesson_sql = selectLesson($where,"");	
 	$lesson = array();
+	$lessons = array();
 	while($lesson = mysql_fetch_array($lesson_sql)) {	//durchlauft die Schleife so oft wie es Datensätze gibt
 		$lessons[]=$lesson;
 	}
@@ -53,7 +60,7 @@
 $( document ).ready(function() {
 	
 
-
+	document.getElementById("title_className").innerHTML=classes;
 
 	for(aLesson in timetObject){					
 		var lesson = timetObject[aLesson];
@@ -105,13 +112,13 @@ $( document ).ready(function() {
 
 		start = start - 1;//start ist um 1 zu groß wegen for-Schleife
 		//Wenn ein Eintrag nach der 11. Stunde existiert --> Abendschule --> nur Abend einblenden
-		if(start >= 12 && actualClass != 0){
+		if(start >= 12 && actualClass != 1){
 			$( document ).ready(function() {
 				$('.normal').css('display', 'none');
 				$('.evening').css('display', 'table-row');
 			});
 		}
-		else if(start >= 12 && actualClass == 0){		//Wenn ein Eintrag nach der 11.Stunde existiert und es sich um keine Klasse handelt(also Lehrer) --> ganzen Tag einblenden
+		else if(start >= 12 && actualClass == 1){		//Wenn ein Eintrag nach der 11.Stunde existiert und es sich um keine Klasse handelt(also Lehrer) --> ganzen Tag einblenden
 			$( document ).ready(function() {
 				$('.normal').css('display', 'table-row');
 				$('.evening').css('display', 'table-row');

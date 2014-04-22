@@ -98,19 +98,11 @@ if($mode=="teacher"){
 }
 
 if($mode != "teacher"){
-
-
 	//Tabellenkopfausgabe
 	echo "<table>";
 	echo "<tr>";
-	if($mode == "teacher"){
- 		echo "<th>Stunden</th>";
-		echo "<th>Klasse</th>";
-	}
-	else{
-		if($mode != "student")	echo "<th>Klasse</th>";
-		echo "<th>Stunden</th>";
-	}
+	if($mode != "student")	echo "<th>Klasse</th>";
+	echo "<th>Stunden</th>";
 	echo "<th>Sup</th>";
 	echo "<th>Fach</th>";
 	echo "<th>urs.</th>";
@@ -121,7 +113,7 @@ if($mode != "teacher"){
 	for($count = 0;$count<count($substitudes); $count++)	//Supplierungen ausgeben
 		{
 			echo "<tr>";
-			if($mode !="student"){ 
+			if($mode !="student"){ //für admins 
 				if($oldClass != $substitudes[$count]['clName']){
 		 			if($count != count($substitudes)-1) echo "<td style=\"border-bottom:0\">";
 					else echo "<td>";
