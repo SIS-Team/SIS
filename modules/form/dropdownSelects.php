@@ -3,12 +3,12 @@
 	 * Autor: Handle Marco
 	 * Version: 1.0.0
 	 * Beschreibung:
-	 *	ERstellt die Dropdown Einträge
+	 *	Erstellt die Listen
 	 *
 	 */
-	
-include(ROOT_LOCATION . "/modules/general/Connect.php");			//Bindet die Datenbank ein
 
+//Bindet die Datenbank ein
+include(ROOT_LOCATION . "/modules/general/Connect.php");
 
 //Section
 if(array_search("Sections",$dropDown)!==false){
@@ -37,25 +37,20 @@ if(array_search("Classes",$dropDown)!==false){
 }
 //Classes nur Abteilung
 if(array_search("ClassesSub",$dropDown)!==false){
-	$temp = mysql_query("SELECT classes.name FROM classes INNER JOIN sections ON sections.ID = classes.sectionFK WHERE classes.invisible = 'FALSE' AND sections.short = '".$section."'");
+	$temp = mysql_query("SELECT classes.name FROM classes 
+		INNER JOIN sections ON sections.ID = classes.sectionFK 
+		WHERE classes.invisible = 'FALSE' AND sections.short = '".$section."'");
 	$selectClasses = create($temp,"clName");
 }
 
 //Days
 if(array_search("Days",$dropDown)!==false){
-	$selectDays = array(
-		array("Mo", ""),
-		array("Di", ""),
-		array("Mi", ""),
-		array("Do", ""),
-		array("Fr", ""),
-		);
+	$selectDays = array("Mo","Di","Mi","Do","Fr");
 		
 	printf("<datalist id=\"day\">\n");
 								
-	foreach($selectDays as $p)													//FÃƒÆ’Ã‚Â¯Ãƒâ€šÃ‚Â¿Ãƒâ€šÃ‚Â½r jeden MenÃƒÆ’Ã‚Â¯Ãƒâ€šÃ‚Â¿Ãƒâ€šÃ‚Â½eintrag im Array f einen Eintrag erstellen
-	{
-		printf("<option value=\"%s\">\n", $p[0]);
+	foreach($selectDays as $p)		{
+		printf("<option value=\"%s\">\n", $p);
 	}
 	
 	printf("</datalist>\n\n");
@@ -67,16 +62,14 @@ function create($result,$name){
 
 $array=array();	//Array erstellen
 
-while ($row = mysql_fetch_array($result)){	//Führt für jeden Datensatz die Schleife einmal aus
-	array_push($array,array($row[0],""));		//Fügt dem Array ein neues Array hinzu mit dem Inhalt und einem leeren Feld(wenn selected wird das zweite benötigt)
+while ($row = mysql_fetch_array($result)){ //F�hrt f�r jeden Datensatz die Schleife einmal aus
+	$array[]=$row[0]; //F�gt dem Array ein neuen Eintrag hinzu
 }
-
 
 printf("<datalist id=\"%s\">\n",$name);
 							
-foreach($array as $p)													//FÃƒÆ’Ã‚Â¯Ãƒâ€šÃ‚Â¿Ãƒâ€šÃ‚Â½r jeden MenÃƒÆ’Ã‚Â¯Ãƒâ€šÃ‚Â¿Ãƒâ€šÃ‚Â½eintrag im Array f einen Eintrag erstellen
-{
-	printf("<option value=\"%s\">\n", $p[0]);
+foreach($array as $p){
+	printf("<option value=\"%s\">\n", $p);
 }
 
 printf("</datalist>\n\n");
