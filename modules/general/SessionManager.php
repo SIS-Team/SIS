@@ -1,18 +1,14 @@
 <?php
 	/* /modules/general/SessionManager.php
 	 * Autor: Buchberger Florian
-	 * Version: 0.1.1
 	 * Beschreibung:
 	 *	initialisiert Session; stellt Funktionen zur Verwanltung der Session zur Verfügung
-	 *
-	 * Changelog:
-	 * 	0.1.0:  22. 06. 2013, Buchberger Florian - erste Version
-	 *	0.1.1:	15. 10. 2013, Buchberger Florian - login, logout
 	 */
 	
 	if (isset($_SESSION))
 		if ($_SESSION['keep'])
-				session_set_cookie_params(60 * 60 * 24 * 7); // behält das session cookie für 1 Woche.
+			session_set_cookie_params(60 * 60 * 24 * 7); 
+			// behält das session cookie für 1 Woche.
 	
 	@session_start();
 	
@@ -35,10 +31,10 @@
 	include_once(ROOT_LOCATION . "/modules/general/ActionLogger.php");
 	
 	/*
-	 * beendet die Session, setzt $loggedIn zurück
+	 * beendet die Session
 	 */
 	function killSession() {
-		global $_SESSION, $logeedIn;
+		global $_SESSION;
 		$_SESSION['active'] = false;
 		$_SESSION['loggedIn'] = false;
 		$_SESSION['rights']['N'] = false;
@@ -70,9 +66,6 @@
 		
 		$_SESSION['class'] = getClass($ent);
 		$_SESSION['isTeacher'] = isTeacher($ent);
-		
-		//if (!($_SESSION['isTeacher'] || $_SESSION['class'] == "5YHELT" || $_SESSION['class'] == "4AHEL"))
-		//	throw new Exception("not in beta");
 		
 		$_SESSION['loggedIn'] = time();
 		$_SESSION['name'] = getFullName($ent);

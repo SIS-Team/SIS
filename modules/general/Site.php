@@ -1,13 +1,8 @@
 <?php
 	/* /modules/general/Site.php
 	 * Autor: Buchberger Florian
-	 * Version: 0.1.0
 	 * Beschreibung:
 	 *	Stellt Funktionen für den Seitenaufbau zur Verfügung
-	 *
-	 * Changelog:
-	 * 	0.1.0:  22. 06. 2013, Buchberger Florian - erste Version
-	 *	0.2.0	24. 06. 2013, Handle MArco - Fehlerkorrektur nun lauffähig
 	 */
 
 	$siteContents = array();
@@ -53,7 +48,7 @@
 	}
 
 	/*
-	 * LÃ¤d Design und gibt den Teil bis zum "main"-seperator aus.
+	 * Läd Design und gibt den Teil bis zum "main"-seperator aus.
 	 * Parameter: $title - Titel der Seite als String
 	 * 	      $design - Designname als String
 	 */
