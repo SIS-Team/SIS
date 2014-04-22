@@ -1,14 +1,9 @@
 <?php
 	/* /modules/general/Main.php
 	 * Autor: Buchberger Florian
-	 * Version: 0.1.1
 	 * Beschreibung:
 	 *	Bindet alle grundlegenden Module ein.
 	 *
-	 * Changelog:
-	 *	0.1.2:	20. 09.	2013, Buchberger Florian - ascii-Zeichen-Filter-Funktion
-	 *	0.1.1:	19. 09. 2013, Buchberger Florian - Cookie check
-	 * 	0.1.0:  22. 06. 2013, Buchberger Florian - erste Version
 	 */
 	include_once(ROOT_LOCATION . "/modules/general/CheckCookies.php");
 	include_once(ROOT_LOCATION . "/modules/general/ForceHTTPS.php");
