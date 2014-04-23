@@ -1,12 +1,8 @@
 <?php
 	/* /modules/general/LDAP.php
 	 * Autor: Buchberger Florian
-         * Version: 0.1.0
          * Beschreibung:
          *      Managed LDAP - Verbindungen
-         *
-         * Changelog:
-         *      0.1.0:  15. 10. 2013, Buchberger Florian - erste Version
          */
 	
 
