@@ -8,7 +8,7 @@
 	 */
 
 //Bindet die Datenbank ein
-include(ROOT_LOCATION . "/modules/general/Connect.php");
+include_once(ROOT_LOCATION . "/modules/general/Connect.php");
 
 //Section
 if(array_search("Sections",$dropDown)!==false){
