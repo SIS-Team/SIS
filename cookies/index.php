@@ -45,7 +45,7 @@
 	<form action="?" method="post">
 		<input type="hidden" name="return" value="<?php echo $_GET['return']; ?>">
 		<input type="hidden" name="okay" value="1">
-		<input type="submit" value="Cookies erlauben  : )">
+		<input type="submit" value="Cookies erlauben">
 	</form>
 <?php
 	pageFooter();
