@@ -20,7 +20,7 @@
 			$fh = fopen(ROOT_LOCATION . "/logs/ldap-fails", "a");
 			fwrite($fh, time() . ": no host, login, user: " . urlencode($dn) . "\n");
 			fclose($fh);
-			return ($dn == "test") && ($pass == "sister");
+			return ($dn == "cn=123345678,ou=STUDENTS,o=HTLinn") && ($pass == "sister");
 		}
 		$con = ldap_connect($host);
 		$ok  = ldap_bind($con, $dn, $pass);
