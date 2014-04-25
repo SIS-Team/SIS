@@ -71,7 +71,6 @@
 							<?php include(BASE_LR); ?>
 							<?php include($buttons[2]['svg']); ?>
 							<div class="subtext">
-							
 								<a<?php echo ($buttons[2]['enabled'] ? "" : ' class="noLink"'); ?> href="<?php echo $buttons[2]['url']; ?>">
 									<?php echo $buttons[2]['text']; ?>
 								</a>
