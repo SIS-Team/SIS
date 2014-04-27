@@ -3,43 +3,55 @@
 	/* /modules/database/inserts.php
 	 * Autor: Handle Marco
 	 * Beschreibung:
-	 *	Insert Befehle fÃ¼r die Datenbank von den Formularen
+	 *	Insert Befehle für die Datenbank von den Formularen
 	 *	
 	 *
 	 */
-include(ROOT_LOCATION . "/modules/other/dateFunctions.php");					//Stell Datumfunktionen zur VerfÃƒÂ¼gung
+//Stell Datumfunktionen zur Verfügung
+include(ROOT_LOCATION . "/modules/other/dateFunctions.php");					
 
 //Insert von dem Klassen Formular
 function classes(){
 
-$post=$_POST;	//alle Post Parameter in eine Variable schreiben
+//alle Post Parameter in eine Variable schreiben
+$post=$_POST;
 
-unset($post["save"]);	//Save Parameter im Array lÃ¶schen
+//Save Parameter im Array löschen
+unset($post["save"]);
 
 //Definition der Spalten in der MYSQL Tabelle
 $data=array("ID" => "","name" => "","sectionFK" => "","teacherFK" => "","roomFK" => "","invisible" => "");
 
-$data["ID"]=$post["ID"];	//Mitgegebene ID ins Daten-Array schreiben
-$data["name"]=htmlentities($post["clName"]);	//Klassenname ins Daten-Array schreiben
+//Mitgegebene ID ins Daten-Array schreiben
+$data["ID"]=$post["ID"];
+
+//Klassenname ins Daten-Array schreiben
+$data["name"]=htmlentities($post["clName"]);
 
 //FK von der Section aus der Datenbank abfragen
 $temp = mysql_fetch_array(mysql_query("SELECT ID FROM sections WHERE short='".mysql_real_escape_string(htmlspecialchars($post["seShort"]))."'"));
-$ok1 = control($post["seShort"],$temp["ID"],"Abteilung");	//Kontrollieren ob eine ID zurÃ¼ckgegeben wurde
-$data["sectionFK"] = $temp["ID"];	//In Daten-Array schreiben
+//Kontrollieren ob eine ID zurückgegeben wurde
+$ok1 = control($post["seShort"],$temp["ID"],"Abteilung");
+//In Daten-Array schreiben	
+$data["sectionFK"] = $temp["ID"];	
 //FK vom Lehrer aus der Datenbank abfragen
 $temp = mysql_fetch_array(mysql_query("SELECT ID FROM teachers WHERE short='".mysql_real_escape_string(htmlspecialchars($post["teShort"]))."'"));
-$ok2 = control($post["teShort"],$temp["ID"],"Lehrer");	//Kontrollieren ob eine ID zurÃ¼ckgegeben wurde
-$data["teacherFK"] = $temp["ID"];	//In Daten-Array schreiben
+//Kontrollieren ob eine ID zurückgegeben wurde
+$ok2 = control($post["teShort"],$temp["ID"],"Lehrer");	
+//In Daten-Array schreiben
+$data["teacherFK"] = $temp["ID"];	
 //FK vom Raum aus der Datenbank abfragen
 $temp = mysql_fetch_array(mysql_query("SELECT ID FROM rooms WHERE name='".mysql_real_escape_string(htmlspecialchars($post["roName"]))."'"));
-$ok3 = control($post["roName"],$temp["ID"],"Raum");	//Kontrollieren ob eine ID zurÃ¼ckgegeben wurde
-$data["roomFK"] = $temp["ID"];	//In Daten-Array schreiben
+//Kontrollieren ob eine ID zurückgegeben wurde
+$ok3 = control($post["roName"],$temp["ID"],"Raum");	
+//In Daten-Array schreiben
+$data["roomFK"] = $temp["ID"];	
 
-//Wenn Invisible ausgewÃ¤hlt dann True in die DB schreiben
+//Wenn Invisible ausgewählt dann True in die DB schreiben
 if(!empty($post["invisible"]))
 	$data["invisible"]=true;
 
-//Wenn Delete nicht ausgewÃ¤hlt ist und alle Kontrollen erfolgreich dann in DB schreiben
+//Wenn Delete nicht ausgewählt ist und alle Kontrollen erfolgreich dann in DB schreiben
 if(empty($post["delete"]) && ($ok1*$ok2*$ok3) == 1)
 	saveupdate($data,"classes");
 }
@@ -49,7 +61,7 @@ function hours(){
 
 $post=$_POST;	//alle Post Parameter in eine Variable schreiben
 
-unset($post["save"]);	//Save Parameter im Array lÃ¶schen
+unset($post["save"]);	//Save Parameter im Array löschen
 
 //Definition der Spalten in der MYSQL Tabelle
 $data=array("ID" => "","weekday" => "","weekdayShort" => "","hour" => "","startTime" => "","endTime" => "");
@@ -62,7 +74,7 @@ $data["hour"]=$post["hour"];
 $data["startTime"]=$post["startTime"];
 $data["endTime"]=$post["endTime"];
 
-//Wenn Delete nicht ausgewÃ¤hlt ist dann in DB schreiben
+//Wenn Delete nicht ausgewählt ist dann in DB schreiben
 if(empty($post["delete"]))
 	saveupdate($data,"hours");
 }
@@ -70,16 +82,17 @@ if(empty($post["delete"]))
 //Insert von dem Stundenplan Formular 
 function lessons(){
 
-$post=$_POST;	//alle Post Parameter in eine Variable schreiben
-
-unset($post["save"]);	//Save Parameter im Array lÃ¶schen
+//alle Post Parameter in eine Variable schreiben
+$post=$_POST;
+//Save Parameter im Array löschen
+unset($post["save"]);
 
 //Definition der Spalten in der MYSQL Tabelle
 $lessonsInsert=array("ID" => "","lessonBaseFK" => "","roomFK" => "","teachersFK" => "","subjectFK" => "","comment"=>"");
 //Definition der Spalten in der MYSQL Tabelle
 $lessonsBaseInsert=array("ID" => "","startHourFK" => "","endHourFK" => "","classFK" => "");
-
-$lessonsInsert["ID"]=$post["ID"];	//Mitgegebene ID ins Daten-Array schreiben
+//Mitgegebene ID ins Daten-Array schreiben
+$lessonsInsert["ID"]=$post["ID"];	
 
 //Alles Werte in das Daten-Array schreiben
 $temp = mysql_fetch_array(mysql_query("SELECT ID FROM hours WHERE hour='".intval($post["hour"])."' AND weekdayShort='".mysql_real_escape_string(htmlspecialchars($post["day"]))."'"));
@@ -112,16 +125,16 @@ if($lessonsBaseInsert['ID']=="" && ($ok1*$ok2*$ok3) == 1){
 
 $lessonsInsert["lessonBaseFK"]=$lessonsBaseInsert["ID"];	//FK der Basisstunde in Array speichern
 
-//Wenn die Stunde nicht gelÃ¶scht werden soll dann erstellen
+//Wenn die Stunde nicht gelöscht werden soll dann erstellen
 if(empty($post["delete"]) && ($ok1*$ok2*$ok3) == 1)
 	saveupdate($lessonsInsert,"lessons");
-else if(($ok1*$ok2*$ok3) == 1)	//Wenn lÃ¶schen gesetzt ist, dann alle Stunden und Basisstunden lÃ¶schen
+else if(($ok1*$ok2*$ok3) == 1)	//Wenn löschen gesetzt ist, dann alle Stunden und Basisstunden löschen
 {
 	$lessonsbaseID=$lessonsInsert["lessonBaseFK"];
-	//Lessons lÃ¶schen
+	//Lessons löschen
 	$sql="DELETE FROM lessons WHERE lessonBaseFK = '".$lessonsbaseID."'";
 	mysql_query($sql);
-	//LessonsBase lÃ¶schen
+	//LessonsBase löschen
 	$sql="DELETE FROM lessonsBase WHERE ID = '".$lessonsbaseID."'";
 	mysql_query($sql);
 }
@@ -132,7 +145,7 @@ function missingClasses(){
 
 $post=$_POST;	//alle Post Parameter in eine Variable schreiben
 
-unset($post["save"]);	//Save Parameter im Array lÃ¶schen
+unset($post["save"]);	//Save Parameter im Array löschen
 
 //Definition der Spalten in der MYSQL Tabelle
 $data=array("ID" => "","classFK" => "","startDay" => "","startHourFK" => "","endDay" => "","endHourFK" => "","reason" => "");
@@ -156,10 +169,10 @@ $data["reason"]=htmlspecialchars($post["reason"]);
 
 //Wenn die Kontrolle erfolgreich
 if( ($ok1*$ok2*$ok3)==1){
-	if(empty($post["delete"]))	//Wenn nicht lÃ¶schen
+	if(empty($post["delete"]))	//Wenn nicht löschen
 		saveupdate($data,"missingClasses");	//speichern
 	else	//sonst
-		deleteID($data["ID"],"missingClasses");		//lÃ¶schen
+		deleteID($data["ID"],"missingClasses");		//löschen
 }	
 }
 
@@ -168,7 +181,7 @@ function missingTeachers(){
 
 $post=$_POST;	//alle Post Parameter in eine Variable schreiben
 
-unset($post["save"]);	//Save Parameter im Array lÃ¶schen
+unset($post["save"]);	//Save Parameter im Array löschen
 
 //Definition der Spalten in der MYSQL Tabelle
 $data=array("ID" => "","teacherFK" => "","startDay" => "","startHourFK" => "","endDay" => "","endHourFK" => "","reason" => "");
@@ -192,10 +205,10 @@ $data["reason"]=htmlspecialchars($post["reason"]);
 
 //Wenn die Kontrolle erfolgreich ist
 if( ($ok1*$ok2*$ok3)==1){
-	if(empty($post["delete"]))	//Wenn nicht lÃ¶schen
+	if(empty($post["delete"]))	//Wenn nicht löschen
 		saveupdate($data,"missingTeachers");	//speichern
 	else	//sonst
-		deleteID($data["ID"],"missingTeachers");	//lÃ¶schen
+		deleteID($data["ID"],"missingTeachers");	//löschen
 }
 }
 
@@ -204,7 +217,7 @@ function rooms(){
 
 $post=$_POST;	//alle Post Parameter in eine Variable schreiben
 
-unset($post["save"]);	//Save Parameter im Array lÃ¶schen
+unset($post["save"]);	//Save Parameter im Array löschen
 
 //Definition der Spalten in der MYSQL Tabelle
 $data=array("ID" => "","name" => "","teacherFK" => "");
@@ -216,7 +229,7 @@ $temp = mysql_fetch_array(mysql_query("SELECT ID FROM teachers WHERE short='".my
 $ok1 = control($post["teShort"],$temp["ID"],"Lehrer");
 $data["teacherFK"]=$temp["ID"];
 
-//Wenn die Kontrolle erfolgreich ist und lÃ¶schen nicht gesetzt ist
+//Wenn die Kontrolle erfolgreich ist und löschen nicht gesetzt ist
 if(empty($post["delete"]) && $ok1==1)
 	saveupdate($data,"rooms"); 	//dann speichern
 	
@@ -227,7 +240,7 @@ function sections(){
 
 $post=$_POST;	//alle Post Parameter in eine Variable schreiben
 
-unset($post["save"]);	//Save Parameter im Array lÃ¶schen
+unset($post["save"]);	//Save Parameter im Array löschen
 
 //Definition der Spalten in der MYSQL Tabelle
 $data=array("ID" => "","name" => "","short" => "","teacherFK" => "");
@@ -240,17 +253,17 @@ $temp = mysql_fetch_array(mysql_query("SELECT ID FROM teachers WHERE short='".my
 $ok1 = control($post["teShort"],$temp["ID"],"Lehrer");
 $data["teacherFK"]=$temp["ID"];
 
-//Wenn die Kontrolle erfolgreich ist und lÃ¶schen nicht gesetzt ist
+//Wenn die Kontrolle erfolgreich ist und löschen nicht gesetzt ist
 if(empty($post["delete"]) && $ok1 == 1)
 	saveupdate($data,"sections");	//dann speichern
 }
 
-//Insert von dem FÃ¤cher Formular
+//Insert von dem Fächer Formular
 function subjects(){
 
 $post=$_POST;	//alle Post Parameter in eine Variable schreiben
 
-unset($post["save"]);	//Save Parameter im Array lÃ¶schen
+unset($post["save"]);	//Save Parameter im Array löschen
 
 //Definition der Spalten in der MYSQL Tabelle
 $data=array("ID" => "","name" => "","short" => "","invisible" => "");
@@ -263,7 +276,7 @@ $data["short"]=htmlspecialchars($post["short"]);
 if(!empty($post["invisible"]))
 	$data["invisible"]=true;
 
-//Wenn lÃ¶schen nicht gesetzt ist
+//Wenn löschen nicht gesetzt ist
 if(empty($post["delete"]))
 	saveupdate($data,"subjects");	
 }
@@ -271,20 +284,21 @@ if(empty($post["delete"]))
 //Insert von dem Supplierplan Formular
 function substitudes(){
 
-$post=$_POST;	//alle Post Parameter in eine Variable schreiben
+//alle Post Parameter in eine Variable schreiben
+$post=$_POST;
 
-unset($post["save"]);	//Save Parameter im Array lÃ¶schen
+//Save Parameter im Array löschen
+unset($post["save"]);
 
 //Definition der Spalten in der MYSQL Tabelle
 $data=array("ID" => "","time" => "","newSub" => "","remove" => "","move" => "","lessonFK" => "","startHourFK" => "","endHourFK" => "","teacherFK" => "","subjectFK" => "","roomFK" => "","classFK" => "","comment" => "");
 
-//Wenn die ID nicht leer ist, dann update, also zuvor Supplierung aus DB lÃ¶schen
+//Wenn die ID nicht leer ist, dann update, also zuvor Supplierung aus DB löschen
 if($post["ID"]!=""){	
 	
-	//ID lÃ¶schen
+	//ID löschen
 	$sql="DELETE FROM substitudes WHERE ID=".$post["ID"];
 	mysql_query($sql);
-	
 	$post["ID"]="";
 
 }
@@ -292,7 +306,7 @@ if($post["ID"]!=""){
 if(empty($post["delete"])){
 	//Wenn die Eingabe eine Freie eingabe ist
 	if(!empty($post["free"]) && $post["free"]=="free"){
-		//Wenn die Stunde hinzugefÃ¼gt wird
+		//Wenn die Stunde hinzugefügt wird
 		if($post["freeRadio"]=="add"){
 			//Alles Werte in das Daten-Array schreiben
 			$data["lessonFK"]=0;
@@ -322,7 +336,7 @@ if(empty($post["delete"])){
 			if(($ok1*$ok2*$ok3*$ok4*$ok5*$ok6) ==1 )
 				saveupdate($data,"substitudes");
 		}
-		else if($post["freeRadio"]=="remove"){	//Wenn die Stunde gelÃ¶scht wird
+		else if($post["freeRadio"]=="remove"){	//Wenn die Stunde gelöscht wird
 			//Alles Werte in das Daten-Array schreiben
 			$data["comment"]=htmlspecialchars($post["comment"]);
 			$data["remove"]=true;
@@ -343,9 +357,9 @@ if(empty($post["delete"])){
 			$data["classFK"] = $temp['ID'];
 			//Wenn die Kontrolle erfolgreich ist
 			if(($ok1*$ok2*$ok3*$ok4)==1){
-				//Wenn kein Lehrer eingegeben wurde --> FÃ¼r alle Lehrer zu dieser Stunde in dieser Klasse usw. wird eine Supplierung eingetragen
+				//Wenn kein Lehrer eingegeben wurde --> Für alle Lehrer zu dieser Stunde in dieser Klasse usw. wird eine Supplierung eingetragen
 				if($teacher==""){
-					//ID's der ganzen Lessons fÃ¼r die Basisstunde finden
+					//ID's der ganzen Lessons für die Basisstunde finden
 					$sql = "SELECT lessons.ID FROM lessons INNER JOIN lessonsBase ON lessonsBase.ID=lessons.lessonBaseFK WHERE lessonsBase.startHourFK='".$startHour."' AND lessonsBase.endHourFK='".$endHour."' AND lessonsBase.classFK='".$class."'";
 					$result = mysql_query($sql);			
 					while($row[]=mysql_fetch_array($result)){
@@ -360,8 +374,9 @@ if(empty($post["delete"])){
 					else
 						return false;
 				}
-				else{	//Wenn ein Lehrer mitgegeben wurde nur fÃ¼r diesen eine Supplierung eintragen
-					//ID der Lesson fÃ¼r die Basisstunde und dem Lehrer finden
+				//Wenn ein Lehrer mitgegeben wurde nur für diesen eine Supplierung eintragen
+				else{
+					//ID der Lesson für die Basisstunde und dem Lehrer finden
 					$sql = "SELECT lessons.ID FROM lessons INNER JOIN lessonsBase ON lessonsBase.ID=lessons.lessonBaseFK WHERE lessonsBase.startHourFK='".$startHour."' AND lessonsBase.endHourFK='".$endHour."' AND lessonsBase.classFK='".$class."' AND lessons.teachersFK='".$teacher."'";
 					$temp = mysql_fetch_array(mysql_query($sql));
 					$data["lessonFK"]=$temp["ID"];
@@ -372,7 +387,8 @@ if(empty($post["delete"])){
 				}
 			}	
 		}
-		else{	//Wenn die Stunde verschoben wird
+		//Wenn die Stunde verschoben wird
+		else{	
 			//Alles Werte in das Daten-Array schreiben
 			$day = weekday($post["time"]);
 			$temp = mysql_fetch_array(mysql_query("SELECT ID FROM subjects WHERE short='".mysql_real_escape_string(htmlspecialchars($post["suShort"]))."'"));
@@ -408,9 +424,9 @@ if(empty($post["delete"])){
 			$data["classFK"] = $temp['ID'];
 			//Wenn die Kontrolle erfolgreich ist
 			if(($ok1*$ok2*$ok3*$ok4*$ok5*$ok6*$ok7*$ok8*$ok9)==1){
-				//Wenn kein Lehrer eingegeben wurde --> FÃ¼r alle Lehrer zu dieser Stunde in dieser Klasse usw. wird eine Supplierung eingetragen
+				//Wenn kein Lehrer eingegeben wurde --> Für alle Lehrer zu dieser Stunde in dieser Klasse usw. wird eine Supplierung eingetragen
 				if($teacher==""){
-					//ID's der ganzen Lessons fÃ¼r die Basisstunde finden
+					//ID's der ganzen Lessons für die Basisstunde finden
 					$sql = "SELECT lessons.ID FROM lessons INNER JOIN lessonsBase ON lessonsBase.ID=lessons.lessonBaseFK WHERE lessonsBase.startHourFK='".$startHour."' AND lessonsBase.endHourFK='".$endHour."' AND lessonsBase.classFK='".$class."'";
 					$result = mysql_query($sql);			
 					while($row[]=mysql_fetch_array($result)){
@@ -425,8 +441,9 @@ if(empty($post["delete"])){
 					else
 						return false;
 				}
-				else{	//Wenn ein Lehrer mitgegeben wurde nur fÃ¼r diesen eine Supplierung eintragen
-					//ID der Lesson fÃ¼r die Basisstunde und dem Lehrer finden
+				//Wenn ein Lehrer mitgegeben wurde nur für diesen eine Supplierung eintragen
+				else{
+					//ID der Lesson für die Basisstunde und dem Lehrer finden
 					$sql = "SELECT lessons.ID FROM lessons INNER JOIN lessonsBase ON lessonsBase.ID=lessons.lessonBaseFK WHERE lessonsBase.startHourFK='".$startHour."' AND lessonsBase.endHourFK='".$endHour."' AND lessonsBase.classFK='".$class."' AND lessons.teachersFK='".$teacher."'";
 					$temp = mysql_fetch_array(mysql_query($sql));
 					$data["lessonFK"]=$temp["ID"];
@@ -438,7 +455,8 @@ if(empty($post["delete"])){
 			}
 		}
 	}
-	else{	//Wenn die Supplierung nicht frei eingetragen wird
+	//Wenn die Supplierung nicht frei eingetragen wird
+	else{
 		//Alles Werte in das Daten-Array schreiben
 		$day = weekday($post["time"]);
 		$temp = mysql_fetch_array(mysql_query("SELECT ID FROM subjects WHERE short='".mysql_real_escape_string(htmlspecialchars($post["suShort"]))."'"));
@@ -472,34 +490,14 @@ if(empty($post["delete"])){
 			unset($missTeacher[count($missTeacher)-1]);
 
 			if(!empty($missTeacher)){
-				//FÃ¼r jeden fehlenden Lehrer eine Supplierung eintragen
+				//Für jeden fehlenden Lehrer eine Supplierung eintragen
 				foreach($missTeacher as $i => $m){
 					//Lessons ID finden
-					if($m['startDay']==$data['time'] && $m['startHour']<=$post['startHour']){
+					if(($m['startDay']==$data['time'] && $m['startHour']<=$post['startHour']) || ($m['endDay']==$data['time'] && $m['endHour']>=$post['endHour']) || ($m['startDay']<$data['time'] && $data['time'] < $m['endDay'])){
 						$sql = "SELECT lessons.ID FROM lessons INNER JOIN lessonsBase ON lessonsBase.ID = lessons.lessonBaseFK WHERE lessonsBase.startHourFK='".$data["startHourFK"]."' AND lessonsBase.endHourFK='".$data["endHourFK"]."' AND lessonsBase.classFK='".$class."' AND lessons.teachersFK = '".$m["teacherFK"]."'";
 						$temp = mysql_query($sql);
 						$temp = mysql_fetch_row($temp);
 						$data["lessonFK"] = $temp[0];
-						if($temp[0]!="")
-							saveupdate($data,"substitudes");
-
-					}
-					else if($m['endDay']==$data['time'] && $m['endHour']>=$post['endHour']){
-						$sql = "SELECT lessons.ID FROM lessons INNER JOIN lessonsBase ON lessonsBase.ID = lessons.lessonBaseFK WHERE lessonsBase.startHourFK='".$data["startHourFK"]."' AND lessonsBase.endHourFK='".$data["endHourFK"]."' AND lessonsBase.classFK='".$class."' AND lessons.teachersFK = '".$m["teacherFK"]."'";
-						$temp = mysql_query($sql);
-						$temp = mysql_fetch_row($temp);
-						$data["lessonFK"] = $temp[0];
-	
-						if($temp[0]!="")
-							saveupdate($data,"substitudes");
-
-					}
-					else if($m['startDay']<$data['time'] && $data['time'] < $m['endDay']){
-						$sql = "SELECT lessons.ID FROM lessons INNER JOIN lessonsBase ON lessonsBase.ID = lessons.lessonBaseFK WHERE lessonsBase.startHourFK='".$data["startHourFK"]."' AND lessonsBase.endHourFK='".$data["endHourFK"]."' AND lessonsBase.classFK='".$class."' AND lessons.teachersFK = '".$m["teacherFK"]."'";
-						$temp = mysql_query($sql);
-						$temp = mysql_fetch_row($temp);
-						$data["lessonFK"] = $temp[0];
-	
 						if($temp[0]!="")
 							saveupdate($data,"substitudes");
 
@@ -507,7 +505,7 @@ if(empty($post["delete"])){
 					else
 						return false;
 				}
-			//Wenn kein fehlender Lehrer gefunden ist Fehler zurÃ¼ckgeben --> falsche Eingabe
+			//Wenn kein fehlender Lehrer gefunden ist Fehler zurückgeben --> falsche Eingabe
 			}
 			else
 				return false;	//sonst true
@@ -522,7 +520,7 @@ function teachers(){
 
 $post=$_POST;	//alle Post Parameter in eine Variable schreiben
 
-unset($post["save"]);	//Save Parameter im Array lÃ¶schen
+unset($post["save"]);	//Save Parameter im Array löschen
 
 //Definition der Spalten in der MYSQL Tabelle
 $data=array("ID" => "","name" => "","short" => "","display" => "","sectionFK" => "","invisible" => "");
@@ -538,21 +536,21 @@ $data["sectionFK"] = $temp["ID"];
 //Wenn Invisible gesetzt dann true in die DB schreiben
 if(!empty($post["invisible"]))
 	$data["invisible"]=true;
-//Wenn die Kontrolle erfolgreich ist und lÃ¶schen nicht gesetzt ist
+//Wenn die Kontrolle erfolgreich ist und löschen nicht gesetzt ist
 if(empty($post["delete"]) && $ok1 == 1)
 	saveupdate($data,"teachers");	
 }
 
-//Funktion um in die Datenban zu speichern oder DatensÃ¤tze zu aktualisieren
-//$insert....Daten mit dem dazugehÃ¶rigen Spaltenname als Index innerhalb des Arrays
+//Funktion um in die Datenban zu speichern oder Datensätze zu aktualisieren
+//$insert....Daten mit dem dazugehörigen Spaltenname als Index innerhalb des Arrays
 //$tabel.....Tabellenname als String
 function saveUpdate($insert,$table){
 	//Wenn ID leer ist --> Neuer Datensatz
 	if(empty($insert['ID']))
 	{
-		$col="";	//String fÃ¼r die Spaltennamen
-		$dat="";	//String fÃ¼r die Daten
-		$len=count($insert);	//LÃ¤nge der Arrays zÃ¤hlen
+		$col="";	//String für die Spaltennamen
+		$dat="";	//String für die Daten
+		$len=count($insert);	//Länge der Arrays zählen
 		$lauf=1;	//Laufvariable auf 1 setzen
 		
 		//Jede Spalte durchlaufen
@@ -561,12 +559,12 @@ function saveUpdate($insert,$table){
 			if($i != "ID"){	//Index ID nicht verwenden
 				$col.= $i;	//Index (Spaltenname)
 				$dat.= "'".$p."'";	//Daten
-				if($lauf < $len){	//Wenn es nicht die letzte Spalte ist Beistrich anfÃ¼gen
+				if($lauf < $len){	//Wenn es nicht die letzte Spalte ist Beistrich anfügen
 					$col.=" , ";
 					$dat.=" , ";
 				}
 			}
-			$lauf+=1;	//Laufvariable erhÃ¶hen		
+			$lauf+=1;	//Laufvariable erhöhen		
 		}
 
 		$sql="INSERT INTO ".$table." (".$col.") VALUES (".$dat.")";	//Insert Befehl aufbauen
@@ -574,8 +572,8 @@ function saveUpdate($insert,$table){
 	}
 	else if(!empty($insert['ID']))	//Wenn die ID gegeben ist --> Update
 	{
-		$dat="";	//String fÃ¼r die Daten
-		$len=count($insert);	//LÃ¤nge der Arrays zÃ¤hlen
+		$dat="";	//String für die Daten
+		$len=count($insert);	//Länge der Arrays zählen
 		$lauf=1;	//Laufvariable auf 1 setzen
 
 		//Jede Spalte durchlaufen
@@ -584,29 +582,29 @@ function saveUpdate($insert,$table){
 			if($i != "ID"){		//Index ID nicht verwenden
 				$dat.= $i." = '".$p."'";	//Daten
 
-				if($lauf < $len)	//Wenn es nicht die letzte Spalte ist Beistrich anfÃ¼gen
+				if($lauf < $len)	//Wenn es nicht die letzte Spalte ist Beistrich anfügen
 					$dat.=" , ";
 			}
-			$lauf+=1;	//Laufvariable erhÃ¶hen	
+			$lauf+=1;	//Laufvariable erhöhen	
 		}
 		$sql="UPDATE ".$table." SET ".$dat." WHERE ID = '".$insert["ID"]."'";	//Update Befehl aufbauen
 	}
 
-mysql_query($sql);	//Befehl ausfÃ¼hren
+mysql_query($sql);	//Befehl ausführen
 
 }
 
-//Funktion zum lÃ¶schen eines Datensatzes
+//Funktion zum löschen eines Datensatzes
 //$ID......Die Datensatz ID
 //$table...Tabellenname als String
 function deleteID($ID,$table){
 
 $sql="DELETE FROM ".$table." WHERE ID = '".$ID."'";	//Delete Befehl aufbauen
-mysql_query($sql);	//Befehl ausfÃ¼hren
+mysql_query($sql);	//Befehl ausführen
 
 }
 
-//Funktion zum lÃ¶schen eines Datensatzes
+//Funktion zum löschen eines Datensatzes
 //$ID......Die Datensatz ID
 //$table...Tabellenname als String
 function hourDelete(){
@@ -646,15 +644,16 @@ mysql_query($sql);
 //Funktion zum Kontrollieren von Selects und Post
 //Wird ein Post Wert gegeben und der Select ist leer --> Fehler
 //Beides leer --> richtig
-//Beides befÃ¼llt --> richtig
+//Beides befüllt --> richtig
 //$post......Mitgabewerte des Formulars
 //$select....ID des Selects
 //$field.....Name des nicht gefundenen Wertes als String
 function control($post,$select,$field)
-{
-	if($post != "" && $select == ""){	//Wenn Post nicht leer, aber select leer --> Fehler
-		printf("<script> window.alert('%s nicht gefunden!');</script> ",$field);	//Alert ausgeben
-		return 0;	//0 zurÃ¼ckgeben
+{	//Wenn Post nicht leer, aber select leer --> Fehler
+	if($post != "" && $select == ""){	
+		//Alert ausgeben
+		printf("<script> window.alert('%s nicht gefunden!');</script> ",$field);	
+		return 0;	//0 zurückgeben
 	}
 	return 1;
 }

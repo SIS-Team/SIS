@@ -3,7 +3,7 @@
 	/* /modules/database/selects.php
 	 * Autor: Handle Marco
 	 * Beschreibung:
-	 *	Select Befehle fÃ¼r die Datenbank
+	 *	Select Befehle für die Datenbank
 	 *
 	 */
 
@@ -22,11 +22,11 @@ function selectAll($table, $where, $order){
 	if (!empty($where)) $sql .= " WHERE " . $where; 	//Wenn where Variable gesetzt ist
 	if (!empty($order)) $sql .= " ORDER BY " . $order;	//Wenn order Variable gesetzt ist
 
-	return mysql_query($sql);	//RÃ¼ckgabe
+	return mysql_query($sql);	//Rückgabe
 }
 
 /*
- *Gibt den Inhalt von der Tabelle Section zurÃ¼ck
+ *Gibt den Inhalt von der Tabelle Section zurück
  *
  *$where string zum Filtern
  *$order string zum Sortieren
@@ -42,11 +42,11 @@ function selectSection($where,$order){
 	if (!empty($where)) $sql .= " WHERE " . $where; 	//Wenn where Variable gesetzt ist
 	if (!empty($order)) $sql .= " ORDER BY " . $order;	//Wenn order Variable gesetzt ist
 	
-	return mysql_query($sql);	//RÃ¼ckgabe
+	return mysql_query($sql);	//Rückgabe
 }
 
 /*
- *Gibt den Inhalt von der Tabelle Rooms zurck
+ *Gibt den Inhalt von der Tabelle Rooms zurück
  *
  *$where string zum Filtern
  *$order string zum Sortieren
@@ -62,11 +62,11 @@ function selectRooms($where,$order){
 	if (!empty($where)) $sql .= " WHERE " . $where; 	//Wenn where Variable gesetzt ist
 	if (!empty($order)) $sql .= " ORDER BY " . $order;	//Wenn order Variable gesetzt ist
 
-	return mysql_query($sql);	//RÃ¼ckgabe
+	return mysql_query($sql);	//Rückgabe
 }
 
 /*
- *Gibt den Inhalt von der Tabelle Teacher zurÃ¼ck
+ *Gibt den Inhalt von der Tabelle Teacher zurück
  *
  *$where string zum Filtern
  *$order string zum Sortieren
@@ -82,11 +82,11 @@ function selectTeacher($where,$order){
 	if (!empty($where)) $sql .= " WHERE " . $where; 	//Wenn where Variable gesetzt ist
 	if (!empty($order)) $sql .= " ORDER BY " . $order;	//Wenn order Variable gesetzt ist
 
-	return mysql_query($sql);	//RÃ¼ckgabe
+	return mysql_query($sql);	//Rückgabe
 }
 
 /*
- *Gibt den Inhalt von der Tabelle Class zurÃ¼ck
+ *Gibt den Inhalt von der Tabelle Class zurück
  *
  *$where string zum Filtern
  *$order string zum Sortieren
@@ -104,11 +104,11 @@ function selectClass($where,$order){
 	if (!empty($where)) $sql .= " WHERE " . $where; 	//Wenn where Variable gesetzt ist
 	if (!empty($order)) $sql .= " ORDER BY " . $order;	//Wenn order Variable gesetzt ist
 
-	return mysql_query($sql);	//RÃ¼ckgabe
+	return mysql_query($sql);	//Rückgabe
 }
 
 /*
- *Gibt den Inhalt von der Tabelle Lesson zurÃ¼ck
+ *Gibt den Inhalt von der Tabelle Lesson zurück
  *
  *$where string zum Filtern
  *$order string zum Sortieren
@@ -130,11 +130,11 @@ function selectLesson($where,$order){
 	if (!empty($where)) $sql .= " WHERE " . $where; 	//Wenn where Variable gesetzt ist
 	if (!empty($order)) $sql .= " ORDER BY " . $order;	//Wenn order Variable gesetzt ist
 
-	return mysql_query($sql);	//RÃ¼ckgabe
+	return mysql_query($sql);	//Rückgabe
 }
 
 /*
- *Gibt den Inhalt von der Tabelle MissingTeacher zurÃ¼ck
+ *Gibt den Inhalt von der Tabelle MissingTeacher zurück
  *
  *$where string zum Filtern
  *$order string zum Sortieren
@@ -152,11 +152,11 @@ function selectMissingTeacher($where,$order){
 	if (!empty($where)) $sql .= " WHERE " . $where; 	//Wenn where Variable gesetzt ist
 	if (!empty($order)) $sql .= " ORDER BY " . $order;	//Wenn order Variable gesetzt ist
 
-	return mysql_query($sql);	//RÃ¼ckgabe
+	return mysql_query($sql);	//Rückgabe
 }
 
 /*
- *Gibt den Inhalt von der Tabelle MissingClasses zurÃ¼ck
+ *Gibt den Inhalt von der Tabelle MissingClasses zurück
  *
  *$where string zum Filtern
  *$order string zum Sortieren
@@ -173,12 +173,12 @@ function selectMissingClass($where,$order){
 	if (!empty($where)) $sql .= " WHERE " . $where; 	//Wenn where Variable gesetzt ist
 	if (!empty($order)) $sql .= " ORDER BY " . $order;	//Wenn order Variable gesetzt ist
 
-	return mysql_query($sql);	//RÃ¼ckgabe
+	return mysql_query($sql);	//Rückgabe
 
 }
 
 /*
- *Gibt den Inhalt von der Tabelle Substitudes zurÃ¼ck
+ *Gibt den Inhalt von der Tabelle Substitudes zurück
  *
  *$where string zum Filtern
  *$order string zum Sortieren
@@ -207,7 +207,7 @@ function selectSubstitude($where,$order){
 	if (!empty($where)) $sql .= " WHERE " . $where; 	//Wenn where Variable gesetzt ist
 	if (!empty($order)) $sql .= " ORDER BY " . $order;	//Wenn order Variable gesetzt ist
 	//echo $sql;
-	return mysql_query($sql);	//RÃ¼ckgabe
+	return mysql_query($sql);	//Rückgabe
 
 }
 
