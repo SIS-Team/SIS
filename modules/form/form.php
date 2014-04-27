@@ -12,7 +12,7 @@
 $fields = array(
 	array( "std", 		"Stunde(n): ", 	"text", 	"15",	"",		"test",		"readonly=\"true\""),
 	array( "datum", 	"Datum: ", 		"textarea", "10",	"10",	"",	""),
-	array( "klasse", 	"Klasse: ", 	"checkbox", "",		"",		"checked",	""),
+	array( "klasse", 	"Klasse: ", 	"checkbox", "",		"",		"true",	""),
 	array( "lehrer", 	"Lehrer: ", 	"checkbox", "",		"",		"",			""),
 	array( "fach", 		"Fach: ", 		"button", 	"",		"",		"",			""),
 	array( "check", 	"Ok", 			"dropdown",	"",		"",		$select,	""),		
@@ -320,7 +320,7 @@ printf("<table style=\"width:100%%;text-align:right\">\n");	//Tabellen Tag auf
   			//FÃƒÂ¯Ã‚Â¿Ã‚Â½r jeden Eintrag im Array field einmal diese Schleife durchlaufen
 			foreach($fieldRow1 as $f) {	
 				
-				if($content!=false && $f[0]!="add" && $f[0]!="free")	//Wenn Content mitgeliefert wird und der Typ des aktuellen Inputs kein DropDown, dann Content austauschen
+				if($content!=false && $f[0]!="add" && $f[0]!="free")	//Wenn Content mitgeliefert wird und der Typ des aktuellen Inputs kein CheckBox, dann Content austauschen
 				{
 					$f[5]=$content[$f[0]];					//Content des aktuellen Inputs austauschen, Name des Array-Indizes ist der name des Inputs
 				}
