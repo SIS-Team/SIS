@@ -46,7 +46,7 @@ $sql ="SELECT
 		INNER JOIN hours AS `sH` ON `lb`.`startHourFK` = `sH`.`ID`
 		INNER JOIN hours AS `eH` ON `lb`.`endHourFK` = `eH`.`ID`
 		INNER JOIN teachers AS `t` ON `l`.`teachersFK`=`t`.`ID`
-		INNER JOIN rooms AS `r` ON `l`.`roomFK`
+		LEFT JOIN rooms AS `r` ON `l`.`roomFK`
 ";
 if(!empty($teacher)) $sql .= "WHERE `t`.`short` = '".$teacher."'"; //wenn Lehrermitgegeben Lehrerabfrage
 else $sql .= "WHERE `c`.`name` = '".$class."'";
@@ -138,13 +138,24 @@ else {
 
 for($i=$start;$i<$end;$i++){ //Stundenplanausgabe
  	$newY = 0;
+	if($i == 12) {
+		$pdf->SetFont('gothic','B',20);
+ 		$pdf->AddPage();
+ 		$pdf->SetXY(135,10);
+		if(!empty($teacher)) $pdf->Cell('10','25','Lehrer: '.$teacher,'','1');
+		else $pdf->Cell('10','25','Klasse: '.$class,'','1');
+		$pdf->SetFont('gothic','',12);
+	}
 	$pdf->Cell('25','10',$i,'RLT');	//Stundennummer ausgeben
 	for($j=1;$j<6;$j++){
  		$y = $pdf->GetY();	//aktuelle Y-Position speichern
 		$x = $pdf->GetX();	//aktuelle X-Position speichern
 		if(isset($hours[$i][$day[$j]])){
  			$output = $hours[$i][$day[$j]]['suShort'];
-			if(isset($teacher)) $output .= "\n" . $hours[$i][$day[$j]]['clName'] ." | ". $hours[$i][$day[$j]]['roName'];
+			if(isset($teacher)){
+ 				$output .= "\n" . $hours[$i][$day[$j]]['clName'];
+				if(isset($hours[$i][$day[$j]]['roName'])) $output.= " | ". $hours[$i][$day[$j]]['roName'];
+			}
  			$pdf->MultiCell('30','10',$output,'RLT','C'); 
 			//Multicell, da Eintrag länger als eingestellte Breite der Spalte sein kann 
 			//RLT = Rand oben, links und rechts
