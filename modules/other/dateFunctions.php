@@ -4,11 +4,8 @@
 * Autor: Handle Marco,
 * Version: 0.2.0
 * Beschreibung:
-* Stellt Datumsfunktionen zur VerfÃ¼gung
+* Stellt Datumsfunktionen zur Verfügung
 *
-* Changelog:
-* 0.1.0: 22. 07. 2013, Handle Marco - erste Version
-* 0.2.0: 09. 09. 2013, Weiland Mathias - Datumsfunktion hinzugefügt
 */
 
 
@@ -51,7 +48,7 @@ function prevNextDay($d) {
 	return $array;
 }
 
-//Datum um eins erhÃ¶hen
+//Datum um eins erhöhen
 function date_increase($d) {
 	do{
 		$x = strptime($d, "%Y-%m-%d");
@@ -63,7 +60,7 @@ function date_increase($d) {
 	return $d;
 }
 
-//Datum um eins zurÃ¼ckstellen
+//Datum um eins zurückstellen
 function date_decrease($d) {
 	do{
 		$x = strptime($d, "%Y-%m-%d");
@@ -75,7 +72,7 @@ function date_decrease($d) {
 	return $d;
 }
 
-//Erhöt so lange, dass das Datum kein Wochenende ist
+//Erhöt so lange, bis das Datum kein Wochenende ist
 function no_weekend($d) {
 	while(date("N",strtotime($d))>=6){
 		$x = strptime($d, "%Y-%m-%d");

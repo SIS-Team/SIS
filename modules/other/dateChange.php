@@ -3,13 +3,11 @@
 include_once(ROOT_LOCATION . "/modules/other/dateFunctions.php");
 
 function dateChange($date){
-	//print_r($_POST);
+
 	if(isset($_POST['right']) && $_POST['right']==1) {
 		$date = date_increase($date);
-		//echo 1;
 	}
 	else if (isset($_POST['left']) && $_POST['left']==1) {
-		//echo -1;
 		$date = date_decrease($date);
 	}
 
@@ -29,6 +27,7 @@ function dateChange($date){
 		</tr>
 	</table>
 </form>
+
 <?php
 	return $date;
 }
