@@ -33,9 +33,12 @@ if($mode == 'student') { //verhindert das Schüler Lehrerstundenpläne sehen
 }
 $sql ="SELECT 
 		`su`.`short` AS `suShort`,
+		`t`.`short` AS `teShort`,
+		`r`.`name` AS `roName`,
 		`sH`.`hour` AS `startHour`,
 		`eH`.`hour` AS `endHour`,
-		`sH`.`weekdayShort` AS `weekday` 
+		`sH`.`weekdayShort` AS `weekday`,
+		`c`.`name` AS `clName` 
 	  	FROM lessons AS `l`
 		INNER JOIN subjects AS `su` ON `l`.`subjectFK` = `su`.`ID`
 		INNER JOIN lessonsBase AS `lb` ON `l`.`lessonBaseFK` = `lb`.`ID`
@@ -43,10 +46,12 @@ $sql ="SELECT
 		INNER JOIN hours AS `sH` ON `lb`.`startHourFK` = `sH`.`ID`
 		INNER JOIN hours AS `eH` ON `lb`.`endHourFK` = `eH`.`ID`
 		INNER JOIN teachers AS `t` ON `l`.`teachersFK`=`t`.`ID`
+		LEFT JOIN rooms AS `r` ON `l`.`roomFK`
 ";
 if(!empty($teacher)) $sql .= "WHERE `t`.`short` = '".$teacher."'"; //wenn Lehrermitgegeben Lehrerabfrage
 else $sql .= "WHERE `c`.`name` = '".$class."'";
 $sql_result  = mysql_query($sql);
+echo mysql_error();
 while($result = mysql_fetch_array($sql_result)) {    
 	$results[]=$result;
 }
@@ -88,12 +93,15 @@ if(isset($results)){
 	 		if(isset($hours[$startHour][$results[$j]['weekday']])) //Abfrage ob bereits Eintrag vorhanden
 			{
  				//Abfrage ob neuer Eintrag beriets in altem enthalten ist	
- 				if(strpos($hours[$startHour][$results[$j]['weekday']],$results[$j]['suShort'])=== false)
+ 				if(strpos($hours[$startHour][$results[$j]['weekday']]['suShort'],$results[$j]['suShort'])=== false)
 				{
-				$hours[$startHour][$results[$j]['weekday']] .= " |  ".$results[$j]['suShort'];
+				$hours[$startHour][$results[$j]['weekday']]['suShort'] .= " |  ".$results[$j]['suShort'];
 				}
 			}
-			else $hours[$startHour][$results[$j]['weekday']] = $results[$j]['suShort']; // sonst Eintrag überschreiben
+			else $hours[$startHour][$results[$j]['weekday']]['suShort'] = $results[$j]['suShort']; // sonst Eintrag überschreiben
+			$hours[$startHour][$results[$j]['weekday']]['teShort'] = $results[$j]['teShort'];
+			$hours[$startHour][$results[$j]['weekday']]['roName'] = $results[$j]['roName'];
+			$hours[$startHour][$results[$j]['weekday']]['clName'] = $results[$j]['clName'];
 		$startHour++;
 		}
 	}
@@ -130,19 +138,33 @@ else {
 
 for($i=$start;$i<$end;$i++){ //Stundenplanausgabe
  	$newY = 0;
+	if($i == 12) {
+		$pdf->SetFont('gothic','B',20);
+ 		$pdf->AddPage();
+ 		$pdf->SetXY(135,10);
+		if(!empty($teacher)) $pdf->Cell('10','25','Lehrer: '.$teacher,'','1');
+		else $pdf->Cell('10','25','Klasse: '.$class,'','1');
+		$pdf->SetFont('gothic','',12);
+	}
 	$pdf->Cell('25','10',$i,'RLT');	//Stundennummer ausgeben
 	for($j=1;$j<6;$j++){
  		$y = $pdf->GetY();	//aktuelle Y-Position speichern
 		$x = $pdf->GetX();	//aktuelle X-Position speichern
 		if(isset($hours[$i][$day[$j]])){
- 			$pdf->MultiCell('30','10',$hours[$i][$day[$j]],'RLT'); 
+ 			$output = $hours[$i][$day[$j]]['suShort'];
+			if(isset($teacher)){
+ 				$output .= "\n" . $hours[$i][$day[$j]]['clName'];
+				if(isset($hours[$i][$day[$j]]['roName'])) $output.= " | ". $hours[$i][$day[$j]]['roName'];
+			}
+ 			$pdf->MultiCell('30','10',$output,'RLT','C'); 
 			//Multicell, da Eintrag länger als eingestellte Breite der Spalte sein kann 
 			//RLT = Rand oben, links und rechts
 			if($pdf->GetY() > $newY)$newY=$pdf->GetY();	//neue Y-Position speichern
 			//Y-Position ändert sich, da nach Multicell automatisch in einer neuen Zeile begonnen wird
 		}
 		else {
- 			$pdf->MultiCell('30','10','','RLT');	
+ 			if (isset($teacher)) $pdf->MultiCell('30','20','','RLT');	
+			else $pdf->MultiCell('30','10','','RLT');	
 			if($pdf->GetY() > $newY)$newY=$pdf->GetY();
 		}
 		//Position neben vorheriger Zelle wiederherstellen, zuerst muss Y, dann X eingestellt werden
@@ -162,7 +184,7 @@ for($i=$start;$i<$end;$i++){ //Stundenplanausgabe
 }
 
 $filename = "timetable_";
-if($mode == 'teacher') $filename .= $teacher;
+if(isset($teacher)) $filename .= $teacher;
 else if(isset($class))$filename .=$class;
 $filename.= ".pdf";
 $pdf->Output($filename,'I'); //PDF ausgeben

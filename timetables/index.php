@@ -131,17 +131,15 @@ if(isset($week) && $week == "next") $offset+=7;
 if($displaytype == "modificated" ){
 echo "Dieser Stundenplan ist g&uuml;ltig: ". date("Y.m.d",time()+24*60*60*$offset) ."-".date("Y.m.d",time()+24*60*60*($offset+4));
 
-	for($j=0;$j<5;$j++)
+for($j=0;$j<5;$j++)
 	{	//fehlende Klassen abfragen
  		$missingClasses= getMissingClasses(date("Y-m-d",time()+24*60*60*$offset) ); 
 		if(isset($missingClasses))
 		{
 			for($i=0;$i<17;$i++)
 			{
- 			
  				if(isset($missingClasses[$i])&& isset($hours[$i][$dayShort[$j+1]]))
-				{
- 					
+				{	
 					if(array_key_exists($hours[$i][$dayShort[$j+1]]->clName,$missingClasses[$i])) 
 					{
  						$className= $hours[$i][$dayShort[$j+1]]->clName;
