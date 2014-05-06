@@ -33,15 +33,6 @@ if(!empty($_POST['save']) && $_POST['save']!=""){
 }
 
 
-if (empty($_POST["date"]) && empty($_POST['startDay'])) {		//wenn nichts zurückgegeben wird, dann heute
-	$date = no_weekend(strftime("%Y-%m-%d"));
-}
-else if($_POST['date']!=""){								//sonst zurückgegebenes Datum
-	$date = no_weekend($_POST["date"]);
-}
-else{
-	$date = no_weekend($_POST['startDay']);
-}
 
 //Seitenheader
 pageHeader("Fehlende Klassen","main");
@@ -62,10 +53,21 @@ $fields = array(
 	array( "reason", 	"Grund: ", 			"text",		"30",	"",		"",					""),
 	);
 
+//wenn nichts zurückgegeben wird, dann heute
+if (empty($_POST["date"]) && empty($_POST['startDay'])) {
+	$date = no_weekend(strftime("%Y-%m-%d"));
+}
+//sonst zurückgegebenes Datum
+else if($_POST['date']!=""){
+	$date = no_weekend($_POST["date"]);
+}
+else{
+	$date = no_weekend($_POST['startDay']);
+}
 
 $date = dateChange($date);
-$fields["2"]["5"] = $date;
-$fields["4"]["5"] = $date;
+$fields["2"]["5"] = $date;	//Zuweisen des aktuellen Datums
+$fields["4"]["5"] = $date;	//Zuweisen des aktuellen Datums
 
 
 $where="missingClasses.endDay >= '".$date."' AND missingClasses.startDay >= '".$date."'";
