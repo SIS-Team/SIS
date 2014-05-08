@@ -43,7 +43,7 @@ class PDF extends FPDF
 	    //Arial kursiv 8
 	    $this->SetFont('Arial','I',10);
 	    //Seitenzahl
-	    $this->Cell(0,10,'Diese Ausgabe wurde mittels SIS (School Information System) generiert',0,0,'C');
+	    $this->Cell(0,10,'Diese Ausgabe wurde mittels SIS (School Information Service) generiert',0,0,'C');
 	}
 }
 		$sql = "SELECT `time`,
