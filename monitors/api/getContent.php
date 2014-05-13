@@ -90,9 +90,17 @@
 						AND `web` = '0'";
 		$result = mysql_query($sql);
 		$response['content'] .= "<table class=\"news\">";
+		$count = 0; 
 		while ($row = mysql_fetch_object($result)) {
 			$response['content'] .= "<tr><th>" . $row->title . "</th></tr>";
 			$response['content'] .= "<tr><td>" . str_replace("\n", "<br />", $row->text)  . "</td></tr>";
+			$count++;
+		}
+		
+		if($count == 0){
+			$response['submodeChange'] = time() + 30;
+			$response['submode'] = 0;
+			$response['script'] ="loadContent();"; // total hässlicher Hack, aber hauptsache es funktioniert
 		}
 		$response['content'] .= "</table>";
 		$hash .= md5($response['content']); // ugly
