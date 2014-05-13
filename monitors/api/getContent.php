@@ -98,9 +98,7 @@
 		}
 		
 		if($count == 0){
-			$response['submodeChange'] = time() + 30;
-			$response['submode'] = 0;
-			$response['script'] ="loadContent();"; // total hässlicher Hack, aber hauptsache es funktioniert
+ 			$response['content'] .= "<tr><th>Es sind keine aktuellen News vorhanden</th></tr>";
 		}
 		$response['content'] .= "</table>";
 		$hash .= md5($response['content']); // ugly
