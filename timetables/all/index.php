@@ -14,7 +14,7 @@ ifNotLoggedInGotoLogin();	//Kontrolle ob angemeldet
 $permission = getPermission();
 if($permission =='root' or $permission == 'admin') $admin=true;
 else $admin = false;
-if(!$admin && !isset($_SESSION['isTeacher'])) noPermission();
+if(!$admin && !$_SESSION['isTeacher']) noPermission();
 pageHeader("Alle Stundenpl&auml;ne","main");
 if(isset($_GET['mode']))
 {	if(!$admin) $mode ='Klasse';
