@@ -234,9 +234,11 @@
 			$response['content'] .= "<table class = 'substitude'>"; 
 			$response['content'] .= "<tr><th>Klasse</th><th>Stunden</th><th>Suppl. durch</th><th>Fach</th><th>Bemerkung</th></tr>";
 			if(isset($results)){
+ 			$counter = 0;
 				for($i = 0; $i <count($results);$i++){
  					if($results[$i]['time'] == date("Y-m-d", time()+ 24 *60 *60 * $day_counter)){ 
-							
+						
+						$counter++;
 			 			$response['content'] .= "<tr>";
 						if($results[$i]['className'] != $upperClass) { //nur Klassennamen wenn erste Supplierung von dieser
  							$response['content'] .= "<td>".$results[$i]['className']."</td>";						 	 
@@ -253,6 +255,7 @@
 						$response['content'] .= "</tr>";	
 					}
 				}
+				if($counter == 0) $response['content'] .= "<tr><th colspan = 5>F&uuml;r diesen Tag sind keine Supplierungen vorgesehen.</th></tr>";
 			}
 			else {
  				$response['content'] .= "<tr><th colspan = 5>F&uuml;r diesen Tag sind keine Supplierungen vorgesehen.</th></tr>";
