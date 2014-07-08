@@ -46,7 +46,7 @@ $sql ="SELECT
 		INNER JOIN hours AS `sH` ON `lb`.`startHourFK` = `sH`.`ID`
 		INNER JOIN hours AS `eH` ON `lb`.`endHourFK` = `eH`.`ID`
 		INNER JOIN teachers AS `t` ON `l`.`teachersFK`=`t`.`ID`
-		LEFT JOIN rooms AS `r` ON `l`.`roomFK`
+		LEFT JOIN rooms AS `r` ON `l`.`roomFK` = `r`.`ID`
 ";
 if(!empty($teacher)) $sql .= "WHERE `t`.`short` = '".$teacher."'"; //wenn Lehrermitgegeben Lehrerabfrage
 else $sql .= "WHERE `c`.`name` = '".$class."'";
