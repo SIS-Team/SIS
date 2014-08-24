@@ -21,7 +21,7 @@
 		$response['error'] = "Monitor nicht gefunden.<br />Klicken Sie <a href=\"?register&name=" . $_GET['name'] . "\">hier</a> um den Monitor zu registrieren oder warten Sie 10 Sekunden.";
  		$response['script'] = "window.setTimeout(function() { location.href = '?register&name=" . $_GET['name'] . "'; }, 10 * 1000);";
 		echo json_encode($response);
-		die();
+		exit();
 	}
 
 	if (file_exists(ROOT_LOCATION . "/tmp/reload.ex")) {
@@ -29,7 +29,7 @@
 	 	$response['script'] = "window.setTimeout(function() { location.href = location.href; }, 1000);";
 	 	$response['hash'] = rand();
 	 	echo json_encode($response);
-	 	die();
+	 	exit();
 	}
 
 	// Hash generieren

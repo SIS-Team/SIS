@@ -16,8 +16,10 @@
 	require(ROOT_LOCATION . "/modules/general/Connect.php");
 	require(ROOT_LOCATION . "/modules/general/Site.php");
 	
-	if (!isset($_GET['name']) || empty($_GET['name'])) 
-		die("no name given");
+	if (!isset($_GET['name']) || empty($_GET['name'])) {
+		echo ("no name given");
+		exit();
+	}
 
 	if (isset($_GET['register'])) {
 		$sql = "SELECT `ID` FROM `monitors` WHERE `ip` = '" . $_SERVER['REMOTE_ADDR'] . "'";
@@ -30,7 +32,7 @@
 		$sql = "INSERT IGNORE INTO `monitors` SET `name`='" . $name . "', `modeFK`=5, `file`='def.mp4', `roomFK`=1, `ip`='" . $_SERVER['REMOTE_ADDR'] . "', `displayModeFK`=1, `displayStartDaytime`=0, `displayEndDaytime`=0, `sectionFK`=1, `time`=" . time() . "";
 		$result = mysql_query($sql);
 		header("LOCATION: ?name=" . $_GET['name']);
-		die();
+		exit();
 	}
 
 	if (!isset($_GET['test']))

@@ -21,7 +21,7 @@
 			login($_GET['username'],$_GET['password']);
 		} catch (Exception $e) {
 			echo $_GET['jsoncallback'] . '({"error": "Benutzername oder Passwort falsch!"})';
-			die();
+			exit();
 		}
 		getLessonsByClass();
 	}

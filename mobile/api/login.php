@@ -14,7 +14,7 @@
 			} catch (Exception $e) {
 				//echo "document.body.innerHTML += '<h1 style=\"color: red;\">Benutzername oder Passwort falsch!</h1>';";
 			}
-			die();
+			exit();
 	}
 	
 ?>

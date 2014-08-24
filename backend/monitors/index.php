@@ -136,16 +136,16 @@
 			if (!empty($_FILES['file']['name'])) {
 				if ($_FILES['file']['size'] > 800 * 1024 * 1024) {
 					header("LOCATION: ?error=4");
-					die();
+					exit();
 				}
 				if ($_FILES['file']['size'] == 0) {
 					header("LOCATION: ?error=6");
-					die();
+					exit();
 				}
 				$filename = time() . "-" . mysql_real_escape_string(sanitize($_FILES['file']['name']));
 				if (!move_uploaded_file($_FILES['file']['tmp_name'], "../../monitors/media/" . $filename)) {
 					header("LOCATION: ?error=5");
-					die();
+					exit();
 				}
 				$query .= "`file`='" . $filename . "' ";
 			}
@@ -159,7 +159,7 @@
 			mysql_query($query . $num);
 		}
 		header("LOCATION: ?sent");
-		die();
+		exit();
 	}
 	
 	pageHeader("Monitore", "main");

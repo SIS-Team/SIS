@@ -11,14 +11,14 @@
 	 *  0.2.0:  27. 08. 2013, Handle Marco - Update,Save,delete implementiert
 	 */
 
-include("../../../config.php");
-include_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
-include_once(ROOT_LOCATION . "/modules/form/form.php");					//Stell die Formularmasken zur Verfügung
-include_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
-include_once(ROOT_LOCATION . "/modules/database/inserts.php");	
-include_once(ROOT_LOCATION . "/modules/other/dateChange.php");									
-include_once(ROOT_LOCATION . "/modules/other/dateFunctions.php");					
-include_once(ROOT_LOCATION . "/modules/form/hashCheckFail.php");		
+require("../../../config.php");
+require_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
+require_once(ROOT_LOCATION . "/modules/form/form.php");					//Stell die Formularmasken zur Verfügung
+require_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
+require_once(ROOT_LOCATION . "/modules/database/inserts.php");	
+require_once(ROOT_LOCATION . "/modules/other/dateChange.php");									
+require_once(ROOT_LOCATION . "/modules/other/dateFunctions.php");					
+require_once(ROOT_LOCATION . "/modules/form/hashCheckFail.php");		
 
 $hashGenerator = new HashGenerator("MissingTeacher", __FILE__);
 
@@ -51,7 +51,7 @@ pageHeader("Fehlende Lehrer","main");
 HashFail();
 
 $dropDown=array("Teachers");
-include_once(ROOT_LOCATION . "/modules/form/dropdownSelects.php");		//Stellt die Listen für die Dropdownmenüs zur Verfügung
+require_once(ROOT_LOCATION . "/modules/form/dropdownSelects.php");		//Stellt die Listen für die Dropdownmenüs zur Verfügung
 //Formularmaske
 $fields = array(
 	array( "ID", 		"",			 		"hidden", 	"",		"",		"",					""),

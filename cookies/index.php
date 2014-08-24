@@ -15,7 +15,7 @@
 	if (isset($_POST['okay'])) {
 		setcookie("allowed", "true", time() + (60 * 60 * 24 * 100), "/"); // 100 Tage keine Abfrage
 		header("LOCATION: " . $_POST['return']);
-		die();
+		exit();
 	}
 
 	if (!isset($_GET['return']))
