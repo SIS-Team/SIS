@@ -45,7 +45,7 @@ $hashGenerator->generate();
 HashFail();
 
 $dropDown=array("Classes","Days");
-require_once(ROOT_LOCATION . "/modules/form/dropdownSelects.php");		//Stellt die Listen für die Dropdownmenüs zur Verfügung
+include(ROOT_LOCATION . "/modules/form/dropdownSelects.php");		//Stellt die Listen für die Dropdownmenüs zur Verfügung
 
 printf("<noscript><br>Bitte aktivieren Sie JavaScript. Ohne JavaScript kann keine korrekte Eingabe der Stundenpl&auml;ne erfolgen<br><br></noscript>");
 

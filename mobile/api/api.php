@@ -3,6 +3,8 @@
 	//die nächste datei würde dei db connect ersetzen
 	require($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Connect.php");			//Bindet die Datenbank ein
 
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/modules/general/SessionManager.php");
+
 	header('Content-Type: application/javascript; charset=UTF-8');					//setzt den Content-Type auf application/javascript damit die JSON-Übertragung funktioniert
 			
 		
@@ -15,9 +17,6 @@
 	}
 
 	function loginApp(){
-		
-		require_once($_SERVER['DOCUMENT_ROOT'] . "/modules/general/SessionManager.php");
-
 		try {
 			login($_GET['username'],$_GET['password']);
 		} catch (Exception $e) {

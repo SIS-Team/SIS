@@ -31,7 +31,7 @@ pageHeader("Stundenplan","main");
 echo "<div id=\"print\">";
 	echo "<a href=\"".RELATIVE_ROOT."/pdf/timetables/\" target=\"_blank\">";
 		echo "<button class =\"nonButton\">";
-			require(ROOT_LOCATION . "/data/images/print.svg");
+			include(ROOT_LOCATION . "/data/images/print.svg");
 		echo "</button>";
 	echo "</a>";
 echo "</div>";

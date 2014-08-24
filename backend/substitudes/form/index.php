@@ -54,7 +54,7 @@ $hashGenerator->generate();
 HashFail();
 
 $dropDown=array("ClassesSub","Subjects","Teachers","Rooms");
-require_once(ROOT_LOCATION . "/modules/form/dropdownSelects.php");		//Stellt die Listen für die Dropdownmenüs zur Verfügung
+include(ROOT_LOCATION . "/modules/form/dropdownSelects.php");		//Stellt die Listen für die Dropdownmenüs zur Verfügung
 
 
 //Formularmaske

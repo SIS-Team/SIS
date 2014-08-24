@@ -33,7 +33,7 @@ pageHeader("Formular","main");
 $hashGenerator->generate();
 HashFail();
 $dropDown=array("Sections");
-require_once(ROOT_LOCATION . "/modules/form/dropdownSelects.php");		//Stellt die Listen für die Dropdownmenüs zur Verfügung	
+include(ROOT_LOCATION . "/modules/form/dropdownSelects.php");		//Stellt die Listen für die Dropdownmenüs zur Verfügung	
 if($isAdmin) {
 	$fields = array(
 		array( "ID", 			"",			 							"hidden", 	"",		"",		"",					""),

@@ -18,11 +18,11 @@ function dateChange($date){
 		<tr style="vertical-align: bottom">
 			<button type="submit" name="ok" style="display:none"></button>
 			<button class="nonButton" name="left" align="absmiddle" value="1">
-				<?php require(ROOT_LOCATION . "/data/images/larrow.svg"); ?>
+				<?php include(ROOT_LOCATION . "/data/images/larrow.svg"); ?>
 			</button>
 			<?php echo weekday($date); ?> <input type="date" name="date" value="<?php echo $date; ?>" size="10">
 			<button class="nonButton" name="right" align="absmiddle" value="1">
-				<?php require(ROOT_LOCATION . "/data/images/rarrow.svg"); ?>
+				<?php include(ROOT_LOCATION . "/data/images/rarrow.svg"); ?>
 			</button>
 		</tr>
 	</table>

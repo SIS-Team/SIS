@@ -4,7 +4,6 @@
          * Beschreibung:
          *      Managed LDAP - Verbindungen
          */
-	
 
 	function LDAP_getDN($ent) {
 		$dn = $ent[0]["dn"];
@@ -15,7 +14,7 @@
 	}
 
 	function LDAP_login($dn, $pass) {
-		require(ROOT_LOCATION . "/modules/general/LDAPpassword.php");
+		include(ROOT_LOCATION . "/modules/general/LDAPpassword.php");
 		if (!isset($host)) {
 			$fh = fopen(ROOT_LOCATION . "/logs/ldap-fails", "a");
 			fwrite($fh, time() . ": no host, login, user: " . urlencode($dn) . "\n");
@@ -29,7 +28,7 @@
 	}
 
 	function LDAP_getUser($cn) {
-		require(ROOT_LOCATION . "/modules/general/LDAPpassword.php");
+		include(ROOT_LOCATION . "/modules/general/LDAPpassword.php");
 
 		if (!isset($host)) {
 			$fh = fopen(ROOT_LOCATION . "/logs/ldap-fails", "a");

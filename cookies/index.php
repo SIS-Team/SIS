@@ -10,7 +10,8 @@
  	 * 	1.0.1:  28.01.2014, Philipp Machac - Ueberarbeitung Text
 	 */
  	require_once("../config.php");
- 	
+	require(ROOT_LOCATION . "/modules/general/Site.php");
+
 	if (isset($_POST['okay'])) {
 		setcookie("allowed", "true", time() + (60 * 60 * 24 * 100), "/"); // 100 Tage keine Abfrage
 		header("LOCATION: " . $_POST['return']);
@@ -26,7 +27,6 @@
 	$_GET['return'] = str_replace("\"", "", $_GET['return']);
 	$_GET['return'] = str_replace("'", "", $_GET['return']);
 
-	require(ROOT_LOCATION . "/modules/general/Site.php");
 	pageHeader("Cookies erlauben", "cookies");
 ?>
 	<h1>Herzlich Willkommen bei SIS</h1>

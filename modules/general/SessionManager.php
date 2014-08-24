@@ -46,7 +46,7 @@
 	}
 
 	function login($username, $password) {
-		require_once(ROOT_LOCATION . "/modules/general/LDAP.php");
+		include_once(ROOT_LOCATION . "/modules/general/LDAP.php");
 		$ent = LDAP_getUser($username);
 		$dn = LDAP_getDN($ent);
 		try {

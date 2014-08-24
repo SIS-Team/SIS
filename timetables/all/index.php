@@ -29,7 +29,7 @@ echo "<div id=\"print\">";
 if(isset($mode) && $mode == 'Lehrer') echo "<a href=\"".RELATIVE_ROOT."/pdf/timetables/?teacher=".$name."\" target=\"_blank\">";
 else if(isset($mode) && $mode == 'Klasse')echo "<a href=\"".RELATIVE_ROOT."/pdf/timetables/?class=".$name."\" target=\"_blank\">";
 echo "<button class =\"nonButton\">";
-require(ROOT_LOCATION . "/data/images/print.svg");
+include(ROOT_LOCATION . "/data/images/print.svg");
 echo "</button>";
 echo "</a>";
 echo "</div>";
