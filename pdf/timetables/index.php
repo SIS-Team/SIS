@@ -46,7 +46,7 @@ $sql ="SELECT
 		INNER JOIN hours AS `sH` ON `lb`.`startHourFK` = `sH`.`ID`
 		INNER JOIN hours AS `eH` ON `lb`.`endHourFK` = `eH`.`ID`
 		INNER JOIN teachers AS `t` ON `l`.`teachersFK`=`t`.`ID`
-		LEFT JOIN rooms AS `r` ON `l`.`roomFK`
+		LEFT JOIN rooms AS `r` ON `l`.`roomFK` = `r`.`ID`
 ";
 if(!empty($teacher)) $sql .= "WHERE `t`.`short` = '".$teacher."'"; //wenn Lehrermitgegeben Lehrerabfrage
 else $sql .= "WHERE `c`.`name` = '".$class."'";
@@ -116,11 +116,11 @@ if(!empty($teacher)) $pdf->Cell('10','25','Lehrer: '.$teacher,'','1');
 else $pdf->Cell('10','25','Klasse: '.$class,'','1');
 $pdf->SetFont('gothic','B',16);
 $pdf->Cell('25','10','Stunde','1');
-$pdf->Cell('30','10','Mo','1');
-$pdf->Cell('30','10','Di','1');
-$pdf->Cell('30','10','Mi','1');
-$pdf->Cell('30','10','Do','1');
-$pdf->Cell('30','10','Fr','1','1');
+$pdf->Cell('32','10','Mo','1');
+$pdf->Cell('32','10','Di','1');
+$pdf->Cell('32','10','Mi','1');
+$pdf->Cell('32','10','Do','1');
+$pdf->Cell('32','10','Fr','1','1');
 $pdf->SetFont('gothic','',12);
 $type = isEvening($hours);
 if($type == "evening"){
@@ -138,7 +138,7 @@ else {
 
 for($i=$start;$i<$end;$i++){ //Stundenplanausgabe
  	$newY = 0;
-	if($i == 12 and $type != "evening") {
+	if(($i == 12 and $type != "evening")or $pdf->GetY() >=265) { //Um Fehler zu vermeiden,wenn Seite überschritten wird
 		$pdf->SetFont('gothic','B',20);
  		$pdf->AddPage();
  		$pdf->SetXY(135,10);
@@ -156,20 +156,20 @@ for($i=$start;$i<$end;$i++){ //Stundenplanausgabe
  				$output .= "\n" . $hours[$i][$day[$j]]['clName'];
 				if(isset($hours[$i][$day[$j]]['roName'])) $output.= " | ". $hours[$i][$day[$j]]['roName'];
 			}
- 			$pdf->MultiCell('30','10',$output,'RLT','C'); 
+ 			$pdf->MultiCell('32','10',$output,'RLT','C'); 
 			//Multicell, da Eintrag länger als eingestellte Breite der Spalte sein kann 
 			//RLT = Rand oben, links und rechts
 			if($pdf->GetY() > $newY)$newY=$pdf->GetY();	//neue Y-Position speichern
 			//Y-Position ändert sich, da nach Multicell automatisch in einer neuen Zeile begonnen wird
 		}
 		else {
- 			if (isset($teacher)) $pdf->MultiCell('30','20','','RLT');	
-			else $pdf->MultiCell('30','10','','RLT');	
+ 			if (isset($teacher)) $pdf->MultiCell('32','20','','RLT');	
+			else $pdf->MultiCell('32','10','','RLT');	
 			if($pdf->GetY() > $newY)$newY=$pdf->GetY();
 		}
 		//Position neben vorheriger Zelle wiederherstellen, zuerst muss Y, dann X eingestellt werden
 		$pdf->SetY($y);
-		$pdf->SetX($x+30);
+		$pdf->SetX($x+32);
 	}
 	$pdf->SetY($y);	//da bei set Y zum Zeilenbeginn zurückgesprungen wird ,muss dies nocheinmal ausgeführt werden
 
@@ -177,7 +177,7 @@ for($i=$start;$i<$end;$i++){ //Stundenplanausgabe
 	$pdf->Cell('25',$newHeight,'','RLB'); //Zelle mit neure Höhe und Rand unten, rechts und links
 	for($j=1;$j<6;$j++)
 	{
-		$pdf->Cell('30',$newHeight,'','RLB');
+		$pdf->Cell('32',$newHeight,'','RLB');
 	}
 
 	$pdf->SetY($newY);	//Zeilenumbruch
