@@ -11,12 +11,12 @@
 	 *  0.2.0:  27. 08. 2013, Handle Marco - Update,Save,delete implementiert
 	 */
 
-include("../../../config.php");
+require("../../../config.php");
 
-include_once(ROOT_LOCATION . "/modules/form/form.php");					//Stell die Formularmasken zur Verfügung
-include_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
-include_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
-include_once(ROOT_LOCATION . "/modules/form/hashCheckFail.php");		
+require_once(ROOT_LOCATION . "/modules/form/form.php");					//Stell die Formularmasken zur Verfügung
+require_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
+require_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
+require_once(ROOT_LOCATION . "/modules/form/hashCheckFail.php");		
 
 $hashGenerator = new HashGenerator("Fach", __FILE__);
 

@@ -8,7 +8,7 @@
 	 *
 	 */
 //Stell Datumfunktionen zur Verfügung
-include(ROOT_LOCATION . "/modules/other/dateFunctions.php");					
+require(ROOT_LOCATION . "/modules/other/dateFunctions.php");					
 
 //Insert von dem Klassen Formular
 function classes(){

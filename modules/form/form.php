@@ -20,7 +20,7 @@ $fields = array(
 
 */
 
-include_once(ROOT_LOCATION . "/modules/form/HashGenerator.php");
+require_once(ROOT_LOCATION . "/modules/form/HashGenerator.php");
 /*Funktion um die Formulare zu erstellen
  *
  *$field - Array das die Informationen über das Formular enthält als string 

@@ -28,7 +28,7 @@
 	
 	session_regenerate_id();
 	
-	include_once(ROOT_LOCATION . "/modules/general/ActionLogger.php");
+	require_once(ROOT_LOCATION . "/modules/general/ActionLogger.php");
 	
 	/*
 	 * beendet die Session
@@ -46,7 +46,7 @@
 	}
 
 	function login($username, $password) {
-		include_once(ROOT_LOCATION . "/modules/general/LDAP.php");
+		require_once(ROOT_LOCATION . "/modules/general/LDAP.php");
 		$ent = LDAP_getUser($username);
 		$dn = LDAP_getDN($ent);
 		try {

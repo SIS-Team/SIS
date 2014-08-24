@@ -7,7 +7,7 @@
 	 *
 	 */
 
-	include_once(ROOT_LOCATION . "/modules/general/VirtualSessionManager.php");
+	require_once(ROOT_LOCATION . "/modules/general/VirtualSessionManager.php");
 
 	
 	class HashGenerator {

@@ -5,10 +5,10 @@
 	 *	Bindet alle grundlegenden Module ein.
 	 *
 	 */
-	include_once(ROOT_LOCATION . "/modules/general/CheckCookies.php");
-	include_once(ROOT_LOCATION . "/modules/general/ForceHTTPS.php");
-	include_once(ROOT_LOCATION . "/modules/general/SessionManager.php");
-	include_once(ROOT_LOCATION . "/modules/general/Connect.php");
-	include_once(ROOT_LOCATION . "/modules/general/Site.php");
+	require_once(ROOT_LOCATION . "/modules/general/CheckCookies.php");
+	require_once(ROOT_LOCATION . "/modules/general/ForceHTTPS.php");
+	require_once(ROOT_LOCATION . "/modules/general/SessionManager.php");
+	require_once(ROOT_LOCATION . "/modules/general/Connect.php");
+	require_once(ROOT_LOCATION . "/modules/general/Site.php");
 
 ?>

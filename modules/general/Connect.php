@@ -4,7 +4,7 @@
 	 * Beschreibung:
 	 *	Stellt Verbindung zum MySQL-Server her.
 	 */
-	include_once(ROOT_LOCATION . "/modules/general/MySQLpassword.php");
+	require_once(ROOT_LOCATION . "/modules/general/MySQLpassword.php");
 	$connection = mysql_connect($host, $user, $passwd);
 	mysql_select_db('sis');
 	echo mysql_error();

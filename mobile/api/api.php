@@ -1,7 +1,7 @@
 <?php
-	include($_SERVER['DOCUMENT_ROOT'] . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
+	require($_SERVER['DOCUMENT_ROOT'] . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
 	//die nächste datei würde dei db connect ersetzen
-	include($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Connect.php");			//Bindet die Datenbank ein
+	require($_SERVER['DOCUMENT_ROOT'] . "/modules/general/Connect.php");			//Bindet die Datenbank ein
 
 	header('Content-Type: application/javascript; charset=UTF-8');					//setzt den Content-Type auf application/javascript damit die JSON-Übertragung funktioniert
 			
@@ -16,7 +16,7 @@
 
 	function loginApp(){
 		
-		include_once($_SERVER['DOCUMENT_ROOT'] . "/modules/general/SessionManager.php");
+		require_once($_SERVER['DOCUMENT_ROOT'] . "/modules/general/SessionManager.php");
 
 		try {
 			login($_GET['username'],$_GET['password']);

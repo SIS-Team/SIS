@@ -10,14 +10,14 @@
 
 
 
-include_once("../../../config.php");
-include_once(ROOT_LOCATION . "/modules/form/form.php");					//Stell die Formularmasken zur Verfügung
-include_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
-include_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
-include_once(ROOT_LOCATION . "/modules/database/inserts.php");			//Stellt die insert-Befehle zur Verf�gung
-include_once(ROOT_LOCATION . "/modules/other/dateFunctions.php");			
-include_once(ROOT_LOCATION . "/modules/form/HashGenerator.php");
-include_once(ROOT_LOCATION . "/modules/form/hashCheckFail.php");		
+require_once("../../../config.php");
+require_once(ROOT_LOCATION . "/modules/form/form.php");					//Stell die Formularmasken zur Verfügung
+require_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
+require_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
+require_once(ROOT_LOCATION . "/modules/database/inserts.php");			//Stellt die insert-Befehle zur Verf�gung
+require_once(ROOT_LOCATION . "/modules/other/dateFunctions.php");			
+require_once(ROOT_LOCATION . "/modules/form/HashGenerator.php");
+require_once(ROOT_LOCATION . "/modules/form/hashCheckFail.php");		
 
 $hashGenerator = new HashGenerator("Stundenplan", __FILE__);
 
@@ -58,7 +58,7 @@ $hashGenerator->generate();
 HashFail();
 
 $dropDown=array("Subjects","Teachers","Rooms");
-include_once(ROOT_LOCATION . "/modules/form/dropdownSelects.php");		//Stellt die Listen f�r die Dropdownmenüs zur Verfügung
+require_once(ROOT_LOCATION . "/modules/form/dropdownSelects.php");		//Stellt die Listen f�r die Dropdownmenüs zur Verfügung
 
 //Formularmaske
 $fields = array(

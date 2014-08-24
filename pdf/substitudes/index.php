@@ -4,12 +4,12 @@
 	 * Beschreibung:
 	 *	Erzeugt die PDF-Ausgabe des Supplierplans
 	 */	
-include_once("../../config.php");	 
+require_once("../../config.php");	 
 require_once(ROOT_LOCATION . "/modules/external/fpdf/fpdf.php");
-include_once(ROOT_LOCATION . "/modules/general/Connect.php");			
-include_once(ROOT_LOCATION . "/modules/general/SessionManager.php");
-include_once(ROOT_LOCATION . "/modules/other/miscellaneous.php");
-include_once(ROOT_LOCATION . "/modules/other/dateFunctions.php");	
+require_once(ROOT_LOCATION . "/modules/general/Connect.php");			
+require_once(ROOT_LOCATION . "/modules/general/SessionManager.php");
+require_once(ROOT_LOCATION . "/modules/other/miscellaneous.php");
+require_once(ROOT_LOCATION . "/modules/other/dateFunctions.php");	
 
 ifNotLoggedInGotoLogin();	
 

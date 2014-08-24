@@ -9,8 +9,8 @@
 	 * 	0.1.0: 09. 09. 2013, Buchberger Florian - erste Version
 	 */
 
-	include_once("../../config.php");
-	include_once(ROOT_LOCATION . "/modules/general/Connect.php");
+	require_once("../../config.php");
+	require_once(ROOT_LOCATION . "/modules/general/Connect.php");
 
 	// gibt den Monitor als MySQL Objekt zurück
 	// Spalten: id, name, file, type, room, roomID

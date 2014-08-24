@@ -10,7 +10,7 @@
 	 * 	1.0.0:  31.01.2014, Machac Philipp - Erste Seite
 	 *	1.0.1:	01.02.2014, Machac Philipp - Pfade angepasst
 	 */
-	include("../config.php");
+	require("../config.php");
 ?> 
 <html>
 	<head>

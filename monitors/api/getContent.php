@@ -11,8 +11,8 @@
 	 * 	0.1.0: 09. 09. 2013, Buchberger Florian - erste Version
 	 */
 
-	include("../../config.php");	
-	include(ROOT_LOCATION . "/modules/monitors/Main.php");
+	require("../../config.php");	
+	require(ROOT_LOCATION . "/modules/monitors/Main.php");
 
 	// Wenn Monitor nicht gefunden -> Fehlermeldung ausgeben
 	$monitor = getMonitorByName($_GET['name']);

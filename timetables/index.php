@@ -6,10 +6,10 @@ session_start();
 	 * Beschreibung:
 	 *	Gibt Stundenplan von Klasse aus
 	 */
-include_once("../config.php");
-include_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
-include_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
-include_once(ROOT_LOCATION . "/modules/other/miscellaneous.php");		//Stellt Verschiedenes zur Verfügung
+require_once("../config.php");
+require_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
+require_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
+require_once(ROOT_LOCATION . "/modules/other/miscellaneous.php");		//Stellt Verschiedenes zur Verfügung
 
 ifNotLoggedInGotoLogin();	//Kontrolle ob angemeldet
 $isTeacher =$_SESSION['isTeacher'];
@@ -31,7 +31,7 @@ pageHeader("Stundenplan","main");
 echo "<div id=\"print\">";
 	echo "<a href=\"".RELATIVE_ROOT."/pdf/timetables/\" target=\"_blank\">";
 		echo "<button class =\"nonButton\">";
-			include(ROOT_LOCATION . "/data/images/print.svg");
+			require(ROOT_LOCATION . "/data/images/print.svg");
 		echo "</button>";
 	echo "</a>";
 echo "</div>";

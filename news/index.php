@@ -4,10 +4,10 @@
 	 * Beschreibung:
 	 *	Gibt News aus
 	 */	 
-include("../config.php");
-include_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
-include_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
-include_once(ROOT_LOCATION . "/modules/other/dateFunctions.php");		//Stellt Datumsfunktionen zur Verfügung
+require("../config.php");
+require_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
+require_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
+require_once(ROOT_LOCATION . "/modules/other/dateFunctions.php");		//Stellt Datumsfunktionen zur Verfügung
 require_once(ROOT_LOCATION . "/modules/other/miscellaneous.php");		//Stell Verschiedenes zur Verfügung
 
 ifNotLoggedInGotoLogin(); //Kontrolle ob angemeldet

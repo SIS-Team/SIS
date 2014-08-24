@@ -15,7 +15,7 @@
 	}
 
 	function LDAP_login($dn, $pass) {
-		include(ROOT_LOCATION . "/modules/general/LDAPpassword.php");
+		require(ROOT_LOCATION . "/modules/general/LDAPpassword.php");
 		if (!isset($host)) {
 			$fh = fopen(ROOT_LOCATION . "/logs/ldap-fails", "a");
 			fwrite($fh, time() . ": no host, login, user: " . urlencode($dn) . "\n");
@@ -29,7 +29,7 @@
 	}
 
 	function LDAP_getUser($cn) {
-		include(ROOT_LOCATION . "/modules/general/LDAPpassword.php");
+		require(ROOT_LOCATION . "/modules/general/LDAPpassword.php");
 
 		if (!isset($host)) {
 			$fh = fopen(ROOT_LOCATION . "/logs/ldap-fails", "a");

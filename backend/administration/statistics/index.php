@@ -7,9 +7,9 @@
 	 *
 	 */
 	 
-include("../../../config.php");
-include_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
-include_once(ROOT_LOCATION . "/modules/other/statistics.php");
+require("../../../config.php");
+require_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
+require_once(ROOT_LOCATION . "/modules/other/statistics.php");
 
 if (!($_SESSION['rights']['root'])){
 	header("Location: ".RELATIVE_ROOT."/");

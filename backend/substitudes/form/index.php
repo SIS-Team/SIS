@@ -7,14 +7,14 @@
 	 *
 	 */
 
-include("../../../config.php");
-include_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
-include_once(ROOT_LOCATION . "/modules/form/form.php");					//Stell die Formularmasken zur Verfügung
-include_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
-include_once(ROOT_LOCATION . "/modules/database/inserts.php");			//Stellt die insert-Befehle zur Verfügung
-include_once(ROOT_LOCATION . "/modules/other/dateChange.php");			//Stell die Funktion für die Datumsauswahl zur Verfügung
-include_once(ROOT_LOCATION . "/modules/other/dateFunctions.php");					
-include_once(ROOT_LOCATION . "/modules/form/hashCheckFail.php");		
+require("../../../config.php");
+require_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
+require_once(ROOT_LOCATION . "/modules/form/form.php");					//Stell die Formularmasken zur Verfügung
+require_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
+require_once(ROOT_LOCATION . "/modules/database/inserts.php");			//Stellt die insert-Befehle zur Verfügung
+require_once(ROOT_LOCATION . "/modules/other/dateChange.php");			//Stell die Funktion für die Datumsauswahl zur Verfügung
+require_once(ROOT_LOCATION . "/modules/other/dateFunctions.php");					
+require_once(ROOT_LOCATION . "/modules/form/hashCheckFail.php");		
 
 $hashGenerator = new HashGenerator("Substitudes", __FILE__);
 
@@ -54,7 +54,7 @@ $hashGenerator->generate();
 HashFail();
 
 $dropDown=array("ClassesSub","Subjects","Teachers","Rooms");
-include_once(ROOT_LOCATION . "/modules/form/dropdownSelects.php");		//Stellt die Listen für die Dropdownmenüs zur Verfügung
+require_once(ROOT_LOCATION . "/modules/form/dropdownSelects.php");		//Stellt die Listen für die Dropdownmenüs zur Verfügung
 
 
 //Formularmaske
@@ -98,7 +98,7 @@ $sort = "classes.name, hoursStart.hour";		//Sortierung nach dem Klassenname und 
 <div id="print">
 	<a href="<?php echo RELATIVE_ROOT; ?>/pdf/substitudes/?date=<?php echo $date; ?>&section=<?php echo $section; ?>" target="_blank">
 		<button class="nonButton">
-			<?php include(ROOT_LOCATION . "/data/images/print.svg"); ?>
+			<?php require(ROOT_LOCATION . "/data/images/print.svg"); ?>
 		</button>
 	</a>
 </div>

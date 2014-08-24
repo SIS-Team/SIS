@@ -1,8 +1,8 @@
 <?php
-	include("../../config.php");
-	include(ROOT_LOCATION . "/modules/general/Main.php");
+	require("../../config.php");
+	require(ROOT_LOCATION . "/modules/general/Main.php");
 
-	include(ROOT_LOCATION . "/modules/menu/Main.php");
+	require(ROOT_LOCATION . "/modules/menu/Main.php");
 
 	if (!$_SESSION['loggedIn']) {
 		header("LOCATION: " . RELATIVE_ROOT . "/login/?return=" . urlencode($_SERVER['REQUEST_URI']) . ((isset($_GET['noMobile'])) ? "&noMobile&noJS" : ""));

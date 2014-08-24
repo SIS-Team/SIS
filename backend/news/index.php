@@ -7,13 +7,13 @@
 	 *	Erstellt die Formulare fuer die Eingabe der News
 	 */
 
-include_once("../../config.php");
-include_once(ROOT_LOCATION . "/modules/form/form.php");					//Stell die Formularmasken zur Verfügung
-include_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
-include_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
-include_once(ROOT_LOCATION . "/modules/database/inserts.php");			//Stellt die insert-Befehle zur Verfügung
-include_once(ROOT_LOCATION . "/modules/other/miscellaneous.php");		//Stellt Verschiedenes zur Verfügung
-include_once(ROOT_LOCATION . "/modules/form/hashCheckFail.php");	
+require_once("../../config.php");
+require_once(ROOT_LOCATION . "/modules/form/form.php");					//Stell die Formularmasken zur Verfügung
+require_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
+require_once(ROOT_LOCATION . "/modules/database/selects.php");			//Stellt die select-Befehle zur Verfügung
+require_once(ROOT_LOCATION . "/modules/database/inserts.php");			//Stellt die insert-Befehle zur Verfügung
+require_once(ROOT_LOCATION . "/modules/other/miscellaneous.php");		//Stellt Verschiedenes zur Verfügung
+require_once(ROOT_LOCATION . "/modules/form/hashCheckFail.php");	
 
 $hashGenerator = new HashGenerator("MissingTeacher", __FILE__);
 
@@ -33,7 +33,7 @@ pageHeader("Formular","main");
 $hashGenerator->generate();
 HashFail();
 $dropDown=array("Sections");
-include_once(ROOT_LOCATION . "/modules/form/dropdownSelects.php");		//Stellt die Listen für die Dropdownmenüs zur Verfügung	
+require_once(ROOT_LOCATION . "/modules/form/dropdownSelects.php");		//Stellt die Listen für die Dropdownmenüs zur Verfügung	
 if($isAdmin) {
 	$fields = array(
 		array( "ID", 			"",			 							"hidden", 	"",		"",		"",					""),

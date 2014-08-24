@@ -8,10 +8,10 @@
 	 *
 	 */
 	 
-include("../config.php");
-include_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Design zur Verfügung			
-include_once(ROOT_LOCATION . "/modules/form/hashCheckFail.php");		
-include_once(ROOT_LOCATION . "/modules/form/HashGenerator.php");
+require("../config.php");
+require_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Design zur Verfügung			
+require_once(ROOT_LOCATION . "/modules/form/hashCheckFail.php");		
+require_once(ROOT_LOCATION . "/modules/form/HashGenerator.php");
 
 $hashGenerator = new HashGenerator("Help", __FILE__);
 

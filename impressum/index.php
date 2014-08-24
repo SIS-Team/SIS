@@ -9,8 +9,8 @@
 	 * 	1.0.0:  18.02.2014, Machac Philipp - Fehler behoben und Datenschutz added
 	 *	1.1.0:	18.02.2014, Machac Philipp - Datenschutz improved
 	 */	 
-	include("../config.php");
-	include_once(ROOT_LOCATION . "/modules/general/Main.php");
+	require("../config.php");
+	require_once(ROOT_LOCATION . "/modules/general/Main.php");
 
 	pageHeader("Impressum","main");
 	

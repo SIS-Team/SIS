@@ -12,11 +12,11 @@
 	 * 	0.1.0:  09. 09. 2013, Buchberger Florian - neue Version
 	 */
 
-	include_once("../../config.php");
-	include_once(ROOT_LOCATION . "/modules/general/Main.php");
-	include_once(ROOT_LOCATION . "/modules/other/miscellaneous.php");
-	include_once(ROOT_LOCATION . "/modules/monitors/Main.php");
-	include_once(ROOT_LOCATION . "/modules/form/HashGenerator.php");
+	require_once("../../config.php");
+	require_once(ROOT_LOCATION . "/modules/general/Main.php");
+	require_once(ROOT_LOCATION . "/modules/other/miscellaneous.php");
+	require_once(ROOT_LOCATION . "/modules/monitors/Main.php");
+	require_once(ROOT_LOCATION . "/modules/form/HashGenerator.php");
 	
 	$hashGenerator = new HashGenerator("monitor-form", __FILE__);
 

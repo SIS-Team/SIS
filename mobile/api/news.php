@@ -1,8 +1,8 @@
 <?php
-	include("../../config.php");
+	require("../../config.php");
 	//die nächste datei würde dei db connect ersetzen
-	include(ROOT_LOCATION . "/modules/general/Connect.php");
-	include(ROOT_LOCATION . "/modules/general/SessionManager.php");	
+	require(ROOT_LOCATION . "/modules/general/Connect.php");
+	require(ROOT_LOCATION . "/modules/general/SessionManager.php");	
 
 	header('Content-Type: application/javascript; charset=UTF-8');	
 	

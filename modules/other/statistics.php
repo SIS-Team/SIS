@@ -5,8 +5,8 @@
 */
 
 
-include_once(ROOT_LOCATION."/modules/other/getBrowser.php");
-include_once(ROOT_LOCATION."/modules/general/Connect.php");
+require_once(ROOT_LOCATION."/modules/other/getBrowser.php");
+require_once(ROOT_LOCATION."/modules/general/Connect.php");
 
 function get(){
 

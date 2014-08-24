@@ -9,7 +9,7 @@
 	 * 	1.0.0:  22.06.2013, Buchberger Florian - erste Version
  	 * 	1.0.1:  28.01.2014, Philipp Machac - Ueberarbeitung Text
 	 */
- 	include_once("../config.php");
+ 	require_once("../config.php");
  	
 	if (isset($_POST['okay'])) {
 		setcookie("allowed", "true", time() + (60 * 60 * 24 * 100), "/"); // 100 Tage keine Abfrage
@@ -26,7 +26,7 @@
 	$_GET['return'] = str_replace("\"", "", $_GET['return']);
 	$_GET['return'] = str_replace("'", "", $_GET['return']);
 
-	include(ROOT_LOCATION . "/modules/general/Site.php");
+	require(ROOT_LOCATION . "/modules/general/Site.php");
 	pageHeader("Cookies erlauben", "cookies");
 ?>
 	<h1>Herzlich Willkommen bei SIS</h1>

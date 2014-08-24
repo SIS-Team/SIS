@@ -9,8 +9,8 @@
 	 * 	0.1.0:  15. 10. 2013, Buchberger Florian - erste Version
 	 *	0.2.0:	03. 02. 2014, Machac Philipp - HTL-Background entfernt
 	 */
-	include("../config.php");
-	include(ROOT_LOCATION . "/modules/general/Main.php");
+	require("../config.php");
+	require(ROOT_LOCATION . "/modules/general/Main.php");
 
 	if (isset($_POST['user']) && isset($_POST['password'])) {
 		if (trim($_POST['user']) != "" && trim($_POST['password']) != "") {
@@ -44,11 +44,11 @@
 		?>
 		<form action="?return=<?php echo (isset($_GET['return'])) ? urlencode($_GET['return']) : urlencode("./"); ?>" method="post">
 			<hr />					
-			<?php include(ROOT_LOCATION . "/data/images/login/user.svg"); ?>
+			<?php require(ROOT_LOCATION . "/data/images/login/user.svg"); ?>
 			<input title="Bitte verwendet eure Novell-Credentials ohne Punkte, ohne Kontext, z.B:
 2001234 und das Novell Passwort." placeholder="Benutzername" type="text" name="user" autofocus>
 			<hr />
-			<?php include(ROOT_LOCATION . "/data/images/login/pass.svg"); ?>
+			<?php require(ROOT_LOCATION . "/data/images/login/pass.svg"); ?>
 			<input placeholder="Kennwort" type="password" name="password">
 			<hr />
 			<input type="checkbox" name="keep">Angemeldet bleiben
