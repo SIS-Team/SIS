@@ -43,7 +43,7 @@ if($isAdmin) {
 		array( "startDay",		"Anzeigebeginn-Datum: (YYYY-MM-DD) ",	"date",		"10",	"",		"",					""),
 		array( "endDay",		"Anzeigeend-Datum: (YYYY-MM-DD)",		"date",		"10",	"",		"",					""),
 		array( "display",		"Anzeigen",								"checkbox",	"",		"",		"",					""),
-		array( "user", 			"Erstellter:",							"text", 	"8",	"5",	"",					"readonly=\"true\" background =\"#FFF\""),
+		array( "user", 			"Ersteller:",							"text", 	"8",	"5",	"",					"readonly=\"true\" background =\"#FFF\""),
 		array( "web",			"Nur Website:",							"checkbox",	"",		"",		"",					""),
 	);
 }
