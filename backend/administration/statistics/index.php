@@ -10,13 +10,41 @@
 require("../../../config.php");
 require_once(ROOT_LOCATION . "/modules/general/Main.php");				//Stellt das Design zur Verfügung
 require_once(ROOT_LOCATION . "/modules/other/statistics.php");
+require_once(ROOT_LOCATION . "/modules/form/HashGenerator.php");
+require_once(ROOT_LOCATION . "/modules/form/hashCheckFail.php");		
+
+$hashGenerator = new HashGenerator("Statistik", __FILE__);
+
 
 if (!($_SESSION['rights']['root'])){
 	header("Location: ".RELATIVE_ROOT."/");
 	exit();
 }
 
-$temp = get();
+$startTime = date("d-m-Y",mktime(0,0,0,2,18,2014));
+$endTime = date("d-m-Y");
+//print_R($_POST);
+if(!empty($_POST['ok']) && $_POST['ok']!=""){
+	HashCheck($hashGenerator);
+	
+	$temp1 = explode("-",$_POST['startTime']);
+	$temp2 = explode("-",$_POST['endTime']);
+	if(checkdate($temp1[1],$temp1[0],$temp1[2]) && checkdate($temp2[1],$temp2[0],$temp2[2])){
+		$temp = get(strtotime($_POST['startTime']),strtotime($_POST['endTime']));
+		$startTime = $_POST['startTime'];
+		$endTime = $_POST['endTime'];
+		$fail = "";
+	}
+	else{
+		$temp = get(strtotime($startTime),strtotime($endTime));
+		$fail = "Bitte korrektes Datum eingeben!!";
+	}
+	
+}
+else
+	$temp = get(strtotime($startTime),strtotime($endTime));
+
+
 
 $browserPC = $temp[0];
 $osPC=$temp[1];
@@ -44,8 +72,26 @@ $y = mktime($x["tm_hour"], $x["tm_min"], $x["tm_sec"],
 $d_max = strftime("%d %b %Y", $y);
 //Seitenheader
 pageHeader("Statistiken","main");
-
+$hashGenerator->generate();
+HashFail();
 ?>
+<form method="post">
+<?php $hashGenerator->printForm(); ?>
+<table>
+<?php 
+if ($fail != "")
+	echo "<tr><td>$fail</td></tr>";
+?>
+<tr><td>Startdatum: (DD-MM-YYYY)</td></tr>
+<tr><td><input type="date" name="startTime" value="<?php echo $startTime; ?>"></td></tr>
+
+<tr><td>Enddatum: (DD-MM-YYYY)</td></tr>
+<tr><td><input type="date" name="endTime" value="<?php echo $endTime; ?>"></td></tr>
+<tr><td><button type="submit" name="ok" value="ok">OK</button></td></tr>
+</table>
+</form>
+
+
 Das Entwicklungsteam wird nicht mitgez&auml;hlt!!!<br />
 <a href="">Reload</a><br /><br />
 <script type="text/javascript" src="<?php echo RELATIVE_ROOT;?>/modules/external/jqplot/jquery.min.js"></script>
