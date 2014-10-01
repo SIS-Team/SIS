@@ -38,9 +38,8 @@
 			$ent[0] = array();
 			$ent[0]["dn"] = "cn=123345678,ou=STUDENTS,o=HTLinn";
 			$ent[0]["groupmembership"] = array();
-			$ent[0]["groupmembership"][0] = "cn=5YHELT,ou=GROUPS,ou=PUBLIC,o=HTLinn";
+			$ent[0]["groupmembership"][0] = "cn=5YHELT,ou=EL,ou=GROUPS,ou=PUBLIC,o=HTLinn";
 			$ent[0]["ou"] = array();
-			$ent[0]["ou"][0] = "N";
 			$ent[0]["givenname"] = array();
 			$ent[0]["givenname"][0] = "Sister";
 			$ent[0]["sn"] = array();
@@ -140,7 +139,17 @@
 	}
 
 	function getSection($ent) {
-		return $ent[0]["ou"][0];
+		$group = $ent[0]["groupmembership"];
+		$i = 0;
+		for (; $i < count($group); $i++) {
+			$path = explode(",", $group[$i]);
+			if ($path[2] == "ou=GROUPS" && $path[3] == "ou=PUBLIC" && $path[4] == "o=HTLinn" && strlen($path[0]) > 3)
+				break;
+		}
+		$group = $group[$i];
+		$group = explode(",", $group);
+		$group = explode("=", $group[1]);
+		return $group[1];
 	}
 
 	function getFullName($ent) {
