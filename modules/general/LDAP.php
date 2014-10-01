@@ -130,7 +130,7 @@
 		$i = 0;
 		for (; $i < count($group); $i++) {
 			$path = explode(",", $group[$i]);
-			if ($path[1] == "ou=GROUPS" && $path[2] == "ou=PUBLIC" && $path[3] == "o=HTLinn" && strlen($path[0]) > 3)
+			if ($path[2] == "ou=GROUPS" && $path[3] == "ou=PUBLIC" && $path[4] == "o=HTLinn" && strlen($path[0]) > 3)
 				break;
 		}
 		$group = $group[$i];
