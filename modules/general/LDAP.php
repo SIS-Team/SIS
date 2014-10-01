@@ -77,10 +77,10 @@
 		$rightArray = array();
 		$rightArray["news"] = false;
 		$rightArray["root"] = false;
-		$rightArray["N"] = false;
-		$rightArray["W"] = false;
-		$rightArray["E"] = false;
-		$rightArray["M"] = false;
+		$rightArray["EL"] = false;
+		$rightArray["WI"] = false;
+		$rightArray["ET"] = false;
+		$rightArray["MB"] = false;
 		$groups = $ent[0]["groupmembership"];
 		for ($i = 0; $i < $groups['count']; $i++) {
 			$split = split(",", $groups[$i]);
@@ -91,7 +91,25 @@
 			if ($split[0] != "SIS")
 				continue;
 			if ($split[1] == "Admin") {
-				$rightArray[$split[2]] = true;
+				if (strlen($split[2]) > 1)
+					$rightArray[$split[2]] = true;
+				else
+					switch($split[2]) {
+					case "W":
+						$rightArray["WI"] = true;
+						break;
+					case "N":
+						$rightArray["EL"] = true;
+						break;
+					case "E":
+						$rightArray["ET"] = true;
+						break;
+					case "M":
+						$rightArray["MB"] = true;
+						break;
+					default:
+						break;
+					}
 			}
 			if ($split[1] == "SuperUser") {
 				$rightArray["root"] = true;
