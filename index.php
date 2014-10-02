@@ -35,15 +35,15 @@
 	$buttons[5]['url'] = RELATIVE_ROOT . "/news/";
 	$buttons[5]['jsurl'] = RELATIVE_ROOT . "/news/?js";
 	
-	$buttons[6]['displayed'] = true;	
+	$buttons[6]['displayed'] = true;
 	$buttons[6]['enabled'] = false;
 	$buttons[6]['svg'] = ROOT_LOCATION . "/data/images/web-access/inputs.svg";	
 	$buttons[6]['text'] = "Eingaben";		
 	$buttons[6]['url'] = RELATIVE_ROOT . "/backend/?noJS" . (isset($_GET['noMobile']) ? "&noMobile" : "");
 	$buttons[6]['jsurl'] = RELATIVE_ROOT . "/backend/?js&menu";
-	// TODO next is absolute magig. any not empty "rights" is sufficient, maybe call it different NEEDS documentation 
+	// if any value in the rights-array is true => enable this menu option
 	foreach ($_SESSION['rights'] as $value) {
-		if ($value)			
+		if ($value)
 			$buttons[6]['enabled'] = true;
 	}
 
