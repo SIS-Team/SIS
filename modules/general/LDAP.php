@@ -38,7 +38,7 @@
 			$ent[0] = array();
 			$ent[0]["dn"] = "cn=123345678,ou=STUDENTS,o=HTLinn";
 			$ent[0]["groupmembership"] = array();
-			$ent[0]["groupmembership"][0] = "cn=5YHELT,ou=EL,ou=GROUPS,ou=PUBLIC,o=HTLinn";
+			$ent[0]["groupmembership"][0] = "cn=5YHELT,ou=" . SECTION_N . ",ou=GROUPS,ou=PUBLIC,o=HTLinn";
 			$ent[0]["ou"] = array();
 			$ent[0]["givenname"] = array();
 			$ent[0]["givenname"][0] = "Sister";
@@ -77,10 +77,10 @@
 		$rightArray = array();
 		$rightArray["news"] = false;
 		$rightArray["root"] = false;
-		$rightArray["EL"] = false;
-		$rightArray["WI"] = false;
-		$rightArray["ET"] = false;
-		$rightArray["MB"] = false;
+		$rightArray[SECTION_N] = false;
+		$rightArray[SECTION_W] = false;
+		$rightArray[SECTION_E] = false;
+		$rightArray[SECTION_M] = false;
 		$groups = $ent[0]["groupmembership"];
 		for ($i = 0; $i < $groups['count']; $i++) {
 			$split = split(",", $groups[$i]);
@@ -96,16 +96,16 @@
 				else
 					switch($split[2]) {
 					case "W":
-						$rightArray["WI"] = true;
+						$rightArray[SECTION_W] = true;
 						break;
 					case "N":
-						$rightArray["EL"] = true;
+						$rightArray[SECTION_N] = true;
 						break;
 					case "E":
-						$rightArray["ET"] = true;
+						$rightArray[SECTION_E] = true;
 						break;
 					case "M":
-						$rightArray["MB"] = true;
+						$rightArray[SECTION_M] = true;
 						break;
 					default:
 						break;

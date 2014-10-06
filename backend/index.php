@@ -14,14 +14,14 @@
 	$name = $_SESSION['name'];
 	
 	$buttons[1]['displayed'] = true;
-	$buttons[1]['enabled'] = $_SESSION['rights']['root'] || $_SESSION['rights']['EL'] || $_SESSION['rights']['WI'] || $_SESSION['rights']['ET'] || $_SESSION['rights']['MB'];
+	$buttons[1]['enabled'] = $_SESSION['rights']['root'] || $_SESSION['rights'][SECTION_E] || $_SESSION['rights'][SECTION_W] || $_SESSION['rights'][SECTION_N] || $_SESSION['rights'][SECTION_M];
 	$buttons[1]['svg'] = ROOT_LOCATION . "/data/images/data-input/monitors.svg";
 	$buttons[1]['text'] = "Monitore verwalten";
 	$buttons[1]['url'] = RELATIVE_ROOT . "/backend/monitors/";
 	$buttons[1]['jsurl'] = RELATIVE_ROOT . "/backend/monitors/?js";
 
 	$buttons[2]['displayed'] = true;
-	$buttons[2]['enabled'] = $_SESSION['rights']['root'] || $_SESSION['rights']['EL'] || $_SESSION['rights']['WI'] || $_SESSION['rights']['ET'] || $_SESSION['rights']['MB'];
+	$buttons[2]['enabled'] = $_SESSION['rights']['root'] || $_SESSION['rights'][SECTION_N] || $_SESSION['rights'][SECTION_W] || $_SESSION['rights'][SECTION_E] || $_SESSION['rights'][SECTION_M];
 	$buttons[2]['svg'] = ROOT_LOCATION . "/data/images/data-input/absentees.svg";
 	$buttons[2]['text'] = "Fehlende eintragen";
 	$buttons[2]['url'] = RELATIVE_ROOT . "/backend/absentees/?noJS" . (isset($_GET['noMobile']) ? "&noMobile" : "");
@@ -36,20 +36,20 @@
 	if (!$_SESSION['rights']['root'])
 		$add .= "form/";
 
-	if ($_SESSION['rights']['EL'])
-		$add .= "?section=EL";
-	else if ($_SESSION['rights']['WI'])
-		$add .= "?section=WI";
-	else if ($_SESSION['rights']['MB'])
-		$add .= "?section=MB";
-	else if ($_SESSION['rights']['ET'])
-		$add .= "?section=ET";
+	if ($_SESSION['rights'][SECTION_N])
+		$add .= "?section=" . SECTION_N;
+	else if ($_SESSION['rights'][SECTION_W])
+		$add .= "?section=" . SECTION_W;
+	else if ($_SESSION['rights'][SECTION_M])
+		$add .= "?section=" . SECTION_M;
+	else if ($_SESSION['rights'][SECTION_E])
+		$add .= "?section=" . SECTION_E;
 
 	$buttons[3]['url'] = RELATIVE_ROOT . "/backend/substitudes/" . $add . (empty($add) ? "?" : "&") . "noJS" . (isset($_GET['noMobile']) ? "&noMobile" : "");
 	$buttons[3]['jsurl'] = RELATIVE_ROOT . "/backend/substitudes/" . $add . (empty($add) ? "?" : "&") . "js" . ((strpos($add, "form") === false) ? "&menu" : "");
 
 	$buttons[5]['displayed'] = true;
-	$buttons[5]['enabled'] = $_SESSION['rights']['root'] || $_SESSION['rights']['EL'] || $_SESSION['rights']['WI'] || $_SESSION['rights']['ET'] || $_SESSION['rights']['MB'] || $_SESSION['rights']['news'];
+	$buttons[5]['enabled'] = $_SESSION['rights']['root'] || $_SESSION['rights'][SECTION_N] || $_SESSION['rights'][SECTION_W] || $_SESSION['rights'][SECTION_E] || $_SESSION['rights'][SECTION_M] || $_SESSION['rights']['news'];
 	$buttons[5]['svg'] = ROOT_LOCATION . "/data/images/data-input/news.svg";
 	$buttons[5]['text'] = "News hinzufügen";
 	$buttons[5]['url'] = RELATIVE_ROOT . "/backend/news/";

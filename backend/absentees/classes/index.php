@@ -22,7 +22,7 @@ require_once(ROOT_LOCATION . "/modules/form/hashCheckFail.php");
 
 $hashGenerator = new HashGenerator("MissingClasses", __FILE__);
 
-if (!($_SESSION['rights']['root'] || $_SESSION['rights']['N'] || $_SESSION['rights']['W'] || $_SESSION['rights']['E'] || $_SESSION['rights']['M'])){
+if (!($_SESSION['rights']['root'] || $_SESSION['rights'][SECTION_N] || $_SESSION['rights'][SECTION_W] || $_SESSION['rights'][SECTION_E] || $_SESSION['rights'][SECTION_M])){
 	header("Location: ".RELATIVE_ROOT."/");
 	exit();
 }

@@ -8,7 +8,7 @@ function ifNotLoggedInGotoLogin(){ //wenn nicht angemeldet zu gegebener Seite we
 }
 
 function getPermission(){ //gibt die Berechtigungsstufe zurück
-	$isAdmin = $_SESSION['rights']['ET'] || $_SESSION['rights']['EL'] || $_SESSION['rights']['WI'] || $_SESSION['rights']['MB'];
+	$isAdmin = $_SESSION['rights'][SECTION_E] || $_SESSION['rights'][SECTION_N] || $_SESSION['rights'][SECTION_W] || $_SESSION['rights'][SECTION_M];
 	if(($_SESSION['rights']['root'])){
  			return "root";
 	}
@@ -27,10 +27,10 @@ function noPermission(){ //wenn keine Berechtigung vorhanden -> weiterleitung
  }
 
 function getAdminSection(){ //Abteilung des Administrators abfragen
-	if($_SESSION['rights']['ET']) return 'ET';
-	if($_SESSION['rights']['EL']) return 'EL';
-	if($_SESSION['rights']['WI']) return 'WI';
-	if($_SESSION['rights']['MB']) return 'MB';
+	if($_SESSION['rights'][SECTION_E]) return SECTION_E;
+	if($_SESSION['rights'][SECTION_N]) return SECTION_N;
+	if($_SESSION['rights'][SECTION_W]) return SECTION_W;
+	if($_SESSION['rights'][SECTION_M]) return SECTION_M;
 	else return false;
 }
 

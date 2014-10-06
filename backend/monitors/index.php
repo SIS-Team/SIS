@@ -24,8 +24,8 @@
 		header("Location: ".RELATIVE_ROOT."/");
 		exit();
 	}
-	if (!($_SESSION['rights']['root'] || $_SESSION['rights']['N'] || $_SESSION['rights']['W'] || $_SESSION['rights']['E'] || $_SESSION['rights']['M'])){
-		header("Location: ".RELATIVE_ROOT."/");
+	if (!($_SESSION['rights']['root'] || $_SESSION['rights'][SECTION_N] || $_SESSION['rights'][SECTION_W] || $_SESSION['rights'][SECTION_E] || $_SESSION['rights'][SECTION_M])){
+		header("Location: " . RELATIVE_ROOT . "/");
 		exit();
 	}
 	// Wenn das Fomular abgeschickt wird
