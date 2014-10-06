@@ -3,4 +3,11 @@
 	
 	define("RELATIVE_ROOT", "");
 	define("ROOT_LOCATION", $_SERVER['DOCUMENT_ROOT'] . RELATIVE_ROOT);
+
+	// Don't forget to change it in DB too (/backend/administration/sections/) + images
+	define("SECTION_N", "EL");
+	define("SECTION_E", "ET");
+	define("SECTION_W", "WI");
+	define("SECTION_M", "MB");
+
 ?>
