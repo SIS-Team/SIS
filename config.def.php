@@ -11,6 +11,6 @@
 	define("SECTION_M", "MB");
 
 	// for stats
-	define("SECTION_ARRAY", array(SECTION_N, SECTION_E, SECTION_W, SECTION_M))
+	$SECTION_ARRAY = array(SECTION_N, SECTION_E, SECTION_W, SECTION_M);
 
 ?>

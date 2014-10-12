@@ -4,7 +4,6 @@
 * Autor: Handle Marco,
 */
 
-
 require_once(ROOT_LOCATION."/modules/other/getBrowser.php");
 require_once(ROOT_LOCATION."/modules/general/Connect.php");
 
@@ -52,7 +51,7 @@ $temp = mysql_fetch_row($result);
 
 if($temp[0]!=0)
 	$classes[]=array("Lehrer",$temp[0]);
-foreach(SECTION_ARRAY as $s){
+foreach($SECTION_ARRAY as $s){
 	$sql = "SELECT COUNT(sections.ID) FROM logsMain LEFT JOIN logsUSConn ON logsUSConn.ID = logsMain.connFK LEFT JOIN logsSessions ON logsSessions.ID = logsUSConn.sessionFK LEFT JOIN logsUsers ON logsUsers.ID = logsUSConn.userFK LEFT JOIN sections ON sections.ID = logsUsers.sectionsFK WHERE sections.short LIKE '".$s."' AND logsMain.time >= '".$startTime."' AND logsMain.time <= '".$endTime."'".$user;
 	$result = mysql_query($sql);
 	$temp = mysql_fetch_row($result);
