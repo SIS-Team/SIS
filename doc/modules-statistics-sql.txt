@@ -1,0 +1,13 @@
+Speed optimizations for statistics
+==================================
+
+:Date: 2014-10-15
+
+Analysis for  "statistics request takes too long #52"
+
+  The request for the statistics-site takes nearly 35 s.
+  This is far too long.
+
+  Additionally in that time the webserver get's fired up.
+
+
