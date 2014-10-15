@@ -13,7 +13,7 @@ Analysis for  "statistics request takes too long #52"
 SQL tests
 ---------
 
-function geti
+function get
 
   original sql::
 
@@ -83,4 +83,35 @@ function geti
   logsUsers: type text for LDAP can hold up to 65535 characters, reduce to 128 ::
 
     ALTER TABLE logsUsers CHANGE COLUMN LDAP LDAP VARCHAR(128);
+
+
+getFirstLastDay
+---------------
+
+::
+
+  SELECT MIN(logsMain.time), MAX(logsMain.time) 
+                FROM logsMain 
+                        LEFT JOIN logsUSConn ON logsUSConn.ID = logsMain.connFK 
+                        LEFT JOIN logsSessions ON logsSessions.ID = logsUSConn.sessionFK 
+                        LEFT JOIN logsUsers ON logsUsers.ID = logsUSConn.userFK 
+                WHERE logsMain.time >= UNIX_TIMESTAMP('2014-10-01 00:00:00')
+                        AND logsMain.time <= UNIX_TIMESTAMP('2014-10-10 00:00:00')
+                        AND logsUsers.LDAP!='20090334'
+                        AND logsUsers.LDAP!='20090319'
+                        AND logsUsers.LDAP!='20090340'
+                        AND logsUsers.LDAP!='20090396'
+                        AND logsUsers.LDAP!='20090359';
+
+
+
+        $sql = "SELECT MAX(logsMain.time) 
+                FROM logsMain 
+                        LEFT JOIN logsUSConn ON logsUSConn.ID = logsMain.connFK 
+                        LEFT JOIN logsSessions ON logsSessions.ID = logsUSConn.sessionFK 
+                        LEFT JOIN logsUsers ON logsUsers.ID = logsUSConn.userFK
+                WHERE logsMain.time >= '".$startTime."' 
+                        AND logsMain.time <= '".$endTime."'".$user;
+
+
 

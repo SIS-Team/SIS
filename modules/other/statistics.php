@@ -363,7 +363,7 @@ function getDayFrequenzy($startTime,$endTime,$user){
 }
 
 function getFirstLastDay($startTime,$endTime,$user){
-	$sql = "SELECT MIN(logsMain.time) 
+	$sql = "SELECT MIN(logsMain.time), MAX(logsMain.time) 
 		FROM logsMain 
 			LEFT JOIN logsUSConn ON logsUSConn.ID = logsMain.connFK 
 			LEFT JOIN logsSessions ON logsSessions.ID = logsUSConn.sessionFK 
@@ -372,18 +372,9 @@ function getFirstLastDay($startTime,$endTime,$user){
 			AND logsMain.time <= '".$endTime."'".$user;
 	$result = mysql_query($sql);
 	$min=mysql_fetch_array($result);
-	
-	$sql = "SELECT MAX(logsMain.time) 
-		FROM logsMain 
-			LEFT JOIN logsUSConn ON logsUSConn.ID = logsMain.connFK 
-			LEFT JOIN logsSessions ON logsSessions.ID = logsUSConn.sessionFK 
-			LEFT JOIN logsUsers ON logsUsers.ID = logsUSConn.userFK
-		WHERE logsMain.time >= '".$startTime."' 
-			AND logsMain.time <= '".$endTime."'".$user;
-	$result = mysql_query($sql);
-	$max=mysql_fetch_array($result);
-
-	return array($min[0],$max[0]);
+	// TODO mysql_freeresult
+        // TODO could we use $min directly or is there a dictionary in it
+	return array($min[0], $min[1]);
 }
 
 function countDat($dats,$sort){
