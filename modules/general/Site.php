@@ -17,6 +17,7 @@
 	$seperators["root"] = "&root;";
 	$seperators["mobile"] = "&mobile;";
 	$seperators['js'] = "&js;";
+	$seperators['roomname'] = "&roomname;";
 
 	/*
 	 * Läd die Design Datei und splittet sie nach dem seperator "main" auf.
@@ -40,6 +41,7 @@
 			$js = "false";
 			
 		$content = str_replace($seperators['js'], $js, $content);
+		$content = str_replace($seperators['roomname'], $_GET["name"], $content);
 			
 			
 		$tmp = strpos($content, $seperators["main"]);
